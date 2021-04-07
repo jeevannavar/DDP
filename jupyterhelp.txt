@@ -1,0 +1,1226 @@
+This application is used to convert notebook files (*.ipynb) to various other
+formats.
+
+WARNING: THE COMMANDLINE INTERFACE MAY CHANGE IN FUTURE RELEASES.
+
+Options
+-------
+
+Arguments that take values are actually convenience aliases to full
+Configurables, whose aliases are listed on the help line. For more information
+on full configurables, see '--help-all'.
+
+--debug
+    set log level to logging.DEBUG (maximize logging output)
+--generate-config
+    generate default config file
+-y
+    Answer yes to any questions instead of prompting.
+--execute
+    Execute the notebook prior to export.
+--allow-errors
+    Continue notebook execution even if one of the cells throws an error and include the error message in the cell output (the default behaviour is to abort conversion). This flag is only relevant if '--execute' was specified, too.
+--stdin
+    read a single notebook file from stdin. Write the resulting notebook with default basename 'notebook.*'
+--stdout
+    Write notebook output to stdout instead of files.
+--inplace
+    Run nbconvert in place, overwriting the existing notebook (only 
+    relevant when converting to notebook format)
+--clear-output
+    Clear output of current file and save in place, 
+    overwriting the existing notebook.
+--no-prompt
+    Exclude input and output prompts from converted document.
+--no-input
+    Exclude input cells and output prompts from converted document. 
+    This mode is ideal for generating code-free reports.
+--log-level=<Enum> (Application.log_level)
+    Default: 30
+    Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
+    Set the log level by value or name.
+--config=<Unicode> (JupyterApp.config_file)
+    Default: ''
+    Full path of a config file.
+--to=<Unicode> (NbConvertApp.export_format)
+    Default: 'html'
+    The export format to be used, either one of the built-in formats
+    ['asciidoc', 'custom', 'html', 'latex', 'markdown', 'notebook', 'pdf',
+    'python', 'rst', 'script', 'slides'] or a dotted object name that represents
+    the import path for an `Exporter` class
+--template=<Unicode> (TemplateExporter.template_file)
+    Default: ''
+    Name of the template file to use
+--writer=<DottedObjectName> (NbConvertApp.writer_class)
+    Default: 'FilesWriter'
+    Writer class used to write the  results of the conversion
+--post=<DottedOrNone> (NbConvertApp.postprocessor_class)
+    Default: ''
+    PostProcessor class used to write the results of the conversion
+--output=<Unicode> (NbConvertApp.output_base)
+    Default: ''
+    overwrite base name use for output files. can only be used when converting
+    one notebook at a time.
+--output-dir=<Unicode> (FilesWriter.build_directory)
+    Default: ''
+    Directory to write output(s) to. Defaults to output to the directory of each
+    notebook. To recover previous default behaviour (outputting to the current
+    working directory) use . as the flag value.
+--reveal-prefix=<Unicode> (SlidesExporter.reveal_url_prefix)
+    Default: ''
+    The URL prefix for reveal.js (version 3.x). This defaults to the reveal CDN,
+    but can be any url pointing to a copy  of reveal.js.
+    For speaker notes to work, this must be a relative path to a local  copy of
+    reveal.js: e.g., "reveal.js".
+    If a relative path is given, it must be a subdirectory of the current
+    directory (from which the server is run).
+    See the usage documentation
+    (https://nbconvert.readthedocs.io/en/latest/usage.html#reveal-js-html-
+    slideshow) for more details.
+--nbformat=<Enum> (NotebookExporter.nbformat_version)
+    Default: 4
+    Choices: [1, 2, 3, 4]
+    The nbformat version to write. Use this to downgrade notebooks.
+
+Class parameters
+----------------
+
+Parameters are set from command-line arguments of the form:
+`--Class.trait=value`. This line is evaluated in Python, so simple expressions
+are allowed, e.g.:: `--C.a='range(3)'` For setting C.a=[0,1,2].
+
+NbConvertApp options
+--------------------
+--NbConvertApp.answer_yes=<Bool>
+    Default: False
+    Answer yes to any prompts.
+--NbConvertApp.config_file=<Unicode>
+    Default: ''
+    Full path of a config file.
+--NbConvertApp.config_file_name=<Unicode>
+    Default: ''
+    Specify a config file to load.
+--NbConvertApp.export_format=<Unicode>
+    Default: 'html'
+    The export format to be used, either one of the built-in formats
+    ['asciidoc', 'custom', 'html', 'latex', 'markdown', 'notebook', 'pdf',
+    'python', 'rst', 'script', 'slides'] or a dotted object name that represents
+    the import path for an `Exporter` class
+--NbConvertApp.from_stdin=<Bool>
+    Default: False
+    read a single notebook from stdin.
+--NbConvertApp.generate_config=<Bool>
+    Default: False
+    Generate default config file.
+--NbConvertApp.ipywidgets_base_url=<Unicode>
+    Default: 'https://unpkg.com/'
+    URL base for ipywidgets package
+--NbConvertApp.log_datefmt=<Unicode>
+    Default: '%Y-%m-%d %H:%M:%S'
+    The date format used by logging formatters for %(asctime)s
+--NbConvertApp.log_format=<Unicode>
+    Default: '[%(name)s]%(highlevel)s %(message)s'
+    The Logging format template
+--NbConvertApp.log_level=<Enum>
+    Default: 30
+    Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
+    Set the log level by value or name.
+--NbConvertApp.notebooks=<List>
+    Default: []
+    List of notebooks to convert. Wildcards are supported. Filenames passed
+    positionally will be added to the list.
+--NbConvertApp.output_base=<Unicode>
+    Default: ''
+    overwrite base name use for output files. can only be used when converting
+    one notebook at a time.
+--NbConvertApp.output_files_dir=<Unicode>
+    Default: '{notebook_name}_files'
+    Directory to copy extra files (figures) to. '{notebook_name}' in the string
+    will be converted to notebook basename
+--NbConvertApp.postprocessor_class=<DottedOrNone>
+    Default: ''
+    PostProcessor class used to write the results of the conversion
+--NbConvertApp.use_output_suffix=<Bool>
+    Default: True
+    Whether to apply a suffix prior to the extension (only relevant when
+    converting to notebook format). The suffix is determined by the exporter,
+    and is usually '.nbconvert'.
+--NbConvertApp.writer_class=<DottedObjectName>
+    Default: 'FilesWriter'
+    Writer class used to write the  results of the conversion
+
+NbConvertBase options
+---------------------
+--NbConvertBase.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--NbConvertBase.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+
+ASCIIDocExporter options
+------------------------
+--ASCIIDocExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--ASCIIDocExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--ASCIIDocExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--ASCIIDocExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--ASCIIDocExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--ASCIIDocExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--ASCIIDocExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--ASCIIDocExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--ASCIIDocExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--ASCIIDocExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--ASCIIDocExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--ASCIIDocExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--ASCIIDocExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--ASCIIDocExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--ASCIIDocExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--ASCIIDocExporter.template_path=<List>
+    Default: ['.']
+
+Exporter options
+----------------
+--Exporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--Exporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--Exporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+
+HTMLExporter options
+--------------------
+--HTMLExporter.anchor_link_text=<Unicode>
+    Default: '¶'
+    The text used as the text for anchor links.
+--HTMLExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--HTMLExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--HTMLExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--HTMLExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--HTMLExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--HTMLExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--HTMLExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--HTMLExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--HTMLExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--HTMLExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--HTMLExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--HTMLExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--HTMLExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--HTMLExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--HTMLExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--HTMLExporter.template_path=<List>
+    Default: ['.']
+
+LatexExporter options
+---------------------
+--LatexExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--LatexExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--LatexExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--LatexExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--LatexExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--LatexExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--LatexExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--LatexExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--LatexExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--LatexExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--LatexExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--LatexExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--LatexExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--LatexExporter.template_extension=<Unicode>
+    Default: '.tplx'
+--LatexExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--LatexExporter.template_path=<List>
+    Default: ['.']
+
+MarkdownExporter options
+------------------------
+--MarkdownExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--MarkdownExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--MarkdownExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--MarkdownExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--MarkdownExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--MarkdownExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--MarkdownExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--MarkdownExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--MarkdownExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--MarkdownExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--MarkdownExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--MarkdownExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--MarkdownExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--MarkdownExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--MarkdownExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--MarkdownExporter.template_path=<List>
+    Default: ['.']
+
+NotebookExporter options
+------------------------
+--NotebookExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--NotebookExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--NotebookExporter.nbformat_version=<Enum>
+    Default: 4
+    Choices: [1, 2, 3, 4]
+    The nbformat version to write. Use this to downgrade notebooks.
+--NotebookExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+
+PDFExporter options
+-------------------
+--PDFExporter.bib_command=<List>
+    Default: ['bibtex', '{filename}']
+    Shell command used to run bibtex.
+--PDFExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--PDFExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--PDFExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--PDFExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--PDFExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--PDFExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--PDFExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--PDFExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--PDFExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--PDFExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--PDFExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--PDFExporter.latex_command=<List>
+    Default: ['xelatex', '{filename}', '-quiet']
+    Shell command used to compile latex.
+--PDFExporter.latex_count=<Int>
+    Default: 3
+    How many times latex will be called.
+--PDFExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--PDFExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--PDFExporter.template_extension=<Unicode>
+    Default: '.tplx'
+--PDFExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--PDFExporter.template_path=<List>
+    Default: ['.']
+--PDFExporter.verbose=<Bool>
+    Default: False
+    Whether to display the output of latex commands.
+
+PythonExporter options
+----------------------
+--PythonExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--PythonExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--PythonExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--PythonExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--PythonExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--PythonExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--PythonExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--PythonExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--PythonExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--PythonExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--PythonExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--PythonExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--PythonExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--PythonExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--PythonExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--PythonExporter.template_path=<List>
+    Default: ['.']
+
+RSTExporter options
+-------------------
+--RSTExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--RSTExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--RSTExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--RSTExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--RSTExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--RSTExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--RSTExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--RSTExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--RSTExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--RSTExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--RSTExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--RSTExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--RSTExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--RSTExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--RSTExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--RSTExporter.template_path=<List>
+    Default: ['.']
+
+ScriptExporter options
+----------------------
+--ScriptExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--ScriptExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--ScriptExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--ScriptExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--ScriptExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--ScriptExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--ScriptExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--ScriptExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--ScriptExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--ScriptExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--ScriptExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--ScriptExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--ScriptExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--ScriptExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--ScriptExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--ScriptExporter.template_path=<List>
+    Default: ['.']
+
+SlidesExporter options
+----------------------
+--SlidesExporter.anchor_link_text=<Unicode>
+    Default: '¶'
+    The text used as the text for anchor links.
+--SlidesExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--SlidesExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--SlidesExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--SlidesExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--SlidesExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--SlidesExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--SlidesExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--SlidesExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--SlidesExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--SlidesExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--SlidesExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--SlidesExporter.font_awesome_url=<Unicode>
+    Default: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/cs...
+    URL to load font awesome from.
+    Defaults to loading from cdnjs.
+--SlidesExporter.jquery_url=<Unicode>
+    Default: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.m...
+    URL to load jQuery from.
+    Defaults to loading from cdnjs.
+--SlidesExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--SlidesExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--SlidesExporter.require_js_url=<Unicode>
+    Default: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/req...
+    URL to load require.js from.
+    Defaults to loading from cdnjs.
+--SlidesExporter.reveal_scroll=<Bool>
+    Default: False
+    If True, enable scrolling within each slide
+--SlidesExporter.reveal_theme=<Unicode>
+    Default: 'simple'
+    Name of the reveal.js theme to use.
+    We look for a file with this name under
+    ``reveal_url_prefix``/css/theme/``reveal_theme``.css.
+    https://github.com/hakimel/reveal.js/tree/master/css/theme has list of
+    themes that ship by default with reveal.js.
+--SlidesExporter.reveal_transition=<Unicode>
+    Default: 'slide'
+    Name of the reveal.js transition to use.
+    The list of transitions that ships by default with reveal.js are: none,
+    fade, slide, convex, concave and zoom.
+--SlidesExporter.reveal_url_prefix=<Unicode>
+    Default: ''
+    The URL prefix for reveal.js (version 3.x). This defaults to the reveal CDN,
+    but can be any url pointing to a copy  of reveal.js.
+    For speaker notes to work, this must be a relative path to a local  copy of
+    reveal.js: e.g., "reveal.js".
+    If a relative path is given, it must be a subdirectory of the current
+    directory (from which the server is run).
+    See the usage documentation
+    (https://nbconvert.readthedocs.io/en/latest/usage.html#reveal-js-html-
+    slideshow) for more details.
+--SlidesExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--SlidesExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--SlidesExporter.template_path=<List>
+    Default: ['.']
+
+TemplateExporter options
+------------------------
+--TemplateExporter.default_preprocessors=<List>
+    Default: ['nbconvert.preprocessors.TagRemovePreprocessor', 'nbconvert....
+    List of preprocessors available by default, by name, namespace, instance, or
+    type.
+--TemplateExporter.exclude_code_cell=<Bool>
+    Default: False
+    This allows you to exclude code cells from all templates if set to True.
+--TemplateExporter.exclude_input=<Bool>
+    Default: False
+    This allows you to exclude code cell inputs from all templates if set to
+    True.
+--TemplateExporter.exclude_input_prompt=<Bool>
+    Default: False
+    This allows you to exclude input prompts from all templates if set to True.
+--TemplateExporter.exclude_markdown=<Bool>
+    Default: False
+    This allows you to exclude markdown cells from all templates if set to True.
+--TemplateExporter.exclude_output=<Bool>
+    Default: False
+    This allows you to exclude code cell outputs from all templates if set to
+    True.
+--TemplateExporter.exclude_output_prompt=<Bool>
+    Default: False
+    This allows you to exclude output prompts from all templates if set to True.
+--TemplateExporter.exclude_raw=<Bool>
+    Default: False
+    This allows you to exclude raw cells from all templates if set to True.
+--TemplateExporter.exclude_unknown=<Bool>
+    Default: False
+    This allows you to exclude unknown cells from all templates if set to True.
+--TemplateExporter.file_extension=<FilenameExtension>
+    Default: '.txt'
+    Extension of the file that should be written to disk
+--TemplateExporter.filters=<Dict>
+    Default: {}
+    Dictionary of filters, by name and namespace, to add to the Jinja
+    environment.
+--TemplateExporter.preprocessors=<List>
+    Default: []
+    List of preprocessors, by name or namespace, to enable.
+--TemplateExporter.raw_mimetypes=<List>
+    Default: []
+    formats of raw cells to be included in this Exporter's output.
+--TemplateExporter.template_extension=<Unicode>
+    Default: '.tpl'
+--TemplateExporter.template_file=<Unicode>
+    Default: ''
+    Name of the template file to use
+--TemplateExporter.template_path=<List>
+    Default: ['.']
+
+CSSHTMLHeaderPreprocessor options
+---------------------------------
+--CSSHTMLHeaderPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--CSSHTMLHeaderPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--CSSHTMLHeaderPreprocessor.enabled=<Bool>
+    Default: False
+--CSSHTMLHeaderPreprocessor.highlight_class=<Unicode>
+    Default: '.highlight'
+    CSS highlight class identifier
+--CSSHTMLHeaderPreprocessor.style=<Unicode>
+    Default: 'default'
+    Name of the pygments style to use
+
+ClearMetadataPreprocessor options
+---------------------------------
+--ClearMetadataPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ClearMetadataPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ClearMetadataPreprocessor.enabled=<Bool>
+    Default: False
+
+ClearOutputPreprocessor options
+-------------------------------
+--ClearOutputPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ClearOutputPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ClearOutputPreprocessor.enabled=<Bool>
+    Default: False
+--ClearOutputPreprocessor.remove_metadata_fields=<Set>
+    Default: {'collapsed', 'scrolled'}
+
+ConvertFiguresPreprocessor options
+----------------------------------
+--ConvertFiguresPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ConvertFiguresPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ConvertFiguresPreprocessor.enabled=<Bool>
+    Default: False
+--ConvertFiguresPreprocessor.from_format=<Unicode>
+    Default: ''
+    Format the converter accepts
+--ConvertFiguresPreprocessor.to_format=<Unicode>
+    Default: ''
+    Format the converter writes
+
+ExecutePreprocessor options
+---------------------------
+--ExecutePreprocessor.allow_errors=<Bool>
+    Default: False
+    If `False` (default), when a cell raises an error the execution is stopped
+    and a `CellExecutionError` is raised. If `True`, execution errors are
+    ignored and the execution is continued until the end of the notebook. Output
+    from exceptions is included in the cell output in both cases.
+--ExecutePreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ExecutePreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ExecutePreprocessor.enabled=<Bool>
+    Default: False
+--ExecutePreprocessor.force_raise_errors=<Bool>
+    Default: False
+    If False (default), errors from executing the notebook can be allowed with a
+    `raises-exception` tag on a single cell, or the `allow_errors` configurable
+    option for all cells. An allowed error will be recorded in notebook output,
+    and execution will continue. If an error occurs when it is not explicitly
+    allowed, a `CellExecutionError` will be raised. If True,
+    `CellExecutionError` will be raised for any error that occurs while
+    executing the notebook. This overrides both the `allow_errors` option and
+    the `raises-exception` cell tag.
+--ExecutePreprocessor.interrupt_on_timeout=<Bool>
+    Default: False
+    If execution of a cell times out, interrupt the kernel and continue
+    executing other cells rather than throwing an error and stopping.
+--ExecutePreprocessor.iopub_timeout=<Int>
+    Default: 4
+    The time to wait (in seconds) for IOPub output. This generally doesn't need
+    to be set, but on some slow networks (such as CI systems) the default
+    timeout might not be long enough to get all messages.
+--ExecutePreprocessor.kernel_manager_class=<Type>
+    Default: 'builtins.object'
+    The kernel manager class to use.
+--ExecutePreprocessor.kernel_name=<Unicode>
+    Default: ''
+    Name of kernel to use to execute the cells. If not set, use the kernel_spec
+    embedded in the notebook.
+--ExecutePreprocessor.raise_on_iopub_timeout=<Bool>
+    Default: False
+    If `False` (default), then the kernel will continue waiting for iopub
+    messages until it receives a kernel idle message, or until a timeout occurs,
+    at which point the currently executing cell will be skipped. If `True`, then
+    an error will be raised after the first timeout. This option generally does
+    not need to be used, but may be useful in contexts where there is the
+    possibility of executing notebooks with memory-consuming infinite loops.
+--ExecutePreprocessor.shutdown_kernel=<Enum>
+    Default: 'graceful'
+    Choices: ['graceful', 'immediate']
+    If `graceful` (default), then the kernel is given time to clean up after
+    executing all cells, e.g., to execute its `atexit` hooks. If `immediate`,
+    then the kernel is signaled to immediately terminate.
+--ExecutePreprocessor.startup_timeout=<Int>
+    Default: 60
+    The time to wait (in seconds) for the kernel to start. If kernel startup
+    takes longer, a RuntimeError is raised.
+--ExecutePreprocessor.store_widget_state=<Bool>
+    Default: True
+    If `True` (default), then the state of the Jupyter widgets created at the
+    kernel will be stored in the metadata of the notebook.
+--ExecutePreprocessor.timeout=<Int>
+    Default: 30
+    The time to wait (in seconds) for output from executions. If a cell
+    execution takes longer, an exception (TimeoutError on python 3+,
+    RuntimeError on python 2) is raised.
+    `None` or `-1` will disable the timeout. If `timeout_func` is set, it
+    overrides `timeout`.
+--ExecutePreprocessor.timeout_func=<Any>
+    Default: None
+    A callable which, when given the cell source as input, returns the time to
+    wait (in seconds) for output from cell executions. If a cell execution takes
+    longer, an exception (TimeoutError on python 3+, RuntimeError on python 2)
+    is raised.
+    Returning `None` or `-1` will disable the timeout for the cell. Not setting
+    `timeout_func` will cause the preprocessor to default to using the `timeout`
+    trait for all cells. The `timeout_func` trait overrides `timeout` if it is
+    not `None`.
+
+ExtractOutputPreprocessor options
+---------------------------------
+--ExtractOutputPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ExtractOutputPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ExtractOutputPreprocessor.enabled=<Bool>
+    Default: False
+--ExtractOutputPreprocessor.extract_output_types=<Set>
+    Default: {'application/pdf', 'image/png', 'image/jpeg', 'image/svg+xml'}
+--ExtractOutputPreprocessor.output_filename_template=<Unicode>
+    Default: '{unique_key}_{cell_index}_{index}{extension}'
+
+HighlightMagicsPreprocessor options
+-----------------------------------
+--HighlightMagicsPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--HighlightMagicsPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--HighlightMagicsPreprocessor.enabled=<Bool>
+    Default: False
+--HighlightMagicsPreprocessor.languages=<Dict>
+    Default: {}
+    Syntax highlighting for magic's extension languages. Each item associates a
+    language magic extension such as %%R, with a pygments lexer such as r.
+
+LatexPreprocessor options
+-------------------------
+--LatexPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--LatexPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--LatexPreprocessor.enabled=<Bool>
+    Default: False
+--LatexPreprocessor.style=<Unicode>
+    Default: 'default'
+    Name of the pygments style to use
+
+Preprocessor options
+--------------------
+--Preprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--Preprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--Preprocessor.enabled=<Bool>
+    Default: False
+
+RegexRemovePreprocessor options
+-------------------------------
+--RegexRemovePreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--RegexRemovePreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--RegexRemovePreprocessor.enabled=<Bool>
+    Default: False
+--RegexRemovePreprocessor.patterns=<List>
+    Default: []
+
+SVG2PDFPreprocessor options
+---------------------------
+--SVG2PDFPreprocessor.command=<Unicode>
+    Default: ''
+    The command to use for converting SVG to PDF
+    This string is a template, which will be formatted with the keys to_filename
+    and from_filename.
+    The conversion call must read the SVG from {from_flename}, and write a PDF
+    to {to_filename}.
+--SVG2PDFPreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--SVG2PDFPreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--SVG2PDFPreprocessor.enabled=<Bool>
+    Default: False
+--SVG2PDFPreprocessor.from_format=<Unicode>
+    Default: ''
+    Format the converter accepts
+--SVG2PDFPreprocessor.inkscape=<Unicode>
+    Default: ''
+    The path to Inkscape, if necessary
+--SVG2PDFPreprocessor.to_format=<Unicode>
+    Default: ''
+    Format the converter writes
+
+TagRemovePreprocessor options
+-----------------------------
+--TagRemovePreprocessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--TagRemovePreprocessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--TagRemovePreprocessor.enabled=<Bool>
+    Default: False
+--TagRemovePreprocessor.remove_all_outputs_tags=<Set>
+    Default: set()
+    Tags indicating cells for which the outputs are to be removed,matches tags
+    in `cell.metadata.tags`.
+--TagRemovePreprocessor.remove_cell_tags=<Set>
+    Default: set()
+    Tags indicating which cells are to be removed,matches tags in
+    `cell.metadata.tags`.
+--TagRemovePreprocessor.remove_input_tags=<Set>
+    Default: set()
+    Tags indicating cells for which input is to be removed,matches tags in
+    `cell.metadata.tags`.
+--TagRemovePreprocessor.remove_metadata_fields=<Set>
+    Default: {'collapsed', 'scrolled'}
+--TagRemovePreprocessor.remove_single_output_tags=<Set>
+    Default: set()
+    Tags indicating which individual outputs are to be removed,matches output
+    *i* tags in `cell.outputs[i].metadata.tags`.
+
+DebugWriter options
+-------------------
+--DebugWriter.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--DebugWriter.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--DebugWriter.files=<List>
+    Default: []
+    List of the files that the notebook references.  Files will be  included
+    with written output.
+
+FilesWriter options
+-------------------
+--FilesWriter.build_directory=<Unicode>
+    Default: ''
+    Directory to write output(s) to. Defaults to output to the directory of each
+    notebook. To recover previous default behaviour (outputting to the current
+    working directory) use . as the flag value.
+--FilesWriter.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--FilesWriter.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--FilesWriter.files=<List>
+    Default: []
+    List of the files that the notebook references.  Files will be  included
+    with written output.
+--FilesWriter.relpath=<Unicode>
+    Default: ''
+    When copying files that the notebook depends on, copy them in relation to
+    this path, such that the destination filename will be
+    os.path.relpath(filename, relpath). If FilesWriter is operating on a
+    notebook that already exists elsewhere on disk, then the default will be the
+    directory containing that notebook.
+
+StdoutWriter options
+--------------------
+--StdoutWriter.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--StdoutWriter.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--StdoutWriter.files=<List>
+    Default: []
+    List of the files that the notebook references.  Files will be  included
+    with written output.
+
+WriterBase options
+------------------
+--WriterBase.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--WriterBase.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--WriterBase.files=<List>
+    Default: []
+    List of the files that the notebook references.  Files will be  included
+    with written output.
+
+PostProcessorBase options
+-------------------------
+--PostProcessorBase.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--PostProcessorBase.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+
+ServePostProcessor options
+--------------------------
+--ServePostProcessor.browser=<Unicode>
+    Default: ''
+    Specify what browser should be used to open slides. See
+    https://docs.python.org/3/library/webbrowser.html#webbrowser.register to see
+    how keys are mapped to browser executables. If  not specified, the default
+    browser will be determined  by the `webbrowser`  standard library module,
+    which allows setting of the BROWSER  environment variable to override it.
+--ServePostProcessor.default_language=<Unicode>
+    Default: 'ipython'
+    Deprecated default highlight language as of 5.0, please use language_info
+    metadata instead
+--ServePostProcessor.display_data_priority=<List>
+    Default: ['text/html', 'application/pdf', 'text/latex', 'image/svg+xml...
+    An ordered list of preferred output type, the first encountered will usually
+    be used when converting discarding the others.
+--ServePostProcessor.ip=<Unicode>
+    Default: '127.0.0.1'
+    The IP address to listen on.
+--ServePostProcessor.open_in_browser=<Bool>
+    Default: True
+    Should the browser be opened automatically?
+--ServePostProcessor.port=<Int>
+    Default: 8000
+    port for the server to listen on.
+--ServePostProcessor.reveal_cdn=<Unicode>
+    Default: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0'
+    URL for reveal.js CDN.
+--ServePostProcessor.reveal_prefix=<Unicode>
+    Default: 'reveal.js'
+    URL prefix for reveal.js
+
+Examples
+--------
+
+    The simplest way to use nbconvert is
+    
+    > jupyter nbconvert mynotebook.ipynb
+    
+    which will convert mynotebook.ipynb to the default format (probably HTML).
+    
+    You can specify the export format with `--to`.
+    Options include ['asciidoc', 'custom', 'html', 'latex', 'markdown', 'notebook', 'pdf', 'python', 'rst', 'script', 'slides'].
+    
+    > jupyter nbconvert --to latex mynotebook.ipynb
+    
+    Both HTML and LaTeX support multiple output templates. LaTeX includes
+    'base', 'article' and 'report'.  HTML includes 'basic' and 'full'. You
+    can specify the flavor of the format used.
+    
+    > jupyter nbconvert --to html --template basic mynotebook.ipynb
+    
+    You can also pipe the output to stdout, rather than a file
+    
+    > jupyter nbconvert mynotebook.ipynb --stdout
+    
+    PDF is generated via latex
+    
+    > jupyter nbconvert mynotebook.ipynb --to pdf
+    
+    You can get (and serve) a Reveal.js-powered slideshow
+    
+    > jupyter nbconvert myslides.ipynb --to slides --post serve
+    
+    Multiple notebooks can be given at the command line in a couple of 
+    different ways:
+    
+    > jupyter nbconvert notebook*.ipynb
+    > jupyter nbconvert notebook1.ipynb notebook2.ipynb
+    
+    or you can specify the notebooks list in a config file, containing::
+    
+        c.NbConvertApp.notebooks = ["my_notebook.ipynb"]
+    
+    > jupyter nbconvert --config mycfg.py
+

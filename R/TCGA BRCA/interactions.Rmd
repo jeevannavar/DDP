@@ -1,0 +1,432 @@
+---
+title: "Interactions"
+output: html_notebook
+---
+
+Importing all the requisite packages first.
+```{r message=FALSE}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(doParallel)
+```
+```{r custom functions}
+custom_anova <- function(data, labels) {
+  num_cpus <- 40
+  cl <- makeCluster(num_cpus)
+  doParallel::registerDoParallel(cl)
+  anova_summary <- foreach(i = 3:ncol(data)) %dopar% {
+    column <- names(data[i]) 
+    avz <- broom:: tidy(aov(data[,i] ~ labels)) # Each ANOVA test iterating through each column
+    return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+  }
+  stopCluster(cl)
+  anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+  anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+
+  #Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+  sorted_data <- anova_summary %>% 
+                  filter(p_value<=0.001/nrow(anova_summary)) %>% 
+                  arrange(desc(f_value))
+  return(sorted_data)
+}
+
+greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features = 1000){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+      }
+      if (length(selected) == max_features) {break}
+    }
+  return(selected)
+  }
+```
+
+# Self-interactions
+
+## miRNA expression
+
+Reading in the data.
+```{r}
+mirna <- read_csv("mirna_complete.csv")
+pam50 <- read_csv("PAM50_subtype.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+```
+
+Finding the self-interactions.
+```{r}
+mirna_train <- column_to_rownames(mirna_train, var = "patient_id")
+col_names <- sapply(combn(colnames(mirna_train), 2, simplify = FALSE), paste, collapse = "__")
+mirna_mirna_train <- setNames(data.frame(combn(mirna_train, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mirna_mirna_train) <- row.names(mirna_train)
+```
+## ANOVA
+```{r}
+num_clusters <- 40
+cl <- makeCluster(num_clusters)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(mirna_mirna_train)) %dopar% {
+  column <- names(mirna_mirna_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mirna_mirna_train[,i] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(microRNA=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+mirna_mirna_sorted <- anova_summary %>% 
+                  filter(p_value<(0.001/nrow(anova_summary))) %>% 
+                  arrange(desc(f_value))
+```
+Now to try a better approach to get the best features: A greedy approach to selecting the top non-correlated features
+```{r}
+greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features = 1000){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+      }
+      if (length(selected) == max_features) {break}
+    }
+  return(selected)
+  }
+```
+
+```{r}
+mirna_mirna_greedy_names <- greedySelect(mirna_mirna_train, mirna_mirna_sorted["microRNA"][[1]], corrThreshold = 0.8)
+
+mirna <- column_to_rownames(mirna, var = "patient_id")
+col_names <- sapply(combn(colnames(mirna), 2, simplify = FALSE), paste, collapse = "__")
+mirna_mirna <- setNames(data.frame(combn(mirna, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mirna_mirna) <- row.names(mirna)
+
+index <- match(mirna_mirna_greedy_names, names(mirna_mirna))
+mirna_mirna_greedy_df <- mirna_mirna[,index]
+row.names(mirna_mirna_greedy_df) <- row.names(mirna)
+mirna_mirna_greedy_df <- mirna_mirna_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(mirna_mirna_greedy_df, "mirna_mirna_anova.csv", row.names = FALSE)
+```
+
+## mRNA expression
+
+Reading in the data.
+```{r}
+mrna <- read_csv("mrna_top1000.csv")
+pam50 <- read_csv("PAM50_subtype.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx)
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(pam50_train$patient_id, mrna_train$patient_id) #This has to be true
+```
+
+Finding the self-interactions.
+```{r}
+mrna_train <- column_to_rownames(mrna_train, var = "patient_id")
+col_names <- sapply(combn(colnames(mrna_train), 2, simplify = FALSE), paste, collapse = "__")
+mrna_mrna_train <- setNames(data.frame(combn(mrna_train, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mrna_mrna_train) <- row.names(mrna_train)
+```
+## ANOVA
+```{r}
+num_clusters <- 40
+cl <- makeCluster(num_clusters)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(mrna_mrna_train)) %dopar% {
+  column <- names(mrna_mrna_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mrna_mrna_train[,i] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+mrna_mrna_sorted <- anova_summary %>% 
+                  filter(p_value<(0.001/nrow(anova_summary))) %>% 
+                  arrange(desc(f_value))
+```
+Now to try a better approach to get the best features: A greedy approach to selecting the top non-correlated features
+```{r}
+greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features = 1000){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+      }
+      if (length(selected) == max_features) {break}
+    }
+  return(selected)
+  }
+```
+
+```{r}
+mrna_mrna_greedy_names <- greedySelect(mrna_mrna_train, mrna_mrna_sorted["gene"][[1]], corrThreshold = 0.8)
+
+mrna <- column_to_rownames(mrna, var = "patient_id")
+col_names <- sapply(combn(colnames(mrna), 2, simplify = FALSE), paste, collapse = "__")
+mrna_mrna <- setNames(data.frame(combn(mrna, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mrna_mrna) <- row.names(mrna)
+
+index <- match(mrna_mrna_greedy_names, names(mrna_mrna))
+mrna_mrna_greedy_df <- mrna_mrna[,index]
+row.names(mrna_mrna_greedy_df) <- row.names(mrna)
+mrna_mrna_greedy_df <- mrna_mrna_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(mrna_mrna_greedy_df, "mrna_mrna_anova.csv", row.names = FALSE)
+
+rm(list = ls())
+```
+
+
+## DNA Methylation
+
+Reading in the data.
+```{r}
+meth <- read_csv("meth_top1000.csv")
+pam50 <- read_csv("PAM50_subtype.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+meth_train <- filter(meth, meth$patient_id %in% train_idx)
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(pam50_train$patient_id, meth_train$patient_id) #This has to be true
+```
+
+Finding the self-interactions.
+```{r}
+meth_train <- column_to_rownames(meth_train, var = "patient_id")
+col_names <- sapply(combn(colnames(meth_train), 2, simplify = FALSE), paste, collapse = "__")
+meth_meth_train <- setNames(data.frame(combn(meth_train, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(meth_meth_train) <- row.names(meth_train)
+```
+## ANOVA
+```{r}
+num_clusters <- 40
+cl <- makeCluster(num_clusters)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(meth_meth_train)) %dopar% {
+  column <- names(meth_meth_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(meth_meth_train[,i] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+meth_meth_sorted <- anova_summary %>% 
+                  filter(p_value<(0.001/nrow(anova_summary))) %>% 
+                  arrange(desc(f_value))
+```
+Now to try a better approach to get the best features: A greedy approach to selecting the top non-correlated features
+```{r}
+greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features = 1000){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+      }
+      if (length(selected) == max_features) {break}
+    }
+  return(selected)
+  }
+```
+
+```{r}
+meth_meth_greedy_names <- greedySelect(meth_meth_train, meth_meth_sorted["gene"][[1]], corrThreshold = 0.8)
+
+meth <- column_to_rownames(meth, var = "patient_id")
+col_names <- sapply(combn(colnames(meth), 2, simplify = FALSE), paste, collapse = "__")
+meth_meth <- setNames(data.frame(combn(meth, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(meth_meth) <- row.names(meth)
+
+index <- match(meth_meth_greedy_names, names(meth_meth))
+meth_meth_greedy_df <- meth_meth[,index]
+row.names(meth_meth_greedy_df) <- row.names(meth)
+meth_meth_greedy_df <- meth_meth_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(meth_meth_greedy_df, "meth_meth_anova.csv", row.names = FALSE)
+```
+
+# Cross-interactions
+
+Reading in all the data.
+```{r}
+pam50 <- read_csv("PAM50_subtype.csv")
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_complete.csv")
+
+
+# Selecting only training samples for doing the processing
+meth_train <- filter(meth, meth$patient_id %in% train_idx)
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx)
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+
+# Check that the labels are identical
+identical(pam50_train$patient_id, meth_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mrna_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+
+# Setting row.names
+meth_train <- column_to_rownames(meth_train, var = "patient_id")
+mrna_train <- column_to_rownames(mrna_train, var = "patient_id")
+mirna_train <- column_to_rownames(mirna_train, var = "patient_id")
+meth <- column_to_rownames(meth, var = "patient_id")
+mrna <- column_to_rownames(mrna, var = "patient_id")
+mirna <- column_to_rownames(mirna, var = "patient_id")
+```
+
+## DNA Methylation X mRNA Expression
+Finding the interactions.
+```{r warning=FALSE}
+col_names <- apply(expand.grid(names(meth_train), names(mrna_train)), 1, paste, collapse="_")
+meth_mrna_train <- setNames(as.data.frame(lapply(mrna_train, `*`, meth_train)), col_names)
+row.names(meth_mrna_train) <- row.names(meth_train)
+
+#ANOVA
+meth_mrna_sorted <- custom_anova(meth_mrna_train, pam50_train$cancer_subtype)
+```
+```{r}
+#Only selecting the top 10000 to be supplied
+top25000 <- meth_mrna_train[, which(names(meth_mrna_train) %in% meth_mrna_sorted$gene[1:25000])]
+meth_mrna_greedy_names <- greedySelect(top25000, meth_mrna_sorted["gene"][[1]][1:25000], corrThreshold = 0.9)
+
+col_names <- apply(expand.grid(names(meth), names(mrna)), 1, paste, collapse="_")
+meth_mrna <- setNames(as.data.frame(lapply(mrna, `*`, meth)), col_names)
+row.names(meth_mrna) <- row.names(meth)
+
+index <- match(meth_mrna_greedy_names, names(meth_mrna))
+meth_mrna_greedy_df <- meth_mrna[,index]
+row.names(meth_mrna_greedy_df) <- row.names(mrna)
+meth_mrna_greedy_df <- meth_mrna_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(meth_mrna_greedy_df, "meth_mrna_anova.csv", row.names = FALSE)
+rm(meth_mrna, meth_mrna_train, meth_mrna_greedy_df)
+```
+
+## DNA Methylation X miRNA Expression
+Finding the interactions.
+```{r warning=FALSE}
+col_names <- apply(expand.grid(names(meth_train), names(mirna_train)), 1, paste, collapse="_")
+meth_mirna_train <- setNames(as.data.frame(lapply(mirna_train, `*`, meth_train)), col_names)
+row.names(meth_mirna_train) <- row.names(meth_train)
+
+#ANOVA
+meth_mirna_sorted <- custom_anova(meth_mirna_train, pam50_train$cancer_subtype)
+
+top25000 <- meth_mirna_train[, which(names(meth_mirna_train) %in% meth_mirna_sorted$gene[1:25000])]
+meth_mirna_greedy_names <- greedySelect(top25000, meth_mirna_sorted["gene"][[1]][1:25000], corrThreshold = 0.95)
+
+col_names <- apply(expand.grid(names(meth), names(mirna)), 1, paste, collapse="_")
+meth_mirna <- setNames(as.data.frame(lapply(mirna, `*`, meth)), col_names)
+row.names(meth_mirna) <- row.names(meth)
+
+index <- match(meth_mirna_greedy_names, names(meth_mirna))
+meth_mirna_greedy_df <- meth_mirna[,index]
+row.names(meth_mirna_greedy_df) <- row.names(mirna)
+meth_mirna_greedy_df <- meth_mirna_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(meth_mirna_greedy_df, "meth_mirna_anova.csv", row.names = FALSE)
+#rm(meth_mirna, meth_mirna_train, meth_mirna_greedy_df)
+```
+
+## mRNA Expression X miRNA Expression
+Finding the interactions.
+```{r warning=FALSE}
+col_names <- apply(expand.grid(names(mrna_train), names(mirna_train)), 1, paste, collapse="_")
+mrna_mirna_train <- setNames(as.data.frame(lapply(mirna_train, `*`, mrna_train)), col_names)
+row.names(mrna_mirna_train) <- row.names(mrna_train)
+
+#ANOVA
+mrna_mirna_sorted <- custom_anova(mrna_mirna_train, pam50_train$cancer_subtype)
+```
+```{r}
+top25000 <- mrna_mirna_train[, which(names(mrna_mirna_train) %in% mrna_mirna_sorted$gene[1:25000])]
+mrna_mirna_greedy_names <- greedySelect(top25000, mrna_mirna_sorted["gene"][[1]][1:25000], corrThreshold = 0.95)
+
+col_names <- apply(expand.grid(names(mrna), names(mirna)), 1, paste, collapse="_")
+mrna_mirna <- setNames(as.data.frame(lapply(mirna, `*`, mrna)), col_names)
+row.names(mrna_mirna) <- row.names(mrna)
+
+index <- match(mrna_mirna_greedy_names, names(mrna_mirna))
+mrna_mirna_greedy_df <- mrna_mirna[,index]
+row.names(mrna_mirna_greedy_df) <- row.names(mirna)
+mrna_mirna_greedy_df <- mrna_mirna_greedy_df %>%
+                        rownames_to_column(var = "patient_id")
+write.csv(mrna_mirna_greedy_df, "mrna_mirna_anova.csv", row.names = FALSE)
+rm(mrna_mirna, mrna_mirna_train, mrna_mirna_greedy_df)
+```

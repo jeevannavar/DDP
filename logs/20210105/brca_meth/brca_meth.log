@@ -1,0 +1,3855 @@
+
+----------------------------------------------------------------------------------------------------
+Run 1
+----------------------------------------------------------------------------------------------------
+2021-01-05 09:46:57.312512 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only one GCN - DNA Methylation
+SEED =  46057
+
+Training...
+Epoch 0, Train loss: methylation:9.41e-02
+
+Test: Epoch 0
+Train Accuracy: 0.1990   Test ACC: 0.0543
+Train F1: 0.1517         Test F1: 0.0056
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.3062              0.1359              0.0000
+Basal 	           0.2000              0.3971              0.1522              0.0000
+Her2 	           0.2000              0.0000              0.0543              1.0000
+LumA 	           0.2000              0.2823              0.4837              0.0000
+LumB 	           0.2000              0.0096              0.1739              0.0000
+
+Epoch 1, Train loss: methylation:1.36e+00
+Epoch 2, Train loss: methylation:1.94e-01
+Epoch 3, Train loss: methylation:1.19e-01
+Epoch 4, Train loss: methylation:2.79e-01
+Epoch 5, Train loss: methylation:1.78e-01
+Epoch 6, Train loss: methylation:5.31e-02
+Epoch 7, Train loss: methylation:6.58e-02
+Epoch 8, Train loss: methylation:1.34e-01
+Epoch 9, Train loss: methylation:1.22e-01
+Epoch 10, Train loss: methylation:6.85e-02
+Epoch 11, Train loss: methylation:3.99e-02
+Epoch 12, Train loss: methylation:4.54e-02
+Epoch 13, Train loss: methylation:6.34e-02
+Epoch 14, Train loss: methylation:6.63e-02
+Epoch 15, Train loss: methylation:5.25e-02
+Epoch 16, Train loss: methylation:3.90e-02
+Epoch 17, Train loss: methylation:3.37e-02
+Epoch 18, Train loss: methylation:3.78e-02
+Epoch 19, Train loss: methylation:4.37e-02
+Epoch 20, Train loss: methylation:4.54e-02
+Epoch 21, Train loss: methylation:4.22e-02
+Epoch 22, Train loss: methylation:3.59e-02
+Epoch 23, Train loss: methylation:3.21e-02
+Epoch 24, Train loss: methylation:3.10e-02
+Epoch 25, Train loss: methylation:3.26e-02
+Epoch 26, Train loss: methylation:3.37e-02
+Epoch 27, Train loss: methylation:3.41e-02
+Epoch 28, Train loss: methylation:3.27e-02
+Epoch 29, Train loss: methylation:3.13e-02
+Epoch 30, Train loss: methylation:2.89e-02
+Epoch 31, Train loss: methylation:2.85e-02
+Epoch 32, Train loss: methylation:2.90e-02
+Epoch 33, Train loss: methylation:2.95e-02
+Epoch 34, Train loss: methylation:2.96e-02
+Epoch 35, Train loss: methylation:2.89e-02
+Epoch 36, Train loss: methylation:2.83e-02
+Epoch 37, Train loss: methylation:2.76e-02
+Epoch 38, Train loss: methylation:2.66e-02
+Epoch 39, Train loss: methylation:2.64e-02
+Epoch 40, Train loss: methylation:2.66e-02
+Epoch 41, Train loss: methylation:2.68e-02
+Epoch 42, Train loss: methylation:2.61e-02
+Epoch 43, Train loss: methylation:2.56e-02
+Epoch 44, Train loss: methylation:2.48e-02
+Epoch 45, Train loss: methylation:2.48e-02
+Epoch 46, Train loss: methylation:2.45e-02
+Epoch 47, Train loss: methylation:2.45e-02
+Epoch 48, Train loss: methylation:2.47e-02
+Epoch 49, Train loss: methylation:2.42e-02
+Epoch 50, Train loss: methylation:2.36e-02
+
+Test: Epoch 50
+Train Accuracy: 0.6153   Test ACC: 0.4076
+Train F1: 0.6035         Test F1: 0.3128
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9043              0.1359              0.9600
+Basal 	           0.2000              0.4976              0.1522              0.6071
+Her2 	           0.2000              0.6651              0.0543              0.7000
+LumA 	           0.2000              0.3445              0.4837              0.0225
+LumB 	           0.2000              0.6651              0.1739              0.7812
+
+Epoch 51, Train loss: methylation:2.36e-02
+Epoch 52, Train loss: methylation:2.33e-02
+Epoch 53, Train loss: methylation:2.32e-02
+Epoch 54, Train loss: methylation:2.29e-02
+Epoch 55, Train loss: methylation:2.25e-02
+Epoch 56, Train loss: methylation:2.24e-02
+Epoch 57, Train loss: methylation:2.20e-02
+Epoch 58, Train loss: methylation:2.20e-02
+Epoch 59, Train loss: methylation:2.17e-02
+Epoch 60, Train loss: methylation:2.17e-02
+Epoch 61, Train loss: methylation:2.16e-02
+Epoch 62, Train loss: methylation:2.13e-02
+Epoch 63, Train loss: methylation:2.13e-02
+Epoch 64, Train loss: methylation:2.11e-02
+Epoch 65, Train loss: methylation:2.07e-02
+Epoch 66, Train loss: methylation:2.07e-02
+Epoch 67, Train loss: methylation:2.02e-02
+Epoch 68, Train loss: methylation:1.99e-02
+Epoch 69, Train loss: methylation:2.01e-02
+Epoch 70, Train loss: methylation:1.95e-02
+Epoch 71, Train loss: methylation:1.91e-02
+Epoch 72, Train loss: methylation:1.96e-02
+Epoch 73, Train loss: methylation:1.92e-02
+Epoch 74, Train loss: methylation:1.92e-02
+Epoch 75, Train loss: methylation:1.91e-02
+Epoch 76, Train loss: methylation:1.90e-02
+Epoch 77, Train loss: methylation:1.87e-02
+Epoch 78, Train loss: methylation:1.85e-02
+Epoch 79, Train loss: methylation:1.82e-02
+Epoch 80, Train loss: methylation:1.81e-02
+Epoch 81, Train loss: methylation:1.82e-02
+Epoch 82, Train loss: methylation:1.76e-02
+Epoch 83, Train loss: methylation:1.78e-02
+Epoch 84, Train loss: methylation:1.77e-02
+Epoch 85, Train loss: methylation:1.74e-02
+Epoch 86, Train loss: methylation:1.76e-02
+Epoch 87, Train loss: methylation:1.74e-02
+Epoch 88, Train loss: methylation:1.70e-02
+Epoch 89, Train loss: methylation:1.71e-02
+Epoch 90, Train loss: methylation:1.72e-02
+Epoch 91, Train loss: methylation:1.70e-02
+Epoch 92, Train loss: methylation:1.71e-02
+Epoch 93, Train loss: methylation:1.69e-02
+Epoch 94, Train loss: methylation:1.66e-02
+Epoch 95, Train loss: methylation:1.62e-02
+Epoch 96, Train loss: methylation:1.61e-02
+Epoch 97, Train loss: methylation:1.63e-02
+Epoch 98, Train loss: methylation:1.60e-02
+Epoch 99, Train loss: methylation:1.59e-02
+Epoch 100, Train loss: methylation:1.57e-02
+
+Test: Epoch 100
+Train Accuracy: 0.8230   Test ACC: 0.5380
+Train F1: 0.8188         Test F1: 0.5048
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9234              0.1359              0.9600
+Basal 	           0.2000              0.9282              0.1522              0.9286
+Her2 	           0.2000              0.8804              0.0543              0.7000
+LumA 	           0.2000              0.6172              0.4837              0.2135
+LumB 	           0.2000              0.7656              0.1739              0.7188
+
+Epoch 101, Train loss: methylation:1.56e-02
+Epoch 102, Train loss: methylation:1.58e-02
+Epoch 103, Train loss: methylation:1.55e-02
+Epoch 104, Train loss: methylation:1.55e-02
+Epoch 105, Train loss: methylation:1.57e-02
+Epoch 106, Train loss: methylation:1.51e-02
+Epoch 107, Train loss: methylation:1.53e-02
+Epoch 108, Train loss: methylation:1.51e-02
+Epoch 109, Train loss: methylation:1.47e-02
+Epoch 110, Train loss: methylation:1.49e-02
+Epoch 111, Train loss: methylation:1.51e-02
+Epoch 112, Train loss: methylation:1.43e-02
+Epoch 113, Train loss: methylation:1.46e-02
+Epoch 114, Train loss: methylation:1.45e-02
+Epoch 115, Train loss: methylation:1.48e-02
+Epoch 116, Train loss: methylation:1.48e-02
+Epoch 117, Train loss: methylation:1.44e-02
+Epoch 118, Train loss: methylation:1.42e-02
+Epoch 119, Train loss: methylation:1.40e-02
+Epoch 120, Train loss: methylation:1.41e-02
+Epoch 121, Train loss: methylation:1.39e-02
+Epoch 122, Train loss: methylation:1.38e-02
+Epoch 123, Train loss: methylation:1.39e-02
+Epoch 124, Train loss: methylation:1.42e-02
+Epoch 125, Train loss: methylation:1.39e-02
+Epoch 126, Train loss: methylation:1.35e-02
+Epoch 127, Train loss: methylation:1.37e-02
+Epoch 128, Train loss: methylation:1.35e-02
+Epoch 129, Train loss: methylation:1.32e-02
+Epoch 130, Train loss: methylation:1.30e-02
+Epoch 131, Train loss: methylation:1.34e-02
+Epoch 132, Train loss: methylation:1.28e-02
+Epoch 133, Train loss: methylation:1.30e-02
+Epoch 134, Train loss: methylation:1.33e-02
+Epoch 135, Train loss: methylation:1.31e-02
+Epoch 136, Train loss: methylation:1.34e-02
+Epoch 137, Train loss: methylation:1.35e-02
+Epoch 138, Train loss: methylation:1.32e-02
+Epoch 139, Train loss: methylation:1.27e-02
+Epoch 140, Train loss: methylation:1.29e-02
+Epoch 141, Train loss: methylation:1.29e-02
+Epoch 142, Train loss: methylation:1.27e-02
+Epoch 143, Train loss: methylation:1.23e-02
+Epoch 144, Train loss: methylation:1.24e-02
+Epoch 145, Train loss: methylation:1.28e-02
+Epoch 146, Train loss: methylation:1.28e-02
+Epoch 147, Train loss: methylation:1.23e-02
+Epoch 148, Train loss: methylation:1.25e-02
+Epoch 149, Train loss: methylation:1.23e-02
+Epoch 150, Train loss: methylation:1.18e-02
+
+Test: Epoch 150
+Train Accuracy: 0.9129   Test ACC: 0.6250
+Train F1: 0.9114         Test F1: 0.6304
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9426              0.1359              0.8400
+Basal 	           0.2000              0.9713              0.1522              0.9286
+Her2 	           0.2000              0.9856              0.0543              0.8000
+LumA 	           0.2000              0.7512              0.4837              0.3933
+LumB 	           0.2000              0.9139              0.1739              0.7812
+
+Epoch 151, Train loss: methylation:1.20e-02
+Epoch 152, Train loss: methylation:1.19e-02
+Epoch 153, Train loss: methylation:1.17e-02
+Epoch 154, Train loss: methylation:1.22e-02
+Epoch 155, Train loss: methylation:1.21e-02
+Epoch 156, Train loss: methylation:1.22e-02
+Epoch 157, Train loss: methylation:1.25e-02
+Epoch 158, Train loss: methylation:1.17e-02
+Epoch 159, Train loss: methylation:1.16e-02
+Epoch 160, Train loss: methylation:1.18e-02
+Epoch 161, Train loss: methylation:1.24e-02
+Epoch 162, Train loss: methylation:1.24e-02
+Epoch 163, Train loss: methylation:1.18e-02
+Epoch 164, Train loss: methylation:1.16e-02
+Epoch 165, Train loss: methylation:1.17e-02
+Epoch 166, Train loss: methylation:1.19e-02
+Epoch 167, Train loss: methylation:1.17e-02
+Epoch 168, Train loss: methylation:1.10e-02
+Epoch 169, Train loss: methylation:1.15e-02
+Epoch 170, Train loss: methylation:1.13e-02
+Epoch 171, Train loss: methylation:1.13e-02
+Epoch 172, Train loss: methylation:1.11e-02
+Epoch 173, Train loss: methylation:1.13e-02
+Epoch 174, Train loss: methylation:1.13e-02
+Epoch 175, Train loss: methylation:1.12e-02
+Epoch 176, Train loss: methylation:1.09e-02
+Epoch 177, Train loss: methylation:1.09e-02
+Epoch 178, Train loss: methylation:1.10e-02
+Epoch 179, Train loss: methylation:1.11e-02
+Epoch 180, Train loss: methylation:1.11e-02
+Epoch 181, Train loss: methylation:1.12e-02
+Epoch 182, Train loss: methylation:1.08e-02
+Epoch 183, Train loss: methylation:1.06e-02
+Epoch 184, Train loss: methylation:1.05e-02
+Epoch 185, Train loss: methylation:1.05e-02
+Epoch 186, Train loss: methylation:1.03e-02
+Epoch 187, Train loss: methylation:1.07e-02
+Epoch 188, Train loss: methylation:1.05e-02
+Epoch 189, Train loss: methylation:1.07e-02
+Epoch 190, Train loss: methylation:1.08e-02
+Epoch 191, Train loss: methylation:1.03e-02
+Epoch 192, Train loss: methylation:1.06e-02
+Epoch 193, Train loss: methylation:9.99e-03
+Epoch 194, Train loss: methylation:9.96e-03
+Epoch 195, Train loss: methylation:1.03e-02
+Epoch 196, Train loss: methylation:1.01e-02
+Epoch 197, Train loss: methylation:1.02e-02
+Epoch 198, Train loss: methylation:1.02e-02
+Epoch 199, Train loss: methylation:9.95e-03
+Epoch 200, Train loss: methylation:1.00e-02
+
+Test: Epoch 200
+Train Accuracy: 0.9148   Test ACC: 0.7337
+Train F1: 0.9141         Test F1: 0.7442
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9282              0.1359              0.8000
+Basal 	           0.2000              0.9713              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8278              0.4837              0.6180
+LumB 	           0.2000              0.8469              0.1739              0.7812
+
+Epoch 201, Train loss: methylation:1.01e-02
+Epoch 202, Train loss: methylation:1.04e-02
+Epoch 203, Train loss: methylation:1.04e-02
+Epoch 204, Train loss: methylation:1.06e-02
+Epoch 205, Train loss: methylation:1.07e-02
+Epoch 206, Train loss: methylation:1.02e-02
+Epoch 207, Train loss: methylation:1.00e-02
+Epoch 208, Train loss: methylation:9.71e-03
+Epoch 209, Train loss: methylation:9.88e-03
+Epoch 210, Train loss: methylation:9.47e-03
+Epoch 211, Train loss: methylation:9.64e-03
+Epoch 212, Train loss: methylation:9.91e-03
+Epoch 213, Train loss: methylation:9.70e-03
+Epoch 214, Train loss: methylation:9.66e-03
+Epoch 215, Train loss: methylation:9.31e-03
+Epoch 216, Train loss: methylation:9.33e-03
+Epoch 217, Train loss: methylation:9.23e-03
+Epoch 218, Train loss: methylation:9.43e-03
+Epoch 219, Train loss: methylation:9.62e-03
+Epoch 220, Train loss: methylation:9.65e-03
+Epoch 221, Train loss: methylation:9.98e-03
+Epoch 222, Train loss: methylation:1.12e-02
+Epoch 223, Train loss: methylation:1.27e-02
+Epoch 224, Train loss: methylation:1.37e-02
+Epoch 225, Train loss: methylation:9.93e-03
+Epoch 226, Train loss: methylation:1.05e-02
+Epoch 227, Train loss: methylation:1.12e-02
+Epoch 228, Train loss: methylation:9.76e-03
+Epoch 229, Train loss: methylation:1.11e-02
+Epoch 230, Train loss: methylation:9.25e-03
+Epoch 231, Train loss: methylation:1.06e-02
+Epoch 232, Train loss: methylation:9.57e-03
+Epoch 233, Train loss: methylation:9.76e-03
+Epoch 234, Train loss: methylation:9.83e-03
+Epoch 235, Train loss: methylation:9.27e-03
+Epoch 236, Train loss: methylation:1.02e-02
+Epoch 237, Train loss: methylation:9.39e-03
+Epoch 238, Train loss: methylation:9.63e-03
+Epoch 239, Train loss: methylation:9.44e-03
+Epoch 240, Train loss: methylation:9.06e-03
+Epoch 241, Train loss: methylation:9.45e-03
+Epoch 242, Train loss: methylation:8.73e-03
+Epoch 243, Train loss: methylation:9.25e-03
+Epoch 244, Train loss: methylation:8.88e-03
+Epoch 245, Train loss: methylation:8.75e-03
+Epoch 246, Train loss: methylation:8.97e-03
+Epoch 247, Train loss: methylation:8.56e-03
+Epoch 248, Train loss: methylation:8.86e-03
+Epoch 249, Train loss: methylation:8.76e-03
+Epoch 250, Train loss: methylation:8.51e-03
+
+Test: Epoch 250
+Train Accuracy: 0.9321   Test ACC: 0.6848
+Train F1: 0.9315         Test F1: 0.6939
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9282              0.1359              0.8400
+Basal 	           0.2000              0.9809              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8517              0.4837              0.5281
+LumB 	           0.2000              0.8995              0.1739              0.7188
+
+Epoch 251, Train loss: methylation:8.58e-03
+Epoch 252, Train loss: methylation:8.69e-03
+Epoch 253, Train loss: methylation:8.43e-03
+Epoch 254, Train loss: methylation:8.54e-03
+Epoch 255, Train loss: methylation:8.54e-03
+Epoch 256, Train loss: methylation:8.53e-03
+Epoch 257, Train loss: methylation:8.73e-03
+Epoch 258, Train loss: methylation:8.49e-03
+Epoch 259, Train loss: methylation:8.46e-03
+Epoch 260, Train loss: methylation:8.19e-03
+Epoch 261, Train loss: methylation:8.15e-03
+Epoch 262, Train loss: methylation:8.23e-03
+Epoch 263, Train loss: methylation:8.25e-03
+Epoch 264, Train loss: methylation:7.99e-03
+Epoch 265, Train loss: methylation:8.04e-03
+Epoch 266, Train loss: methylation:8.17e-03
+Epoch 267, Train loss: methylation:8.02e-03
+Epoch 268, Train loss: methylation:7.81e-03
+Epoch 269, Train loss: methylation:8.00e-03
+Epoch 270, Train loss: methylation:8.01e-03
+Epoch 271, Train loss: methylation:7.87e-03
+Epoch 272, Train loss: methylation:7.97e-03
+Epoch 273, Train loss: methylation:8.17e-03
+Epoch 274, Train loss: methylation:9.16e-03
+Epoch 275, Train loss: methylation:1.12e-02
+Epoch 276, Train loss: methylation:1.46e-02
+Epoch 277, Train loss: methylation:1.24e-02
+Epoch 278, Train loss: methylation:9.23e-03
+Epoch 279, Train loss: methylation:1.12e-02
+Epoch 280, Train loss: methylation:9.45e-03
+Epoch 281, Train loss: methylation:1.08e-02
+Epoch 282, Train loss: methylation:8.82e-03
+Epoch 283, Train loss: methylation:1.02e-02
+Epoch 284, Train loss: methylation:8.51e-03
+Epoch 285, Train loss: methylation:9.90e-03
+Epoch 286, Train loss: methylation:9.23e-03
+Epoch 287, Train loss: methylation:8.92e-03
+Epoch 288, Train loss: methylation:9.27e-03
+Epoch 289, Train loss: methylation:8.37e-03
+Epoch 290, Train loss: methylation:8.76e-03
+Epoch 291, Train loss: methylation:8.57e-03
+Epoch 292, Train loss: methylation:8.31e-03
+Epoch 293, Train loss: methylation:8.84e-03
+Epoch 294, Train loss: methylation:7.72e-03
+Epoch 295, Train loss: methylation:8.54e-03
+Epoch 296, Train loss: methylation:7.76e-03
+Epoch 297, Train loss: methylation:8.05e-03
+Epoch 298, Train loss: methylation:7.90e-03
+Epoch 299, Train loss: methylation:7.85e-03
+Epoch 300, Train loss: methylation:7.58e-03
+
+Test: Epoch 300
+Train Accuracy: 0.9455   Test ACC: 0.7880
+Train F1: 0.9451         Test F1: 0.7893
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9426              0.1359              0.8800
+Basal 	           0.2000              0.9713              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8660              0.4837              0.7528
+LumB 	           0.2000              0.9474              0.1739              0.6562
+
+Epoch 301, Train loss: methylation:7.58e-03
+Epoch 302, Train loss: methylation:7.62e-03
+Epoch 303, Train loss: methylation:7.93e-03
+Epoch 304, Train loss: methylation:7.35e-03
+Epoch 305, Train loss: methylation:7.55e-03
+Epoch 306, Train loss: methylation:7.47e-03
+Epoch 307, Train loss: methylation:7.57e-03
+Epoch 308, Train loss: methylation:7.54e-03
+Epoch 309, Train loss: methylation:7.38e-03
+Epoch 310, Train loss: methylation:7.27e-03
+Epoch 311, Train loss: methylation:7.60e-03
+Epoch 312, Train loss: methylation:7.36e-03
+Epoch 313, Train loss: methylation:7.49e-03
+Epoch 314, Train loss: methylation:7.30e-03
+Epoch 315, Train loss: methylation:7.82e-03
+Epoch 316, Train loss: methylation:8.16e-03
+Epoch 317, Train loss: methylation:8.87e-03
+Epoch 318, Train loss: methylation:7.88e-03
+Epoch 319, Train loss: methylation:7.08e-03
+Epoch 320, Train loss: methylation:7.14e-03
+Epoch 321, Train loss: methylation:7.36e-03
+Epoch 322, Train loss: methylation:7.37e-03
+Epoch 323, Train loss: methylation:7.22e-03
+Epoch 324, Train loss: methylation:7.20e-03
+Epoch 325, Train loss: methylation:7.23e-03
+Epoch 326, Train loss: methylation:7.21e-03
+Epoch 327, Train loss: methylation:6.94e-03
+Epoch 328, Train loss: methylation:7.17e-03
+Epoch 329, Train loss: methylation:7.67e-03
+Epoch 330, Train loss: methylation:7.69e-03
+Epoch 331, Train loss: methylation:7.46e-03
+Epoch 332, Train loss: methylation:6.86e-03
+Epoch 333, Train loss: methylation:6.77e-03
+Epoch 334, Train loss: methylation:7.05e-03
+Epoch 335, Train loss: methylation:7.01e-03
+Epoch 336, Train loss: methylation:6.97e-03
+Epoch 337, Train loss: methylation:6.92e-03
+Epoch 338, Train loss: methylation:6.93e-03
+Epoch 339, Train loss: methylation:7.36e-03
+Epoch 340, Train loss: methylation:7.70e-03
+Epoch 341, Train loss: methylation:7.56e-03
+Epoch 342, Train loss: methylation:7.37e-03
+Epoch 343, Train loss: methylation:7.26e-03
+Epoch 344, Train loss: methylation:6.88e-03
+Epoch 345, Train loss: methylation:6.83e-03
+Epoch 346, Train loss: methylation:6.72e-03
+Epoch 347, Train loss: methylation:6.78e-03
+Epoch 348, Train loss: methylation:6.64e-03
+Epoch 349, Train loss: methylation:6.72e-03
+Epoch 350, Train loss: methylation:6.51e-03
+
+Test: Epoch 350
+Train Accuracy: 0.9579   Test ACC: 0.8043
+Train F1: 0.9578         Test F1: 0.8078
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9426              0.1359              0.8000
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9091              0.4837              0.7978
+LumB 	           0.2000              0.9474              0.1739              0.6875
+
+Epoch 351, Train loss: methylation:6.38e-03
+Epoch 352, Train loss: methylation:6.63e-03
+Epoch 353, Train loss: methylation:6.66e-03
+Epoch 354, Train loss: methylation:6.51e-03
+Epoch 355, Train loss: methylation:6.91e-03
+Epoch 356, Train loss: methylation:7.28e-03
+Epoch 357, Train loss: methylation:7.92e-03
+Epoch 358, Train loss: methylation:9.87e-03
+Epoch 359, Train loss: methylation:8.27e-03
+Epoch 360, Train loss: methylation:6.96e-03
+Epoch 361, Train loss: methylation:7.37e-03
+Epoch 362, Train loss: methylation:7.49e-03
+Epoch 363, Train loss: methylation:6.72e-03
+Epoch 364, Train loss: methylation:6.78e-03
+Epoch 365, Train loss: methylation:7.31e-03
+Epoch 366, Train loss: methylation:6.85e-03
+Epoch 367, Train loss: methylation:6.41e-03
+Epoch 368, Train loss: methylation:7.34e-03
+Epoch 369, Train loss: methylation:7.05e-03
+Epoch 370, Train loss: methylation:6.65e-03
+Epoch 371, Train loss: methylation:7.12e-03
+Epoch 372, Train loss: methylation:6.58e-03
+Epoch 373, Train loss: methylation:6.98e-03
+Epoch 374, Train loss: methylation:7.01e-03
+Epoch 375, Train loss: methylation:6.31e-03
+Epoch 376, Train loss: methylation:6.71e-03
+Epoch 377, Train loss: methylation:6.22e-03
+Epoch 378, Train loss: methylation:6.68e-03
+Epoch 379, Train loss: methylation:7.38e-03
+Epoch 380, Train loss: methylation:6.52e-03
+Epoch 381, Train loss: methylation:6.65e-03
+Epoch 382, Train loss: methylation:6.17e-03
+Epoch 383, Train loss: methylation:6.78e-03
+Epoch 384, Train loss: methylation:7.29e-03
+Epoch 385, Train loss: methylation:6.39e-03
+Epoch 386, Train loss: methylation:6.59e-03
+Epoch 387, Train loss: methylation:6.27e-03
+Epoch 388, Train loss: methylation:6.78e-03
+Epoch 389, Train loss: methylation:6.79e-03
+Epoch 390, Train loss: methylation:6.03e-03
+Epoch 391, Train loss: methylation:6.53e-03
+Epoch 392, Train loss: methylation:6.17e-03
+Epoch 393, Train loss: methylation:6.75e-03
+Epoch 394, Train loss: methylation:6.39e-03
+Epoch 395, Train loss: methylation:6.01e-03
+Epoch 396, Train loss: methylation:6.50e-03
+Epoch 397, Train loss: methylation:6.07e-03
+Epoch 398, Train loss: methylation:6.85e-03
+Epoch 399, Train loss: methylation:6.77e-03
+Epoch 400, Train loss: methylation:6.51e-03
+
+Test: Epoch 400
+Train Accuracy: 0.9512   Test ACC: 0.7772
+Train F1: 0.9509         Test F1: 0.7701
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9474              0.1359              0.7600
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8469              0.4837              0.8539
+LumB 	           0.2000              0.9665              0.1739              0.4062
+
+Epoch 401, Train loss: methylation:7.48e-03
+Epoch 402, Train loss: methylation:8.47e-03
+Epoch 403, Train loss: methylation:9.27e-03
+Epoch 404, Train loss: methylation:9.59e-03
+Epoch 405, Train loss: methylation:6.94e-03
+Epoch 406, Train loss: methylation:7.77e-03
+Epoch 407, Train loss: methylation:8.44e-03
+Epoch 408, Train loss: methylation:7.22e-03
+Epoch 409, Train loss: methylation:8.15e-03
+Epoch 410, Train loss: methylation:7.41e-03
+Epoch 411, Train loss: methylation:7.05e-03
+Epoch 412, Train loss: methylation:7.47e-03
+Epoch 413, Train loss: methylation:6.18e-03
+Epoch 414, Train loss: methylation:7.66e-03
+Epoch 415, Train loss: methylation:6.70e-03
+Epoch 416, Train loss: methylation:7.80e-03
+Epoch 417, Train loss: methylation:7.28e-03
+Epoch 418, Train loss: methylation:6.45e-03
+Epoch 419, Train loss: methylation:6.98e-03
+Epoch 420, Train loss: methylation:6.89e-03
+Epoch 421, Train loss: methylation:6.24e-03
+Epoch 422, Train loss: methylation:6.51e-03
+Epoch 423, Train loss: methylation:6.71e-03
+Epoch 424, Train loss: methylation:5.90e-03
+Epoch 425, Train loss: methylation:6.78e-03
+Epoch 426, Train loss: methylation:6.59e-03
+Epoch 427, Train loss: methylation:6.56e-03
+Epoch 428, Train loss: methylation:6.05e-03
+Epoch 429, Train loss: methylation:6.70e-03
+Epoch 430, Train loss: methylation:6.46e-03
+Epoch 431, Train loss: methylation:6.93e-03
+Epoch 432, Train loss: methylation:6.38e-03
+Epoch 433, Train loss: methylation:6.06e-03
+Epoch 434, Train loss: methylation:6.39e-03
+Epoch 435, Train loss: methylation:6.38e-03
+Epoch 436, Train loss: methylation:5.95e-03
+Epoch 437, Train loss: methylation:5.87e-03
+Epoch 438, Train loss: methylation:6.37e-03
+Epoch 439, Train loss: methylation:5.72e-03
+Epoch 440, Train loss: methylation:6.29e-03
+Epoch 441, Train loss: methylation:5.87e-03
+Epoch 442, Train loss: methylation:6.08e-03
+Epoch 443, Train loss: methylation:5.42e-03
+Epoch 444, Train loss: methylation:5.92e-03
+Epoch 445, Train loss: methylation:5.88e-03
+Epoch 446, Train loss: methylation:5.79e-03
+Epoch 447, Train loss: methylation:5.42e-03
+Epoch 448, Train loss: methylation:5.81e-03
+Epoch 449, Train loss: methylation:5.76e-03
+Epoch 450, Train loss: methylation:5.40e-03
+
+Test: Epoch 450
+Train Accuracy: 0.9560   Test ACC: 0.8207
+Train F1: 0.9557         Test F1: 0.8223
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9426              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9091              0.4837              0.8427
+LumB 	           0.2000              0.9330              0.1739              0.6562
+
+Epoch 451, Train loss: methylation:5.61e-03
+Epoch 452, Train loss: methylation:5.64e-03
+Epoch 453, Train loss: methylation:5.58e-03
+Epoch 454, Train loss: methylation:5.25e-03
+Epoch 455, Train loss: methylation:5.42e-03
+Epoch 456, Train loss: methylation:5.48e-03
+Epoch 457, Train loss: methylation:5.48e-03
+Epoch 458, Train loss: methylation:5.27e-03
+Epoch 459, Train loss: methylation:5.27e-03
+Epoch 460, Train loss: methylation:5.18e-03
+Epoch 461, Train loss: methylation:5.32e-03
+Epoch 462, Train loss: methylation:5.26e-03
+Epoch 463, Train loss: methylation:5.48e-03
+Epoch 464, Train loss: methylation:6.64e-03
+Epoch 465, Train loss: methylation:8.30e-03
+Epoch 466, Train loss: methylation:1.01e-02
+Epoch 467, Train loss: methylation:7.44e-03
+Epoch 468, Train loss: methylation:5.96e-03
+Epoch 469, Train loss: methylation:7.54e-03
+Epoch 470, Train loss: methylation:5.80e-03
+Epoch 471, Train loss: methylation:6.65e-03
+Epoch 472, Train loss: methylation:6.03e-03
+Epoch 473, Train loss: methylation:5.78e-03
+Epoch 474, Train loss: methylation:6.34e-03
+Epoch 475, Train loss: methylation:5.71e-03
+Epoch 476, Train loss: methylation:5.71e-03
+Epoch 477, Train loss: methylation:6.42e-03
+Epoch 478, Train loss: methylation:6.81e-03
+Epoch 479, Train loss: methylation:5.67e-03
+Epoch 480, Train loss: methylation:5.72e-03
+Epoch 481, Train loss: methylation:5.73e-03
+Epoch 482, Train loss: methylation:5.90e-03
+Epoch 483, Train loss: methylation:5.47e-03
+Epoch 484, Train loss: methylation:5.54e-03
+Epoch 485, Train loss: methylation:5.51e-03
+Epoch 486, Train loss: methylation:5.56e-03
+Epoch 487, Train loss: methylation:5.30e-03
+Epoch 488, Train loss: methylation:5.37e-03
+Epoch 489, Train loss: methylation:5.61e-03
+Epoch 490, Train loss: methylation:5.52e-03
+Epoch 491, Train loss: methylation:5.47e-03
+Epoch 492, Train loss: methylation:5.16e-03
+Epoch 493, Train loss: methylation:5.31e-03
+Epoch 494, Train loss: methylation:5.23e-03
+Epoch 495, Train loss: methylation:5.45e-03
+Epoch 496, Train loss: methylation:5.33e-03
+Epoch 497, Train loss: methylation:5.16e-03
+Epoch 498, Train loss: methylation:4.97e-03
+Epoch 499, Train loss: methylation:5.02e-03
+Epoch 500, Train loss: methylation:5.10e-03
+
+Test: Epoch 500
+Train Accuracy: 0.9579   Test ACC: 0.8043
+Train F1: 0.9576         Test F1: 0.8087
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9282              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9091              0.4837              0.7865
+LumB 	           0.2000              0.9569              0.1739              0.6875
+
+Epoch 501, Train loss: methylation:4.99e-03
+Epoch 502, Train loss: methylation:5.07e-03
+Epoch 503, Train loss: methylation:5.33e-03
+Epoch 504, Train loss: methylation:5.20e-03
+Epoch 505, Train loss: methylation:5.04e-03
+Epoch 506, Train loss: methylation:4.86e-03
+Epoch 507, Train loss: methylation:4.95e-03
+Epoch 508, Train loss: methylation:4.90e-03
+Epoch 509, Train loss: methylation:5.01e-03
+Epoch 510, Train loss: methylation:4.90e-03
+Epoch 511, Train loss: methylation:4.90e-03
+Epoch 512, Train loss: methylation:4.96e-03
+Epoch 513, Train loss: methylation:5.23e-03
+Epoch 514, Train loss: methylation:6.15e-03
+Epoch 515, Train loss: methylation:6.21e-03
+Epoch 516, Train loss: methylation:7.53e-03
+Epoch 517, Train loss: methylation:7.01e-03
+Epoch 518, Train loss: methylation:6.08e-03
+Epoch 519, Train loss: methylation:5.76e-03
+Epoch 520, Train loss: methylation:5.55e-03
+Epoch 521, Train loss: methylation:5.71e-03
+Epoch 522, Train loss: methylation:5.82e-03
+Epoch 523, Train loss: methylation:5.53e-03
+Epoch 524, Train loss: methylation:5.91e-03
+Epoch 525, Train loss: methylation:5.55e-03
+Epoch 526, Train loss: methylation:5.32e-03
+Epoch 527, Train loss: methylation:5.22e-03
+Epoch 528, Train loss: methylation:5.68e-03
+Epoch 529, Train loss: methylation:5.82e-03
+Epoch 530, Train loss: methylation:5.20e-03
+Epoch 531, Train loss: methylation:5.21e-03
+Epoch 532, Train loss: methylation:5.10e-03
+Epoch 533, Train loss: methylation:5.15e-03
+Epoch 534, Train loss: methylation:5.33e-03
+Epoch 535, Train loss: methylation:5.16e-03
+Epoch 536, Train loss: methylation:5.21e-03
+Epoch 537, Train loss: methylation:4.98e-03
+Epoch 538, Train loss: methylation:5.04e-03
+Epoch 539, Train loss: methylation:5.02e-03
+Epoch 540, Train loss: methylation:4.87e-03
+Epoch 541, Train loss: methylation:4.71e-03
+Epoch 542, Train loss: methylation:5.01e-03
+Epoch 543, Train loss: methylation:5.21e-03
+Epoch 544, Train loss: methylation:5.29e-03
+Epoch 545, Train loss: methylation:5.41e-03
+Epoch 546, Train loss: methylation:5.47e-03
+Epoch 547, Train loss: methylation:5.03e-03
+Epoch 548, Train loss: methylation:4.81e-03
+Epoch 549, Train loss: methylation:4.65e-03
+Epoch 550, Train loss: methylation:5.05e-03
+
+Test: Epoch 550
+Train Accuracy: 0.9598   Test ACC: 0.7717
+Train F1: 0.9597         Test F1: 0.7782
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9378              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9522              0.4837              0.6966
+LumB 	           0.2000              0.9139              0.1739              0.7500
+
+Epoch 551, Train loss: methylation:5.30e-03
+Epoch 552, Train loss: methylation:5.15e-03
+Epoch 553, Train loss: methylation:4.78e-03
+Epoch 554, Train loss: methylation:4.51e-03
+Epoch 555, Train loss: methylation:4.46e-03
+Epoch 556, Train loss: methylation:4.80e-03
+Epoch 557, Train loss: methylation:5.01e-03
+Epoch 558, Train loss: methylation:5.65e-03
+Epoch 559, Train loss: methylation:5.29e-03
+Epoch 560, Train loss: methylation:5.12e-03
+Epoch 561, Train loss: methylation:4.82e-03
+Epoch 562, Train loss: methylation:4.51e-03
+Epoch 563, Train loss: methylation:4.75e-03
+Epoch 564, Train loss: methylation:4.69e-03
+Epoch 565, Train loss: methylation:4.61e-03
+Epoch 566, Train loss: methylation:4.53e-03
+Epoch 567, Train loss: methylation:4.67e-03
+Epoch 568, Train loss: methylation:4.51e-03
+Epoch 569, Train loss: methylation:4.54e-03
+Epoch 570, Train loss: methylation:4.65e-03
+Epoch 571, Train loss: methylation:5.41e-03
+Epoch 572, Train loss: methylation:6.76e-03
+Epoch 573, Train loss: methylation:7.19e-03
+Epoch 574, Train loss: methylation:6.24e-03
+Epoch 575, Train loss: methylation:4.88e-03
+Epoch 576, Train loss: methylation:6.19e-03
+Epoch 577, Train loss: methylation:5.59e-03
+Epoch 578, Train loss: methylation:5.10e-03
+Epoch 579, Train loss: methylation:6.09e-03
+Epoch 580, Train loss: methylation:4.96e-03
+Epoch 581, Train loss: methylation:5.06e-03
+Epoch 582, Train loss: methylation:5.59e-03
+Epoch 583, Train loss: methylation:5.33e-03
+Epoch 584, Train loss: methylation:4.76e-03
+Epoch 585, Train loss: methylation:4.91e-03
+Epoch 586, Train loss: methylation:5.03e-03
+Epoch 587, Train loss: methylation:4.52e-03
+Epoch 588, Train loss: methylation:4.54e-03
+Epoch 589, Train loss: methylation:4.70e-03
+Epoch 590, Train loss: methylation:4.68e-03
+Epoch 591, Train loss: methylation:4.44e-03
+Epoch 592, Train loss: methylation:4.44e-03
+Epoch 593, Train loss: methylation:4.42e-03
+Epoch 594, Train loss: methylation:4.36e-03
+Epoch 595, Train loss: methylation:4.46e-03
+Epoch 596, Train loss: methylation:4.40e-03
+Epoch 597, Train loss: methylation:4.68e-03
+Epoch 598, Train loss: methylation:5.11e-03
+Epoch 599, Train loss: methylation:6.09e-03
+Epoch 600, Train loss: methylation:6.17e-03
+
+Test: Epoch 600
+Train Accuracy: 0.9483   Test ACC: 0.7446
+Train F1: 0.9484         Test F1: 0.7565
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9234              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.9000
+LumA 	           0.2000              0.9856              0.4837              0.6180
+LumB 	           0.2000              0.8373              0.1739              0.8125
+
+Epoch 601, Train loss: methylation:6.35e-03
+Epoch 602, Train loss: methylation:4.70e-03
+Epoch 603, Train loss: methylation:5.26e-03
+Epoch 604, Train loss: methylation:5.93e-03
+Epoch 605, Train loss: methylation:4.58e-03
+Epoch 606, Train loss: methylation:5.74e-03
+Epoch 607, Train loss: methylation:6.23e-03
+Epoch 608, Train loss: methylation:4.44e-03
+Epoch 609, Train loss: methylation:6.01e-03
+Epoch 610, Train loss: methylation:7.62e-03
+Epoch 611, Train loss: methylation:4.70e-03
+Epoch 612, Train loss: methylation:7.02e-03
+Epoch 613, Train loss: methylation:7.59e-03
+Epoch 614, Train loss: methylation:6.16e-03
+Epoch 615, Train loss: methylation:7.17e-03
+Epoch 616, Train loss: methylation:5.54e-03
+Epoch 617, Train loss: methylation:6.20e-03
+Epoch 618, Train loss: methylation:5.42e-03
+Epoch 619, Train loss: methylation:6.18e-03
+Epoch 620, Train loss: methylation:5.16e-03
+Epoch 621, Train loss: methylation:5.93e-03
+Epoch 622, Train loss: methylation:4.78e-03
+Epoch 623, Train loss: methylation:5.59e-03
+Epoch 624, Train loss: methylation:5.24e-03
+Epoch 625, Train loss: methylation:6.39e-03
+Epoch 626, Train loss: methylation:5.54e-03
+Epoch 627, Train loss: methylation:5.12e-03
+Epoch 628, Train loss: methylation:5.22e-03
+Epoch 629, Train loss: methylation:5.30e-03
+Epoch 630, Train loss: methylation:4.87e-03
+Epoch 631, Train loss: methylation:4.80e-03
+Epoch 632, Train loss: methylation:5.32e-03
+Epoch 633, Train loss: methylation:5.48e-03
+Epoch 634, Train loss: methylation:5.01e-03
+Epoch 635, Train loss: methylation:4.63e-03
+Epoch 636, Train loss: methylation:4.90e-03
+Epoch 637, Train loss: methylation:5.12e-03
+Epoch 638, Train loss: methylation:4.95e-03
+Epoch 639, Train loss: methylation:4.61e-03
+Epoch 640, Train loss: methylation:4.91e-03
+Epoch 641, Train loss: methylation:5.30e-03
+Epoch 642, Train loss: methylation:5.14e-03
+Epoch 643, Train loss: methylation:4.55e-03
+Epoch 644, Train loss: methylation:4.70e-03
+Epoch 645, Train loss: methylation:4.57e-03
+Epoch 646, Train loss: methylation:4.89e-03
+Epoch 647, Train loss: methylation:4.44e-03
+Epoch 648, Train loss: methylation:4.70e-03
+Epoch 649, Train loss: methylation:4.42e-03
+Epoch 650, Train loss: methylation:4.81e-03
+
+Test: Epoch 650
+Train Accuracy: 0.9751   Test ACC: 0.7826
+Train F1: 0.9751         Test F1: 0.7880
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9665              0.1359              0.8000
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9617              0.4837              0.7528
+LumB 	           0.2000              0.9474              0.1739              0.6875
+
+Epoch 651, Train loss: methylation:4.59e-03
+Epoch 652, Train loss: methylation:4.34e-03
+Epoch 653, Train loss: methylation:4.41e-03
+Epoch 654, Train loss: methylation:4.57e-03
+Epoch 655, Train loss: methylation:4.32e-03
+Epoch 656, Train loss: methylation:4.04e-03
+Epoch 657, Train loss: methylation:4.07e-03
+Epoch 658, Train loss: methylation:4.20e-03
+Epoch 659, Train loss: methylation:4.21e-03
+Epoch 660, Train loss: methylation:4.11e-03
+Epoch 661, Train loss: methylation:4.10e-03
+Epoch 662, Train loss: methylation:4.15e-03
+Epoch 663, Train loss: methylation:4.15e-03
+Epoch 664, Train loss: methylation:3.94e-03
+Epoch 665, Train loss: methylation:4.18e-03
+Epoch 666, Train loss: methylation:4.16e-03
+Epoch 667, Train loss: methylation:4.11e-03
+Epoch 668, Train loss: methylation:4.31e-03
+Epoch 669, Train loss: methylation:4.48e-03
+Epoch 670, Train loss: methylation:5.26e-03
+Epoch 671, Train loss: methylation:5.42e-03
+Epoch 672, Train loss: methylation:5.14e-03
+Epoch 673, Train loss: methylation:4.62e-03
+Epoch 674, Train loss: methylation:4.17e-03
+Epoch 675, Train loss: methylation:4.39e-03
+Epoch 676, Train loss: methylation:4.56e-03
+Epoch 677, Train loss: methylation:4.19e-03
+Epoch 678, Train loss: methylation:4.07e-03
+Epoch 679, Train loss: methylation:4.19e-03
+Epoch 680, Train loss: methylation:4.46e-03
+Epoch 681, Train loss: methylation:4.38e-03
+Epoch 682, Train loss: methylation:4.38e-03
+Epoch 683, Train loss: methylation:4.33e-03
+Epoch 684, Train loss: methylation:4.22e-03
+Epoch 685, Train loss: methylation:3.99e-03
+Epoch 686, Train loss: methylation:3.89e-03
+Epoch 687, Train loss: methylation:3.97e-03
+Epoch 688, Train loss: methylation:3.85e-03
+Epoch 689, Train loss: methylation:3.81e-03
+Epoch 690, Train loss: methylation:3.91e-03
+Epoch 691, Train loss: methylation:3.84e-03
+Epoch 692, Train loss: methylation:3.99e-03
+Epoch 693, Train loss: methylation:3.89e-03
+Epoch 694, Train loss: methylation:3.97e-03
+Epoch 695, Train loss: methylation:4.10e-03
+Epoch 696, Train loss: methylation:4.38e-03
+Epoch 697, Train loss: methylation:4.78e-03
+Epoch 698, Train loss: methylation:5.25e-03
+Epoch 699, Train loss: methylation:5.66e-03
+Epoch 700, Train loss: methylation:5.33e-03
+
+Test: Epoch 700
+Train Accuracy: 0.9502   Test ACC: 0.7935
+Train F1: 0.9490         Test F1: 0.7890
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.7943              0.4837              0.8539
+LumB 	           0.2000              0.9904              0.1739              0.4688
+
+Epoch 701, Train loss: methylation:4.14e-03
+Epoch 702, Train loss: methylation:4.57e-03
+Epoch 703, Train loss: methylation:5.27e-03
+Epoch 704, Train loss: methylation:4.19e-03
+Epoch 705, Train loss: methylation:4.18e-03
+Epoch 706, Train loss: methylation:5.08e-03
+Epoch 707, Train loss: methylation:4.74e-03
+Epoch 708, Train loss: methylation:4.38e-03
+Epoch 709, Train loss: methylation:4.16e-03
+Epoch 710, Train loss: methylation:4.43e-03
+Epoch 711, Train loss: methylation:4.36e-03
+Epoch 712, Train loss: methylation:4.04e-03
+Epoch 713, Train loss: methylation:4.08e-03
+Epoch 714, Train loss: methylation:4.45e-03
+Epoch 715, Train loss: methylation:4.05e-03
+Epoch 716, Train loss: methylation:3.81e-03
+Epoch 717, Train loss: methylation:3.95e-03
+Epoch 718, Train loss: methylation:4.17e-03
+Epoch 719, Train loss: methylation:4.17e-03
+Epoch 720, Train loss: methylation:4.17e-03
+Epoch 721, Train loss: methylation:4.81e-03
+Epoch 722, Train loss: methylation:6.03e-03
+Epoch 723, Train loss: methylation:5.07e-03
+Epoch 724, Train loss: methylation:4.66e-03
+Epoch 725, Train loss: methylation:4.75e-03
+Epoch 726, Train loss: methylation:4.99e-03
+Epoch 727, Train loss: methylation:4.57e-03
+Epoch 728, Train loss: methylation:4.52e-03
+Epoch 729, Train loss: methylation:5.36e-03
+Epoch 730, Train loss: methylation:4.72e-03
+Epoch 731, Train loss: methylation:4.89e-03
+Epoch 732, Train loss: methylation:5.74e-03
+Epoch 733, Train loss: methylation:3.94e-03
+Epoch 734, Train loss: methylation:4.88e-03
+Epoch 735, Train loss: methylation:4.85e-03
+Epoch 736, Train loss: methylation:4.50e-03
+Epoch 737, Train loss: methylation:5.51e-03
+Epoch 738, Train loss: methylation:5.13e-03
+Epoch 739, Train loss: methylation:5.23e-03
+Epoch 740, Train loss: methylation:4.43e-03
+Epoch 741, Train loss: methylation:5.39e-03
+Epoch 742, Train loss: methylation:4.10e-03
+Epoch 743, Train loss: methylation:4.67e-03
+Epoch 744, Train loss: methylation:4.25e-03
+Epoch 745, Train loss: methylation:4.62e-03
+Epoch 746, Train loss: methylation:4.43e-03
+Epoch 747, Train loss: methylation:4.60e-03
+Epoch 748, Train loss: methylation:4.87e-03
+Epoch 749, Train loss: methylation:4.30e-03
+Epoch 750, Train loss: methylation:4.43e-03
+
+Test: Epoch 750
+Train Accuracy: 0.9780   Test ACC: 0.7935
+Train F1: 0.9779         Test F1: 0.7924
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9952              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9234              0.4837              0.8315
+LumB 	           0.2000              0.9761              0.1739              0.5312
+
+Epoch 751, Train loss: methylation:3.78e-03
+Epoch 752, Train loss: methylation:4.20e-03
+Epoch 753, Train loss: methylation:3.77e-03
+Epoch 754, Train loss: methylation:4.18e-03
+Epoch 755, Train loss: methylation:4.14e-03
+Epoch 756, Train loss: methylation:4.64e-03
+Epoch 757, Train loss: methylation:4.56e-03
+Epoch 758, Train loss: methylation:4.86e-03
+Epoch 759, Train loss: methylation:5.57e-03
+Epoch 760, Train loss: methylation:4.40e-03
+Epoch 761, Train loss: methylation:4.05e-03
+Epoch 762, Train loss: methylation:4.28e-03
+Epoch 763, Train loss: methylation:4.96e-03
+Epoch 764, Train loss: methylation:3.98e-03
+Epoch 765, Train loss: methylation:3.84e-03
+Epoch 766, Train loss: methylation:4.09e-03
+Epoch 767, Train loss: methylation:4.71e-03
+Epoch 768, Train loss: methylation:4.06e-03
+Epoch 769, Train loss: methylation:3.70e-03
+Epoch 770, Train loss: methylation:3.76e-03
+Epoch 771, Train loss: methylation:4.22e-03
+Epoch 772, Train loss: methylation:4.27e-03
+Epoch 773, Train loss: methylation:4.29e-03
+Epoch 774, Train loss: methylation:4.29e-03
+Epoch 775, Train loss: methylation:3.75e-03
+Epoch 776, Train loss: methylation:3.86e-03
+Epoch 777, Train loss: methylation:4.53e-03
+Epoch 778, Train loss: methylation:4.87e-03
+Epoch 779, Train loss: methylation:4.11e-03
+Epoch 780, Train loss: methylation:3.85e-03
+Epoch 781, Train loss: methylation:3.85e-03
+Epoch 782, Train loss: methylation:4.23e-03
+Epoch 783, Train loss: methylation:4.10e-03
+Epoch 784, Train loss: methylation:3.89e-03
+Epoch 785, Train loss: methylation:3.68e-03
+Epoch 786, Train loss: methylation:3.47e-03
+Epoch 787, Train loss: methylation:3.73e-03
+Epoch 788, Train loss: methylation:3.98e-03
+Epoch 789, Train loss: methylation:4.38e-03
+Epoch 790, Train loss: methylation:4.28e-03
+Epoch 791, Train loss: methylation:3.88e-03
+Epoch 792, Train loss: methylation:3.50e-03
+Epoch 793, Train loss: methylation:3.59e-03
+Epoch 794, Train loss: methylation:3.96e-03
+Epoch 795, Train loss: methylation:3.87e-03
+Epoch 796, Train loss: methylation:3.83e-03
+Epoch 797, Train loss: methylation:3.50e-03
+Epoch 798, Train loss: methylation:3.60e-03
+Epoch 799, Train loss: methylation:3.86e-03
+Epoch 800, Train loss: methylation:4.23e-03
+
+Test: Epoch 800
+Train Accuracy: 0.9703   Test ACC: 0.7772
+Train F1: 0.9703         Test F1: 0.7850
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9378              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9761              0.4837              0.7079
+LumB 	           0.2000              0.9426              0.1739              0.7500
+
+Epoch 801, Train loss: methylation:4.83e-03
+Epoch 802, Train loss: methylation:4.79e-03
+Epoch 803, Train loss: methylation:4.60e-03
+Epoch 804, Train loss: methylation:3.76e-03
+Epoch 805, Train loss: methylation:3.93e-03
+Epoch 806, Train loss: methylation:4.19e-03
+Epoch 807, Train loss: methylation:3.67e-03
+Epoch 808, Train loss: methylation:3.67e-03
+Epoch 809, Train loss: methylation:3.74e-03
+Epoch 810, Train loss: methylation:3.92e-03
+Epoch 811, Train loss: methylation:4.06e-03
+Epoch 812, Train loss: methylation:4.20e-03
+Epoch 813, Train loss: methylation:4.42e-03
+Epoch 814, Train loss: methylation:4.25e-03
+Epoch 815, Train loss: methylation:3.84e-03
+Epoch 816, Train loss: methylation:3.46e-03
+Epoch 817, Train loss: methylation:3.72e-03
+Epoch 818, Train loss: methylation:3.71e-03
+Epoch 819, Train loss: methylation:3.67e-03
+Epoch 820, Train loss: methylation:3.42e-03
+Epoch 821, Train loss: methylation:3.59e-03
+Epoch 822, Train loss: methylation:3.79e-03
+Epoch 823, Train loss: methylation:3.68e-03
+Epoch 824, Train loss: methylation:3.68e-03
+Epoch 825, Train loss: methylation:4.02e-03
+Epoch 826, Train loss: methylation:4.39e-03
+Epoch 827, Train loss: methylation:4.90e-03
+Epoch 828, Train loss: methylation:3.86e-03
+Epoch 829, Train loss: methylation:3.73e-03
+Epoch 830, Train loss: methylation:3.88e-03
+Epoch 831, Train loss: methylation:3.62e-03
+Epoch 832, Train loss: methylation:3.54e-03
+Epoch 833, Train loss: methylation:3.51e-03
+Epoch 834, Train loss: methylation:3.62e-03
+Epoch 835, Train loss: methylation:3.61e-03
+Epoch 836, Train loss: methylation:3.55e-03
+Epoch 837, Train loss: methylation:3.67e-03
+Epoch 838, Train loss: methylation:3.65e-03
+Epoch 839, Train loss: methylation:4.00e-03
+Epoch 840, Train loss: methylation:4.66e-03
+Epoch 841, Train loss: methylation:5.82e-03
+Epoch 842, Train loss: methylation:5.26e-03
+Epoch 843, Train loss: methylation:4.56e-03
+Epoch 844, Train loss: methylation:3.72e-03
+Epoch 845, Train loss: methylation:4.71e-03
+Epoch 846, Train loss: methylation:5.03e-03
+Epoch 847, Train loss: methylation:3.74e-03
+Epoch 848, Train loss: methylation:4.96e-03
+Epoch 849, Train loss: methylation:6.24e-03
+Epoch 850, Train loss: methylation:4.26e-03
+
+Test: Epoch 850
+Train Accuracy: 0.9751   Test ACC: 0.7717
+Train F1: 0.9751         Test F1: 0.7569
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9569              0.1359              0.8000
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9569              0.4837              0.8876
+LumB 	           0.2000              0.9617              0.1739              0.3125
+
+Epoch 851, Train loss: methylation:5.21e-03
+Epoch 852, Train loss: methylation:7.02e-03
+Epoch 853, Train loss: methylation:4.77e-03
+Epoch 854, Train loss: methylation:7.55e-03
+Epoch 855, Train loss: methylation:5.85e-03
+Epoch 856, Train loss: methylation:6.70e-03
+Epoch 857, Train loss: methylation:7.02e-03
+Epoch 858, Train loss: methylation:5.54e-03
+Epoch 859, Train loss: methylation:7.29e-03
+Epoch 860, Train loss: methylation:5.23e-03
+Epoch 861, Train loss: methylation:7.16e-03
+Epoch 862, Train loss: methylation:5.46e-03
+Epoch 863, Train loss: methylation:7.68e-03
+Epoch 864, Train loss: methylation:5.45e-03
+Epoch 865, Train loss: methylation:5.78e-03
+Epoch 866, Train loss: methylation:4.51e-03
+Epoch 867, Train loss: methylation:5.29e-03
+Epoch 868, Train loss: methylation:4.16e-03
+Epoch 869, Train loss: methylation:4.96e-03
+Epoch 870, Train loss: methylation:4.48e-03
+Epoch 871, Train loss: methylation:4.92e-03
+Epoch 872, Train loss: methylation:4.56e-03
+Epoch 873, Train loss: methylation:4.38e-03
+Epoch 874, Train loss: methylation:4.75e-03
+Epoch 875, Train loss: methylation:4.53e-03
+Epoch 876, Train loss: methylation:4.98e-03
+Epoch 877, Train loss: methylation:4.52e-03
+Epoch 878, Train loss: methylation:4.39e-03
+Epoch 879, Train loss: methylation:3.87e-03
+Epoch 880, Train loss: methylation:4.74e-03
+Epoch 881, Train loss: methylation:3.96e-03
+Epoch 882, Train loss: methylation:4.16e-03
+Epoch 883, Train loss: methylation:3.73e-03
+Epoch 884, Train loss: methylation:4.37e-03
+Epoch 885, Train loss: methylation:4.37e-03
+Epoch 886, Train loss: methylation:3.82e-03
+Epoch 887, Train loss: methylation:3.92e-03
+Epoch 888, Train loss: methylation:3.73e-03
+Epoch 889, Train loss: methylation:4.07e-03
+Epoch 890, Train loss: methylation:3.62e-03
+Epoch 891, Train loss: methylation:3.68e-03
+Epoch 892, Train loss: methylation:3.57e-03
+Epoch 893, Train loss: methylation:3.68e-03
+Epoch 894, Train loss: methylation:3.62e-03
+Epoch 895, Train loss: methylation:3.60e-03
+Epoch 896, Train loss: methylation:3.57e-03
+Epoch 897, Train loss: methylation:3.39e-03
+Epoch 898, Train loss: methylation:3.37e-03
+Epoch 899, Train loss: methylation:3.51e-03
+Epoch 900, Train loss: methylation:3.34e-03
+
+Test: Epoch 900
+Train Accuracy: 0.9751   Test ACC: 0.8043
+Train F1: 0.9750         Test F1: 0.8047
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8000
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9330              0.4837              0.8315
+LumB 	           0.2000              0.9713              0.1739              0.5938
+
+Epoch 901, Train loss: methylation:3.47e-03
+Epoch 902, Train loss: methylation:3.35e-03
+Epoch 903, Train loss: methylation:3.39e-03
+Epoch 904, Train loss: methylation:3.27e-03
+Epoch 905, Train loss: methylation:3.28e-03
+Epoch 906, Train loss: methylation:3.28e-03
+Epoch 907, Train loss: methylation:3.26e-03
+Epoch 908, Train loss: methylation:3.31e-03
+Epoch 909, Train loss: methylation:3.33e-03
+Epoch 910, Train loss: methylation:3.25e-03
+Epoch 911, Train loss: methylation:3.39e-03
+Epoch 912, Train loss: methylation:3.46e-03
+Epoch 913, Train loss: methylation:3.44e-03
+Epoch 914, Train loss: methylation:3.57e-03
+Epoch 915, Train loss: methylation:3.85e-03
+Epoch 916, Train loss: methylation:4.65e-03
+Epoch 917, Train loss: methylation:5.50e-03
+Epoch 918, Train loss: methylation:6.43e-03
+Epoch 919, Train loss: methylation:4.33e-03
+Epoch 920, Train loss: methylation:4.21e-03
+Epoch 921, Train loss: methylation:5.45e-03
+Epoch 922, Train loss: methylation:4.13e-03
+Epoch 923, Train loss: methylation:4.60e-03
+Epoch 924, Train loss: methylation:5.31e-03
+Epoch 925, Train loss: methylation:4.25e-03
+Epoch 926, Train loss: methylation:4.57e-03
+Epoch 927, Train loss: methylation:5.87e-03
+Epoch 928, Train loss: methylation:4.74e-03
+Epoch 929, Train loss: methylation:4.09e-03
+Epoch 930, Train loss: methylation:5.66e-03
+Epoch 931, Train loss: methylation:3.96e-03
+Epoch 932, Train loss: methylation:4.58e-03
+Epoch 933, Train loss: methylation:5.10e-03
+Epoch 934, Train loss: methylation:3.46e-03
+Epoch 935, Train loss: methylation:4.78e-03
+Epoch 936, Train loss: methylation:4.21e-03
+Epoch 937, Train loss: methylation:3.80e-03
+Epoch 938, Train loss: methylation:4.72e-03
+Epoch 939, Train loss: methylation:4.93e-03
+Epoch 940, Train loss: methylation:4.08e-03
+Epoch 941, Train loss: methylation:5.48e-03
+Epoch 942, Train loss: methylation:6.08e-03
+Epoch 943, Train loss: methylation:3.99e-03
+Epoch 944, Train loss: methylation:7.05e-03
+Epoch 945, Train loss: methylation:5.08e-03
+Epoch 946, Train loss: methylation:5.71e-03
+Epoch 947, Train loss: methylation:4.61e-03
+Epoch 948, Train loss: methylation:4.99e-03
+Epoch 949, Train loss: methylation:4.41e-03
+Epoch 950, Train loss: methylation:4.99e-03
+
+Test: Epoch 950
+Train Accuracy: 0.9608   Test ACC: 0.7880
+Train F1: 0.9601         Test F1: 0.7812
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9522              0.1359              0.8000
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8660              0.4837              0.8652
+LumB 	           0.2000              0.9856              0.1739              0.4062
+
+Epoch 951, Train loss: methylation:4.31e-03
+Epoch 952, Train loss: methylation:4.52e-03
+Epoch 953, Train loss: methylation:3.93e-03
+Epoch 954, Train loss: methylation:4.59e-03
+Epoch 955, Train loss: methylation:3.92e-03
+Epoch 956, Train loss: methylation:4.33e-03
+Epoch 957, Train loss: methylation:3.77e-03
+Epoch 958, Train loss: methylation:4.28e-03
+Epoch 959, Train loss: methylation:3.82e-03
+Epoch 960, Train loss: methylation:4.28e-03
+Epoch 961, Train loss: methylation:3.85e-03
+Epoch 962, Train loss: methylation:4.20e-03
+Epoch 963, Train loss: methylation:3.70e-03
+Epoch 964, Train loss: methylation:3.99e-03
+Epoch 965, Train loss: methylation:3.64e-03
+Epoch 966, Train loss: methylation:3.85e-03
+Epoch 967, Train loss: methylation:3.52e-03
+Epoch 968, Train loss: methylation:4.00e-03
+Epoch 969, Train loss: methylation:3.92e-03
+Epoch 970, Train loss: methylation:4.18e-03
+Epoch 971, Train loss: methylation:3.34e-03
+Epoch 972, Train loss: methylation:4.05e-03
+Epoch 973, Train loss: methylation:3.96e-03
+Epoch 974, Train loss: methylation:4.16e-03
+Epoch 975, Train loss: methylation:3.49e-03
+Epoch 976, Train loss: methylation:4.10e-03
+Epoch 977, Train loss: methylation:4.30e-03
+Epoch 978, Train loss: methylation:4.24e-03
+Epoch 979, Train loss: methylation:3.41e-03
+Epoch 980, Train loss: methylation:4.92e-03
+Epoch 981, Train loss: methylation:4.80e-03
+Epoch 982, Train loss: methylation:4.27e-03
+Epoch 983, Train loss: methylation:3.79e-03
+Epoch 984, Train loss: methylation:5.38e-03
+Epoch 985, Train loss: methylation:4.47e-03
+Epoch 986, Train loss: methylation:4.22e-03
+Epoch 987, Train loss: methylation:4.41e-03
+Epoch 988, Train loss: methylation:4.49e-03
+Epoch 989, Train loss: methylation:3.30e-03
+Epoch 990, Train loss: methylation:4.22e-03
+Epoch 991, Train loss: methylation:3.52e-03
+Epoch 992, Train loss: methylation:3.57e-03
+Epoch 993, Train loss: methylation:3.99e-03
+Epoch 994, Train loss: methylation:4.46e-03
+Epoch 995, Train loss: methylation:3.34e-03
+Epoch 996, Train loss: methylation:4.61e-03
+Epoch 997, Train loss: methylation:5.07e-03
+Epoch 998, Train loss: methylation:4.12e-03
+Epoch 999, Train loss: methylation:4.25e-03
+Epoch 1000, Train loss: methylation:4.97e-03
+
+Test: Epoch 1000
+Train Accuracy: 0.9598   Test ACC: 0.7717
+Train F1: 0.9593         Test F1: 0.7671
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8230              0.4837              0.8427
+LumB 	           0.2000              1.0000              0.1739              0.4062
+
+
+----------------------------------------------------------------------------------------------------
+Run 2
+----------------------------------------------------------------------------------------------------
+2021-01-05 09:51:27.331249 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only one GCN - DNA Methylation
+SEED =  92364
+
+Training...
+Epoch 0, Train loss: methylation:8.92e-02
+
+Test: Epoch 0
+Train Accuracy: 0.2182   Test ACC: 0.2120
+Train F1: 0.1363         Test F1: 0.1478
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.8612              0.1359              0.0000
+Basal 	           0.2000              0.0048              0.1522              0.9643
+Her2 	           0.2000              0.0718              0.0543              0.0000
+LumA 	           0.2000              0.0383              0.4837              0.1348
+LumB 	           0.2000              0.1148              0.1739              0.0000
+
+Epoch 1, Train loss: methylation:1.49e+00
+Epoch 2, Train loss: methylation:1.76e-01
+Epoch 3, Train loss: methylation:1.44e-01
+Epoch 4, Train loss: methylation:3.12e-01
+Epoch 5, Train loss: methylation:1.86e-01
+Epoch 6, Train loss: methylation:5.34e-02
+Epoch 7, Train loss: methylation:8.16e-02
+Epoch 8, Train loss: methylation:1.47e-01
+Epoch 9, Train loss: methylation:1.20e-01
+Epoch 10, Train loss: methylation:6.31e-02
+Epoch 11, Train loss: methylation:3.94e-02
+Epoch 12, Train loss: methylation:5.03e-02
+Epoch 13, Train loss: methylation:6.82e-02
+Epoch 14, Train loss: methylation:6.91e-02
+Epoch 15, Train loss: methylation:5.45e-02
+Epoch 16, Train loss: methylation:4.02e-02
+Epoch 17, Train loss: methylation:3.49e-02
+Epoch 18, Train loss: methylation:4.10e-02
+Epoch 19, Train loss: methylation:4.83e-02
+Epoch 20, Train loss: methylation:4.95e-02
+Epoch 21, Train loss: methylation:4.35e-02
+Epoch 22, Train loss: methylation:3.70e-02
+Epoch 23, Train loss: methylation:3.26e-02
+Epoch 24, Train loss: methylation:3.26e-02
+Epoch 25, Train loss: methylation:3.40e-02
+Epoch 26, Train loss: methylation:3.63e-02
+Epoch 27, Train loss: methylation:3.59e-02
+Epoch 28, Train loss: methylation:3.44e-02
+Epoch 29, Train loss: methylation:3.17e-02
+Epoch 30, Train loss: methylation:2.97e-02
+Epoch 31, Train loss: methylation:2.90e-02
+Epoch 32, Train loss: methylation:2.96e-02
+Epoch 33, Train loss: methylation:3.08e-02
+Epoch 34, Train loss: methylation:3.06e-02
+Epoch 35, Train loss: methylation:2.99e-02
+Epoch 36, Train loss: methylation:2.84e-02
+Epoch 37, Train loss: methylation:2.73e-02
+Epoch 38, Train loss: methylation:2.67e-02
+Epoch 39, Train loss: methylation:2.63e-02
+Epoch 40, Train loss: methylation:2.67e-02
+Epoch 41, Train loss: methylation:2.68e-02
+Epoch 42, Train loss: methylation:2.65e-02
+Epoch 43, Train loss: methylation:2.56e-02
+Epoch 44, Train loss: methylation:2.52e-02
+Epoch 45, Train loss: methylation:2.43e-02
+Epoch 46, Train loss: methylation:2.46e-02
+Epoch 47, Train loss: methylation:2.43e-02
+Epoch 48, Train loss: methylation:2.40e-02
+Epoch 49, Train loss: methylation:2.40e-02
+Epoch 50, Train loss: methylation:2.39e-02
+
+Test: Epoch 50
+Train Accuracy: 0.6469   Test ACC: 0.4728
+Train F1: 0.6449         Test F1: 0.4011
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.7656              0.1359              0.8400
+Basal 	           0.2000              0.6651              0.1522              0.7857
+Her2 	           0.2000              0.7895              0.0543              0.8000
+LumA 	           0.2000              0.4976              0.4837              0.0899
+LumB 	           0.2000              0.5167              0.1739              0.8750
+
+Epoch 51, Train loss: methylation:2.30e-02
+Epoch 52, Train loss: methylation:2.31e-02
+Epoch 53, Train loss: methylation:2.27e-02
+Epoch 54, Train loss: methylation:2.25e-02
+Epoch 55, Train loss: methylation:2.27e-02
+Epoch 56, Train loss: methylation:2.16e-02
+Epoch 57, Train loss: methylation:2.16e-02
+Epoch 58, Train loss: methylation:2.13e-02
+Epoch 59, Train loss: methylation:2.14e-02
+Epoch 60, Train loss: methylation:2.14e-02
+Epoch 61, Train loss: methylation:2.09e-02
+Epoch 62, Train loss: methylation:2.06e-02
+Epoch 63, Train loss: methylation:2.07e-02
+Epoch 64, Train loss: methylation:2.06e-02
+Epoch 65, Train loss: methylation:1.96e-02
+Epoch 66, Train loss: methylation:2.02e-02
+Epoch 67, Train loss: methylation:1.98e-02
+Epoch 68, Train loss: methylation:1.94e-02
+Epoch 69, Train loss: methylation:1.94e-02
+Epoch 70, Train loss: methylation:1.92e-02
+Epoch 71, Train loss: methylation:1.87e-02
+Epoch 72, Train loss: methylation:1.87e-02
+Epoch 73, Train loss: methylation:1.87e-02
+Epoch 74, Train loss: methylation:1.89e-02
+Epoch 75, Train loss: methylation:1.83e-02
+Epoch 76, Train loss: methylation:1.79e-02
+Epoch 77, Train loss: methylation:1.81e-02
+Epoch 78, Train loss: methylation:1.76e-02
+Epoch 79, Train loss: methylation:1.81e-02
+Epoch 80, Train loss: methylation:1.76e-02
+Epoch 81, Train loss: methylation:1.75e-02
+Epoch 82, Train loss: methylation:1.75e-02
+Epoch 83, Train loss: methylation:1.76e-02
+Epoch 84, Train loss: methylation:1.76e-02
+Epoch 85, Train loss: methylation:1.70e-02
+Epoch 86, Train loss: methylation:1.70e-02
+Epoch 87, Train loss: methylation:1.71e-02
+Epoch 88, Train loss: methylation:1.63e-02
+Epoch 89, Train loss: methylation:1.64e-02
+Epoch 90, Train loss: methylation:1.64e-02
+Epoch 91, Train loss: methylation:1.65e-02
+Epoch 92, Train loss: methylation:1.60e-02
+Epoch 93, Train loss: methylation:1.58e-02
+Epoch 94, Train loss: methylation:1.57e-02
+Epoch 95, Train loss: methylation:1.57e-02
+Epoch 96, Train loss: methylation:1.56e-02
+Epoch 97, Train loss: methylation:1.53e-02
+Epoch 98, Train loss: methylation:1.55e-02
+Epoch 99, Train loss: methylation:1.53e-02
+Epoch 100, Train loss: methylation:1.54e-02
+
+Test: Epoch 100
+Train Accuracy: 0.8383   Test ACC: 0.4837
+Train F1: 0.8368         Test F1: 0.3859
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9234              0.1359              0.8400
+Basal 	           0.2000              0.9330              0.1522              0.9286
+Her2 	           0.2000              0.8947              0.0543              0.8000
+LumA 	           0.2000              0.7033              0.4837              0.0337
+LumB 	           0.2000              0.7368              0.1739              0.9688
+
+Epoch 101, Train loss: methylation:1.49e-02
+Epoch 102, Train loss: methylation:1.48e-02
+Epoch 103, Train loss: methylation:1.50e-02
+Epoch 104, Train loss: methylation:1.49e-02
+Epoch 105, Train loss: methylation:1.48e-02
+Epoch 106, Train loss: methylation:1.47e-02
+Epoch 107, Train loss: methylation:1.44e-02
+Epoch 108, Train loss: methylation:1.46e-02
+Epoch 109, Train loss: methylation:1.41e-02
+Epoch 110, Train loss: methylation:1.44e-02
+Epoch 111, Train loss: methylation:1.46e-02
+Epoch 112, Train loss: methylation:1.41e-02
+Epoch 113, Train loss: methylation:1.41e-02
+Epoch 114, Train loss: methylation:1.42e-02
+Epoch 115, Train loss: methylation:1.44e-02
+Epoch 116, Train loss: methylation:1.41e-02
+Epoch 117, Train loss: methylation:1.39e-02
+Epoch 118, Train loss: methylation:1.37e-02
+Epoch 119, Train loss: methylation:1.41e-02
+Epoch 120, Train loss: methylation:1.40e-02
+Epoch 121, Train loss: methylation:1.33e-02
+Epoch 122, Train loss: methylation:1.34e-02
+Epoch 123, Train loss: methylation:1.34e-02
+Epoch 124, Train loss: methylation:1.33e-02
+Epoch 125, Train loss: methylation:1.38e-02
+Epoch 126, Train loss: methylation:1.38e-02
+Epoch 127, Train loss: methylation:1.37e-02
+Epoch 128, Train loss: methylation:1.42e-02
+Epoch 129, Train loss: methylation:1.41e-02
+Epoch 130, Train loss: methylation:1.36e-02
+Epoch 131, Train loss: methylation:1.28e-02
+Epoch 132, Train loss: methylation:1.36e-02
+Epoch 133, Train loss: methylation:1.36e-02
+Epoch 134, Train loss: methylation:1.32e-02
+Epoch 135, Train loss: methylation:1.33e-02
+Epoch 136, Train loss: methylation:1.31e-02
+Epoch 137, Train loss: methylation:1.28e-02
+Epoch 138, Train loss: methylation:1.32e-02
+Epoch 139, Train loss: methylation:1.30e-02
+Epoch 140, Train loss: methylation:1.26e-02
+Epoch 141, Train loss: methylation:1.31e-02
+Epoch 142, Train loss: methylation:1.28e-02
+Epoch 143, Train loss: methylation:1.25e-02
+Epoch 144, Train loss: methylation:1.27e-02
+Epoch 145, Train loss: methylation:1.26e-02
+Epoch 146, Train loss: methylation:1.26e-02
+Epoch 147, Train loss: methylation:1.31e-02
+Epoch 148, Train loss: methylation:1.19e-02
+Epoch 149, Train loss: methylation:1.23e-02
+Epoch 150, Train loss: methylation:1.24e-02
+
+Test: Epoch 150
+Train Accuracy: 0.8938   Test ACC: 0.5815
+Train F1: 0.8932         Test F1: 0.5574
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9091              0.1359              0.8400
+Basal 	           0.2000              0.9665              0.1522              0.9286
+Her2 	           0.2000              0.9569              0.0543              0.8000
+LumA 	           0.2000              0.7751              0.4837              0.2472
+LumB 	           0.2000              0.8612              0.1739              0.9375
+
+Epoch 151, Train loss: methylation:1.19e-02
+Epoch 152, Train loss: methylation:1.26e-02
+Epoch 153, Train loss: methylation:1.18e-02
+Epoch 154, Train loss: methylation:1.21e-02
+Epoch 155, Train loss: methylation:1.20e-02
+Epoch 156, Train loss: methylation:1.18e-02
+Epoch 157, Train loss: methylation:1.17e-02
+Epoch 158, Train loss: methylation:1.17e-02
+Epoch 159, Train loss: methylation:1.16e-02
+Epoch 160, Train loss: methylation:1.20e-02
+Epoch 161, Train loss: methylation:1.18e-02
+Epoch 162, Train loss: methylation:1.17e-02
+Epoch 163, Train loss: methylation:1.27e-02
+Epoch 164, Train loss: methylation:1.26e-02
+Epoch 165, Train loss: methylation:1.30e-02
+Epoch 166, Train loss: methylation:1.25e-02
+Epoch 167, Train loss: methylation:1.14e-02
+Epoch 168, Train loss: methylation:1.13e-02
+Epoch 169, Train loss: methylation:1.19e-02
+Epoch 170, Train loss: methylation:1.14e-02
+Epoch 171, Train loss: methylation:1.11e-02
+Epoch 172, Train loss: methylation:1.13e-02
+Epoch 173, Train loss: methylation:1.12e-02
+Epoch 174, Train loss: methylation:1.11e-02
+Epoch 175, Train loss: methylation:1.11e-02
+Epoch 176, Train loss: methylation:1.10e-02
+Epoch 177, Train loss: methylation:1.10e-02
+Epoch 178, Train loss: methylation:1.08e-02
+Epoch 179, Train loss: methylation:1.09e-02
+Epoch 180, Train loss: methylation:1.07e-02
+Epoch 181, Train loss: methylation:1.06e-02
+Epoch 182, Train loss: methylation:1.05e-02
+Epoch 183, Train loss: methylation:1.07e-02
+Epoch 184, Train loss: methylation:1.09e-02
+Epoch 185, Train loss: methylation:1.05e-02
+Epoch 186, Train loss: methylation:1.04e-02
+Epoch 187, Train loss: methylation:1.07e-02
+Epoch 188, Train loss: methylation:1.09e-02
+Epoch 189, Train loss: methylation:1.07e-02
+Epoch 190, Train loss: methylation:1.03e-02
+Epoch 191, Train loss: methylation:1.04e-02
+Epoch 192, Train loss: methylation:1.03e-02
+Epoch 193, Train loss: methylation:1.06e-02
+Epoch 194, Train loss: methylation:1.07e-02
+Epoch 195, Train loss: methylation:1.08e-02
+Epoch 196, Train loss: methylation:1.12e-02
+Epoch 197, Train loss: methylation:1.15e-02
+Epoch 198, Train loss: methylation:1.14e-02
+Epoch 199, Train loss: methylation:1.08e-02
+Epoch 200, Train loss: methylation:1.03e-02
+
+Test: Epoch 200
+Train Accuracy: 0.9196   Test ACC: 0.6467
+Train F1: 0.9187         Test F1: 0.6539
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9286
+Her2 	           0.2000              0.9904              0.0543              0.8000
+LumA 	           0.2000              0.8230              0.4837              0.4494
+LumB 	           0.2000              0.8804              0.1739              0.7500
+
+Epoch 201, Train loss: methylation:1.04e-02
+Epoch 202, Train loss: methylation:1.05e-02
+Epoch 203, Train loss: methylation:1.03e-02
+Epoch 204, Train loss: methylation:1.02e-02
+Epoch 205, Train loss: methylation:1.04e-02
+Epoch 206, Train loss: methylation:1.01e-02
+Epoch 207, Train loss: methylation:1.01e-02
+Epoch 208, Train loss: methylation:1.09e-02
+Epoch 209, Train loss: methylation:1.18e-02
+Epoch 210, Train loss: methylation:1.20e-02
+Epoch 211, Train loss: methylation:1.08e-02
+Epoch 212, Train loss: methylation:1.01e-02
+Epoch 213, Train loss: methylation:1.06e-02
+Epoch 214, Train loss: methylation:1.03e-02
+Epoch 215, Train loss: methylation:9.82e-03
+Epoch 216, Train loss: methylation:1.03e-02
+Epoch 217, Train loss: methylation:1.04e-02
+Epoch 218, Train loss: methylation:9.77e-03
+Epoch 219, Train loss: methylation:9.98e-03
+Epoch 220, Train loss: methylation:9.92e-03
+Epoch 221, Train loss: methylation:9.80e-03
+Epoch 222, Train loss: methylation:9.93e-03
+Epoch 223, Train loss: methylation:1.02e-02
+Epoch 224, Train loss: methylation:9.79e-03
+Epoch 225, Train loss: methylation:9.78e-03
+Epoch 226, Train loss: methylation:9.28e-03
+Epoch 227, Train loss: methylation:9.76e-03
+Epoch 228, Train loss: methylation:9.71e-03
+Epoch 229, Train loss: methylation:9.40e-03
+Epoch 230, Train loss: methylation:9.36e-03
+Epoch 231, Train loss: methylation:9.45e-03
+Epoch 232, Train loss: methylation:9.61e-03
+Epoch 233, Train loss: methylation:9.42e-03
+Epoch 234, Train loss: methylation:9.23e-03
+Epoch 235, Train loss: methylation:9.39e-03
+Epoch 236, Train loss: methylation:9.33e-03
+Epoch 237, Train loss: methylation:9.24e-03
+Epoch 238, Train loss: methylation:9.05e-03
+Epoch 239, Train loss: methylation:9.05e-03
+Epoch 240, Train loss: methylation:9.52e-03
+Epoch 241, Train loss: methylation:1.04e-02
+Epoch 242, Train loss: methylation:1.08e-02
+Epoch 243, Train loss: methylation:1.02e-02
+Epoch 244, Train loss: methylation:9.00e-03
+Epoch 245, Train loss: methylation:9.42e-03
+Epoch 246, Train loss: methylation:1.00e-02
+Epoch 247, Train loss: methylation:9.65e-03
+Epoch 248, Train loss: methylation:9.28e-03
+Epoch 249, Train loss: methylation:9.51e-03
+Epoch 250, Train loss: methylation:9.70e-03
+
+Test: Epoch 250
+Train Accuracy: 0.9110   Test ACC: 0.7120
+Train F1: 0.9098         Test F1: 0.7206
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8469              0.4837              0.5506
+LumB 	           0.2000              0.7990              0.1739              0.8125
+
+Epoch 251, Train loss: methylation:9.10e-03
+Epoch 252, Train loss: methylation:8.91e-03
+Epoch 253, Train loss: methylation:9.27e-03
+Epoch 254, Train loss: methylation:9.51e-03
+Epoch 255, Train loss: methylation:8.97e-03
+Epoch 256, Train loss: methylation:8.94e-03
+Epoch 257, Train loss: methylation:9.09e-03
+Epoch 258, Train loss: methylation:8.84e-03
+Epoch 259, Train loss: methylation:9.17e-03
+Epoch 260, Train loss: methylation:9.09e-03
+Epoch 261, Train loss: methylation:8.93e-03
+Epoch 262, Train loss: methylation:9.16e-03
+Epoch 263, Train loss: methylation:9.64e-03
+Epoch 264, Train loss: methylation:9.95e-03
+Epoch 265, Train loss: methylation:9.55e-03
+Epoch 266, Train loss: methylation:8.59e-03
+Epoch 267, Train loss: methylation:8.61e-03
+Epoch 268, Train loss: methylation:9.11e-03
+Epoch 269, Train loss: methylation:8.66e-03
+Epoch 270, Train loss: methylation:8.58e-03
+Epoch 271, Train loss: methylation:8.80e-03
+Epoch 272, Train loss: methylation:8.86e-03
+Epoch 273, Train loss: methylation:8.64e-03
+Epoch 274, Train loss: methylation:8.43e-03
+Epoch 275, Train loss: methylation:8.23e-03
+Epoch 276, Train loss: methylation:8.53e-03
+Epoch 277, Train loss: methylation:9.00e-03
+Epoch 278, Train loss: methylation:8.65e-03
+Epoch 279, Train loss: methylation:8.14e-03
+Epoch 280, Train loss: methylation:8.14e-03
+Epoch 281, Train loss: methylation:8.45e-03
+Epoch 282, Train loss: methylation:8.20e-03
+Epoch 283, Train loss: methylation:8.17e-03
+Epoch 284, Train loss: methylation:8.10e-03
+Epoch 285, Train loss: methylation:8.06e-03
+Epoch 286, Train loss: methylation:8.04e-03
+Epoch 287, Train loss: methylation:8.01e-03
+Epoch 288, Train loss: methylation:8.32e-03
+Epoch 289, Train loss: methylation:8.52e-03
+Epoch 290, Train loss: methylation:8.61e-03
+Epoch 291, Train loss: methylation:8.47e-03
+Epoch 292, Train loss: methylation:7.94e-03
+Epoch 293, Train loss: methylation:7.91e-03
+Epoch 294, Train loss: methylation:8.07e-03
+Epoch 295, Train loss: methylation:8.91e-03
+Epoch 296, Train loss: methylation:9.09e-03
+Epoch 297, Train loss: methylation:1.01e-02
+Epoch 298, Train loss: methylation:1.09e-02
+Epoch 299, Train loss: methylation:1.25e-02
+Epoch 300, Train loss: methylation:1.01e-02
+
+Test: Epoch 300
+Train Accuracy: 0.8986   Test ACC: 0.8098
+Train F1: 0.8973         Test F1: 0.8060
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.8400
+Basal 	           0.2000              0.9761              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.8660              0.4837              0.8652
+LumB 	           0.2000              0.7368              0.1739              0.5312
+
+Epoch 301, Train loss: methylation:9.29e-03
+Epoch 302, Train loss: methylation:1.01e-02
+Epoch 303, Train loss: methylation:9.22e-03
+Epoch 304, Train loss: methylation:1.04e-02
+Epoch 305, Train loss: methylation:8.58e-03
+Epoch 306, Train loss: methylation:9.26e-03
+Epoch 307, Train loss: methylation:8.65e-03
+Epoch 308, Train loss: methylation:8.48e-03
+Epoch 309, Train loss: methylation:9.02e-03
+Epoch 310, Train loss: methylation:7.79e-03
+Epoch 311, Train loss: methylation:8.62e-03
+Epoch 312, Train loss: methylation:8.42e-03
+Epoch 313, Train loss: methylation:8.02e-03
+Epoch 314, Train loss: methylation:8.35e-03
+Epoch 315, Train loss: methylation:8.21e-03
+Epoch 316, Train loss: methylation:8.09e-03
+Epoch 317, Train loss: methylation:8.15e-03
+Epoch 318, Train loss: methylation:8.69e-03
+Epoch 319, Train loss: methylation:7.95e-03
+Epoch 320, Train loss: methylation:8.04e-03
+Epoch 321, Train loss: methylation:8.15e-03
+Epoch 322, Train loss: methylation:8.09e-03
+Epoch 323, Train loss: methylation:7.54e-03
+Epoch 324, Train loss: methylation:8.30e-03
+Epoch 325, Train loss: methylation:8.08e-03
+Epoch 326, Train loss: methylation:7.41e-03
+Epoch 327, Train loss: methylation:8.04e-03
+Epoch 328, Train loss: methylation:7.82e-03
+Epoch 329, Train loss: methylation:7.46e-03
+Epoch 330, Train loss: methylation:7.58e-03
+Epoch 331, Train loss: methylation:7.74e-03
+Epoch 332, Train loss: methylation:7.54e-03
+Epoch 333, Train loss: methylation:7.70e-03
+Epoch 334, Train loss: methylation:7.21e-03
+Epoch 335, Train loss: methylation:7.30e-03
+Epoch 336, Train loss: methylation:7.65e-03
+Epoch 337, Train loss: methylation:7.27e-03
+Epoch 338, Train loss: methylation:7.20e-03
+Epoch 339, Train loss: methylation:7.14e-03
+Epoch 340, Train loss: methylation:7.32e-03
+Epoch 341, Train loss: methylation:7.22e-03
+Epoch 342, Train loss: methylation:7.12e-03
+Epoch 343, Train loss: methylation:7.15e-03
+Epoch 344, Train loss: methylation:7.15e-03
+Epoch 345, Train loss: methylation:6.99e-03
+Epoch 346, Train loss: methylation:7.31e-03
+Epoch 347, Train loss: methylation:7.21e-03
+Epoch 348, Train loss: methylation:7.11e-03
+Epoch 349, Train loss: methylation:6.90e-03
+Epoch 350, Train loss: methylation:6.98e-03
+
+Test: Epoch 350
+Train Accuracy: 0.9416   Test ACC: 0.7772
+Train F1: 0.9410         Test F1: 0.7829
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9187              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8421              0.4837              0.7079
+LumB 	           0.2000              0.9569              0.1739              0.7500
+
+Epoch 351, Train loss: methylation:6.88e-03
+Epoch 352, Train loss: methylation:7.41e-03
+Epoch 353, Train loss: methylation:8.76e-03
+Epoch 354, Train loss: methylation:1.01e-02
+Epoch 355, Train loss: methylation:1.29e-02
+Epoch 356, Train loss: methylation:8.52e-03
+Epoch 357, Train loss: methylation:8.57e-03
+Epoch 358, Train loss: methylation:1.03e-02
+Epoch 359, Train loss: methylation:7.88e-03
+Epoch 360, Train loss: methylation:1.00e-02
+Epoch 361, Train loss: methylation:8.11e-03
+Epoch 362, Train loss: methylation:9.91e-03
+Epoch 363, Train loss: methylation:8.44e-03
+Epoch 364, Train loss: methylation:8.94e-03
+Epoch 365, Train loss: methylation:7.68e-03
+Epoch 366, Train loss: methylation:8.25e-03
+Epoch 367, Train loss: methylation:7.86e-03
+Epoch 368, Train loss: methylation:7.73e-03
+Epoch 369, Train loss: methylation:8.08e-03
+Epoch 370, Train loss: methylation:7.26e-03
+Epoch 371, Train loss: methylation:7.76e-03
+Epoch 372, Train loss: methylation:7.07e-03
+Epoch 373, Train loss: methylation:7.54e-03
+Epoch 374, Train loss: methylation:7.37e-03
+Epoch 375, Train loss: methylation:7.17e-03
+Epoch 376, Train loss: methylation:7.37e-03
+Epoch 377, Train loss: methylation:7.11e-03
+Epoch 378, Train loss: methylation:7.32e-03
+Epoch 379, Train loss: methylation:7.26e-03
+Epoch 380, Train loss: methylation:6.95e-03
+Epoch 381, Train loss: methylation:7.43e-03
+Epoch 382, Train loss: methylation:7.26e-03
+Epoch 383, Train loss: methylation:7.17e-03
+Epoch 384, Train loss: methylation:7.40e-03
+Epoch 385, Train loss: methylation:6.90e-03
+Epoch 386, Train loss: methylation:6.79e-03
+Epoch 387, Train loss: methylation:6.97e-03
+Epoch 388, Train loss: methylation:6.61e-03
+Epoch 389, Train loss: methylation:6.65e-03
+Epoch 390, Train loss: methylation:6.84e-03
+Epoch 391, Train loss: methylation:6.67e-03
+Epoch 392, Train loss: methylation:6.79e-03
+Epoch 393, Train loss: methylation:6.78e-03
+Epoch 394, Train loss: methylation:6.68e-03
+Epoch 395, Train loss: methylation:6.48e-03
+Epoch 396, Train loss: methylation:6.70e-03
+Epoch 397, Train loss: methylation:6.72e-03
+Epoch 398, Train loss: methylation:6.69e-03
+Epoch 399, Train loss: methylation:6.51e-03
+Epoch 400, Train loss: methylation:6.32e-03
+
+Test: Epoch 400
+Train Accuracy: 0.9464   Test ACC: 0.7935
+Train F1: 0.9460         Test F1: 0.7964
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9187              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8660              0.4837              0.7753
+LumB 	           0.2000              0.9569              0.1739              0.6562
+
+Epoch 401, Train loss: methylation:6.25e-03
+Epoch 402, Train loss: methylation:6.30e-03
+Epoch 403, Train loss: methylation:6.32e-03
+Epoch 404, Train loss: methylation:6.22e-03
+Epoch 405, Train loss: methylation:6.33e-03
+Epoch 406, Train loss: methylation:6.21e-03
+Epoch 407, Train loss: methylation:6.27e-03
+Epoch 408, Train loss: methylation:6.28e-03
+Epoch 409, Train loss: methylation:6.29e-03
+Epoch 410, Train loss: methylation:6.76e-03
+Epoch 411, Train loss: methylation:7.78e-03
+Epoch 412, Train loss: methylation:9.93e-03
+Epoch 413, Train loss: methylation:1.05e-02
+Epoch 414, Train loss: methylation:8.75e-03
+Epoch 415, Train loss: methylation:7.39e-03
+Epoch 416, Train loss: methylation:9.39e-03
+Epoch 417, Train loss: methylation:8.13e-03
+Epoch 418, Train loss: methylation:8.44e-03
+Epoch 419, Train loss: methylation:7.97e-03
+Epoch 420, Train loss: methylation:7.31e-03
+Epoch 421, Train loss: methylation:8.87e-03
+Epoch 422, Train loss: methylation:7.54e-03
+Epoch 423, Train loss: methylation:8.39e-03
+Epoch 424, Train loss: methylation:7.89e-03
+Epoch 425, Train loss: methylation:6.83e-03
+Epoch 426, Train loss: methylation:8.13e-03
+Epoch 427, Train loss: methylation:7.44e-03
+Epoch 428, Train loss: methylation:7.70e-03
+Epoch 429, Train loss: methylation:8.04e-03
+Epoch 430, Train loss: methylation:6.57e-03
+Epoch 431, Train loss: methylation:7.99e-03
+Epoch 432, Train loss: methylation:7.05e-03
+Epoch 433, Train loss: methylation:6.41e-03
+Epoch 434, Train loss: methylation:6.88e-03
+Epoch 435, Train loss: methylation:6.47e-03
+Epoch 436, Train loss: methylation:6.91e-03
+Epoch 437, Train loss: methylation:7.65e-03
+Epoch 438, Train loss: methylation:6.33e-03
+Epoch 439, Train loss: methylation:7.08e-03
+Epoch 440, Train loss: methylation:6.63e-03
+Epoch 441, Train loss: methylation:6.32e-03
+Epoch 442, Train loss: methylation:6.96e-03
+Epoch 443, Train loss: methylation:6.34e-03
+Epoch 444, Train loss: methylation:6.37e-03
+Epoch 445, Train loss: methylation:6.51e-03
+Epoch 446, Train loss: methylation:6.24e-03
+Epoch 447, Train loss: methylation:6.56e-03
+Epoch 448, Train loss: methylation:5.92e-03
+Epoch 449, Train loss: methylation:6.08e-03
+Epoch 450, Train loss: methylation:6.41e-03
+
+Test: Epoch 450
+Train Accuracy: 0.9349   Test ACC: 0.8098
+Train F1: 0.9335         Test F1: 0.8092
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9187              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.7799              0.4837              0.8427
+LumB 	           0.2000              0.9809              0.1739              0.5938
+
+Epoch 451, Train loss: methylation:6.03e-03
+Epoch 452, Train loss: methylation:6.26e-03
+Epoch 453, Train loss: methylation:6.03e-03
+Epoch 454, Train loss: methylation:6.02e-03
+Epoch 455, Train loss: methylation:5.94e-03
+Epoch 456, Train loss: methylation:5.64e-03
+Epoch 457, Train loss: methylation:5.82e-03
+Epoch 458, Train loss: methylation:5.81e-03
+Epoch 459, Train loss: methylation:5.72e-03
+Epoch 460, Train loss: methylation:5.90e-03
+Epoch 461, Train loss: methylation:6.11e-03
+Epoch 462, Train loss: methylation:6.07e-03
+Epoch 463, Train loss: methylation:6.97e-03
+Epoch 464, Train loss: methylation:6.22e-03
+Epoch 465, Train loss: methylation:6.06e-03
+Epoch 466, Train loss: methylation:5.70e-03
+Epoch 467, Train loss: methylation:5.64e-03
+Epoch 468, Train loss: methylation:5.71e-03
+Epoch 469, Train loss: methylation:5.95e-03
+Epoch 470, Train loss: methylation:5.99e-03
+Epoch 471, Train loss: methylation:5.92e-03
+Epoch 472, Train loss: methylation:5.87e-03
+Epoch 473, Train loss: methylation:5.79e-03
+Epoch 474, Train loss: methylation:5.60e-03
+Epoch 475, Train loss: methylation:5.56e-03
+Epoch 476, Train loss: methylation:5.53e-03
+Epoch 477, Train loss: methylation:5.60e-03
+Epoch 478, Train loss: methylation:5.62e-03
+Epoch 479, Train loss: methylation:5.48e-03
+Epoch 480, Train loss: methylation:5.56e-03
+Epoch 481, Train loss: methylation:5.74e-03
+Epoch 482, Train loss: methylation:6.40e-03
+Epoch 483, Train loss: methylation:8.15e-03
+Epoch 484, Train loss: methylation:8.73e-03
+Epoch 485, Train loss: methylation:8.55e-03
+Epoch 486, Train loss: methylation:5.89e-03
+Epoch 487, Train loss: methylation:8.50e-03
+Epoch 488, Train loss: methylation:7.32e-03
+Epoch 489, Train loss: methylation:7.22e-03
+Epoch 490, Train loss: methylation:7.48e-03
+Epoch 491, Train loss: methylation:6.54e-03
+Epoch 492, Train loss: methylation:7.60e-03
+Epoch 493, Train loss: methylation:6.06e-03
+Epoch 494, Train loss: methylation:6.96e-03
+Epoch 495, Train loss: methylation:6.79e-03
+Epoch 496, Train loss: methylation:5.91e-03
+Epoch 497, Train loss: methylation:6.72e-03
+Epoch 498, Train loss: methylation:5.85e-03
+Epoch 499, Train loss: methylation:6.59e-03
+Epoch 500, Train loss: methylation:6.51e-03
+
+Test: Epoch 500
+Train Accuracy: 0.9483   Test ACC: 0.8098
+Train F1: 0.9481         Test F1: 0.8101
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9378              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9187              0.4837              0.8202
+LumB 	           0.2000              0.8900              0.1739              0.6250
+
+Epoch 501, Train loss: methylation:5.95e-03
+Epoch 502, Train loss: methylation:6.16e-03
+Epoch 503, Train loss: methylation:6.29e-03
+Epoch 504, Train loss: methylation:6.18e-03
+Epoch 505, Train loss: methylation:6.14e-03
+Epoch 506, Train loss: methylation:5.93e-03
+Epoch 507, Train loss: methylation:6.46e-03
+Epoch 508, Train loss: methylation:6.15e-03
+Epoch 509, Train loss: methylation:5.40e-03
+Epoch 510, Train loss: methylation:5.99e-03
+Epoch 511, Train loss: methylation:5.96e-03
+Epoch 512, Train loss: methylation:5.87e-03
+Epoch 513, Train loss: methylation:5.85e-03
+Epoch 514, Train loss: methylation:5.74e-03
+Epoch 515, Train loss: methylation:5.93e-03
+Epoch 516, Train loss: methylation:6.22e-03
+Epoch 517, Train loss: methylation:5.40e-03
+Epoch 518, Train loss: methylation:5.80e-03
+Epoch 519, Train loss: methylation:6.10e-03
+Epoch 520, Train loss: methylation:6.01e-03
+Epoch 521, Train loss: methylation:5.91e-03
+Epoch 522, Train loss: methylation:6.08e-03
+Epoch 523, Train loss: methylation:7.37e-03
+Epoch 524, Train loss: methylation:6.92e-03
+Epoch 525, Train loss: methylation:5.71e-03
+Epoch 526, Train loss: methylation:5.74e-03
+Epoch 527, Train loss: methylation:6.29e-03
+Epoch 528, Train loss: methylation:6.16e-03
+Epoch 529, Train loss: methylation:5.62e-03
+Epoch 530, Train loss: methylation:6.10e-03
+Epoch 531, Train loss: methylation:6.30e-03
+Epoch 532, Train loss: methylation:6.09e-03
+Epoch 533, Train loss: methylation:5.35e-03
+Epoch 534, Train loss: methylation:6.16e-03
+Epoch 535, Train loss: methylation:6.02e-03
+Epoch 536, Train loss: methylation:5.24e-03
+Epoch 537, Train loss: methylation:5.57e-03
+Epoch 538, Train loss: methylation:5.84e-03
+Epoch 539, Train loss: methylation:5.58e-03
+Epoch 540, Train loss: methylation:5.63e-03
+Epoch 541, Train loss: methylation:5.28e-03
+Epoch 542, Train loss: methylation:5.98e-03
+Epoch 543, Train loss: methylation:5.54e-03
+Epoch 544, Train loss: methylation:5.96e-03
+Epoch 545, Train loss: methylation:6.35e-03
+Epoch 546, Train loss: methylation:6.98e-03
+Epoch 547, Train loss: methylation:6.78e-03
+Epoch 548, Train loss: methylation:6.40e-03
+Epoch 549, Train loss: methylation:5.51e-03
+Epoch 550, Train loss: methylation:6.21e-03
+
+Test: Epoch 550
+Train Accuracy: 0.9627   Test ACC: 0.7554
+Train F1: 0.9627         Test F1: 0.7652
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9330              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9282              0.4837              0.6742
+LumB 	           0.2000              0.9569              0.1739              0.7500
+
+Epoch 551, Train loss: methylation:5.82e-03
+Epoch 552, Train loss: methylation:5.89e-03
+Epoch 553, Train loss: methylation:5.88e-03
+Epoch 554, Train loss: methylation:5.38e-03
+Epoch 555, Train loss: methylation:5.69e-03
+Epoch 556, Train loss: methylation:5.84e-03
+Epoch 557, Train loss: methylation:5.22e-03
+Epoch 558, Train loss: methylation:5.27e-03
+Epoch 559, Train loss: methylation:5.83e-03
+Epoch 560, Train loss: methylation:5.65e-03
+Epoch 561, Train loss: methylation:5.57e-03
+Epoch 562, Train loss: methylation:6.36e-03
+Epoch 563, Train loss: methylation:6.54e-03
+Epoch 564, Train loss: methylation:6.34e-03
+Epoch 565, Train loss: methylation:6.62e-03
+Epoch 566, Train loss: methylation:5.58e-03
+Epoch 567, Train loss: methylation:5.72e-03
+Epoch 568, Train loss: methylation:5.63e-03
+Epoch 569, Train loss: methylation:6.66e-03
+Epoch 570, Train loss: methylation:5.53e-03
+Epoch 571, Train loss: methylation:5.04e-03
+Epoch 572, Train loss: methylation:5.54e-03
+Epoch 573, Train loss: methylation:5.33e-03
+Epoch 574, Train loss: methylation:5.27e-03
+Epoch 575, Train loss: methylation:4.99e-03
+Epoch 576, Train loss: methylation:5.48e-03
+Epoch 577, Train loss: methylation:5.09e-03
+Epoch 578, Train loss: methylation:5.26e-03
+Epoch 579, Train loss: methylation:5.64e-03
+Epoch 580, Train loss: methylation:5.70e-03
+Epoch 581, Train loss: methylation:5.88e-03
+Epoch 582, Train loss: methylation:6.01e-03
+Epoch 583, Train loss: methylation:5.72e-03
+Epoch 584, Train loss: methylation:5.03e-03
+Epoch 585, Train loss: methylation:5.04e-03
+Epoch 586, Train loss: methylation:5.45e-03
+Epoch 587, Train loss: methylation:5.17e-03
+Epoch 588, Train loss: methylation:4.80e-03
+Epoch 589, Train loss: methylation:4.92e-03
+Epoch 590, Train loss: methylation:5.22e-03
+Epoch 591, Train loss: methylation:5.28e-03
+Epoch 592, Train loss: methylation:5.89e-03
+Epoch 593, Train loss: methylation:5.74e-03
+Epoch 594, Train loss: methylation:5.18e-03
+Epoch 595, Train loss: methylation:4.97e-03
+Epoch 596, Train loss: methylation:4.74e-03
+Epoch 597, Train loss: methylation:4.69e-03
+Epoch 598, Train loss: methylation:4.68e-03
+Epoch 599, Train loss: methylation:4.78e-03
+Epoch 600, Train loss: methylation:4.67e-03
+
+Test: Epoch 600
+Train Accuracy: 0.9656   Test ACC: 0.8043
+Train F1: 0.9654         Test F1: 0.8064
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9522              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9234              0.4837              0.8090
+LumB 	           0.2000              0.9569              0.1739              0.6250
+
+Epoch 601, Train loss: methylation:4.66e-03
+Epoch 602, Train loss: methylation:4.53e-03
+Epoch 603, Train loss: methylation:5.02e-03
+Epoch 604, Train loss: methylation:6.11e-03
+Epoch 605, Train loss: methylation:6.79e-03
+Epoch 606, Train loss: methylation:8.36e-03
+Epoch 607, Train loss: methylation:5.34e-03
+Epoch 608, Train loss: methylation:5.71e-03
+Epoch 609, Train loss: methylation:6.91e-03
+Epoch 610, Train loss: methylation:5.24e-03
+Epoch 611, Train loss: methylation:6.87e-03
+Epoch 612, Train loss: methylation:6.43e-03
+Epoch 613, Train loss: methylation:5.39e-03
+Epoch 614, Train loss: methylation:7.17e-03
+Epoch 615, Train loss: methylation:5.80e-03
+Epoch 616, Train loss: methylation:5.55e-03
+Epoch 617, Train loss: methylation:6.35e-03
+Epoch 618, Train loss: methylation:5.15e-03
+Epoch 619, Train loss: methylation:5.35e-03
+Epoch 620, Train loss: methylation:5.67e-03
+Epoch 621, Train loss: methylation:4.74e-03
+Epoch 622, Train loss: methylation:5.56e-03
+Epoch 623, Train loss: methylation:5.67e-03
+Epoch 624, Train loss: methylation:4.74e-03
+Epoch 625, Train loss: methylation:5.68e-03
+Epoch 626, Train loss: methylation:5.50e-03
+Epoch 627, Train loss: methylation:4.65e-03
+Epoch 628, Train loss: methylation:5.30e-03
+Epoch 629, Train loss: methylation:5.37e-03
+Epoch 630, Train loss: methylation:5.01e-03
+Epoch 631, Train loss: methylation:5.10e-03
+Epoch 632, Train loss: methylation:5.03e-03
+Epoch 633, Train loss: methylation:4.85e-03
+Epoch 634, Train loss: methylation:4.61e-03
+Epoch 635, Train loss: methylation:5.01e-03
+Epoch 636, Train loss: methylation:4.70e-03
+Epoch 637, Train loss: methylation:4.44e-03
+Epoch 638, Train loss: methylation:4.82e-03
+Epoch 639, Train loss: methylation:4.49e-03
+Epoch 640, Train loss: methylation:4.64e-03
+Epoch 641, Train loss: methylation:4.54e-03
+Epoch 642, Train loss: methylation:4.93e-03
+Epoch 643, Train loss: methylation:4.77e-03
+Epoch 644, Train loss: methylation:4.54e-03
+Epoch 645, Train loss: methylation:5.02e-03
+Epoch 646, Train loss: methylation:5.17e-03
+Epoch 647, Train loss: methylation:5.24e-03
+Epoch 648, Train loss: methylation:4.76e-03
+Epoch 649, Train loss: methylation:4.71e-03
+Epoch 650, Train loss: methylation:4.85e-03
+
+Test: Epoch 650
+Train Accuracy: 0.9646   Test ACC: 0.7935
+Train F1: 0.9644         Test F1: 0.7943
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9330              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9043              0.4837              0.8090
+LumB 	           0.2000              0.9904              0.1739              0.5625
+
+Epoch 651, Train loss: methylation:4.70e-03
+Epoch 652, Train loss: methylation:4.20e-03
+Epoch 653, Train loss: methylation:4.71e-03
+Epoch 654, Train loss: methylation:4.79e-03
+Epoch 655, Train loss: methylation:4.59e-03
+Epoch 656, Train loss: methylation:4.31e-03
+Epoch 657, Train loss: methylation:4.63e-03
+Epoch 658, Train loss: methylation:4.69e-03
+Epoch 659, Train loss: methylation:4.57e-03
+Epoch 660, Train loss: methylation:5.36e-03
+Epoch 661, Train loss: methylation:6.36e-03
+Epoch 662, Train loss: methylation:8.19e-03
+Epoch 663, Train loss: methylation:6.18e-03
+Epoch 664, Train loss: methylation:5.10e-03
+Epoch 665, Train loss: methylation:5.37e-03
+Epoch 666, Train loss: methylation:5.19e-03
+Epoch 667, Train loss: methylation:5.11e-03
+Epoch 668, Train loss: methylation:5.65e-03
+Epoch 669, Train loss: methylation:5.56e-03
+Epoch 670, Train loss: methylation:4.59e-03
+Epoch 671, Train loss: methylation:5.35e-03
+Epoch 672, Train loss: methylation:5.62e-03
+Epoch 673, Train loss: methylation:4.64e-03
+Epoch 674, Train loss: methylation:5.77e-03
+Epoch 675, Train loss: methylation:5.18e-03
+Epoch 676, Train loss: methylation:5.05e-03
+Epoch 677, Train loss: methylation:6.47e-03
+Epoch 678, Train loss: methylation:5.21e-03
+Epoch 679, Train loss: methylation:5.04e-03
+Epoch 680, Train loss: methylation:5.09e-03
+Epoch 681, Train loss: methylation:5.07e-03
+Epoch 682, Train loss: methylation:4.67e-03
+Epoch 683, Train loss: methylation:4.69e-03
+Epoch 684, Train loss: methylation:4.86e-03
+Epoch 685, Train loss: methylation:4.40e-03
+Epoch 686, Train loss: methylation:4.78e-03
+Epoch 687, Train loss: methylation:4.76e-03
+Epoch 688, Train loss: methylation:4.97e-03
+Epoch 689, Train loss: methylation:4.91e-03
+Epoch 690, Train loss: methylation:4.69e-03
+Epoch 691, Train loss: methylation:4.70e-03
+Epoch 692, Train loss: methylation:4.21e-03
+Epoch 693, Train loss: methylation:4.27e-03
+Epoch 694, Train loss: methylation:4.33e-03
+Epoch 695, Train loss: methylation:4.34e-03
+Epoch 696, Train loss: methylation:4.51e-03
+Epoch 697, Train loss: methylation:4.62e-03
+Epoch 698, Train loss: methylation:4.76e-03
+Epoch 699, Train loss: methylation:4.76e-03
+Epoch 700, Train loss: methylation:4.70e-03
+
+Test: Epoch 700
+Train Accuracy: 0.9789   Test ACC: 0.7880
+Train F1: 0.9789         Test F1: 0.7948
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9713              0.4837              0.7528
+LumB 	           0.2000              0.9426              0.1739              0.7188
+
+Epoch 701, Train loss: methylation:4.67e-03
+Epoch 702, Train loss: methylation:4.47e-03
+Epoch 703, Train loss: methylation:4.15e-03
+Epoch 704, Train loss: methylation:4.02e-03
+Epoch 705, Train loss: methylation:4.34e-03
+Epoch 706, Train loss: methylation:4.57e-03
+Epoch 707, Train loss: methylation:4.48e-03
+Epoch 708, Train loss: methylation:5.19e-03
+Epoch 709, Train loss: methylation:5.29e-03
+Epoch 710, Train loss: methylation:5.54e-03
+Epoch 711, Train loss: methylation:5.13e-03
+Epoch 712, Train loss: methylation:4.62e-03
+Epoch 713, Train loss: methylation:4.60e-03
+Epoch 714, Train loss: methylation:4.88e-03
+Epoch 715, Train loss: methylation:5.41e-03
+Epoch 716, Train loss: methylation:4.41e-03
+Epoch 717, Train loss: methylation:4.74e-03
+Epoch 718, Train loss: methylation:6.16e-03
+Epoch 719, Train loss: methylation:5.15e-03
+Epoch 720, Train loss: methylation:4.58e-03
+Epoch 721, Train loss: methylation:4.49e-03
+Epoch 722, Train loss: methylation:5.34e-03
+Epoch 723, Train loss: methylation:5.07e-03
+Epoch 724, Train loss: methylation:4.28e-03
+Epoch 725, Train loss: methylation:4.77e-03
+Epoch 726, Train loss: methylation:5.23e-03
+Epoch 727, Train loss: methylation:4.71e-03
+Epoch 728, Train loss: methylation:4.36e-03
+Epoch 729, Train loss: methylation:4.49e-03
+Epoch 730, Train loss: methylation:4.37e-03
+Epoch 731, Train loss: methylation:4.34e-03
+Epoch 732, Train loss: methylation:4.77e-03
+Epoch 733, Train loss: methylation:4.44e-03
+Epoch 734, Train loss: methylation:4.33e-03
+Epoch 735, Train loss: methylation:4.28e-03
+Epoch 736, Train loss: methylation:4.01e-03
+Epoch 737, Train loss: methylation:4.18e-03
+Epoch 738, Train loss: methylation:4.23e-03
+Epoch 739, Train loss: methylation:4.19e-03
+Epoch 740, Train loss: methylation:4.24e-03
+Epoch 741, Train loss: methylation:4.11e-03
+Epoch 742, Train loss: methylation:4.41e-03
+Epoch 743, Train loss: methylation:4.18e-03
+Epoch 744, Train loss: methylation:4.04e-03
+Epoch 745, Train loss: methylation:4.18e-03
+Epoch 746, Train loss: methylation:3.89e-03
+Epoch 747, Train loss: methylation:3.99e-03
+Epoch 748, Train loss: methylation:3.96e-03
+Epoch 749, Train loss: methylation:4.15e-03
+Epoch 750, Train loss: methylation:4.23e-03
+
+Test: Epoch 750
+Train Accuracy: 0.9809   Test ACC: 0.7826
+Train F1: 0.9809         Test F1: 0.7904
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9617              0.4837              0.7191
+LumB 	           0.2000              0.9713              0.1739              0.7500
+
+Epoch 751, Train loss: methylation:4.77e-03
+Epoch 752, Train loss: methylation:5.70e-03
+Epoch 753, Train loss: methylation:7.48e-03
+Epoch 754, Train loss: methylation:6.66e-03
+Epoch 755, Train loss: methylation:4.53e-03
+Epoch 756, Train loss: methylation:5.40e-03
+Epoch 757, Train loss: methylation:5.66e-03
+Epoch 758, Train loss: methylation:4.69e-03
+Epoch 759, Train loss: methylation:5.03e-03
+Epoch 760, Train loss: methylation:4.80e-03
+Epoch 761, Train loss: methylation:4.62e-03
+Epoch 762, Train loss: methylation:4.57e-03
+Epoch 763, Train loss: methylation:4.85e-03
+Epoch 764, Train loss: methylation:5.05e-03
+Epoch 765, Train loss: methylation:4.60e-03
+Epoch 766, Train loss: methylation:4.68e-03
+Epoch 767, Train loss: methylation:4.00e-03
+Epoch 768, Train loss: methylation:4.74e-03
+Epoch 769, Train loss: methylation:5.16e-03
+Epoch 770, Train loss: methylation:4.87e-03
+Epoch 771, Train loss: methylation:4.71e-03
+Epoch 772, Train loss: methylation:4.24e-03
+Epoch 773, Train loss: methylation:5.06e-03
+Epoch 774, Train loss: methylation:4.06e-03
+Epoch 775, Train loss: methylation:4.53e-03
+Epoch 776, Train loss: methylation:4.65e-03
+Epoch 777, Train loss: methylation:4.40e-03
+Epoch 778, Train loss: methylation:4.32e-03
+Epoch 779, Train loss: methylation:4.14e-03
+Epoch 780, Train loss: methylation:4.50e-03
+Epoch 781, Train loss: methylation:3.94e-03
+Epoch 782, Train loss: methylation:4.38e-03
+Epoch 783, Train loss: methylation:4.24e-03
+Epoch 784, Train loss: methylation:4.15e-03
+Epoch 785, Train loss: methylation:4.14e-03
+Epoch 786, Train loss: methylation:3.83e-03
+Epoch 787, Train loss: methylation:4.27e-03
+Epoch 788, Train loss: methylation:3.99e-03
+Epoch 789, Train loss: methylation:4.24e-03
+Epoch 790, Train loss: methylation:4.33e-03
+Epoch 791, Train loss: methylation:5.01e-03
+Epoch 792, Train loss: methylation:5.68e-03
+Epoch 793, Train loss: methylation:6.35e-03
+Epoch 794, Train loss: methylation:5.19e-03
+Epoch 795, Train loss: methylation:4.26e-03
+Epoch 796, Train loss: methylation:4.39e-03
+Epoch 797, Train loss: methylation:4.79e-03
+Epoch 798, Train loss: methylation:4.55e-03
+Epoch 799, Train loss: methylation:3.89e-03
+Epoch 800, Train loss: methylation:4.60e-03
+
+Test: Epoch 800
+Train Accuracy: 0.9761   Test ACC: 0.7283
+Train F1: 0.9762         Test F1: 0.7389
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8800
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9761              0.4837              0.5843
+LumB 	           0.2000              0.9378              0.1739              0.7812
+
+Epoch 801, Train loss: methylation:5.97e-03
+Epoch 802, Train loss: methylation:5.60e-03
+Epoch 803, Train loss: methylation:4.12e-03
+Epoch 804, Train loss: methylation:4.27e-03
+Epoch 805, Train loss: methylation:5.19e-03
+Epoch 806, Train loss: methylation:5.20e-03
+Epoch 807, Train loss: methylation:4.07e-03
+Epoch 808, Train loss: methylation:4.70e-03
+Epoch 809, Train loss: methylation:6.34e-03
+Epoch 810, Train loss: methylation:4.01e-03
+Epoch 811, Train loss: methylation:5.48e-03
+Epoch 812, Train loss: methylation:7.99e-03
+Epoch 813, Train loss: methylation:6.27e-03
+Epoch 814, Train loss: methylation:5.85e-03
+Epoch 815, Train loss: methylation:8.83e-03
+Epoch 816, Train loss: methylation:6.06e-03
+Epoch 817, Train loss: methylation:8.90e-03
+Epoch 818, Train loss: methylation:6.47e-03
+Epoch 819, Train loss: methylation:7.38e-03
+Epoch 820, Train loss: methylation:6.42e-03
+Epoch 821, Train loss: methylation:6.14e-03
+Epoch 822, Train loss: methylation:6.14e-03
+Epoch 823, Train loss: methylation:5.45e-03
+Epoch 824, Train loss: methylation:7.27e-03
+Epoch 825, Train loss: methylation:6.00e-03
+Epoch 826, Train loss: methylation:6.34e-03
+Epoch 827, Train loss: methylation:5.65e-03
+Epoch 828, Train loss: methylation:6.37e-03
+Epoch 829, Train loss: methylation:5.20e-03
+Epoch 830, Train loss: methylation:6.28e-03
+Epoch 831, Train loss: methylation:5.22e-03
+Epoch 832, Train loss: methylation:5.38e-03
+Epoch 833, Train loss: methylation:6.02e-03
+Epoch 834, Train loss: methylation:4.53e-03
+Epoch 835, Train loss: methylation:5.26e-03
+Epoch 836, Train loss: methylation:5.08e-03
+Epoch 837, Train loss: methylation:4.62e-03
+Epoch 838, Train loss: methylation:4.83e-03
+Epoch 839, Train loss: methylation:4.64e-03
+Epoch 840, Train loss: methylation:4.60e-03
+Epoch 841, Train loss: methylation:4.47e-03
+Epoch 842, Train loss: methylation:4.56e-03
+Epoch 843, Train loss: methylation:4.11e-03
+Epoch 844, Train loss: methylation:4.22e-03
+Epoch 845, Train loss: methylation:4.41e-03
+Epoch 846, Train loss: methylation:3.87e-03
+Epoch 847, Train loss: methylation:4.32e-03
+Epoch 848, Train loss: methylation:3.93e-03
+Epoch 849, Train loss: methylation:4.00e-03
+Epoch 850, Train loss: methylation:4.02e-03
+
+Test: Epoch 850
+Train Accuracy: 0.9761   Test ACC: 0.7935
+Train F1: 0.9759         Test F1: 0.7938
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9187              0.4837              0.8202
+LumB 	           0.2000              0.9856              0.1739              0.5625
+
+Epoch 851, Train loss: methylation:3.75e-03
+Epoch 852, Train loss: methylation:3.80e-03
+Epoch 853, Train loss: methylation:3.76e-03
+Epoch 854, Train loss: methylation:3.86e-03
+Epoch 855, Train loss: methylation:3.71e-03
+Epoch 856, Train loss: methylation:3.73e-03
+Epoch 857, Train loss: methylation:3.75e-03
+Epoch 858, Train loss: methylation:3.80e-03
+Epoch 859, Train loss: methylation:3.81e-03
+Epoch 860, Train loss: methylation:3.63e-03
+Epoch 861, Train loss: methylation:3.76e-03
+Epoch 862, Train loss: methylation:3.69e-03
+Epoch 863, Train loss: methylation:3.76e-03
+Epoch 864, Train loss: methylation:3.70e-03
+Epoch 865, Train loss: methylation:3.66e-03
+Epoch 866, Train loss: methylation:3.57e-03
+Epoch 867, Train loss: methylation:3.60e-03
+Epoch 868, Train loss: methylation:3.68e-03
+Epoch 869, Train loss: methylation:3.65e-03
+Epoch 870, Train loss: methylation:3.78e-03
+Epoch 871, Train loss: methylation:3.92e-03
+Epoch 872, Train loss: methylation:4.53e-03
+Epoch 873, Train loss: methylation:5.31e-03
+Epoch 874, Train loss: methylation:6.35e-03
+Epoch 875, Train loss: methylation:5.21e-03
+Epoch 876, Train loss: methylation:3.91e-03
+Epoch 877, Train loss: methylation:4.64e-03
+Epoch 878, Train loss: methylation:4.72e-03
+Epoch 879, Train loss: methylation:3.84e-03
+Epoch 880, Train loss: methylation:4.22e-03
+Epoch 881, Train loss: methylation:4.54e-03
+Epoch 882, Train loss: methylation:4.12e-03
+Epoch 883, Train loss: methylation:3.90e-03
+Epoch 884, Train loss: methylation:4.00e-03
+Epoch 885, Train loss: methylation:3.99e-03
+Epoch 886, Train loss: methylation:4.22e-03
+Epoch 887, Train loss: methylation:4.39e-03
+Epoch 888, Train loss: methylation:3.84e-03
+Epoch 889, Train loss: methylation:3.79e-03
+Epoch 890, Train loss: methylation:4.06e-03
+Epoch 891, Train loss: methylation:4.11e-03
+Epoch 892, Train loss: methylation:4.14e-03
+Epoch 893, Train loss: methylation:4.51e-03
+Epoch 894, Train loss: methylation:4.27e-03
+Epoch 895, Train loss: methylation:3.68e-03
+Epoch 896, Train loss: methylation:3.98e-03
+Epoch 897, Train loss: methylation:4.20e-03
+Epoch 898, Train loss: methylation:3.97e-03
+Epoch 899, Train loss: methylation:4.07e-03
+Epoch 900, Train loss: methylation:4.51e-03
+
+Test: Epoch 900
+Train Accuracy: 0.9780   Test ACC: 0.7880
+Train F1: 0.9780         Test F1: 0.7923
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9426              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9809              0.4837              0.7753
+LumB 	           0.2000              0.9713              0.1739              0.6250
+
+Epoch 901, Train loss: methylation:4.06e-03
+Epoch 902, Train loss: methylation:4.04e-03
+Epoch 903, Train loss: methylation:4.66e-03
+Epoch 904, Train loss: methylation:4.10e-03
+Epoch 905, Train loss: methylation:3.94e-03
+Epoch 906, Train loss: methylation:3.86e-03
+Epoch 907, Train loss: methylation:3.69e-03
+Epoch 908, Train loss: methylation:3.83e-03
+Epoch 909, Train loss: methylation:4.23e-03
+Epoch 910, Train loss: methylation:4.35e-03
+Epoch 911, Train loss: methylation:3.88e-03
+Epoch 912, Train loss: methylation:3.90e-03
+Epoch 913, Train loss: methylation:3.66e-03
+Epoch 914, Train loss: methylation:3.54e-03
+Epoch 915, Train loss: methylation:3.77e-03
+Epoch 916, Train loss: methylation:3.76e-03
+Epoch 917, Train loss: methylation:3.67e-03
+Epoch 918, Train loss: methylation:3.80e-03
+Epoch 919, Train loss: methylation:3.89e-03
+Epoch 920, Train loss: methylation:3.60e-03
+Epoch 921, Train loss: methylation:3.48e-03
+Epoch 922, Train loss: methylation:3.71e-03
+Epoch 923, Train loss: methylation:3.57e-03
+Epoch 924, Train loss: methylation:3.60e-03
+Epoch 925, Train loss: methylation:3.65e-03
+Epoch 926, Train loss: methylation:3.75e-03
+Epoch 927, Train loss: methylation:3.54e-03
+Epoch 928, Train loss: methylation:4.01e-03
+Epoch 929, Train loss: methylation:4.14e-03
+Epoch 930, Train loss: methylation:4.44e-03
+Epoch 931, Train loss: methylation:4.84e-03
+Epoch 932, Train loss: methylation:4.97e-03
+Epoch 933, Train loss: methylation:3.98e-03
+Epoch 934, Train loss: methylation:3.59e-03
+Epoch 935, Train loss: methylation:4.04e-03
+Epoch 936, Train loss: methylation:4.10e-03
+Epoch 937, Train loss: methylation:3.79e-03
+Epoch 938, Train loss: methylation:3.97e-03
+Epoch 939, Train loss: methylation:3.86e-03
+Epoch 940, Train loss: methylation:3.78e-03
+Epoch 941, Train loss: methylation:4.23e-03
+Epoch 942, Train loss: methylation:4.78e-03
+Epoch 943, Train loss: methylation:4.38e-03
+Epoch 944, Train loss: methylation:5.14e-03
+Epoch 945, Train loss: methylation:4.34e-03
+Epoch 946, Train loss: methylation:3.74e-03
+Epoch 947, Train loss: methylation:3.92e-03
+Epoch 948, Train loss: methylation:4.31e-03
+Epoch 949, Train loss: methylation:3.92e-03
+Epoch 950, Train loss: methylation:3.36e-03
+
+Test: Epoch 950
+Train Accuracy: 0.9818   Test ACC: 0.7826
+Train F1: 0.9818         Test F1: 0.7816
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9904              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9474              0.4837              0.8202
+LumB 	           0.2000              0.9761              0.1739              0.5000
+
+Epoch 951, Train loss: methylation:3.87e-03
+Epoch 952, Train loss: methylation:3.89e-03
+Epoch 953, Train loss: methylation:3.77e-03
+Epoch 954, Train loss: methylation:4.08e-03
+Epoch 955, Train loss: methylation:4.00e-03
+Epoch 956, Train loss: methylation:3.84e-03
+Epoch 957, Train loss: methylation:3.85e-03
+Epoch 958, Train loss: methylation:3.76e-03
+Epoch 959, Train loss: methylation:3.54e-03
+Epoch 960, Train loss: methylation:3.57e-03
+Epoch 961, Train loss: methylation:4.29e-03
+Epoch 962, Train loss: methylation:3.95e-03
+Epoch 963, Train loss: methylation:4.26e-03
+Epoch 964, Train loss: methylation:4.83e-03
+Epoch 965, Train loss: methylation:4.66e-03
+Epoch 966, Train loss: methylation:3.96e-03
+Epoch 967, Train loss: methylation:3.95e-03
+Epoch 968, Train loss: methylation:3.57e-03
+Epoch 969, Train loss: methylation:3.98e-03
+Epoch 970, Train loss: methylation:4.80e-03
+Epoch 971, Train loss: methylation:4.73e-03
+Epoch 972, Train loss: methylation:3.98e-03
+Epoch 973, Train loss: methylation:3.41e-03
+Epoch 974, Train loss: methylation:3.80e-03
+Epoch 975, Train loss: methylation:3.78e-03
+Epoch 976, Train loss: methylation:3.74e-03
+Epoch 977, Train loss: methylation:3.67e-03
+Epoch 978, Train loss: methylation:3.36e-03
+Epoch 979, Train loss: methylation:3.47e-03
+Epoch 980, Train loss: methylation:3.43e-03
+Epoch 981, Train loss: methylation:3.90e-03
+Epoch 982, Train loss: methylation:4.69e-03
+Epoch 983, Train loss: methylation:5.00e-03
+Epoch 984, Train loss: methylation:6.29e-03
+Epoch 985, Train loss: methylation:4.01e-03
+Epoch 986, Train loss: methylation:3.84e-03
+Epoch 987, Train loss: methylation:5.06e-03
+Epoch 988, Train loss: methylation:3.98e-03
+Epoch 989, Train loss: methylation:4.20e-03
+Epoch 990, Train loss: methylation:5.48e-03
+Epoch 991, Train loss: methylation:5.19e-03
+Epoch 992, Train loss: methylation:3.81e-03
+Epoch 993, Train loss: methylation:5.22e-03
+Epoch 994, Train loss: methylation:4.85e-03
+Epoch 995, Train loss: methylation:3.76e-03
+Epoch 996, Train loss: methylation:4.78e-03
+Epoch 997, Train loss: methylation:4.62e-03
+Epoch 998, Train loss: methylation:4.73e-03
+Epoch 999, Train loss: methylation:3.61e-03
+Epoch 1000, Train loss: methylation:5.01e-03
+
+Test: Epoch 1000
+Train Accuracy: 0.9809   Test ACC: 0.7554
+Train F1: 0.9810         Test F1: 0.7642
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.8400
+Basal 	           0.2000              0.9856              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9904              0.4837              0.6742
+LumB 	           0.2000              0.9474              0.1739              0.7188
+
+
+----------------------------------------------------------------------------------------------------
+Run 3
+----------------------------------------------------------------------------------------------------
+2021-01-05 09:55:46.990272 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only one GCN - DNA Methylation
+SEED =  64582
+
+Training...
+Epoch 0, Train loss: methylation:1.36e-01
+
+Test: Epoch 0
+Train Accuracy: 0.1866   Test ACC: 0.0543
+Train F1: 0.1193         Test F1: 0.0056
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.0000              0.1359              0.0000
+Basal 	           0.2000              0.4641              0.1522              0.0000
+Her2 	           0.2000              0.0000              0.0543              1.0000
+LumA 	           0.2000              0.0431              0.4837              0.0000
+LumB 	           0.2000              0.4258              0.1739              0.0000
+
+Epoch 1, Train loss: methylation:1.41e+00
+Epoch 2, Train loss: methylation:2.01e-01
+Epoch 3, Train loss: methylation:1.10e-01
+Epoch 4, Train loss: methylation:2.92e-01
+Epoch 5, Train loss: methylation:2.31e-01
+Epoch 6, Train loss: methylation:9.60e-02
+Epoch 7, Train loss: methylation:4.07e-02
+Epoch 8, Train loss: methylation:9.90e-02
+Epoch 9, Train loss: methylation:1.32e-01
+Epoch 10, Train loss: methylation:1.02e-01
+Epoch 11, Train loss: methylation:5.73e-02
+Epoch 12, Train loss: methylation:3.84e-02
+Epoch 13, Train loss: methylation:4.44e-02
+Epoch 14, Train loss: methylation:5.78e-02
+Epoch 15, Train loss: methylation:6.13e-02
+Epoch 16, Train loss: methylation:5.47e-02
+Epoch 17, Train loss: methylation:4.32e-02
+Epoch 18, Train loss: methylation:3.53e-02
+Epoch 19, Train loss: methylation:3.38e-02
+Epoch 20, Train loss: methylation:3.88e-02
+Epoch 21, Train loss: methylation:4.28e-02
+Epoch 22, Train loss: methylation:4.35e-02
+Epoch 23, Train loss: methylation:4.04e-02
+Epoch 24, Train loss: methylation:3.54e-02
+Epoch 25, Train loss: methylation:3.16e-02
+Epoch 26, Train loss: methylation:3.14e-02
+Epoch 27, Train loss: methylation:3.23e-02
+Epoch 28, Train loss: methylation:3.33e-02
+Epoch 29, Train loss: methylation:3.40e-02
+Epoch 30, Train loss: methylation:3.33e-02
+Epoch 31, Train loss: methylation:3.15e-02
+Epoch 32, Train loss: methylation:2.94e-02
+Epoch 33, Train loss: methylation:2.86e-02
+Epoch 34, Train loss: methylation:2.83e-02
+Epoch 35, Train loss: methylation:2.86e-02
+Epoch 36, Train loss: methylation:2.95e-02
+Epoch 37, Train loss: methylation:2.83e-02
+Epoch 38, Train loss: methylation:2.78e-02
+Epoch 39, Train loss: methylation:2.74e-02
+Epoch 40, Train loss: methylation:2.63e-02
+Epoch 41, Train loss: methylation:2.55e-02
+Epoch 42, Train loss: methylation:2.61e-02
+Epoch 43, Train loss: methylation:2.54e-02
+Epoch 44, Train loss: methylation:2.57e-02
+Epoch 45, Train loss: methylation:2.51e-02
+Epoch 46, Train loss: methylation:2.48e-02
+Epoch 47, Train loss: methylation:2.42e-02
+Epoch 48, Train loss: methylation:2.42e-02
+Epoch 49, Train loss: methylation:2.39e-02
+Epoch 50, Train loss: methylation:2.40e-02
+
+Test: Epoch 50
+Train Accuracy: 0.6191   Test ACC: 0.3152
+Train F1: 0.6023         Test F1: 0.2515
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.9600
+Basal 	           0.2000              0.5359              0.1522              0.5714
+Her2 	           0.2000              0.8182              0.0543              0.8000
+LumA 	           0.2000              0.4976              0.4837              0.0112
+LumB 	           0.2000              0.3301              0.1739              0.2812
+
+Epoch 51, Train loss: methylation:2.38e-02
+Epoch 52, Train loss: methylation:2.32e-02
+Epoch 53, Train loss: methylation:2.29e-02
+Epoch 54, Train loss: methylation:2.28e-02
+Epoch 55, Train loss: methylation:2.24e-02
+Epoch 56, Train loss: methylation:2.19e-02
+Epoch 57, Train loss: methylation:2.15e-02
+Epoch 58, Train loss: methylation:2.19e-02
+Epoch 59, Train loss: methylation:2.13e-02
+Epoch 60, Train loss: methylation:2.14e-02
+Epoch 61, Train loss: methylation:2.16e-02
+Epoch 62, Train loss: methylation:2.09e-02
+Epoch 63, Train loss: methylation:2.12e-02
+Epoch 64, Train loss: methylation:2.09e-02
+Epoch 65, Train loss: methylation:2.03e-02
+Epoch 66, Train loss: methylation:2.03e-02
+Epoch 67, Train loss: methylation:2.02e-02
+Epoch 68, Train loss: methylation:1.99e-02
+Epoch 69, Train loss: methylation:1.96e-02
+Epoch 70, Train loss: methylation:1.97e-02
+Epoch 71, Train loss: methylation:1.98e-02
+Epoch 72, Train loss: methylation:1.93e-02
+Epoch 73, Train loss: methylation:1.92e-02
+Epoch 74, Train loss: methylation:1.90e-02
+Epoch 75, Train loss: methylation:1.88e-02
+Epoch 76, Train loss: methylation:1.86e-02
+Epoch 77, Train loss: methylation:1.86e-02
+Epoch 78, Train loss: methylation:1.85e-02
+Epoch 79, Train loss: methylation:1.82e-02
+Epoch 80, Train loss: methylation:1.80e-02
+Epoch 81, Train loss: methylation:1.75e-02
+Epoch 82, Train loss: methylation:1.78e-02
+Epoch 83, Train loss: methylation:1.76e-02
+Epoch 84, Train loss: methylation:1.77e-02
+Epoch 85, Train loss: methylation:1.76e-02
+Epoch 86, Train loss: methylation:1.73e-02
+Epoch 87, Train loss: methylation:1.69e-02
+Epoch 88, Train loss: methylation:1.72e-02
+Epoch 89, Train loss: methylation:1.67e-02
+Epoch 90, Train loss: methylation:1.70e-02
+Epoch 91, Train loss: methylation:1.70e-02
+Epoch 92, Train loss: methylation:1.67e-02
+Epoch 93, Train loss: methylation:1.66e-02
+Epoch 94, Train loss: methylation:1.64e-02
+Epoch 95, Train loss: methylation:1.66e-02
+Epoch 96, Train loss: methylation:1.63e-02
+Epoch 97, Train loss: methylation:1.61e-02
+Epoch 98, Train loss: methylation:1.62e-02
+Epoch 99, Train loss: methylation:1.58e-02
+Epoch 100, Train loss: methylation:1.62e-02
+
+Test: Epoch 100
+Train Accuracy: 0.8182   Test ACC: 0.5109
+Train F1: 0.8136         Test F1: 0.4285
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9091              0.1359              0.9200
+Basal 	           0.2000              0.9856              0.1522              0.9286
+Her2 	           0.2000              0.8660              0.0543              0.7000
+LumA 	           0.2000              0.6411              0.4837              0.0899
+LumB 	           0.2000              0.6890              0.1739              0.9375
+
+Epoch 101, Train loss: methylation:1.61e-02
+Epoch 102, Train loss: methylation:1.56e-02
+Epoch 103, Train loss: methylation:1.56e-02
+Epoch 104, Train loss: methylation:1.55e-02
+Epoch 105, Train loss: methylation:1.56e-02
+Epoch 106, Train loss: methylation:1.57e-02
+Epoch 107, Train loss: methylation:1.52e-02
+Epoch 108, Train loss: methylation:1.52e-02
+Epoch 109, Train loss: methylation:1.51e-02
+Epoch 110, Train loss: methylation:1.52e-02
+Epoch 111, Train loss: methylation:1.51e-02
+Epoch 112, Train loss: methylation:1.53e-02
+Epoch 113, Train loss: methylation:1.51e-02
+Epoch 114, Train loss: methylation:1.52e-02
+Epoch 115, Train loss: methylation:1.46e-02
+Epoch 116, Train loss: methylation:1.47e-02
+Epoch 117, Train loss: methylation:1.46e-02
+Epoch 118, Train loss: methylation:1.45e-02
+Epoch 119, Train loss: methylation:1.45e-02
+Epoch 120, Train loss: methylation:1.50e-02
+Epoch 121, Train loss: methylation:1.48e-02
+Epoch 122, Train loss: methylation:1.40e-02
+Epoch 123, Train loss: methylation:1.40e-02
+Epoch 124, Train loss: methylation:1.39e-02
+Epoch 125, Train loss: methylation:1.42e-02
+Epoch 126, Train loss: methylation:1.40e-02
+Epoch 127, Train loss: methylation:1.39e-02
+Epoch 128, Train loss: methylation:1.38e-02
+Epoch 129, Train loss: methylation:1.41e-02
+Epoch 130, Train loss: methylation:1.38e-02
+Epoch 131, Train loss: methylation:1.35e-02
+Epoch 132, Train loss: methylation:1.34e-02
+Epoch 133, Train loss: methylation:1.35e-02
+Epoch 134, Train loss: methylation:1.33e-02
+Epoch 135, Train loss: methylation:1.32e-02
+Epoch 136, Train loss: methylation:1.30e-02
+Epoch 137, Train loss: methylation:1.35e-02
+Epoch 138, Train loss: methylation:1.31e-02
+Epoch 139, Train loss: methylation:1.29e-02
+Epoch 140, Train loss: methylation:1.32e-02
+Epoch 141, Train loss: methylation:1.31e-02
+Epoch 142, Train loss: methylation:1.30e-02
+Epoch 143, Train loss: methylation:1.27e-02
+Epoch 144, Train loss: methylation:1.28e-02
+Epoch 145, Train loss: methylation:1.25e-02
+Epoch 146, Train loss: methylation:1.27e-02
+Epoch 147, Train loss: methylation:1.25e-02
+Epoch 148, Train loss: methylation:1.26e-02
+Epoch 149, Train loss: methylation:1.24e-02
+Epoch 150, Train loss: methylation:1.27e-02
+
+Test: Epoch 150
+Train Accuracy: 0.8900   Test ACC: 0.6196
+Train F1: 0.8891         Test F1: 0.6142
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.8400
+Basal 	           0.2000              0.9809              0.1522              0.9286
+Her2 	           0.2000              0.9665              0.0543              0.9000
+LumA 	           0.2000              0.8182              0.4837              0.3596
+LumB 	           0.2000              0.7703              0.1739              0.8125
+
+Epoch 151, Train loss: methylation:1.24e-02
+Epoch 152, Train loss: methylation:1.27e-02
+Epoch 153, Train loss: methylation:1.22e-02
+Epoch 154, Train loss: methylation:1.20e-02
+Epoch 155, Train loss: methylation:1.24e-02
+Epoch 156, Train loss: methylation:1.21e-02
+Epoch 157, Train loss: methylation:1.22e-02
+Epoch 158, Train loss: methylation:1.19e-02
+Epoch 159, Train loss: methylation:1.20e-02
+Epoch 160, Train loss: methylation:1.17e-02
+Epoch 161, Train loss: methylation:1.16e-02
+Epoch 162, Train loss: methylation:1.18e-02
+Epoch 163, Train loss: methylation:1.16e-02
+Epoch 164, Train loss: methylation:1.16e-02
+Epoch 165, Train loss: methylation:1.14e-02
+Epoch 166, Train loss: methylation:1.16e-02
+Epoch 167, Train loss: methylation:1.14e-02
+Epoch 168, Train loss: methylation:1.18e-02
+Epoch 169, Train loss: methylation:1.19e-02
+Epoch 170, Train loss: methylation:1.14e-02
+Epoch 171, Train loss: methylation:1.13e-02
+Epoch 172, Train loss: methylation:1.14e-02
+Epoch 173, Train loss: methylation:1.13e-02
+Epoch 174, Train loss: methylation:1.15e-02
+Epoch 175, Train loss: methylation:1.13e-02
+Epoch 176, Train loss: methylation:1.09e-02
+Epoch 177, Train loss: methylation:1.10e-02
+Epoch 178, Train loss: methylation:1.14e-02
+Epoch 179, Train loss: methylation:1.21e-02
+Epoch 180, Train loss: methylation:1.11e-02
+Epoch 181, Train loss: methylation:1.06e-02
+Epoch 182, Train loss: methylation:1.11e-02
+Epoch 183, Train loss: methylation:1.14e-02
+Epoch 184, Train loss: methylation:1.05e-02
+Epoch 185, Train loss: methylation:1.08e-02
+Epoch 186, Train loss: methylation:1.12e-02
+Epoch 187, Train loss: methylation:1.07e-02
+Epoch 188, Train loss: methylation:1.05e-02
+Epoch 189, Train loss: methylation:1.11e-02
+Epoch 190, Train loss: methylation:1.12e-02
+Epoch 191, Train loss: methylation:1.03e-02
+Epoch 192, Train loss: methylation:1.08e-02
+Epoch 193, Train loss: methylation:1.11e-02
+Epoch 194, Train loss: methylation:1.01e-02
+Epoch 195, Train loss: methylation:1.07e-02
+Epoch 196, Train loss: methylation:1.11e-02
+Epoch 197, Train loss: methylation:1.03e-02
+Epoch 198, Train loss: methylation:1.06e-02
+Epoch 199, Train loss: methylation:1.08e-02
+Epoch 200, Train loss: methylation:9.94e-03
+
+Test: Epoch 200
+Train Accuracy: 0.9139   Test ACC: 0.7283
+Train F1: 0.9125         Test F1: 0.7324
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9474              0.1359              0.8000
+Basal 	           0.2000              0.9809              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.8086              0.4837              0.6404
+LumB 	           0.2000              0.8325              0.1739              0.7188
+
+Epoch 201, Train loss: methylation:1.02e-02
+Epoch 202, Train loss: methylation:1.07e-02
+Epoch 203, Train loss: methylation:1.00e-02
+Epoch 204, Train loss: methylation:1.02e-02
+Epoch 205, Train loss: methylation:1.06e-02
+Epoch 206, Train loss: methylation:9.68e-03
+Epoch 207, Train loss: methylation:1.04e-02
+Epoch 208, Train loss: methylation:1.03e-02
+Epoch 209, Train loss: methylation:1.01e-02
+Epoch 210, Train loss: methylation:1.16e-02
+Epoch 211, Train loss: methylation:1.18e-02
+Epoch 212, Train loss: methylation:1.08e-02
+Epoch 213, Train loss: methylation:1.03e-02
+Epoch 214, Train loss: methylation:9.74e-03
+Epoch 215, Train loss: methylation:1.05e-02
+Epoch 216, Train loss: methylation:9.79e-03
+Epoch 217, Train loss: methylation:9.73e-03
+Epoch 218, Train loss: methylation:1.00e-02
+Epoch 219, Train loss: methylation:9.89e-03
+Epoch 220, Train loss: methylation:9.63e-03
+Epoch 221, Train loss: methylation:9.53e-03
+Epoch 222, Train loss: methylation:9.43e-03
+Epoch 223, Train loss: methylation:9.80e-03
+Epoch 224, Train loss: methylation:9.79e-03
+Epoch 225, Train loss: methylation:8.94e-03
+Epoch 226, Train loss: methylation:9.32e-03
+Epoch 227, Train loss: methylation:9.48e-03
+Epoch 228, Train loss: methylation:9.03e-03
+Epoch 229, Train loss: methylation:9.08e-03
+Epoch 230, Train loss: methylation:8.76e-03
+Epoch 231, Train loss: methylation:9.05e-03
+Epoch 232, Train loss: methylation:9.20e-03
+Epoch 233, Train loss: methylation:8.88e-03
+Epoch 234, Train loss: methylation:8.75e-03
+Epoch 235, Train loss: methylation:9.00e-03
+Epoch 236, Train loss: methylation:8.83e-03
+Epoch 237, Train loss: methylation:8.95e-03
+Epoch 238, Train loss: methylation:9.24e-03
+Epoch 239, Train loss: methylation:9.33e-03
+Epoch 240, Train loss: methylation:8.94e-03
+Epoch 241, Train loss: methylation:9.00e-03
+Epoch 242, Train loss: methylation:9.74e-03
+Epoch 243, Train loss: methylation:1.00e-02
+Epoch 244, Train loss: methylation:1.03e-02
+Epoch 245, Train loss: methylation:9.72e-03
+Epoch 246, Train loss: methylation:8.62e-03
+Epoch 247, Train loss: methylation:9.06e-03
+Epoch 248, Train loss: methylation:9.76e-03
+Epoch 249, Train loss: methylation:8.78e-03
+Epoch 250, Train loss: methylation:8.67e-03
+
+Test: Epoch 250
+Train Accuracy: 0.9321   Test ACC: 0.6957
+Train F1: 0.9315         Test F1: 0.7053
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9234              0.1359              0.8800
+Basal 	           0.2000              0.9856              0.1522              0.9286
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8995              0.4837              0.4944
+LumB 	           0.2000              0.8517              0.1739              0.8750
+
+Epoch 251, Train loss: methylation:9.06e-03
+Epoch 252, Train loss: methylation:9.01e-03
+Epoch 253, Train loss: methylation:8.39e-03
+Epoch 254, Train loss: methylation:8.50e-03
+Epoch 255, Train loss: methylation:8.63e-03
+Epoch 256, Train loss: methylation:8.69e-03
+Epoch 257, Train loss: methylation:8.33e-03
+Epoch 258, Train loss: methylation:8.14e-03
+Epoch 259, Train loss: methylation:8.35e-03
+Epoch 260, Train loss: methylation:8.49e-03
+Epoch 261, Train loss: methylation:8.65e-03
+Epoch 262, Train loss: methylation:8.41e-03
+Epoch 263, Train loss: methylation:8.49e-03
+Epoch 264, Train loss: methylation:8.27e-03
+Epoch 265, Train loss: methylation:7.85e-03
+Epoch 266, Train loss: methylation:8.12e-03
+Epoch 267, Train loss: methylation:8.33e-03
+Epoch 268, Train loss: methylation:8.36e-03
+Epoch 269, Train loss: methylation:8.44e-03
+Epoch 270, Train loss: methylation:8.20e-03
+Epoch 271, Train loss: methylation:7.95e-03
+Epoch 272, Train loss: methylation:7.89e-03
+Epoch 273, Train loss: methylation:8.05e-03
+Epoch 274, Train loss: methylation:7.88e-03
+Epoch 275, Train loss: methylation:7.80e-03
+Epoch 276, Train loss: methylation:8.04e-03
+Epoch 277, Train loss: methylation:8.09e-03
+Epoch 278, Train loss: methylation:8.50e-03
+Epoch 279, Train loss: methylation:8.63e-03
+Epoch 280, Train loss: methylation:8.75e-03
+Epoch 281, Train loss: methylation:8.52e-03
+Epoch 282, Train loss: methylation:8.22e-03
+Epoch 283, Train loss: methylation:8.60e-03
+Epoch 284, Train loss: methylation:9.09e-03
+Epoch 285, Train loss: methylation:8.53e-03
+Epoch 286, Train loss: methylation:7.94e-03
+Epoch 287, Train loss: methylation:7.71e-03
+Epoch 288, Train loss: methylation:8.10e-03
+Epoch 289, Train loss: methylation:8.44e-03
+Epoch 290, Train loss: methylation:8.52e-03
+Epoch 291, Train loss: methylation:8.79e-03
+Epoch 292, Train loss: methylation:8.60e-03
+Epoch 293, Train loss: methylation:8.63e-03
+Epoch 294, Train loss: methylation:8.27e-03
+Epoch 295, Train loss: methylation:7.85e-03
+Epoch 296, Train loss: methylation:8.26e-03
+Epoch 297, Train loss: methylation:7.88e-03
+Epoch 298, Train loss: methylation:7.96e-03
+Epoch 299, Train loss: methylation:8.01e-03
+Epoch 300, Train loss: methylation:7.80e-03
+
+Test: Epoch 300
+Train Accuracy: 0.9483   Test ACC: 0.7228
+Train F1: 0.9480         Test F1: 0.7305
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9286
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9330              0.4837              0.6067
+LumB 	           0.2000              0.8565              0.1739              0.7500
+
+Epoch 301, Train loss: methylation:7.94e-03
+Epoch 302, Train loss: methylation:7.84e-03
+Epoch 303, Train loss: methylation:7.46e-03
+Epoch 304, Train loss: methylation:7.49e-03
+Epoch 305, Train loss: methylation:7.53e-03
+Epoch 306, Train loss: methylation:7.48e-03
+Epoch 307, Train loss: methylation:7.46e-03
+Epoch 308, Train loss: methylation:7.83e-03
+Epoch 309, Train loss: methylation:8.01e-03
+Epoch 310, Train loss: methylation:8.12e-03
+Epoch 311, Train loss: methylation:8.30e-03
+Epoch 312, Train loss: methylation:7.92e-03
+Epoch 313, Train loss: methylation:7.37e-03
+Epoch 314, Train loss: methylation:7.72e-03
+Epoch 315, Train loss: methylation:7.64e-03
+Epoch 316, Train loss: methylation:7.20e-03
+Epoch 317, Train loss: methylation:7.19e-03
+Epoch 318, Train loss: methylation:7.45e-03
+Epoch 319, Train loss: methylation:7.17e-03
+Epoch 320, Train loss: methylation:7.30e-03
+Epoch 321, Train loss: methylation:7.01e-03
+Epoch 322, Train loss: methylation:6.88e-03
+Epoch 323, Train loss: methylation:6.95e-03
+Epoch 324, Train loss: methylation:7.03e-03
+Epoch 325, Train loss: methylation:7.07e-03
+Epoch 326, Train loss: methylation:7.65e-03
+Epoch 327, Train loss: methylation:9.50e-03
+Epoch 328, Train loss: methylation:1.12e-02
+Epoch 329, Train loss: methylation:1.29e-02
+Epoch 330, Train loss: methylation:7.78e-03
+Epoch 331, Train loss: methylation:1.24e-02
+Epoch 332, Train loss: methylation:9.09e-03
+Epoch 333, Train loss: methylation:1.15e-02
+Epoch 334, Train loss: methylation:8.46e-03
+Epoch 335, Train loss: methylation:1.08e-02
+Epoch 336, Train loss: methylation:8.08e-03
+Epoch 337, Train loss: methylation:1.00e-02
+Epoch 338, Train loss: methylation:8.28e-03
+Epoch 339, Train loss: methylation:9.29e-03
+Epoch 340, Train loss: methylation:8.48e-03
+Epoch 341, Train loss: methylation:9.00e-03
+Epoch 342, Train loss: methylation:8.32e-03
+Epoch 343, Train loss: methylation:8.05e-03
+Epoch 344, Train loss: methylation:8.13e-03
+Epoch 345, Train loss: methylation:8.22e-03
+Epoch 346, Train loss: methylation:7.84e-03
+Epoch 347, Train loss: methylation:7.64e-03
+Epoch 348, Train loss: methylation:7.65e-03
+Epoch 349, Train loss: methylation:7.47e-03
+Epoch 350, Train loss: methylation:7.50e-03
+
+Test: Epoch 350
+Train Accuracy: 0.9301   Test ACC: 0.8098
+Train F1: 0.9288         Test F1: 0.8119
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8038              0.4837              0.8090
+LumB 	           0.2000              0.8852              0.1739              0.6562
+
+Epoch 351, Train loss: methylation:7.24e-03
+Epoch 352, Train loss: methylation:7.48e-03
+Epoch 353, Train loss: methylation:7.35e-03
+Epoch 354, Train loss: methylation:7.24e-03
+Epoch 355, Train loss: methylation:7.07e-03
+Epoch 356, Train loss: methylation:7.00e-03
+Epoch 357, Train loss: methylation:6.98e-03
+Epoch 358, Train loss: methylation:7.02e-03
+Epoch 359, Train loss: methylation:6.94e-03
+Epoch 360, Train loss: methylation:6.86e-03
+Epoch 361, Train loss: methylation:6.62e-03
+Epoch 362, Train loss: methylation:6.60e-03
+Epoch 363, Train loss: methylation:6.76e-03
+Epoch 364, Train loss: methylation:6.83e-03
+Epoch 365, Train loss: methylation:6.95e-03
+Epoch 366, Train loss: methylation:6.64e-03
+Epoch 367, Train loss: methylation:6.90e-03
+Epoch 368, Train loss: methylation:6.54e-03
+Epoch 369, Train loss: methylation:6.64e-03
+Epoch 370, Train loss: methylation:6.63e-03
+Epoch 371, Train loss: methylation:6.83e-03
+Epoch 372, Train loss: methylation:6.82e-03
+Epoch 373, Train loss: methylation:6.68e-03
+Epoch 374, Train loss: methylation:6.37e-03
+Epoch 375, Train loss: methylation:6.40e-03
+Epoch 376, Train loss: methylation:6.42e-03
+Epoch 377, Train loss: methylation:6.78e-03
+Epoch 378, Train loss: methylation:6.70e-03
+Epoch 379, Train loss: methylation:6.58e-03
+Epoch 380, Train loss: methylation:6.66e-03
+Epoch 381, Train loss: methylation:6.47e-03
+Epoch 382, Train loss: methylation:6.46e-03
+Epoch 383, Train loss: methylation:6.34e-03
+Epoch 384, Train loss: methylation:6.24e-03
+Epoch 385, Train loss: methylation:6.53e-03
+Epoch 386, Train loss: methylation:6.43e-03
+Epoch 387, Train loss: methylation:6.32e-03
+Epoch 388, Train loss: methylation:6.25e-03
+Epoch 389, Train loss: methylation:6.23e-03
+Epoch 390, Train loss: methylation:6.17e-03
+Epoch 391, Train loss: methylation:6.58e-03
+Epoch 392, Train loss: methylation:6.70e-03
+Epoch 393, Train loss: methylation:7.87e-03
+Epoch 394, Train loss: methylation:8.07e-03
+Epoch 395, Train loss: methylation:8.89e-03
+Epoch 396, Train loss: methylation:6.72e-03
+Epoch 397, Train loss: methylation:7.47e-03
+Epoch 398, Train loss: methylation:8.58e-03
+Epoch 399, Train loss: methylation:6.59e-03
+Epoch 400, Train loss: methylation:8.29e-03
+
+Test: Epoch 400
+Train Accuracy: 0.9292   Test ACC: 0.6685
+Train F1: 0.9300         Test F1: 0.6703
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9187              0.1359              0.8400
+Basal 	           0.2000              0.9856              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.9000
+LumA 	           0.2000              0.9761              0.4837              0.4157
+LumB 	           0.2000              0.7656              0.1739              0.9062
+
+Epoch 401, Train loss: methylation:8.44e-03
+Epoch 402, Train loss: methylation:6.81e-03
+Epoch 403, Train loss: methylation:9.08e-03
+Epoch 404, Train loss: methylation:7.61e-03
+Epoch 405, Train loss: methylation:7.66e-03
+Epoch 406, Train loss: methylation:8.04e-03
+Epoch 407, Train loss: methylation:6.37e-03
+Epoch 408, Train loss: methylation:7.64e-03
+Epoch 409, Train loss: methylation:6.18e-03
+Epoch 410, Train loss: methylation:7.33e-03
+Epoch 411, Train loss: methylation:6.53e-03
+Epoch 412, Train loss: methylation:6.88e-03
+Epoch 413, Train loss: methylation:6.75e-03
+Epoch 414, Train loss: methylation:6.30e-03
+Epoch 415, Train loss: methylation:6.77e-03
+Epoch 416, Train loss: methylation:6.50e-03
+Epoch 417, Train loss: methylation:6.43e-03
+Epoch 418, Train loss: methylation:6.67e-03
+Epoch 419, Train loss: methylation:6.17e-03
+Epoch 420, Train loss: methylation:6.90e-03
+Epoch 421, Train loss: methylation:6.30e-03
+Epoch 422, Train loss: methylation:6.53e-03
+Epoch 423, Train loss: methylation:6.36e-03
+Epoch 424, Train loss: methylation:5.89e-03
+Epoch 425, Train loss: methylation:6.37e-03
+Epoch 426, Train loss: methylation:6.18e-03
+Epoch 427, Train loss: methylation:6.68e-03
+Epoch 428, Train loss: methylation:6.66e-03
+Epoch 429, Train loss: methylation:6.43e-03
+Epoch 430, Train loss: methylation:6.81e-03
+Epoch 431, Train loss: methylation:7.23e-03
+Epoch 432, Train loss: methylation:7.10e-03
+Epoch 433, Train loss: methylation:6.96e-03
+Epoch 434, Train loss: methylation:5.81e-03
+Epoch 435, Train loss: methylation:6.40e-03
+Epoch 436, Train loss: methylation:6.51e-03
+Epoch 437, Train loss: methylation:6.31e-03
+Epoch 438, Train loss: methylation:6.13e-03
+Epoch 439, Train loss: methylation:5.78e-03
+Epoch 440, Train loss: methylation:6.39e-03
+Epoch 441, Train loss: methylation:6.35e-03
+Epoch 442, Train loss: methylation:5.97e-03
+Epoch 443, Train loss: methylation:6.27e-03
+Epoch 444, Train loss: methylation:6.19e-03
+Epoch 445, Train loss: methylation:6.36e-03
+Epoch 446, Train loss: methylation:6.02e-03
+Epoch 447, Train loss: methylation:6.04e-03
+Epoch 448, Train loss: methylation:6.84e-03
+Epoch 449, Train loss: methylation:6.64e-03
+Epoch 450, Train loss: methylation:6.22e-03
+
+Test: Epoch 450
+Train Accuracy: 0.9569   Test ACC: 0.7880
+Train F1: 0.9570         Test F1: 0.7921
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9474              0.4837              0.7528
+LumB 	           0.2000              0.8660              0.1739              0.6875
+
+Epoch 451, Train loss: methylation:5.71e-03
+Epoch 452, Train loss: methylation:5.66e-03
+Epoch 453, Train loss: methylation:6.16e-03
+Epoch 454, Train loss: methylation:6.27e-03
+Epoch 455, Train loss: methylation:5.92e-03
+Epoch 456, Train loss: methylation:5.87e-03
+Epoch 457, Train loss: methylation:6.11e-03
+Epoch 458, Train loss: methylation:5.62e-03
+Epoch 459, Train loss: methylation:5.42e-03
+Epoch 460, Train loss: methylation:5.55e-03
+Epoch 461, Train loss: methylation:5.95e-03
+Epoch 462, Train loss: methylation:5.92e-03
+Epoch 463, Train loss: methylation:5.99e-03
+Epoch 464, Train loss: methylation:6.22e-03
+Epoch 465, Train loss: methylation:6.55e-03
+Epoch 466, Train loss: methylation:5.93e-03
+Epoch 467, Train loss: methylation:5.50e-03
+Epoch 468, Train loss: methylation:5.42e-03
+Epoch 469, Train loss: methylation:5.61e-03
+Epoch 470, Train loss: methylation:5.59e-03
+Epoch 471, Train loss: methylation:5.54e-03
+Epoch 472, Train loss: methylation:5.36e-03
+Epoch 473, Train loss: methylation:5.55e-03
+Epoch 474, Train loss: methylation:5.65e-03
+Epoch 475, Train loss: methylation:5.71e-03
+Epoch 476, Train loss: methylation:5.79e-03
+Epoch 477, Train loss: methylation:5.82e-03
+Epoch 478, Train loss: methylation:6.48e-03
+Epoch 479, Train loss: methylation:6.36e-03
+Epoch 480, Train loss: methylation:6.59e-03
+Epoch 481, Train loss: methylation:5.97e-03
+Epoch 482, Train loss: methylation:5.42e-03
+Epoch 483, Train loss: methylation:5.73e-03
+Epoch 484, Train loss: methylation:5.70e-03
+Epoch 485, Train loss: methylation:5.43e-03
+Epoch 486, Train loss: methylation:5.28e-03
+Epoch 487, Train loss: methylation:5.65e-03
+Epoch 488, Train loss: methylation:5.99e-03
+Epoch 489, Train loss: methylation:6.01e-03
+Epoch 490, Train loss: methylation:6.06e-03
+Epoch 491, Train loss: methylation:6.37e-03
+Epoch 492, Train loss: methylation:6.34e-03
+Epoch 493, Train loss: methylation:5.42e-03
+Epoch 494, Train loss: methylation:5.13e-03
+Epoch 495, Train loss: methylation:5.64e-03
+Epoch 496, Train loss: methylation:5.49e-03
+Epoch 497, Train loss: methylation:5.03e-03
+Epoch 498, Train loss: methylation:5.26e-03
+Epoch 499, Train loss: methylation:5.46e-03
+Epoch 500, Train loss: methylation:5.31e-03
+
+Test: Epoch 500
+Train Accuracy: 0.9627   Test ACC: 0.8098
+Train F1: 0.9623         Test F1: 0.8105
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8804              0.4837              0.8315
+LumB 	           0.2000              0.9569              0.1739              0.5938
+
+Epoch 501, Train loss: methylation:5.04e-03
+Epoch 502, Train loss: methylation:5.22e-03
+Epoch 503, Train loss: methylation:5.22e-03
+Epoch 504, Train loss: methylation:5.04e-03
+Epoch 505, Train loss: methylation:5.13e-03
+Epoch 506, Train loss: methylation:4.99e-03
+Epoch 507, Train loss: methylation:5.09e-03
+Epoch 508, Train loss: methylation:5.36e-03
+Epoch 509, Train loss: methylation:6.37e-03
+Epoch 510, Train loss: methylation:9.31e-03
+Epoch 511, Train loss: methylation:1.11e-02
+Epoch 512, Train loss: methylation:9.62e-03
+Epoch 513, Train loss: methylation:7.17e-03
+Epoch 514, Train loss: methylation:9.79e-03
+Epoch 515, Train loss: methylation:7.35e-03
+Epoch 516, Train loss: methylation:9.23e-03
+Epoch 517, Train loss: methylation:6.73e-03
+Epoch 518, Train loss: methylation:7.45e-03
+Epoch 519, Train loss: methylation:6.88e-03
+Epoch 520, Train loss: methylation:7.41e-03
+Epoch 521, Train loss: methylation:6.29e-03
+Epoch 522, Train loss: methylation:7.54e-03
+Epoch 523, Train loss: methylation:6.59e-03
+Epoch 524, Train loss: methylation:6.72e-03
+Epoch 525, Train loss: methylation:6.18e-03
+Epoch 526, Train loss: methylation:6.39e-03
+Epoch 527, Train loss: methylation:6.10e-03
+Epoch 528, Train loss: methylation:5.98e-03
+Epoch 529, Train loss: methylation:5.92e-03
+Epoch 530, Train loss: methylation:6.18e-03
+Epoch 531, Train loss: methylation:5.94e-03
+Epoch 532, Train loss: methylation:5.60e-03
+Epoch 533, Train loss: methylation:5.89e-03
+Epoch 534, Train loss: methylation:6.24e-03
+Epoch 535, Train loss: methylation:5.60e-03
+Epoch 536, Train loss: methylation:5.81e-03
+Epoch 537, Train loss: methylation:5.69e-03
+Epoch 538, Train loss: methylation:6.05e-03
+Epoch 539, Train loss: methylation:5.55e-03
+Epoch 540, Train loss: methylation:5.39e-03
+Epoch 541, Train loss: methylation:5.54e-03
+Epoch 542, Train loss: methylation:5.62e-03
+Epoch 543, Train loss: methylation:5.35e-03
+Epoch 544, Train loss: methylation:5.53e-03
+Epoch 545, Train loss: methylation:5.36e-03
+Epoch 546, Train loss: methylation:5.38e-03
+Epoch 547, Train loss: methylation:5.09e-03
+Epoch 548, Train loss: methylation:5.12e-03
+Epoch 549, Train loss: methylation:5.22e-03
+Epoch 550, Train loss: methylation:5.02e-03
+
+Test: Epoch 550
+Train Accuracy: 0.9636   Test ACC: 0.8098
+Train F1: 0.9633         Test F1: 0.8109
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9904              0.1359              0.8400
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8995              0.4837              0.8315
+LumB 	           0.2000              0.9378              0.1739              0.5938
+
+Epoch 551, Train loss: methylation:5.07e-03
+Epoch 552, Train loss: methylation:4.91e-03
+Epoch 553, Train loss: methylation:5.05e-03
+Epoch 554, Train loss: methylation:5.01e-03
+Epoch 555, Train loss: methylation:4.99e-03
+Epoch 556, Train loss: methylation:4.89e-03
+Epoch 557, Train loss: methylation:4.81e-03
+Epoch 558, Train loss: methylation:4.74e-03
+Epoch 559, Train loss: methylation:4.94e-03
+Epoch 560, Train loss: methylation:4.79e-03
+Epoch 561, Train loss: methylation:4.89e-03
+Epoch 562, Train loss: methylation:4.77e-03
+Epoch 563, Train loss: methylation:5.04e-03
+Epoch 564, Train loss: methylation:5.39e-03
+Epoch 565, Train loss: methylation:5.91e-03
+Epoch 566, Train loss: methylation:5.57e-03
+Epoch 567, Train loss: methylation:5.36e-03
+Epoch 568, Train loss: methylation:5.01e-03
+Epoch 569, Train loss: methylation:4.85e-03
+Epoch 570, Train loss: methylation:5.22e-03
+Epoch 571, Train loss: methylation:4.97e-03
+Epoch 572, Train loss: methylation:4.97e-03
+Epoch 573, Train loss: methylation:4.83e-03
+Epoch 574, Train loss: methylation:4.78e-03
+Epoch 575, Train loss: methylation:4.79e-03
+Epoch 576, Train loss: methylation:4.86e-03
+Epoch 577, Train loss: methylation:5.02e-03
+Epoch 578, Train loss: methylation:5.04e-03
+Epoch 579, Train loss: methylation:4.84e-03
+Epoch 580, Train loss: methylation:4.76e-03
+Epoch 581, Train loss: methylation:4.73e-03
+Epoch 582, Train loss: methylation:4.66e-03
+Epoch 583, Train loss: methylation:4.63e-03
+Epoch 584, Train loss: methylation:4.63e-03
+Epoch 585, Train loss: methylation:4.67e-03
+Epoch 586, Train loss: methylation:4.78e-03
+Epoch 587, Train loss: methylation:4.79e-03
+Epoch 588, Train loss: methylation:4.94e-03
+Epoch 589, Train loss: methylation:4.93e-03
+Epoch 590, Train loss: methylation:4.93e-03
+Epoch 591, Train loss: methylation:5.40e-03
+Epoch 592, Train loss: methylation:6.19e-03
+Epoch 593, Train loss: methylation:5.85e-03
+Epoch 594, Train loss: methylation:5.33e-03
+Epoch 595, Train loss: methylation:4.93e-03
+Epoch 596, Train loss: methylation:5.15e-03
+Epoch 597, Train loss: methylation:5.08e-03
+Epoch 598, Train loss: methylation:4.72e-03
+Epoch 599, Train loss: methylation:4.94e-03
+Epoch 600, Train loss: methylation:5.01e-03
+
+Test: Epoch 600
+Train Accuracy: 0.9751   Test ACC: 0.8043
+Train F1: 0.9750         Test F1: 0.8043
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.8400
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9187              0.4837              0.8315
+LumB 	           0.2000              0.9761              0.1739              0.5625
+
+Epoch 601, Train loss: methylation:5.03e-03
+Epoch 602, Train loss: methylation:4.54e-03
+Epoch 603, Train loss: methylation:4.89e-03
+Epoch 604, Train loss: methylation:5.31e-03
+Epoch 605, Train loss: methylation:5.30e-03
+Epoch 606, Train loss: methylation:5.57e-03
+Epoch 607, Train loss: methylation:5.98e-03
+Epoch 608, Train loss: methylation:5.85e-03
+Epoch 609, Train loss: methylation:5.07e-03
+Epoch 610, Train loss: methylation:4.72e-03
+Epoch 611, Train loss: methylation:5.30e-03
+Epoch 612, Train loss: methylation:5.31e-03
+Epoch 613, Train loss: methylation:4.94e-03
+Epoch 614, Train loss: methylation:5.14e-03
+Epoch 615, Train loss: methylation:5.32e-03
+Epoch 616, Train loss: methylation:5.00e-03
+Epoch 617, Train loss: methylation:4.61e-03
+Epoch 618, Train loss: methylation:4.98e-03
+Epoch 619, Train loss: methylation:4.87e-03
+Epoch 620, Train loss: methylation:4.55e-03
+Epoch 621, Train loss: methylation:4.60e-03
+Epoch 622, Train loss: methylation:4.74e-03
+Epoch 623, Train loss: methylation:4.77e-03
+Epoch 624, Train loss: methylation:4.36e-03
+Epoch 625, Train loss: methylation:4.77e-03
+Epoch 626, Train loss: methylation:4.59e-03
+Epoch 627, Train loss: methylation:4.53e-03
+Epoch 628, Train loss: methylation:5.28e-03
+Epoch 629, Train loss: methylation:6.08e-03
+Epoch 630, Train loss: methylation:7.53e-03
+Epoch 631, Train loss: methylation:6.65e-03
+Epoch 632, Train loss: methylation:6.52e-03
+Epoch 633, Train loss: methylation:6.06e-03
+Epoch 634, Train loss: methylation:6.45e-03
+Epoch 635, Train loss: methylation:5.96e-03
+Epoch 636, Train loss: methylation:7.23e-03
+Epoch 637, Train loss: methylation:6.54e-03
+Epoch 638, Train loss: methylation:6.48e-03
+Epoch 639, Train loss: methylation:6.91e-03
+Epoch 640, Train loss: methylation:5.47e-03
+Epoch 641, Train loss: methylation:8.18e-03
+Epoch 642, Train loss: methylation:5.63e-03
+Epoch 643, Train loss: methylation:6.51e-03
+Epoch 644, Train loss: methylation:6.33e-03
+Epoch 645, Train loss: methylation:6.51e-03
+Epoch 646, Train loss: methylation:5.74e-03
+Epoch 647, Train loss: methylation:5.96e-03
+Epoch 648, Train loss: methylation:6.20e-03
+Epoch 649, Train loss: methylation:5.60e-03
+Epoch 650, Train loss: methylation:5.59e-03
+
+Test: Epoch 650
+Train Accuracy: 0.9713   Test ACC: 0.7772
+Train F1: 0.9710         Test F1: 0.7674
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9904              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.8900              0.4837              0.8764
+LumB 	           0.2000              0.9809              0.1739              0.3750
+
+Epoch 651, Train loss: methylation:6.39e-03
+Epoch 652, Train loss: methylation:7.61e-03
+Epoch 653, Train loss: methylation:5.47e-03
+Epoch 654, Train loss: methylation:6.59e-03
+Epoch 655, Train loss: methylation:8.97e-03
+Epoch 656, Train loss: methylation:6.80e-03
+Epoch 657, Train loss: methylation:6.19e-03
+Epoch 658, Train loss: methylation:6.79e-03
+Epoch 659, Train loss: methylation:5.58e-03
+Epoch 660, Train loss: methylation:5.98e-03
+Epoch 661, Train loss: methylation:6.40e-03
+Epoch 662, Train loss: methylation:5.21e-03
+Epoch 663, Train loss: methylation:6.83e-03
+Epoch 664, Train loss: methylation:5.68e-03
+Epoch 665, Train loss: methylation:5.72e-03
+Epoch 666, Train loss: methylation:5.75e-03
+Epoch 667, Train loss: methylation:6.16e-03
+Epoch 668, Train loss: methylation:4.99e-03
+Epoch 669, Train loss: methylation:5.52e-03
+Epoch 670, Train loss: methylation:5.48e-03
+Epoch 671, Train loss: methylation:4.79e-03
+Epoch 672, Train loss: methylation:5.55e-03
+Epoch 673, Train loss: methylation:5.28e-03
+Epoch 674, Train loss: methylation:4.92e-03
+Epoch 675, Train loss: methylation:5.49e-03
+Epoch 676, Train loss: methylation:6.13e-03
+Epoch 677, Train loss: methylation:4.65e-03
+Epoch 678, Train loss: methylation:5.82e-03
+Epoch 679, Train loss: methylation:5.24e-03
+Epoch 680, Train loss: methylation:5.19e-03
+Epoch 681, Train loss: methylation:5.70e-03
+Epoch 682, Train loss: methylation:5.46e-03
+Epoch 683, Train loss: methylation:4.87e-03
+Epoch 684, Train loss: methylation:5.59e-03
+Epoch 685, Train loss: methylation:5.06e-03
+Epoch 686, Train loss: methylation:5.21e-03
+Epoch 687, Train loss: methylation:4.99e-03
+Epoch 688, Train loss: methylation:4.74e-03
+Epoch 689, Train loss: methylation:5.11e-03
+Epoch 690, Train loss: methylation:4.60e-03
+Epoch 691, Train loss: methylation:4.59e-03
+Epoch 692, Train loss: methylation:4.92e-03
+Epoch 693, Train loss: methylation:4.29e-03
+Epoch 694, Train loss: methylation:4.57e-03
+Epoch 695, Train loss: methylation:4.56e-03
+Epoch 696, Train loss: methylation:4.35e-03
+Epoch 697, Train loss: methylation:4.76e-03
+Epoch 698, Train loss: methylation:4.23e-03
+Epoch 699, Train loss: methylation:4.37e-03
+Epoch 700, Train loss: methylation:4.38e-03
+
+Test: Epoch 700
+Train Accuracy: 0.9694   Test ACC: 0.8043
+Train F1: 0.9691         Test F1: 0.8045
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.8995              0.4837              0.8427
+LumB 	           0.2000              0.9713              0.1739              0.5625
+
+Epoch 701, Train loss: methylation:4.39e-03
+Epoch 702, Train loss: methylation:4.29e-03
+Epoch 703, Train loss: methylation:4.31e-03
+Epoch 704, Train loss: methylation:4.05e-03
+Epoch 705, Train loss: methylation:4.41e-03
+Epoch 706, Train loss: methylation:4.32e-03
+Epoch 707, Train loss: methylation:4.20e-03
+Epoch 708, Train loss: methylation:4.31e-03
+Epoch 709, Train loss: methylation:4.26e-03
+Epoch 710, Train loss: methylation:4.02e-03
+Epoch 711, Train loss: methylation:4.14e-03
+Epoch 712, Train loss: methylation:4.02e-03
+Epoch 713, Train loss: methylation:3.95e-03
+Epoch 714, Train loss: methylation:4.19e-03
+Epoch 715, Train loss: methylation:4.18e-03
+Epoch 716, Train loss: methylation:4.10e-03
+Epoch 717, Train loss: methylation:4.17e-03
+Epoch 718, Train loss: methylation:4.20e-03
+Epoch 719, Train loss: methylation:4.17e-03
+Epoch 720, Train loss: methylation:4.39e-03
+Epoch 721, Train loss: methylation:4.09e-03
+Epoch 722, Train loss: methylation:4.00e-03
+Epoch 723, Train loss: methylation:4.00e-03
+Epoch 724, Train loss: methylation:4.05e-03
+Epoch 725, Train loss: methylation:3.85e-03
+Epoch 726, Train loss: methylation:3.86e-03
+Epoch 727, Train loss: methylation:4.07e-03
+Epoch 728, Train loss: methylation:3.85e-03
+Epoch 729, Train loss: methylation:3.95e-03
+Epoch 730, Train loss: methylation:3.96e-03
+Epoch 731, Train loss: methylation:4.10e-03
+Epoch 732, Train loss: methylation:4.87e-03
+Epoch 733, Train loss: methylation:5.96e-03
+Epoch 734, Train loss: methylation:8.37e-03
+Epoch 735, Train loss: methylation:5.90e-03
+Epoch 736, Train loss: methylation:4.27e-03
+Epoch 737, Train loss: methylation:5.58e-03
+Epoch 738, Train loss: methylation:4.68e-03
+Epoch 739, Train loss: methylation:4.94e-03
+Epoch 740, Train loss: methylation:5.15e-03
+Epoch 741, Train loss: methylation:4.22e-03
+Epoch 742, Train loss: methylation:5.46e-03
+Epoch 743, Train loss: methylation:5.95e-03
+Epoch 744, Train loss: methylation:4.22e-03
+Epoch 745, Train loss: methylation:6.04e-03
+Epoch 746, Train loss: methylation:6.87e-03
+Epoch 747, Train loss: methylation:4.53e-03
+Epoch 748, Train loss: methylation:7.22e-03
+Epoch 749, Train loss: methylation:6.04e-03
+Epoch 750, Train loss: methylation:5.94e-03
+
+Test: Epoch 750
+Train Accuracy: 0.9330   Test ACC: 0.7609
+Train F1: 0.9306         Test F1: 0.7424
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9665              0.1359              0.8000
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.4000
+LumA 	           0.2000              0.7368              0.4837              0.8876
+LumB 	           0.2000              0.9713              0.1739              0.3125
+
+Epoch 751, Train loss: methylation:6.06e-03
+Epoch 752, Train loss: methylation:5.02e-03
+Epoch 753, Train loss: methylation:5.86e-03
+Epoch 754, Train loss: methylation:4.99e-03
+Epoch 755, Train loss: methylation:5.41e-03
+Epoch 756, Train loss: methylation:4.67e-03
+Epoch 757, Train loss: methylation:4.94e-03
+Epoch 758, Train loss: methylation:4.58e-03
+Epoch 759, Train loss: methylation:4.64e-03
+Epoch 760, Train loss: methylation:4.42e-03
+Epoch 761, Train loss: methylation:4.52e-03
+Epoch 762, Train loss: methylation:4.29e-03
+Epoch 763, Train loss: methylation:4.58e-03
+Epoch 764, Train loss: methylation:4.08e-03
+Epoch 765, Train loss: methylation:4.69e-03
+Epoch 766, Train loss: methylation:4.42e-03
+Epoch 767, Train loss: methylation:4.15e-03
+Epoch 768, Train loss: methylation:4.15e-03
+Epoch 769, Train loss: methylation:4.19e-03
+Epoch 770, Train loss: methylation:3.98e-03
+Epoch 771, Train loss: methylation:4.05e-03
+Epoch 772, Train loss: methylation:4.10e-03
+Epoch 773, Train loss: methylation:3.92e-03
+Epoch 774, Train loss: methylation:4.07e-03
+Epoch 775, Train loss: methylation:4.21e-03
+Epoch 776, Train loss: methylation:4.17e-03
+Epoch 777, Train loss: methylation:3.87e-03
+Epoch 778, Train loss: methylation:4.22e-03
+Epoch 779, Train loss: methylation:4.13e-03
+Epoch 780, Train loss: methylation:4.32e-03
+Epoch 781, Train loss: methylation:4.17e-03
+Epoch 782, Train loss: methylation:4.00e-03
+Epoch 783, Train loss: methylation:3.92e-03
+Epoch 784, Train loss: methylation:4.15e-03
+Epoch 785, Train loss: methylation:4.08e-03
+Epoch 786, Train loss: methylation:3.81e-03
+Epoch 787, Train loss: methylation:3.96e-03
+Epoch 788, Train loss: methylation:3.97e-03
+Epoch 789, Train loss: methylation:3.90e-03
+Epoch 790, Train loss: methylation:3.86e-03
+Epoch 791, Train loss: methylation:3.89e-03
+Epoch 792, Train loss: methylation:3.83e-03
+Epoch 793, Train loss: methylation:3.78e-03
+Epoch 794, Train loss: methylation:3.92e-03
+Epoch 795, Train loss: methylation:4.14e-03
+Epoch 796, Train loss: methylation:3.92e-03
+Epoch 797, Train loss: methylation:3.71e-03
+Epoch 798, Train loss: methylation:3.67e-03
+Epoch 799, Train loss: methylation:3.74e-03
+Epoch 800, Train loss: methylation:3.85e-03
+
+Test: Epoch 800
+Train Accuracy: 0.9770   Test ACC: 0.7989
+Train F1: 0.9769         Test F1: 0.7966
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9904              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9139              0.4837              0.8539
+LumB 	           0.2000              0.9856              0.1739              0.5000
+
+Epoch 801, Train loss: methylation:4.03e-03
+Epoch 802, Train loss: methylation:4.14e-03
+Epoch 803, Train loss: methylation:3.94e-03
+Epoch 804, Train loss: methylation:3.98e-03
+Epoch 805, Train loss: methylation:3.85e-03
+Epoch 806, Train loss: methylation:3.71e-03
+Epoch 807, Train loss: methylation:3.77e-03
+Epoch 808, Train loss: methylation:3.68e-03
+Epoch 809, Train loss: methylation:4.10e-03
+Epoch 810, Train loss: methylation:4.10e-03
+Epoch 811, Train loss: methylation:4.48e-03
+Epoch 812, Train loss: methylation:4.61e-03
+Epoch 813, Train loss: methylation:5.02e-03
+Epoch 814, Train loss: methylation:4.79e-03
+Epoch 815, Train loss: methylation:3.90e-03
+Epoch 816, Train loss: methylation:4.05e-03
+Epoch 817, Train loss: methylation:4.49e-03
+Epoch 818, Train loss: methylation:3.95e-03
+Epoch 819, Train loss: methylation:3.70e-03
+Epoch 820, Train loss: methylation:4.11e-03
+Epoch 821, Train loss: methylation:4.02e-03
+Epoch 822, Train loss: methylation:3.75e-03
+Epoch 823, Train loss: methylation:4.21e-03
+Epoch 824, Train loss: methylation:4.28e-03
+Epoch 825, Train loss: methylation:3.73e-03
+Epoch 826, Train loss: methylation:3.81e-03
+Epoch 827, Train loss: methylation:4.16e-03
+Epoch 828, Train loss: methylation:3.87e-03
+Epoch 829, Train loss: methylation:3.70e-03
+Epoch 830, Train loss: methylation:4.09e-03
+Epoch 831, Train loss: methylation:3.88e-03
+Epoch 832, Train loss: methylation:4.02e-03
+Epoch 833, Train loss: methylation:4.61e-03
+Epoch 834, Train loss: methylation:5.77e-03
+Epoch 835, Train loss: methylation:5.26e-03
+Epoch 836, Train loss: methylation:5.09e-03
+Epoch 837, Train loss: methylation:4.26e-03
+Epoch 838, Train loss: methylation:4.27e-03
+Epoch 839, Train loss: methylation:4.97e-03
+Epoch 840, Train loss: methylation:4.62e-03
+Epoch 841, Train loss: methylation:4.58e-03
+Epoch 842, Train loss: methylation:4.93e-03
+Epoch 843, Train loss: methylation:5.32e-03
+Epoch 844, Train loss: methylation:3.92e-03
+Epoch 845, Train loss: methylation:5.28e-03
+Epoch 846, Train loss: methylation:5.48e-03
+Epoch 847, Train loss: methylation:4.64e-03
+Epoch 848, Train loss: methylation:5.13e-03
+Epoch 849, Train loss: methylation:5.68e-03
+Epoch 850, Train loss: methylation:6.27e-03
+
+Test: Epoch 850
+Train Accuracy: 0.9426   Test ACC: 0.8043
+Train F1: 0.9407         Test F1: 0.8069
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9569              0.1359              0.9200
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.7703              0.4837              0.7753
+LumB 	           0.2000              0.9904              0.1739              0.6562
+
+Epoch 851, Train loss: methylation:4.28e-03
+Epoch 852, Train loss: methylation:6.84e-03
+Epoch 853, Train loss: methylation:7.35e-03
+Epoch 854, Train loss: methylation:6.16e-03
+Epoch 855, Train loss: methylation:6.71e-03
+Epoch 856, Train loss: methylation:6.18e-03
+Epoch 857, Train loss: methylation:4.81e-03
+Epoch 858, Train loss: methylation:6.06e-03
+Epoch 859, Train loss: methylation:5.13e-03
+Epoch 860, Train loss: methylation:5.66e-03
+Epoch 861, Train loss: methylation:4.56e-03
+Epoch 862, Train loss: methylation:5.35e-03
+Epoch 863, Train loss: methylation:4.59e-03
+Epoch 864, Train loss: methylation:5.47e-03
+Epoch 865, Train loss: methylation:4.61e-03
+Epoch 866, Train loss: methylation:5.16e-03
+Epoch 867, Train loss: methylation:4.31e-03
+Epoch 868, Train loss: methylation:5.04e-03
+Epoch 869, Train loss: methylation:4.33e-03
+Epoch 870, Train loss: methylation:4.60e-03
+Epoch 871, Train loss: methylation:4.05e-03
+Epoch 872, Train loss: methylation:4.38e-03
+Epoch 873, Train loss: methylation:4.40e-03
+Epoch 874, Train loss: methylation:4.26e-03
+Epoch 875, Train loss: methylation:3.94e-03
+Epoch 876, Train loss: methylation:4.02e-03
+Epoch 877, Train loss: methylation:4.06e-03
+Epoch 878, Train loss: methylation:3.71e-03
+Epoch 879, Train loss: methylation:3.96e-03
+Epoch 880, Train loss: methylation:3.58e-03
+Epoch 881, Train loss: methylation:4.19e-03
+Epoch 882, Train loss: methylation:3.76e-03
+Epoch 883, Train loss: methylation:3.96e-03
+Epoch 884, Train loss: methylation:3.78e-03
+Epoch 885, Train loss: methylation:4.03e-03
+Epoch 886, Train loss: methylation:4.10e-03
+Epoch 887, Train loss: methylation:3.93e-03
+Epoch 888, Train loss: methylation:3.57e-03
+Epoch 889, Train loss: methylation:4.03e-03
+Epoch 890, Train loss: methylation:4.08e-03
+Epoch 891, Train loss: methylation:4.06e-03
+Epoch 892, Train loss: methylation:3.57e-03
+Epoch 893, Train loss: methylation:4.03e-03
+Epoch 894, Train loss: methylation:4.73e-03
+Epoch 895, Train loss: methylation:4.33e-03
+Epoch 896, Train loss: methylation:3.69e-03
+Epoch 897, Train loss: methylation:3.67e-03
+Epoch 898, Train loss: methylation:4.34e-03
+Epoch 899, Train loss: methylation:4.60e-03
+Epoch 900, Train loss: methylation:3.71e-03
+
+Test: Epoch 900
+Train Accuracy: 0.9770   Test ACC: 0.7717
+Train F1: 0.9769         Test F1: 0.7615
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.8000
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9330              0.4837              0.8652
+LumB 	           0.2000              0.9665              0.1739              0.3438
+
+Epoch 901, Train loss: methylation:4.47e-03
+Epoch 902, Train loss: methylation:5.92e-03
+Epoch 903, Train loss: methylation:4.20e-03
+Epoch 904, Train loss: methylation:4.49e-03
+Epoch 905, Train loss: methylation:5.57e-03
+Epoch 906, Train loss: methylation:4.00e-03
+Epoch 907, Train loss: methylation:5.23e-03
+Epoch 908, Train loss: methylation:4.89e-03
+Epoch 909, Train loss: methylation:4.16e-03
+Epoch 910, Train loss: methylation:5.95e-03
+Epoch 911, Train loss: methylation:4.85e-03
+Epoch 912, Train loss: methylation:5.04e-03
+Epoch 913, Train loss: methylation:5.54e-03
+Epoch 914, Train loss: methylation:4.69e-03
+Epoch 915, Train loss: methylation:5.91e-03
+Epoch 916, Train loss: methylation:4.58e-03
+Epoch 917, Train loss: methylation:4.78e-03
+Epoch 918, Train loss: methylation:4.75e-03
+Epoch 919, Train loss: methylation:3.74e-03
+Epoch 920, Train loss: methylation:4.83e-03
+Epoch 921, Train loss: methylation:4.01e-03
+Epoch 922, Train loss: methylation:4.60e-03
+Epoch 923, Train loss: methylation:4.17e-03
+Epoch 924, Train loss: methylation:3.92e-03
+Epoch 925, Train loss: methylation:4.67e-03
+Epoch 926, Train loss: methylation:3.62e-03
+Epoch 927, Train loss: methylation:4.13e-03
+Epoch 928, Train loss: methylation:3.81e-03
+Epoch 929, Train loss: methylation:3.84e-03
+Epoch 930, Train loss: methylation:3.90e-03
+Epoch 931, Train loss: methylation:3.82e-03
+Epoch 932, Train loss: methylation:3.76e-03
+Epoch 933, Train loss: methylation:3.73e-03
+Epoch 934, Train loss: methylation:3.60e-03
+Epoch 935, Train loss: methylation:4.19e-03
+Epoch 936, Train loss: methylation:3.79e-03
+Epoch 937, Train loss: methylation:4.11e-03
+Epoch 938, Train loss: methylation:3.70e-03
+Epoch 939, Train loss: methylation:3.58e-03
+Epoch 940, Train loss: methylation:3.57e-03
+Epoch 941, Train loss: methylation:3.62e-03
+Epoch 942, Train loss: methylation:3.51e-03
+Epoch 943, Train loss: methylation:3.50e-03
+Epoch 944, Train loss: methylation:3.44e-03
+Epoch 945, Train loss: methylation:3.56e-03
+Epoch 946, Train loss: methylation:3.51e-03
+Epoch 947, Train loss: methylation:3.60e-03
+Epoch 948, Train loss: methylation:3.54e-03
+Epoch 949, Train loss: methylation:3.48e-03
+Epoch 950, Train loss: methylation:3.40e-03
+
+Test: Epoch 950
+Train Accuracy: 0.9828   Test ACC: 0.7935
+Train F1: 0.9827         Test F1: 0.7960
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.8400
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9617              0.4837              0.7978
+LumB 	           0.2000              0.9665              0.1739              0.5938
+
+Epoch 951, Train loss: methylation:3.30e-03
+Epoch 952, Train loss: methylation:3.35e-03
+Epoch 953, Train loss: methylation:3.37e-03
+Epoch 954, Train loss: methylation:3.54e-03
+Epoch 955, Train loss: methylation:3.36e-03
+Epoch 956, Train loss: methylation:3.49e-03
+Epoch 957, Train loss: methylation:3.48e-03
+Epoch 958, Train loss: methylation:3.56e-03
+Epoch 959, Train loss: methylation:3.49e-03
+Epoch 960, Train loss: methylation:3.67e-03
+Epoch 961, Train loss: methylation:4.01e-03
+Epoch 962, Train loss: methylation:4.43e-03
+Epoch 963, Train loss: methylation:4.21e-03
+Epoch 964, Train loss: methylation:3.98e-03
+Epoch 965, Train loss: methylation:3.34e-03
+Epoch 966, Train loss: methylation:3.36e-03
+Epoch 967, Train loss: methylation:3.74e-03
+Epoch 968, Train loss: methylation:3.48e-03
+Epoch 969, Train loss: methylation:3.34e-03
+Epoch 970, Train loss: methylation:3.43e-03
+Epoch 971, Train loss: methylation:3.74e-03
+Epoch 972, Train loss: methylation:4.42e-03
+Epoch 973, Train loss: methylation:4.94e-03
+Epoch 974, Train loss: methylation:4.87e-03
+Epoch 975, Train loss: methylation:3.63e-03
+Epoch 976, Train loss: methylation:4.01e-03
+Epoch 977, Train loss: methylation:4.81e-03
+Epoch 978, Train loss: methylation:3.80e-03
+Epoch 979, Train loss: methylation:3.86e-03
+Epoch 980, Train loss: methylation:5.46e-03
+Epoch 981, Train loss: methylation:4.72e-03
+Epoch 982, Train loss: methylation:3.59e-03
+Epoch 983, Train loss: methylation:4.68e-03
+Epoch 984, Train loss: methylation:4.43e-03
+Epoch 985, Train loss: methylation:4.00e-03
+Epoch 986, Train loss: methylation:4.47e-03
+Epoch 987, Train loss: methylation:4.18e-03
+Epoch 988, Train loss: methylation:3.81e-03
+Epoch 989, Train loss: methylation:3.71e-03
+Epoch 990, Train loss: methylation:3.81e-03
+Epoch 991, Train loss: methylation:3.53e-03
+Epoch 992, Train loss: methylation:3.45e-03
+Epoch 993, Train loss: methylation:3.62e-03
+Epoch 994, Train loss: methylation:3.48e-03
+Epoch 995, Train loss: methylation:3.46e-03
+Epoch 996, Train loss: methylation:3.43e-03
+Epoch 997, Train loss: methylation:3.33e-03
+Epoch 998, Train loss: methylation:3.34e-03
+Epoch 999, Train loss: methylation:3.53e-03
+Epoch 1000, Train loss: methylation:3.34e-03
+
+Test: Epoch 1000
+Train Accuracy: 0.9818   Test ACC: 0.7935
+Train F1: 0.9818         Test F1: 0.7953
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.8400
+Basal 	           0.2000              1.0000              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9713              0.4837              0.7978
+LumB 	           0.2000              0.9617              0.1739              0.5938
+

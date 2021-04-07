@@ -1,0 +1,110 @@
+---
+title: "microRNA Expression"
+output: html_notebook
+---
+
+Importing all the requisite packages first.
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(doParallel)
+```
+
+# Importing data
+
+```{r}
+mirna <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_mirnaseq__illuminahiseq_mirnaseq__bcgsc_ca__Level_3__miR_isoform_expression__data.Level_3.2016012800.0.0/mirna.txt", "\t", escape_double = FALSE, trim_ws = TRUE) %>% 
+          select(SampleId, miRNA_ID, read_count)
+```
+
+# Basic processing
+
+We need to format the imported data so it can be parsed by the model
+```{r}
+pattern <- "^(\\w{4}\\-\\w{2}\\-\\w{4}\\-\\w{2}).*" #This is the format in which we want the sample id names
+
+mirna <- mirna %>%
+    group_by(SampleId, miRNA_ID) %>%
+    summarise(read_counts = sum(read_count)) %>%
+    pivot_wider(names_from = miRNA_ID, values_from = read_counts) %>%
+    mutate(SampleId =sub(pattern, "\\1", SampleId)) %>%
+    purrr::discard(~sum(is.na(.x))/length(.x)* 100 >=30) %>% #This removes columns where more than 30% of the values are NAs
+    replace(is.na(.), 0) #This replaces the remaining na values with 0
+```
+In order to get the samples that we can use, we will need to import the PAM50_subtype file and get the ids from there.
+```{r}
+pam50 <- read_csv("PAM50_subtype.csv")
+mirna <- mirna[match(pam50$patient_id, mirna$SampleId),]
+```
+
+### Min-max scaling
+
+Now we will scale each of the columns to [0,1]
+```{r}
+temp <- sapply(mirna[,2:ncol(mirna)], function(x){(x-min(x))/(max(x)-min(x))})
+mirna <- cbind(mirna$SampleId, as.data.frame(temp))
+```
+
+### Writing to file
+
+Here we are writing the complete data to a parseable file. This might be considered a kind of checkpoint too. We can later load this file to continue pre-processing.
+```{r}
+mirna %>%
+  rename(patient_id = "mirna$SampleId") %>%
+  write.csv("mirna_complete.csv", row.names = FALSE)
+```
+
+# Further processing
+```{r}
+#If you are using this script right from the top, then you could comment out the next line
+mirna <- read_csv("mirna_complete.csv")
+pam50 <- read_csv("PAM50_subtype.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+```
+
+## ANOVA
+```{r}
+cl <- makeCluster(5)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(mirna_train)) %dopar% {
+  column <- names(mirna_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mirna_train[,i][[1]] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(microRNA=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+mirna_sorted <- anova_summary %>% 
+                  filter(p_value<=0.001/nrow(anova_summary)) %>% 
+                  arrange(desc(f_value))
+```
+Now to select the columns in the dataframe and then export them to csv.
+```{r}
+namelist <- c(mirna_sorted["microRNA"])
+index <- match(namelist[[1]], names(mirna))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+mirna_anova <- mirna[,index]  
+
+#write.csv(mirna_anova, "mirna_anova.csv", row.names = FALSE)
+```
+

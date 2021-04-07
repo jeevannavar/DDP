@@ -1,0 +1,5 @@
+/pytorch/torch/csrc/utils/python_arg_parser.cpp:756: UserWarning: This overload of nonzero is deprecated:
+	nonzero(Tensor input, *, Tensor out)
+Consider using one of the following signatures instead:
+	nonzero(Tensor input, *, bool as_tuple)
+  0%|          | 0/622 [00:00<?, ?it/s]  0%|          | 1/622 [13:07<135:46:41, 787.12s/it]  0%|          | 2/622 [26:27<136:53:17, 794.83s/it]  0%|          | 3/622 [35:52<118:38:51, 690.03s/it]  1%|          | 4/622 [48:33<123:16:25, 718.10s/it]  1%|          | 5/622 [1:02:28<130:15:38, 760.03s/it]

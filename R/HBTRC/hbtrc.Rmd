@@ -1,0 +1,482 @@
+---
+title: "HBTRC Data Processing"
+output: html_notebook
+---
+
+Importing all the requisite packages first.
+```{r message=FALSE}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(parallel)
+library(doParallel)
+library(glmnet)
+```
+
+Custom Functions
+```{r Custom functions}
+# Custom function to transpose while preserving names
+transpose_df <- function(df) {
+  t_df <- data.table::transpose(df)
+  colnames(t_df) <- rownames(df)
+  rownames(t_df) <- colnames(df)
+  t_df <- t_df %>%
+    tibble::rownames_to_column(.data = .) %>%
+    tibble::as_tibble(.)
+  return(t_df)
+}
+
+# A greedy approach to selecting the top non-correlated features
+greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features = 1000){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+      }
+      if (length(selected) == max_features) {break}
+    }
+  return(selected)
+  }
+```
+
+
+# Cerebellum
+## Loading data
+```{r}
+cerebellum <- read_delim("/data/users/bs16b001/HBTRC_data/GN326_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
+```
+
+## Removing the unnecessary metadata
+```{r}
+cerebellum <- cerebellum %>%
+  select("Gene Symbol" | "Gene Id" | starts_with("HB")) %>%
+  rename(Gene_Symbol = "Gene Symbol", GeneID = "Gene Id") %>%
+  filter(GeneID != "None") %>%
+  mutate(Gene = paste(Gene_Symbol, GeneID, sep = "|")) %>%
+  select(!GeneID & !Gene_Symbol) %>%
+  group_by(Gene) %>%
+  summarize(across(everything(), list(mean))) %>%
+  column_to_rownames("Gene")
+
+# Keep only finite features
+cerebellum <- cerebellum[is.finite(rowSums(cerebellum)),]
+
+# Transposing to get sample ids as row names and genes as column names
+cerebellum <- transpose_df(cerebellum)
+```
+
+Now we will format the sample id names and then attach the labels from the disease_class file.
+```{r}
+pattern <- "^(\\w{2}\\_\\w{3}\\_\\w{1,2})\\_1$"
+cerebellum <- cerebellum %>%  
+  mutate(rowname = sub(pattern, "\\1", rowname)) %>%
+  rename(Sample_ID = rowname)
+
+labels <- read_csv("disease_class.csv")
+cerebellum <- cerebellum[match(labels$patient_id, cerebellum$Sample_ID),]
+```
+
+### Writing to file
+
+Here we are writing the complete data to a parseable file. This might be considered a kind of checkpoint too. We can later load this file to continue pre-processing.
+```{r}
+cerebellum %>%
+  rename(patient_id = "Sample_ID") %>%
+  write.csv("cerebellum_complete.csv", row.names = FALSE)
+```
+
+## Further processing
+```{r}
+#If you are using this script right from the top, then you could comment out the next line
+cerebellum <- read_csv("cerebellum_complete.csv")
+labels <- read_csv("disease_class.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+cerebellum_train <- filter(cerebellum, cerebellum$patient_id %in% train_idx)
+labels_train <- filter(labels, labels$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(cerebellum_train$patient_id, labels_train$patient_id) #This has to be true
+```
+
+### ANOVA
+```{r}
+num_cpus <- 40
+cl <- makeCluster(num_cpus)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(cerebellum_train)) %dopar% {
+  column <- names(cerebellum_train[i]) 
+  avz <- broom:: tidy(aov(cerebellum_train[,i][[1]] ~ unlist(labels_train$class))) # Each ANOVA test iterating through each column
+  return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+cerebellum_sorted <- anova_summary %>% 
+                  filter(p_value<=0.001/nrow(anova_summary)) %>% 
+                  arrange(desc(f_value))
+```
+Now to select the columns in the dataframe and then export them to csv.
+```{r}
+namelist <- c(cerebellum_sorted["gene"])
+index <- match(namelist[[1]], names(cerebellum))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+cerebellum_anova <- cerebellum[,index]  
+
+write.csv(cerebellum_anova, "cerebellum_anova.csv", row.names = FALSE)
+```
+
+Make sure you've loaded the greedySelect function defined at the top of the file in the Custom functions ...
+```{r}
+cerebellum_best1000 <- greedySelect(cerebellum_anova, cerebellum_sorted["gene"][[1]], corrThreshold = 0.7)
+
+index <- match(cerebellum_best1000, names(cerebellum_anova))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+cerebellum_top1000 <- cerebellum_anova[,index]
+write.csv(cerebellum_top1000, "cerebellum_top1000.csv", row.names = FALSE)
+```
+
+## Elastic Net
+As a precursor for the next code block, run the first code block under the heading of further processing.
+```{r}
+#Remember to scale and center the values
+a <- seq(0.1, 0.9, 0.05)    #Alpha values search grid
+
+X <- scale(as.matrix(cerebellum_train[,2:ncol(cerebellum_train)]), center = TRUE, scale = TRUE)
+Y <- as.factor(as.matrix(labels_train$class))
+
+num_cpus <- 25
+cl <- makeCluster(num_cpus) 
+doParallel::registerDoParallel(cl)
+search <- foreach(i = a, .combine = rbind) %dopar% {
+  cv <- glmnet::cv.glmnet(X, Y, family = "multinomial", nfold = 10, type.measure = "deviance", parallel = TRUE, alpha = i)
+  data.frame(cvm = cv$cvm[cv$lambda == cv$lambda.1se], lambda.1se = cv$lambda.1se, alpha = i)
+}
+stopCluster(cl)
+cv <- search[search$cvm == min(search$cvm), ]
+model <- glmnet(X, Y, family = "multinomial", lambda = cv$lambda.1se, alpha = cv$alpha)
+
+coeff = coef(model)
+out <- 0
+#Coeff is a list because of multinomial classification
+for (i in 1:length(coeff)) {
+  temp <- coeff[i][[1]]
+  var <- names(temp[which(temp !=0),])
+  out <- c(out,var)
+}
+
+selectedVar <- unique(out)[3:length(unique(out))]
+```
+```{r}
+index <- match(selectedVar, names(cerebellum))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+cerebellum_elasticnet <- cerebellum[,index]
+write.csv(cerebellum_elasticnet, "cerebellum_elasticnet.csv", row.names = FALSE)
+```
+
+# Primary Visual Cortex
+## Loading data
+```{r}
+visualCortex <- read_delim("/data/users/bs16b001/HBTRC_data/GN327_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
+```
+
+## Removing the unnecessary metadata
+```{r}
+visualCortex <- visualCortex %>%
+  select("Gene Symbol" | "Gene Id" | starts_with("HB")) %>%
+  rename(Gene_Symbol = "Gene Symbol", GeneID = "Gene Id") %>%
+  filter(GeneID != "None") %>%
+  mutate(Gene = paste(Gene_Symbol, GeneID, sep = "|")) %>%
+  select(!GeneID & !Gene_Symbol) %>%
+  group_by(Gene) %>%
+  summarize(across(everything(), list(mean))) %>%
+  column_to_rownames("Gene")
+
+# Keep only finite features
+visualCortex <- visualCortex[is.finite(rowSums(visualCortex)),]
+
+# Transposing to get sample ids as row names and genes as column names
+visualCortex <- transpose_df(visualCortex)
+```
+
+Now we will format the sample id names and then filter to get only those samples that are present in all the tissue type samples
+```{r}
+pattern <- "^(\\w{2}\\_\\w{3}\\_\\w{1,2})\\_1$"
+visualCortex <- visualCortex %>%  
+  mutate(rowname = sub(pattern, "\\1", rowname)) %>%
+  rename(Sample_ID = rowname)
+
+labels <- read_csv("disease_class.csv")
+visualCortex <- visualCortex[match(labels$patient_id, visualCortex$Sample_ID),]
+```
+
+### Writing to file
+
+Here we are writing the complete data to a parseable file. This might be considered a kind of checkpoint too. We can later load this file to continue pre-processing.
+```{r}
+visualCortex %>%
+  rename(patient_id = "Sample_ID") %>%
+  write.csv("visualCortex_complete.csv", row.names = FALSE)
+```
+
+## Further processing
+```{r}
+#If you are using this script right from the top, then you could comment out the next line
+visualCortex <- read_csv("visualCortex_complete.csv")
+labels <- read_csv("disease_class.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+visualCortex_train <- filter(visualCortex, visualCortex$patient_id %in% train_idx)
+labels_train <- filter(labels, labels$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(visualCortex_train$patient_id, labels_train$patient_id) #This has to be true
+```
+
+### ANOVA
+```{r}
+num_cpus <- 40
+cl <- makeCluster(num_cpus)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(visualCortex_train)) %dopar% {
+  column <- names(visualCortex_train[i]) 
+  avz <- broom:: tidy(aov(visualCortex_train[,i][[1]] ~ unlist(labels_train$class))) # Each ANOVA test iterating through each column
+  return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+visualCortex_sorted <- anova_summary %>% 
+                  filter(p_value<=0.001/nrow(anova_summary)) %>% 
+                  arrange(desc(f_value))
+```
+Now to select the columns in the dataframe and then export them to csv.
+```{r}
+namelist <- c(visualCortex_sorted["gene"])
+index <- match(namelist[[1]], names(visualCortex))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+visualCortex_anova <- visualCortex[,index]  
+
+write.csv(visualCortex_anova, "visualCortex_anova.csv", row.names = FALSE)
+```
+
+Make sure you've loaded the greedySelect function defined at the top of the file in the Custom functions ...
+```{r}
+visualCortex_best1000 <- greedySelect(visualCortex_anova, visualCortex_sorted["gene"][[1]], corrThreshold = 0.7)
+
+index <- match(visualCortex_best1000, names(visualCortex_anova))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+visualCortex_top1000 <- visualCortex_anova[,index]
+write.csv(visualCortex_top1000, "visualCortex_top1000.csv", row.names = FALSE)
+```
+
+## Elastic Net
+As a precursor for the next code block, run the first code block under the heading of further processing.
+```{r}
+#Remember to scale and center the values
+a <- seq(0.1, 0.9, 0.05)    #Alpha values search grid
+
+X <- scale(as.matrix(visualCortex_train[,2:ncol(visualCortex_train)]), center = TRUE, scale = TRUE)
+Y <- as.factor(as.matrix(labels_train$class))
+
+num_cpus <- 25
+cl <- makeCluster(num_cpus) 
+doParallel::registerDoParallel(cl)
+search <- foreach(i = a, .combine = rbind) %dopar% {
+  cv <- glmnet::cv.glmnet(X, Y, family = "multinomial", nfold = 10, type.measure = "deviance", parallel = TRUE, alpha = i)
+  data.frame(cvm = cv$cvm[cv$lambda == cv$lambda.1se], lambda.1se = cv$lambda.1se, alpha = i)
+}
+stopCluster(cl)
+cv <- search[search$cvm == min(search$cvm), ]
+model <- glmnet(X, Y, family = "multinomial", lambda = cv$lambda.1se, alpha = cv$alpha)
+
+coeff = coef(model)
+out <- 0
+#Coeff is a list because of multinomial classification
+for (i in 1:length(coeff)) {
+  temp <- coeff[i][[1]]
+  var <- names(temp[which(temp !=0),])
+  out <- c(out,var)
+}
+
+selectedVar <- unique(out)[3:length(unique(out))]
+```
+```{r}
+index <- match(selectedVar, names(visualCortex))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+visualCortex_elasticnet <- visualCortex[,index]
+write.csv(visualCortex_elasticnet, "visualCortex_elasticnet.csv", row.names = FALSE)
+```
+
+# Prefrontal Cortex
+## Loading data
+```{r}
+prefrontalCortex <- read_delim("/data/users/bs16b001/HBTRC_data/GN328_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
+```
+
+## Removing the unnecessary metadata
+```{r}
+prefrontalCortex <- prefrontalCortex %>%
+  select("Gene Symbol" | "Gene Id" | starts_with("HB")) %>%
+  rename(Gene_Symbol = "Gene Symbol", GeneID = "Gene Id") %>%
+  filter(GeneID != "None") %>%
+  mutate(Gene = paste(Gene_Symbol, GeneID, sep = "|")) %>%
+  select(!GeneID & !Gene_Symbol) %>%
+  group_by(Gene) %>%
+  summarize(across(everything(), list(mean))) %>%
+  column_to_rownames("Gene")
+
+# Keep only finite features
+prefrontalCortex <- prefrontalCortex[is.finite(rowSums(prefrontalCortex)),]
+
+# Transposing to get sample ids as row names and genes as column names
+prefrontalCortex <- transpose_df(prefrontalCortex)
+```
+
+Now we will format the sample id names and then attach the labels from the disease_class file.
+```{r}
+pattern <- "^(\\w{2}\\_\\w{3}\\_\\w{1,2})\\_1$"
+prefrontalCortex <- prefrontalCortex %>%  
+  mutate(rowname = sub(pattern, "\\1", rowname)) %>%
+  rename(Sample_ID = rowname)
+
+labels <- read_csv("disease_class.csv")
+prefrontalCortex <- prefrontalCortex[match(labels$patient_id, prefrontalCortex$Sample_ID),]
+```
+
+### Writing to file
+
+Here we are writing the complete data to a parseable file. This might be considered a kind of checkpoint too. We can later load this file to continue pre-processing.
+```{r}
+prefrontalCortex %>%
+  rename(patient_id = "Sample_ID") %>%
+  write.csv("prefrontalCortex_complete.csv", row.names = FALSE)
+```
+
+## Further processing
+```{r}
+#If you are using this script right from the top, then you could comment out the next line
+prefrontalCortex <- read_csv("prefrontalCortex_complete.csv")
+labels <- read_csv("disease_class.csv")
+
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+# Selecting only training samples for doing the processing
+prefrontalCortex_train <- filter(prefrontalCortex, prefrontalCortex$patient_id %in% train_idx)
+labels_train <- filter(labels, labels$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(prefrontalCortex_train$patient_id, labels_train$patient_id) #This has to be true
+```
+
+### ANOVA
+```{r}
+num_cpus <- 40
+cl <- makeCluster(num_cpus)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 3:ncol(prefrontalCortex_train)) %dopar% {
+  column <- names(prefrontalCortex_train[i]) 
+  avz <- broom:: tidy(aov(prefrontalCortex_train[,i][[1]] ~ unlist(labels_train$class))) # Each ANOVA test iterating through each column
+  return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+prefrontalCortex_sorted <- anova_summary %>% 
+                  filter(p_value<=0.001/nrow(anova_summary)) %>% 
+                  arrange(desc(f_value))
+```
+Now to select the columns in the dataframe and then export them to csv.
+```{r}
+namelist <- c(prefrontalCortex_sorted["gene"])
+index <- match(namelist[[1]], names(prefrontalCortex))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+prefrontalCortex_anova <- prefrontalCortex[,index]  
+
+write.csv(prefrontalCortex_anova, "prefrontalCortex_anova.csv", row.names = FALSE)
+```
+
+Make sure you've loaded the greedySelect function defined at the top of the file in the Custom functions ...
+```{r}
+prefrontalCortex_best1000 <- greedySelect(prefrontalCortex_anova, prefrontalCortex_sorted["gene"][[1]], corrThreshold = 0.7)
+
+index <- match(prefrontalCortex_best1000, names(prefrontalCortex_anova))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+prefrontalCortex_top1000 <- prefrontalCortex_anova[,index]
+write.csv(prefrontalCortex_top1000, "prefrontalCortex_top1000.csv", row.names = FALSE)
+```
+
+## Elastic Net
+As a precursor for the next code block, run the first code block under the heading of further processing.
+```{r}
+#Remember to scale and center the values
+a <- seq(0.1, 0.9, 0.05)    #Alpha values search grid
+
+X <- scale(as.matrix(prefrontalCortex_train[,2:ncol(prefrontalCortex_train)]), center = TRUE, scale = TRUE)
+Y <- as.factor(as.matrix(labels_train$class))
+
+num_cpus <- 25
+cl <- makeCluster(num_cpus) 
+doParallel::registerDoParallel(cl)
+search <- foreach(i = a, .combine = rbind) %dopar% {
+  cv <- glmnet::cv.glmnet(X, Y, family = "multinomial", nfold = 10, type.measure = "deviance", parallel = TRUE, alpha = i)
+  data.frame(cvm = cv$cvm[cv$lambda == cv$lambda.1se], lambda.1se = cv$lambda.1se, alpha = i)
+}
+stopCluster(cl)
+cv <- search[search$cvm == min(search$cvm), ]
+model <- glmnet(X, Y, family = "multinomial", lambda = cv$lambda.1se, alpha = cv$alpha)
+
+coeff = coef(model)
+out <- 0
+#Coeff is a list because of multinomial classification
+for (i in 1:length(coeff)) {
+  temp <- coeff[i][[1]]
+  var <- names(temp[which(temp !=0),])
+  out <- c(out,var)
+}
+
+selectedVar <- unique(out)[3:length(unique(out))]
+```
+```{r}
+index <- match(selectedVar, names(prefrontalCortex))
+index <- prepend(index,1)     #To add the column with the patient_ids too to the output
+prefrontalCortex_elasticnet <- prefrontalCortex[,index]
+write.csv(prefrontalCortex_elasticnet, "prefrontalCortex_elasticnet.csv", row.names = FALSE)
+```

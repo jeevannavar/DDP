@@ -1,0 +1,53 @@
+---
+title: "The PAM50 Labels"
+output: html_notebook
+---
+This doesn't work. The immunohistochemistry way of determining the label is not very reliable without the missing KI67 marker readinng. I will just take the value from that paper I found. :)
+https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-876/tables/1
+```{r}
+library(tidyverse)
+library(data.table)
+```
+```{r}
+pam50_labels <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Clinical_Pick_Tier1.Level_4.2016012800.0.0/All_CDEs.txt", "\t", escape_double = FALSE, trim_ws = TRUE) %>% slice(26,31,80,81) %>% column_to_rownames(var = "bcr_patient_barcode")
+```
+
+```{r}
+transpose_df <- function(df) {
+    t_df <- data.table::transpose(df)
+    colnames(t_df) <- rownames(df)
+    rownames(t_df) <- colnames(df)
+    t_df <- t_df %>%
+      tibble::rownames_to_column(.data = .) %>%
+      tibble::as_tibble(.)
+    return(t_df)
+  }
+```
+
+```{r}
+pam50_labels <- transpose_df(pam50_labels) %>%
+  rename(ER = breast_carcinoma_estrogen_receptor_status, PR = breast_carcinoma_progesterone_receptor_status, HER2 = lab_proc_her2_neu_immunohistochemistry_receptor_status, fish = lab_procedure_her2_neu_in_situ_hybrid_outcome_type) %>%
+  mutate(HER2 = replace(HER2, HER2 == "equivocal" & !is.na(HER2), fish[HER2 == "equivocal" & !is.na(HER2)])) %>%
+  select(!fish)
+  
+```
+
+```{r}
+samples <- pam50_labels["rowname"]
+pattern <- "^(\\w{4}\\-\\w{2}\\-\\w{4}).*"
+pam50_labels <- pam50_labels %>%
+  drop_na() %>%
+  mutate(rowname =sub(pattern, "\\1\\-01", rowname))
+pam50_labels$rowname = toupper(pam50_labels$rowname)
+
+temp$PAM50 = case_when(temp$ER == "negative" & temp$PR == "negative" & temp$HER2 == "negative" ~ "Basal",
+                       temp$ER == "positive" & temp$PR == "positive" & temp$HER2 == "negative" ~ "LumA",
+                       temp$ER == "positive" & temp$HER2 == "positive" ~ "LumB",
+                       temp$PR == "positive" & temp$HER2 == "negative" ~ "LumB",
+                       temp$ER == "negative" & temp$PR == "negative" & temp$HER2 == "positive" ~ "HER2"
+)
+
+temp %>% group_by(PAM50) %>% count()
+```
+
+

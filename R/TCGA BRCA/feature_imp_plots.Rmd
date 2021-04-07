@@ -1,0 +1,995 @@
+---
+title: "Feature Importance plots"
+output: html_notebook
+---
+
+Importing libraries
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(doParallel)
+#library(matrixStats)
+library(gridExtra)
+```
+
+Reading in all the data.
+```{r message=FALSE, warning=FALSE}
+pam50 <- read_csv("PAM50_subtype.csv")
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+test_idx <- unlist(strsplit(lines[4], ","))
+
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+pam50_test <- filter(pam50, pam50$patient_id %in% test_idx)
+
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+
+
+# Selecting only training samples for model training
+meth_train <- filter(meth, meth$patient_id %in% train_idx)
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx)
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+
+
+# Check that the labels are identical
+identical(pam50_train$patient_id, meth_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mrna_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+
+# Setting row.names
+meth_train <- column_to_rownames(meth_train, var = "patient_id")
+mrna_train <- column_to_rownames(mrna_train, var = "patient_id")
+mirna_train <- column_to_rownames(mirna_train, var = "patient_id")
+meth <- column_to_rownames(meth, var = "patient_id")
+mrna <- column_to_rownames(mrna, var = "patient_id")
+mirna <- column_to_rownames(mirna, var = "patient_id")
+```
+
+Concatenating the data for easier use with most modelers.
+
+```{r}
+all_train <- bind_cols(mrna_train, meth_train, mirna_train)
+all_data <- bind_cols(mrna, meth, mirna)
+```
+
+## ANOVA
+```{r}
+num_clusters <- 40
+cl <- makeCluster(num_clusters)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 1:ncol(all_train)) %dopar% {
+  column <- names(all_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(all_train[,i] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(features=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Filter the features according to the ANOVA p-value and then sort them according to the f_values, which is not necessary here, but can be useful for functional and representational purposes later
+```{r}
+anova <- anova_summary %>% dplyr::select(!p_value)
+```
+
+Loading shap and lime values
+```{r}
+lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
+shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
+    col_types = cols(features = col_skip()))
+shap <- rename(shap, features = features_1)
+```
+
+Average values over the three sets
+```{r}
+# lime1 <- read_csv("/data/users/bs16b001/Modified_Moronet/lime_1.csv") %>% arrange(features)
+# lime2 <- read_csv("/data/users/bs16b001/Modified_Moronet/lime_2.csv") %>% arrange(features)
+# lime3 <- read_csv("/data/users/bs16b001/Modified_Moronet/lime_3.csv") %>% arrange(features)
+# lime_aggregated <- tibble(features = lime1$features, values1 = lime1$aggregate, values2 = lime2$aggregate, values3 = lime3$aggregate)
+# 
+# lime_aggregated$ranks1 <- rank(-lime_aggregated$values1)
+# lime_aggregated$ranks2 <- rank(-lime_aggregated$values2)
+# lime_aggregated$ranks3 <- rank(-lime_aggregated$values3)
+# 
+# ## Visualizing if there is significant dispersion
+# ggplot(lime_aggregated, aes(ranks3, ranks1)) + geom_point() +geom_smooth()
+# 
+# ## Mean and sd
+# columns <- c("values1", "values2", "values3")
+# lime_aggregated <- lime_aggregated %>% mutate(Mean= rowMeans(.[columns]), stdev=rowSds(as.matrix(.[columns])))
+# 
+# ## Plotting distribution of sd
+# ggplot(lime_aggregated, aes(y=stdev))+geom_boxplot()
+# 
+# shap1 <- read_csv("/data/users/bs16b001/Modified_Moronet/shap_1.csv") %>% arrange(features_1)
+# shap2 <- read_csv("/data/users/bs16b001/Modified_Moronet/shap_2.csv") %>% arrange(features_1)
+# shap3 <- read_csv("/data/users/bs16b001/Modified_Moronet/shap_3.csv") %>% arrange(features_1)
+# shap_aggregated <- tibble(features = shap1$features_1, values1 = shap1$shapley_values, values2 = shap2$shapley_values, values3 = shap3$shapley_values)
+# 
+# shap_aggregated$ranks1 <- rank(-shap_aggregated$values1)
+# shap_aggregated$ranks2 <- rank(-shap_aggregated$values2)
+# shap_aggregated$ranks3 <- rank(-shap_aggregated$values3)
+# 
+# ## Visualizing if there is significant dispersion
+# ggplot(shap_aggregated, aes(ranks3, ranks2)) + geom_point() +geom_smooth()
+# 
+# ## Mean and sd
+# columns <- c("values1", "values2", "values3")
+# shap_aggregated <- shap_aggregated %>% mutate(Mean= rowMeans(.[columns]), stdev=rowSds(as.matrix(.[columns])))
+# 
+# ## Plotting distribution of sd
+# ggplot(shap_aggregated, aes(y=stdev))+geom_boxplot()
+```
+
+Combining the values
+```{r}
+lime <- arrange(lime, features)
+shap <- arrange(shap, features)
+anova <- arrange(anova, features)
+values <- merge(merge(shap, lime), anova) #%>% rename(shap=shapley_values, lime=aggregate, anova=f_value)
+values$shap = rank(-values$shapley_values) # "-" because otherwise it gives rank 1 to lowest value
+values$lime = rank(-values$aggregate)
+values$anova = rank(-values$f_value)
+
+ranks <- dplyr::select(values, features, shap, lime, anova)
+```
+
+Mentioning which data type they are
+```{r}
+values$datatype <- NA
+values$datatype[values$features %in% names(meth)] = "meth"
+values$datatype[values$features %in% names(mrna)] = "mrna"
+values$datatype[values$features %in% names(mirna)] = "mirna"
+
+ranks$Datatype = values$datatype
+```
+
+Plotting
+```{r}
+ggplot(ranks, aes(x=anova, y=lime, colour=Datatype))+
+  geom_point()+
+  labs(x="ANOVA Ranks", y="LIME Ranks")
+```
+
+
+## SVM
+```{r}
+svm_lime <- read_csv("/data/users/bs16b001/logs/20210131/svm/svm_lime.csv")
+lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
+shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
+    col_types = cols(features = col_skip()))
+shap <- rename(shap, features = features_1)
+
+# Combining values
+lime <- arrange(lime, features)
+shap <- arrange(shap, features)
+anova <- arrange(anova, features)
+svm_lime <- arrange(svm_lime, features)
+values <- left_join(left_join(left_join(shap, lime, by="features"), anova, by="features"), svm_lime, by="features")
+
+values$shap = rank(-values$shapley_values) # "-" because otherwise it gives rank 1 to lowest value
+values$lime = rank(-values$aggregate.x)
+values$anova = rank(-values$f_value)
+values$svm_lime = rank(-values$aggregate.y)
+
+ranks <- dplyr::select(values, features, shap, lime, anova, svm_lime)
+
+# Mentioning which datatype they are
+values$datatype <- NA
+values$datatype[values$features %in% names(meth)] = "meth"
+values$datatype[values$features %in% names(mrna)] = "mrna"
+values$datatype[values$features %in% names(mirna)] = "mirna"
+
+ranks$Datatype = values$datatype
+```
+Plotting
+```{r}
+ggplot(ranks, aes(x=lime, y=svm_lime, colour=Datatype))+
+  geom_point()+
+  labs(x="GCN Lime Ranks", y="SVM LIME Ranks")
+```
+
+## Correlation plot
+```{r}
+matrix <- values[c("shapley_values", "aggregate.x", "f_value", "aggregate.y")]
+matrix <- rename(matrix, "gcn_shap"="shapley_values", "gcn_lime"="aggregate.x", "anova"="f_value", "svm_lime"="aggregate.y")
+corr_matrix <- cor(matrix)
+
+library(corrplot)
+corrplot.mixed(corr_matrix, lower.col = "black")
+```
+
+# All interaction features
+```{r}
+lime_all_int <- read_csv("/data/users/bs16b001/logs/20210217/lime_1.csv")
+shap_all_int <- read_csv("/data/users/bs16b001/logs/20210217/shap_1.csv", 
+    col_types = cols(features = col_skip())) %>% rename("features"="features_1")
+
+# Combining values
+lime_all_int <- arrange(lime_all_int, features)
+shap_all_int <- arrange(shap_all_int, features)
+values_all_int <- left_join(shap_all_int, lime_all_int, by="features")
+
+values_all_int$shap = rank(-values_all_int$shapley_values) # "-" because otherwise it gives rank 1 to lowest value
+values_all_int$lime = rank(-values_all_int$aggregate)
+
+ranks <- dplyr::select(values_all_int, features, shap, lime)
+
+
+ggplot(ranks, aes(x=lime, y=shap))+
+  geom_point()
+```
+
+```{r}
+meth_meth <- names(read_csv("meth_meth_anova.csv", n_max = 0))
+mrna_mrna <- names(read_csv("mrna_mrna_anova.csv", n_max = 0))
+mirna_mirna <- names(read_csv("mirna_mirna_anova.csv", n_max = 0))
+
+mrna_meth <- names(read_csv("meth_mrna_anova.csv", n_max = 0))
+meth_mirna <- names(read_csv("meth_mirna_anova.csv", n_max = 0))
+mirna_mrna <- names(read_csv("mrna_mirna_anova.csv", n_max = 0))
+
+# Mentioning which datatype they are
+values_all_int$datatype <- NA
+values_all_int$datatype[values_all_int$features %in% names(meth)] = "meth"
+values_all_int$datatype[values_all_int$features %in% names(mrna)] = "mrna"
+values_all_int$datatype[values_all_int$features %in% names(mirna)] = "mirna"
+values_all_int$datatype[values_all_int$features %in% meth_meth] = "meth_meth"
+values_all_int$datatype[values_all_int$features %in% mrna_mrna] = "mrna_mrna"
+values_all_int$datatype[values_all_int$features %in% mirna_mirna] = "mirna_mirna"
+values_all_int$datatype[values_all_int$features %in% mrna_meth] = "mrna_meth"
+values_all_int$datatype[values_all_int$features %in% meth_mirna] = "meth_mirna"
+values_all_int$datatype[values_all_int$features %in% mirna_mrna] = "mirna_mrna"
+
+
+ranks$Datatype = values_all_int$datatype
+```
+
+## ANOVA over all interaction features
+Loading data
+```{r message=FALSE, warning=FALSE}
+pam50 <- read_csv("PAM50_subtype.csv")
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+test_idx <- unlist(strsplit(lines[4], ","))
+
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+pam50_test <- filter(pam50, pam50$patient_id %in% test_idx)
+
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+mrna_mrna <- read_csv("mrna_mrna_anova.csv")
+meth_meth <- read_csv("meth_meth_anova.csv")
+mirna_mirna <- read_csv("mirna_mirna_anova.csv")
+mrna_meth <- read_csv("meth_mrna_anova.csv")
+meth_mirna <- read_csv("meth_mirna_anova.csv")
+mirna_mrna <- read_csv("mrna_mirna_anova.csv")
+
+# Selecting only training samples for model training
+meth_train <- filter(meth, meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx) %>% column_to_rownames(var = "patient_id")
+mrna_mrna_train <- filter(mrna_mrna, mrna_mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_meth_train <- filter(meth_meth, meth_meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mirna_train <- filter(mirna_mirna, mirna_mirna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_meth_train <- filter(mrna_meth, mrna_meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_mirna_train <- filter(meth_mirna, meth_mirna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mrna_train <- filter(mirna_mrna, mirna_mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+
+# Setting row.names
+
+meth <- column_to_rownames(meth, var = "patient_id")
+mrna <- column_to_rownames(mrna, var = "patient_id")
+mirna <- column_to_rownames(mirna, var = "patient_id")
+mrna_mrna <- column_to_rownames(mrna_mrna, var = "patient_id")
+meth_meth <- column_to_rownames(meth_meth, var = "patient_id")
+mirna_mirna <- column_to_rownames(mirna_mirna, var = "patient_id")
+mrna_meth <- column_to_rownames(mrna_meth, var = "patient_id")
+meth_mirna <- column_to_rownames(meth_mirna, var = "patient_id")
+mirna_mrna <- column_to_rownames(mirna_mrna, var = "patient_id")
+```
+
+Combining them
+```{r}
+all_train <- bind_cols(mrna_train, meth_train, mirna_train, mrna_mrna_train, meth_meth_train, mirna_mirna_train, mrna_meth_train, meth_mirna_train, mirna_mrna_train)
+all_data <- bind_cols(mrna, meth, mirna, mrna_mrna, meth_meth, mirna_mirna, mrna_meth, meth_mirna, mirna_mrna)
+```
+Anova
+```{r}
+num_clusters <- 40
+cl <- makeCluster(num_clusters)
+doParallel::registerDoParallel(cl)
+anova_summary <- foreach(i = 1:ncol(all_train)) %dopar% {
+  column <- names(all_train[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(all_train[,i] ~ unlist(pam50_train$cancer_subtype))) # Each ANOVA test iterating through each column
+  return(c(features=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+}
+stopCluster(cl)
+anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+```
+
+Joining anova values with the rest
+```{r}
+anova <- anova_summary %>% dplyr::select(!p_value)
+anova <- arrange(anova, features)
+
+values_all_int <- merge(values_all_int, anova)
+```
+
+
+Top 10 of each category
+```{r}
+top10 <- values_all_int %>%
+  #arrange(desc(aggregate)) %>%
+  group_by(datatype) %>%
+  slice_max(aggregate, n = 10)
+```
+
+# Gene Set Enrichment Analysis
+
+```{r}
+library(msigdbr)
+library(fgsea)
+
+all_gene_sets = msigdbr(species = "Homo sapiens")
+msigdbr_list = split(x = as.character(all_gene_sets$entrez_gene), f = all_gene_sets$gs_name)
+temp <- fgsea(pathways = msigdbr_list, 
+      stats = exampleRanks,
+      nperm = 100)
+```
+Formatting mrna names:
+```{r}
+# The mrna names have both names and entrez ids joined with an underscore
+# Splitting them and keeping only one of them will be enough
+values$features[values$datatype == "mrna"] <- unlist(str_split(values$features[values$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
+```
+
+Formatting mirna names:
+```{r}
+# In my analysis, the mirna names are in the format hsa-mir-000ab
+# Get only the part after first dash, and keep the last dash
+#test <- c("hsa-mir-100", "hsa-mir-100a", "hsa-mir-100-1")
+mirna_names <- values$features[values$datatype == "mirna"]
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+
+#setdiff(mirna_names, all_gene_sets$gene_symbol)
+
+values$features[values$datatype == "mirna"] <- mirna_names
+```
+
+Converting everything to entrez ids
+```{r}
+# Convert the object to a list
+#xx <- as.list(org.Hs.egALIAS2EG)
+# Remove pathway identifiers that do not map to any entrez gene id
+#xx <- xx[!is.na(xx)]
+#Ok, this is going to be a wasted effort, I might as well manually edit the ones that don't match
+```
+
+
+```{r}
+msigdbr_list = split(x = all_gene_sets$gene_symbol, f = all_gene_sets$gs_name)
+
+genes <- values %>%
+  dplyr::select(features, aggregate.x) %>%
+  deframe()
+fgseaRes_gcnlime <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 10)
+
+genes <- values %>%
+  dplyr::select(features, shapley_values) %>%
+  deframe()
+fgseaRes_gcnshap <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 10)
+
+genes <- values %>%
+  dplyr::select(features, f_value) %>%
+  deframe()
+fgseaRes_anova <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 10)
+
+genes <- values %>%
+  dplyr::select(features, aggregate.y) %>%
+  deframe()
+fgseaRes_svmlime <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 10)
+
+
+#topPathwaysUp <- fgseaRes[ES > 0][head(order(pval), n=10), pathway]
+#topPathwaysDown <- fgseaRes[ES < 0][head(order(pval), n=10), pathway]
+#topPathways <- c(topPathwaysUp, rev(topPathwaysDown))
+#plotGseaTable(msigdbr_list[topPathways], genes, fgseaRes, gseaParam=0.5)
+
+#plotEnrichment(msigdbr_list[["FARMER_BREAST_CANCER_CLUSTER_3"]], genes) + labs(title="FARMER_BREAST_CANCER_CLUSTER_3")
+
+summary(fgseaRes_anova$padj)
+summary(fgseaRes_gcnlime$padj)
+summary(fgseaRes_gcnshap$padj)
+summary(fgseaRes_svmlime$padj)
+count(fgseaRes_anova$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnshap$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_svmlime$padj < 0.05, na.rm = TRUE)
+
+count(fgseaRes_gcnlime$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.01, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.005, na.rm = TRUE)
+```
+
+Making tables:
+```{r}
+genesets_cat <- all_gene_sets %>% 
+                  filter(!gs_cat %in% c("C1", "C7", "C8")) %>%
+                  select(gs_cat, gs_subcat, gs_name) %>% 
+                  distinct()
+
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C6"] <- "Oncogenic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "H"] <- "Hallmark"
+genesets_cat <- select(genesets_cat, gs_subcat, gs_name)
+
+
+temp_list <- fgseaRes_anova$pathway[fgseaRes_anova$padj < 0.05]
+anova_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+gcnlime_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnshap$pathway[fgseaRes_gcnshap$padj < 0.05]
+gcnshap_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_svmlime$pathway[fgseaRes_svmlime$padj < 0.05]
+svmlime_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+enrich_tibble <- full_join(anova_gs, gcnlime_gs, by="Var1") %>%
+  full_join(gcnshap_gs, by="Var1") %>%
+  rename("ANOVA" = "Freq.x", "GCN_LIME" = "Freq.y", "GCN_SHAP" = "Freq", "Geneset Collection" = "Var1")
+
+enrich_tibble$SVM <- rep(NA, length(enrich_tibble$ANOVA))
+enrich_tibble <- enrich_tibble %>% replace(is.na(.), 0) %>% arrange(desc(ANOVA))
+
+enrich_tibble$`Geneset Collection` <- enrich_tibble$`Geneset Collection` %>%
+                    recode("CGP" = "Chemical/Genetic Perturbations",
+                           "CM" = "Cancer Modules",
+                           "CP:WIKIPATHWAYS" = "WikiPathways",
+                           "GO:BP" = "GO: Biological Processes",
+                           "MIR:MIRDB" = "miRDB Targets",
+                           "CGN" = "Cancer Gene Neighbourhoods",
+                           "GO:CC" = "GO: Cellular Components",
+                           "GO:MF" = "GO: Molecular Function",
+                           "HPO" = "Human Phenotype Ontology",
+                           "CP:REACTOME" = "Reactome Pathways",
+                           "TFT:TFT_Legacy" = "Legacy TF Targets")
+#library(gridExtra)
+#tableGrob(enrich_tibble)
+grid.arrange(tableGrob(enrich_tibble, rows=NULL), padding = unit(0))
+```
+
+
+```{r}
+# List of all gene sets with BREAST in the name
+#unique(str_subset(all_gene_sets$gs_name, pattern=fixed("BREAST")))
+```
+Plot of significant pathways enriched:
+```{r}
+fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.005]
+
+gcnlime_gs <- fgseaRes_gcnlime %>%
+                filter(padj < 0.005) %>%
+                filter(pathway %in% genesets_cat$gs_name) %>%
+                select(gs_name = pathway, NES) %>%
+                left_join(genesets_cat)
+
+gcnlime_gs$gs_subcat <- gcnlime_gs$gs_subcat %>%
+                    recode("CGP" = "Chemical/Genetic Perturbations",
+                           "CM" = "Cancer Modules",
+                           "CP:WIKIPATHWAYS" = "WikiPathways",
+                           "GO:BP" = "GO: Biological Processes",
+                           "MIR:MIRDB" = "miRDB Targets",
+                           "CGN" = "Cancer Gene Neighbourhoods",
+                           "GO:CC" = "GO: Cellular Components",
+                           "GO:MF" = "GO: Molecular Function",
+                           "HPO" = "Human Phenotype Ontology",
+                           "CP:REACTOME" = "Reactome Pathways",
+                           "TFT:TFT_Legacy" = "Legacy TF Targets")
+
+gcnlime_gs %>%
+  mutate(NES = abs(NES)) %>%
+  #slice_max(NES, n = 40) %>%
+  mutate(gs_name = fct_reorder(gs_name, NES)) %>%
+  ggplot(aes(x = NES, y = gs_name, fill = gs_subcat))+
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  labs(y = "Top Significant Genesets at FDR = 0.5%", x = "Normalized Enrichment Score", title = "Gene Set Enrichment Analysis Results", fill = "Sub-collection")
+```
+
+
+Separating the names in the paired names of interaction features:
+```{r}
+#test <- dplyr::filter(values_all_int, datatype=="mirna_mirna") %>% head()
+#test
+#separate_rows(test, features, sep = "__")
+
+single_omics <- dplyr::filter(values_all_int, datatype %in% c("mrna", "meth", "mirna"))
+self_int <- dplyr::filter(values_all_int, datatype %in% c("mrna_mrna", "meth_meth", "mirna_mirna"))
+cross_int <- dplyr::filter(values_all_int, datatype %in% c("meth_mirna", "mirna_mrna", "mrna_meth"))
+
+self_int <- separate_rows(self_int, features, sep = "__")
+cross_int <- separate_rows(cross_int, features, sep = "_")
+
+values_all <- bind_rows(single_omics, self_int, cross_int)
+
+# Formatting mrna names:
+
+# The mrna names have both names and entrez ids joined with an underscore
+# Splitting them and keeping only one of them will be enough
+values_all$features <- vapply(strsplit(values_all$features, "\\|"), `[`, 1, FUN.VALUE=character(1))
+# Formatting mirna names:
+
+# In my analysis, the mirna names are in the format hsa-mir-000ab
+# Get only the part after first dash, and keep the last dash
+#test <- c("hsa-mir-100", "hsa-mir-100a", "hsa-mir-100-1")
+mirna_names <- values_all$features[startsWith(values_all$features, "hsa-")]
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+#New ones
+mirna_names <- sub("LET7A-1", "MIRLET7A1", mirna_names)
+mirna_names <- sub("LET7B", "MIRLET7B", mirna_names)
+mirna_names <- sub("LET7F-2", "MIRLET7F2", mirna_names)
+mirna_names <- sub("LET7A-2", "MIRLET7A2", mirna_names)
+mirna_names <- sub("LET7A-3", "MIRLET7A3", mirna_names)
+mirna_names <- sub("MIR92A-1", "MIR92A1", mirna_names)
+mirna_names <- sub("MIR125B-1", "MIR125B1", mirna_names)
+mirna_names <- sub("MIR125B-2", "MIR125B2", mirna_names)
+mirna_names <- sub("MIR181B-2", "MIR181B2", mirna_names)
+mirna_names <- sub("MIR181A-2", "MIR181A2", mirna_names)
+mirna_names <- sub("MIR181B-1", "MIR181B1", mirna_names)
+mirna_names <- sub("MIR320C-1", "MIR320C1", mirna_names)
+mirna_names <- sub("MIR29B-2", "MIR29B2", mirna_names)
+
+#setdiff(mirna_names, all_gene_sets$gene_symbol)
+
+values_all$features[startsWith(values_all$features, "hsa-")] <- mirna_names
+```
+
+Grouping them by gene_name and adding them:
+```{r}
+values_all <- dplyr::select(values_all, features, shapley_values, aggregate, f_value)
+
+values_summarised <- values_all %>%
+  group_by(features) %>%
+  summarize(across(everything(), list(mean))) %>%
+  rename("shap" = "shapley_values_1", "lime" = "aggregate_1", "anova" = "f_value_1")
+  #rename("shap" = "shapley_values", "lime" = "aggregate", "anova" = "f_value")
+```
+
+GSEA
+```{r}
+msigdbr_list = split(x = all_gene_sets$gene_symbol, f = all_gene_sets$gs_name)
+
+genes <- values_summarised %>%
+  dplyr::select(features, lime) %>%
+  deframe()
+fgseaRes_gcnlime <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 30)
+
+genes <- values_summarised %>%
+  dplyr::select(features, shap) %>%
+  deframe()
+fgseaRes_gcnshap <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 30)
+
+genes <- values_summarised %>%
+  dplyr::select(features, anova) %>%
+  deframe()
+fgseaRes_anova <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 100000,
+                  nproc = 30)
+
+
+
+topPathwaysUp <- fgseaRes_gcnlime[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnlime[ES < 0][head(order(pval), n=10), pathway]
+topPathways_gcnlime <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_gcnshap[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnshap[ES < 0][head(order(pval), n=10), pathway]
+topPathways_gcnshap <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_anova[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_anova[ES < 0][head(order(pval), n=10), pathway]
+topPathways_anova <- c(topPathwaysUp, rev(topPathwaysDown))
+
+enriched_pathways <- tibble(anova=topPathways_anova, lime=topPathways_gcnlime, shap=topPathways_gcnshap)
+
+#plotGseaTable(msigdbr_list[topPathways], genes, fgseaRes_gcnlime, gseaParam=0.5)
+```
+
+### The metric
+The number of gene sets with an FDR less than 5% were determined and used as a metric to compared different multi-omics integrative methods.
+```{r}
+summary(fgseaRes_anova$padj)
+summary(fgseaRes_gcnlime$padj)
+summary(fgseaRes_gcnshap$padj)
+count(fgseaRes_anova$padj < 0.1, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.1, na.rm = TRUE)
+count(fgseaRes_gcnshap$padj < 0.1, na.rm = TRUE)
+```
+
+## Making table
+```{r}
+genesets_cat <- all_gene_sets %>% 
+                  filter(!gs_cat %in% c("C1", "C7", "C8")) %>%
+                  select(gs_cat, gs_subcat, gs_name) %>% 
+                  distinct()
+
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C6"] <- "Oncogenic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "H"] <- "Hallmark"
+genesets_cat <- select(genesets_cat, gs_subcat, gs_name)
+
+temp_list <- fgseaRes_anova$pathway[fgseaRes_anova$padj < 0.05]
+anova_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+gcnlime_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnshap$pathway[fgseaRes_gcnshap$padj < 0.05]
+gcnshap_gs <- table(genesets_cat$gs_subcat[genesets_cat$gs_name %in% temp_list]) %>% as.data.frame()
+
+
+enrich_tibble <- full_join(anova_gs, gcnlime_gs, by="Var1") %>%
+  full_join(gcnshap_gs, by="Var1") %>%
+  rename("ANOVA" = "Freq.x", "GCN_LIME" = "Freq.y", "GCN_SHAP" = "Freq", "Geneset Collection" = "Var1")
+
+enrich_tibble <- enrich_tibble %>% replace(is.na(.), 0) %>% arrange(desc(ANOVA))
+
+enrich_tibble$`Geneset Collection` <- enrich_tibble$`Geneset Collection` %>%
+                    recode("CGP" = "Chemical/Genetic Perturbations",
+                           "CM" = "Cancer Modules",
+                           "CP:WIKIPATHWAYS" = "WikiPathways",
+                           "GO:BP" = "GO: Biological Processes",
+                           "MIR:MIRDB" = "miRDB Targets",
+                           "CGN" = "Cancer Gene Neighbourhoods",
+                           "GO:CC" = "GO: Cellular Components",
+                           "GO:MF" = "GO: Molecular Function",
+                           "HPO" = "Human Phenotype Ontology",
+                           "CP:REACTOME" = "Reactome Pathways",
+                           "TFT:TFT_Legacy" = "Legacy TF Targets",
+                           "TFT:GTRD" = "GTRD TF Targets")
+
+grid.arrange(tableGrob(enrich_tibble, rows=NULL))
+```
+
+
+Try to subset msigdbr and then run:
+```{r}
+subset_list <- all_gene_sets %>% filter(gs_cat == "C6")
+msigdbr_list = split(x = subset_list$gene_symbol, f = subset_list$gs_name)
+
+genes <- values_summarised %>%
+  dplyr::select(features, lime) %>%
+  deframe()
+fgseaRes_gcnlime <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 1000000,
+                  nproc = 30)
+
+genes <- values_summarised %>%
+  dplyr::select(features, shap) %>%
+  deframe()
+fgseaRes_gcnshap <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 1000000,
+                  nproc = 30)
+
+genes <- values_summarised %>%
+  dplyr::select(features, anova) %>%
+  deframe()
+fgseaRes_anova <- fgsea(pathways = msigdbr_list, 
+                  stats = genes,
+                  nperm = 1000000,
+                  nproc = 30)
+
+
+summary(fgseaRes_anova$padj)
+summary(fgseaRes_gcnlime$padj)
+summary(fgseaRes_gcnshap$padj)
+count(fgseaRes_anova$padj < 0.1, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.1)
+count(fgseaRes_gcnshap$padj < 0.1)
+
+topPathwaysUp <- fgseaRes_gcnlime[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnlime[ES < 0][head(order(pval), n=10), pathway]
+topPathways_gcnlime <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_gcnshap[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnshap[ES < 0][head(order(pval), n=10), pathway]
+topPathways_gcnshap <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_anova[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes_anova[ES < 0][head(order(pval), n=10), pathway]
+topPathways_anova <- c(topPathwaysUp, rev(topPathwaysDown))
+
+enriched_pathways_c6 <- tibble(anova=topPathways_anova, lime=topPathways_gcnlime, shap=topPathways_gcnshap)
+```
+
+Try other disease gene sets:
+
+#### DisGeNET
+```{r}
+DisGeNET <- read_delim("/data/users/bs16b001/genesets/all_gene_disease_associations.tsv", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
+
+pathways_list = split(x = DisGeNET$geneSymbol, f = DisGeNET$diseaseName)
+
+genes <- values_summarised %>% dplyr::select(features, lime) %>% deframe()
+fgseaRes_gcnlime <- fgsea(pathways = pathways_list, stats = genes, nperm = 100000, nproc = 30)
+
+genes <- values_summarised %>% dplyr::select(features, shap) %>% deframe()
+fgseaRes_gcnshap <- fgsea(pathways = pathways_list, stats = genes, nperm = 100000, nproc = 30)
+
+genes <- values_summarised %>% dplyr::select(features, anova) %>% deframe()
+fgseaRes_anova <- fgsea(pathways = pathways_list, stats = genes, nperm = 100000, nproc = 30)
+
+summary(fgseaRes_anova$padj)
+summary(fgseaRes_gcnlime$padj)
+summary(fgseaRes_gcnshap$padj)
+count(fgseaRes_anova$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnshap$padj < 0.05, na.rm = TRUE)
+
+topPathwaysUp <- fgseaRes_gcnlime[ES > 0][head(order(padj), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnlime[ES < 0][head(order(padj), n=10), pathway]
+topPathways_gcnlime <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_gcnshap[ES > 0][head(order(padj), n=10), pathway]
+topPathwaysDown <- fgseaRes_gcnshap[ES < 0][head(order(padj), n=10), pathway]
+topPathways_gcnshap <- c(topPathwaysUp, rev(topPathwaysDown))
+
+topPathwaysUp <- fgseaRes_anova[ES > 0][head(order(padj), n=10), pathway]
+topPathwaysDown <- fgseaRes_anova[ES < 0][head(order(padj), n=10), pathway]
+topPathways_anova <- c(topPathwaysUp, rev(topPathwaysDown))
+
+enriched_pathways_disgenet <- tibble(anova=topPathways_anova, lime=topPathways_gcnlime, shap=topPathways_gcnshap)
+
+```
+## Making table
+```{r}
+genesets_cat <- select(DisGeNET, diseaseSemanticType, diseaseName) %>% distinct()
+
+temp_list <- fgseaRes_anova$pathway[fgseaRes_anova$padj < 0.05]
+anova_gs <- table(genesets_cat$diseaseSemanticType[genesets_cat$diseaseName %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+gcnlime_gs <- table(genesets_cat$disease1.SemanticType[genesets_cat$diseaseName %in% temp_list]) %>% as.data.frame()
+
+temp_list <- fgseaRes_gcnshap$pathway[fgseaRes_gcnshap$padj < 0.05]
+gcnshap_gs <- table(genesets_cat$diseaseSemanticType[genesets_cat$diseaseName %in% temp_list]) %>% as.data.frame()
+
+
+enrich_tibble <- full_join(gcnlime_gs, gcnshap_gs, by="Var1") %>%
+  #full_join(gcnshap_gs, by="Var1") %>%
+  rename("GCN_LIME" = "Freq.x", "GCN_SHAP" = "Freq.y", "Geneset Collection" = "Var1")
+enrich_tibble$ANOVA <- rep(NA, length(enrich_tibble$GCN_LIME))
+
+enrich_tibble <- enrich_tibble %>% replace(is.na(.), 0) %>% arrange(desc(GCN_LIME))
+grid.arrange(tableGrob(enrich_tibble, rows=NULL))
+```
+
+
+#### DriverV3
+Applied for the dataset online
+```{r}
+mutations <- read_tsv("/data/users/bs16b001/genesets/mutation_download_tab.txt") %>%
+  select(cancer = cancer_type_abbr, driver_gene) %>%
+  separate_rows(driver_gene) %>%
+  unique()
+
+methylation <- read_tsv("/data/users/bs16b001/genesets/methylation_download_tab.txt") %>%
+  select(cancer = cancer_type_abbr, driver_gene) %>%
+  separate_rows(driver_gene) %>%
+  unique()
+
+CNV <- read_tsv("/data/users/bs16b001/genesets/CNV_download_tab.txt") %>%
+  select(cancer = cancer_type_abbr, driver_gene) %>%
+  separate_rows(driver_gene) %>%
+  unique()
+  
+driverv3 <- rbind(rbind(mutations, methylation), CNV) %>% unique()
+
+pathways_list = split(x = driverv3$driver_gene, f = driverv3$cancer)
+
+genes <- values %>% dplyr::select(features, lime) %>% deframe()
+fgseaRes_gcnlime <- fgsea(pathways = pathways_list, stats = genes, nperm = 1000000, nproc = 30)
+
+genes <- values %>% dplyr::select(features, shap) %>% deframe()
+fgseaRes_gcnshap <- fgsea(pathways = pathways_list, stats = genes, nperm = 1000000, nproc = 30)
+
+genes <- values %>% dplyr::select(features, anova) %>% deframe()
+fgseaRes_anova <- fgsea(pathways = pathways_list, stats = genes, nperm = 1000000, nproc = 30)
+
+genes <- values %>% dplyr:: select(features, svm_lime) %>% deframe()
+fgseaRes_svmlime <- fgsea(pathways = pathways_list, stats = genes, nperm = 1000000, nproc = 30)
+
+summary(fgseaRes_anova$padj)
+summary(fgseaRes_gcnlime$padj)
+summary(fgseaRes_gcnshap$padj)
+summary(fgseaRes_svmlime$padj)
+count(fgseaRes_anova$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnlime$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_gcnshap$padj < 0.05, na.rm = TRUE)
+count(fgseaRes_svmlime$padj < 0.05, na.rm = TRUE)
+```
+
+
+Making tables:
+```{r}
+genesets_cat <- driverv3
+
+fgseaRes_anova$pathway[fgseaRes_anova$padj < 0.05]
+fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+fgseaRes_gcnshap$pathway[fgseaRes_gcnshap$padj < 0.05]
+fgseaRes_svmlime$pathway[fgseaRes_svmlime$padj < 0.05]
+
+#library(gridExtra)
+#tableGrob(enrich_tibble)
+#grid.arrange(tableGrob(enrich_tibble, rows=NULL), padding = unit(0))
+```
+
+
+```{r}
+uterine_cancer_genes <- unique(driverv3$driver_gene[driverv3$cancer == "UCEC" | driverv3$cancer == "UCS"])
+breast_cancer_genes <- unique(driverv3$driver_gene[driverv3$cancer == "BRCA"])
+length(uterine_cancer_genes)
+length(breast_cancer_genes)
+length(intersect(uterine_cancer_genes, breast_cancer_genes))
+
+
+length(unique(values$features))
+length(intersect(unique(values$features), breast_cancer_genes))
+length(intersect(unique(values$features), uterine_cancer_genes))
+```
+
+Removing redundant genesets
+```{r}
+enriched_pathways <- fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+selected_pathways <- all_gene_sets %>% 
+  filter(gs_name %in% enriched_pathways) %>%
+  select(gs_name, gene_symbol)
+
+selected_pathways_list <- lapply(split(selected_pathways, selected_pathways$gs_name), function(x) as.list(x[,2])[[1]])
+
+temp <- sapply(selected_pathways_list, function(x) sapply(selected_pathways_list, function(y) {
+    length(intersect(x,y))/length(union(x,y))
+  }))
+
+# temp[,"GO_NEGATIVE_REGULATION_OF_PEPTIDE_SECRETION"]
+```
+

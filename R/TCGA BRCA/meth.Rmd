@@ -1,0 +1,527 @@
+---
+title: "TCGA BRCA Level 3 Data Analysis"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+```
+
+# Methylation
+
+In the first chunk, we import only the first row in the form of a tibble. Later we will convert it into a character vector which can then be used to import the whole file, with this as column names.
+```{r}
+  cnames <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
+      "\t", escape_double = FALSE, trim_ws = TRUE, n_max=1, col_names = FALSE)
+  #View(cnames)
+
+```
+
+Here, we import the complete methylation data with the correct column names and making sure that the beta values are imported as numeric types rather than character type.
+```{r}
+  meth <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
+    "\t", escape_double = FALSE, na = "NA", col_names = unlist(c(cnames[1,])),
+    trim_ws = TRUE, skip = 2)
+#View(meth)
+```
+
+
+```{r}
+  processed <- meth[complete.cases(meth), ] %>%
+      rename(Gene_symbol = "TCGA-3C-AAAU-01A-11D-A41Q-05_1") %>%
+      select(!ends_with("_1") & !ends_with("_2") & !ends_with("_3")) %>%
+      select(!starts_with("Hybrid")) %>%
+      group_by(Gene_symbol) %>%
+      summarize(across(everything(), list(mean))) %>%
+      column_to_rownames("Gene_symbol")
+      
+  processed <- processed[is.finite(rowSums(processed)),]
+```
+
+```{r}
+  nrow(meth)
+  nrow(distinct(meth, "TCGA-3C-AAAU-01A-11D-A41Q-05"))
+  nrow(processed)
+  nrow(distinct(processed))
+#  rm(meth)
+```
+
+```{r}
+  #Now to make the rows into columns and vice verse, basically pivoting the table
+  # custom function to transpose while preserving names
+  transpose_df <- function(df) {
+    t_df <- data.table::transpose(df)
+    colnames(t_df) <- rownames(df)
+    rownames(t_df) <- colnames(df)
+    t_df <- t_df %>%
+      tibble::rownames_to_column(.data = .) %>%
+      tibble::as_tibble(.)
+    return(t_df)
+  }
+  transposed <- transpose_df(processed)
+# transposed <- as_tibble(cbind(nms=names(processed), t(processed)))
+```
+
+
+
+```{r}
+  #To extract just the 3 part patient id
+  pattern <- "^(\\w{4}\\-\\w{2}\\-\\w{4}\\-\\w{2}).*"
+  patient_names_altered <- transposed %>%  
+    #rownames_to_column(var="patient") %>%
+    mutate(rowname =sub(pattern, "\\1", rowname)) %>%
+    rename(Sample_ID = rowname)
+```
+
+Now to import the PAM50 Labels and extract just the 3 part patient id
+```{r}
+  pam50 <- read_csv("/data/users/bs16b001/R/pam50.csv")
+  pam50 <- mutate(pam50, Sample_ID = sub(pattern, "\\1", Sample_ID))
+```
+Now to add the pam50 labels to the methhylation data tibble
+```{r}
+  meth_joined <- left_join(patient_names_altered, pam50, by = c("Sample_ID")) %>%
+      #patient_names_altered %>% select(Sample_ID) %>% left_join(pam50, by = c("Sample_ID")) %>%
+      drop_na(PAM50) %>%
+      #mutate(Sample_ID = make.names(Sample_ID, unique = TRUE))
+      #distinct(Sample_ID, .keep_all = TRUE) %>%
+      column_to_rownames(var = "Sample_ID")
+
+  meth_joined$PAM50 <- as.factor(meth_joined$PAM50)
+```
+
+```{r}
+  meth_joined %>%
+    select(PAM50) %>%
+    count(PAM50)
+```
+
+## ANOVA
+Now to run the anova
+
+```{r}
+anova_summary <- data.frame(Gene_Symbol=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(meth_joined)-1){
+
+  column <- names(meth_joined[i]) # to print each ROI at the top of each ANOVA summary
+
+  avz <- broom:: tidy(aov(meth_joined[,i] ~ PAM50, data = meth_joined)) # Each ANOVA test iterating through each column
+  
+  #result <- summary(avz) # summarize each ANOVA in a table
+  
+  anova_summary <- add_row(anova_summary, Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+  #print(column)
+  #print(avz)
+  #print(avz$statistic[[1]])
+}
+```
+Selecting the genes using the anova summary
+```{r}
+  anova_summary %>%
+    filter(p_value<=0.001/nrow(anova_summary)) %>%
+    arrange(desc(f_value))
+```
+
+
+Plot the ANOVA F values
+```{r}
+  meth_sorted <- anova_summary %>% filter(p_value<=0.001/nrow(anova_summary)) %>% arrange(desc(f_value))
+  index <- c(1:nrow(meth_sorted))
+  ggplot(meth_sorted, aes(index, f_value)) +
+  geom_line()
+```
+
+Selecting the genes and producing a list of them, so that then they can be then combined with the ones from mRNA and miRNA expression genes that were selected
+```{r}
+  NameList <- c(meth_sorted["Gene_Symbol"])
+
+  idx <- match(NameList[[1]], names(meth_joined))
+
+  meth_joined <- meth_joined[,idx]  
+```
+
+# miRNA
+
+Reading in the data
+```{r}
+  mirna <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_mirnaseq__illuminahiseq_mirnaseq__bcgsc_ca__Level_3__miR_isoform_expression__data.Level_3.2016012800.0.0/mirna.txt", 
+     "\t", escape_double = FALSE, trim_ws = TRUE) %>% 
+          select(SampleId, miRNA_ID, read_count)
+```
+
+Make it wider
+```{r}
+  mirna <- mirna %>%
+    group_by(SampleId, miRNA_ID) %>%
+    summarise(read_counts = sum(read_count)) %>%
+    pivot_wider(names_from = miRNA_ID, values_from = read_counts) %>%
+    rename(Sample_ID = SampleId) %>%
+    mutate(Sample_ID =sub(pattern, "\\1", Sample_ID)) %>%
+    left_join(pam50, by = c("Sample_ID")) %>%
+    column_to_rownames(var = "Sample_ID") %>%
+    drop_na(PAM50) %>%
+    purrr::discard(~sum(is.na(.x))/length(.x)* 100 >=40) %>% #This removes columns where more than 60% (100-40) of the values are NAs
+    replace(is.na(.), 0)
+```
+
+
+Check the labels
+```{r}
+  mirna %>%
+    select(PAM50) %>%
+    count(PAM50)
+```
+
+### Normalizing the data
+min-max scaling
+```{r}
+  #preproc <- preProcess(mirna[,c(1:ncol(mirna)-1)], method=c("center", "scale"))
+  #mirna <- predict(preproc, mirna[,c(1:ncol(mirna)-1)])
+  
+  summary(mirna[,1:5])
+  #summary(mirna_norm[,1:5])
+```
+
+## ANOVA
+Now to run the anova
+
+```{r}
+mirna_anova_summary <- data.frame(microRNA=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(mirna)-1){
+
+  column <- names(mirna[i]) # to print each ROI at the top of each ANOVA summary
+
+  avz <- broom:: tidy(aov(mirna[,i] ~ PAM50, data = mirna)) # Each ANOVA test iterating through each column
+  
+  #result <- summary(avz) # summarize each ANOVA in a table
+  
+  mirna_anova_summary <- add_row(mirna_anova_summary, microRNA=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+  #print(column)
+  #print(avz)
+  #print(avz$statistic[[1]])
+}
+```
+Selecting the genes using the anova summary
+```{r}
+  mirna_anova_summary %>%
+    filter(p_value<=0.001/nrow(mirna_anova_summary)) %>%
+    arrange(desc(f_value))
+```
+
+
+Plot the ANOVA F values
+```{r}
+  mirna_sorted <- mirna_anova_summary %>% filter(p_value<=0.001/nrow(mirna_anova_summary)) %>% arrange(desc(f_value))
+  index <- c(1:nrow(mirna_sorted))
+  ggplot(mirna_sorted, aes(index, f_value)) +
+  geom_line()
+```
+
+```{r}
+  NameList <- c(mirna_sorted["microRNA"])
+
+  idx <- match(NameList[[1]], names(mirna))
+
+  mirna <- mirna[,idx]  
+```
+
+# mRNA Expression
+
+Loading data
+```{r}
+  mRNA <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.mRNAseq_Preprocess.Level_3.2016012800.0.0/BRCA.uncv2.mRNAseq_RSEM_normalized_log2.txt", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
+```
+```{r}
+  mRNA <- mRNA[complete.cases(mRNA),] %>%
+      column_to_rownames("gene")
+  mRNA <- transpose_df(mRNA) %>%    #Transposing the dataframe
+      rename(Sample_ID = rowname)
+```
+
+```{r}
+  mRNA_joined <- left_join(mRNA, pam50, by = c("Sample_ID")) %>%
+      #mRNA %>% select(Sample_ID) %>% left_join(pam50, by = c("Sample_ID")) %>%
+      drop_na(PAM50) %>%
+      #mutate(Sample_ID = make.names(Sample_ID, unique = TRUE))
+      #distinct(Sample_ID, .keep_all = TRUE) %>%
+      column_to_rownames(var = "Sample_ID")
+
+  mRNA_joined$PAM50 <- as.factor(mRNA_joined$PAM50)
+```
+
+```{r}
+  mRNA_joined %>%
+    select(PAM50) %>%
+    count(PAM50)
+```
+
+## ANOVA
+Now to run the anova
+
+```{r}
+mRNA_anova_summary <- data.frame(Gene_Symbol=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(mRNA_joined)-1){
+
+  column <- names(mRNA_joined[i]) # to print each ROI at the top of each ANOVA summary
+
+  avz <- broom:: tidy(aov(mRNA_joined[,i] ~ PAM50, data = mRNA_joined)) # Each ANOVA test iterating through each column
+  
+  #result <- summary(avz) # summarize each ANOVA in a table
+  
+  mRNA_anova_summary <- add_row(mRNA_anova_summary, Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+  #print(column)
+  #print(avz)
+  #print(avz$statistic[[1]])
+}
+```
+Selecting the genes using the anova summary
+```{r}
+  mRNA_anova_summary %>%
+    filter(p_value<=0.001/nrow(mRNA_anova_summary)) %>%
+    arrange(desc(f_value))
+```
+
+
+Plot the ANOVA F values
+```{r}
+  mRNA_sorted <- mRNA_anova_summary %>% filter(p_value<=0.001/nrow(mRNA_anova_summary)) %>% arrange(desc(f_value))
+  index <- c(1:nrow(mRNA_sorted))
+  ggplot(mRNA_sorted, aes(index, f_value)) +
+  geom_line()
+```
+
+```{r}
+  NameList <- c(mRNA_sorted["Gene_Symbol"])
+
+  idx <- match(NameList[[1]], names(mRNA_joined))
+
+  mRNA_joined <- mRNA_joined[,idx]  
+```
+
+Selecting the common sample_IDs from the three data types. So we get the sample IDs from each, find the intersection, and then select those rows from the three dataframes.
+```{r}
+  #The three dataframes are: meth_joined, mirna, mRNA_joined
+  common_samples <- intersect(intersect(row.names(meth_joined), row.names(mirna)), row.names(mRNA_joined))
+  mirna_final <- mirna[common_samples,]
+  meth_final <- meth_joined[common_samples,]
+  mrna_final <- mRNA_joined[common_samples,]
+```
+
+Saving these data frames as csv files. Here only the ANOVA p-value cut-off has been used to select the features. So there are a lot of features.
+```{r}
+  write.csv(mirna_final, "mirna.csv")
+  write.csv(meth_final, "meth.csv")
+  write.csv(mrna_final, "mrna.csv")
+```
+
+Selecting the top 500 features from each and producing a list of them, so that then they can be then combined with the ones from other data types that were selected and here a union of the features will be used.
+
+If the combined features so obtained are too large, then we can just select the top 500 features for individual GCNs and obtain the pairwise features from the more comprehensive list.
+```{r}
+  #The three final files are
+  meth_top500 <- meth_final[,match(c(meth_sorted["Gene_Symbol"])[[1]][1:500], names(meth_final))]
+  mrna_top500 <- mrna_final[,match(c(mRNA_sorted["Gene_Symbol"])[[1]][1:500], names(mrna_final))]
+```
+
+Now to try a better approach to get the best features: A greedy approach to selecting the top non-correlated features
+```{r}
+greedySelect <- function(dframe, featureList, corrThreshold = 0.5){
+  selected = c(featureList[1])
+    for (i in c(2:length(featureList))) {
+      tempList <- c(cor(dframe[featureList[i]], dframe[selected[1]])) 
+      for (s in c(1:length(selected))){
+        temp <- cor(dframe[featureList[i]], dframe[selected[s]])
+        tempList <- append(tempList, temp)
+        if (abs(temp) > corrThreshold) {break}
+        }
+      if (all( abs(tempList) < corrThreshold)) {
+        selected <- append(selected, featureList[i])
+        }
+    }
+  return(selected)
+  }
+```
+
+```{r}
+# Let't try it with mRNA and methylation
+  mRNA_greedy <- greedySelect(mrna_final, mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.3)
+  mrna_0.4 <- greedySelect(mrna_final, mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.4)
+  mrna_0.5 <- greedySelect(mrna_final, mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.5)
+  hmeth_greedy <- greedySelect(meth_final, meth_sorted["Gene_Symbol"][[1]])
+  meth_0.4 <- greedySelect(meth_final, meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.4)
+  meth_0.3 <- greedySelect(meth_final, meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.3)
+```
+```{r}
+  mrna_0.35 <- greedySelect(mrna_final, mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.35)
+  meth_0.35 <- greedySelect(meth_final, meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.35)
+```
+
+```{r}
+findInteractionsSelf <- function(dframe) {
+  rows <- nrow(dframe)
+  columns <- ncol(dframe)
+  old_names <- names(dframe)
+  new_names <- c()
+  for (i in 1:columns) {
+    for (j in i:columns) {
+      new_names <- append(new_names, paste(old_names[[i]], old_names[[j]], sep = "__"))
+    }
+  }
+  data <- setNames(data.table(matrix(nrow = rows, ncol = (columns*(columns+1)/2))), new_names)
+  for (i in 1:(columns*(columns+1)/2)) {
+    features <- strsplit(new_names[i], "__")[[1]]
+    data[, (new_names[i]):=dframe[features[1]]*dframe[features[2]]]
+  }
+  return(data)
+}
+#exampleFrame <- data.frame(a=1:5, b=6:10, c=11:15)
+#temp <- findInteractionsSelf(exampleFrame)
+
+findInteractionsAcross <- function(dframe1, dframe2) {
+  rows <- nrow(dframe1)
+  columns1 <- ncol(dframe1)
+  columns2 <- ncol(dframe2)
+  old_names1 <- names(dframe1)
+  old_names2 <- names(dframe2)
+  new_names <- c()
+  for (i in 1:columns1) {
+    for (j in 1:columns2) {
+      new_names <- append(new_names, paste(old_names1[[i]], old_names2[[j]], sep = "__"))
+    }
+  }
+  data <- setNames(data.table(matrix(nrow = rows, ncol = columns1*columns2)), new_names)
+  for (i in 1:(columns1*columns2)) {
+    features <- strsplit(new_names[i], "__")[[1]]
+    data[, (new_names[i]):=dframe1[features[1]]*dframe2[features[2]]]
+  }
+  return(data)
+}
+exampleFrame1 <- data.frame(a=1:5, b=6:10, c=11:15)
+exampleFrame2 <- data.frame(d=c(0.1,0.2,0.3,0.4,0.5), e=c(10,20,30,40,50))
+test <- findInteractionsAcross(exampleFrame1, exampleFrame2)
+```
+
+```{r}
+mRNA_data_0.4 <- mrna_final[,match(mrna_0.4, names(mrna_final))]
+#mRNA__mRNA <- findInteractionsSelf(mRNA_data_0.5)
+
+#temp <- setNames(data.frame(combn(names(exampleFrame), 2, function(x) exampleFrame[x[1]] * exampleFrame[x[2]], simplify = FALSE)), )
+col_names <- sapply(combn(colnames(mRNA_data_0.4), 2, simplify = FALSE), paste, collapse = "__")
+mRNA_mRNA_data <- setNames(data.frame(combn(mRNA_data_0.4, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mRNA_mRNA_data) <- row.names(mRNA_data_0.4)
+```
+
+```{r}
+pam50_labels <- column_to_rownames(pam50,"Sample_ID")[common_samples,]
+mRNA_mRNA_anova_summary <- data.frame(Gene_Symbol=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(mRNA_mRNA_data)-1){
+  column <- names(mRNA_mRNA_data[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mRNA_mRNA_data[,i] ~ pam50_labels))  # Each ANOVA test iterating through each column
+  mRNA_mRNA_anova_summary <- add_row(mRNA_mRNA_anova_summary, Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+}
+mRNA_mRNA_sorted <- mRNA_mRNA_anova_summary %>% filter(p_value<=0.001/nrow(mRNA_mRNA_anova_summary)) %>% arrange(desc(f_value))
+mRNA_mRNA_final <- mRNA_mRNA_data[,match(c(mRNA_mRNA_sorted["Gene_Symbol"])[[1]], names(mRNA_mRNA_data))]
+mRNA_mRNA_0.2 <- greedySelect(mRNA_mRNA_final, mRNA_mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.2)
+```
+
+```{r}
+library(foreach)
+library(parallel)
+library(iterators)
+library(doParallel)
+cores=detectCores()
+cl <- makeCluster(10)
+registerDoParallel(cl)
+temp_anova_summary <- foreach(i=1:100, .combine = 'rbind') %dopar% {
+  column <- names(mRNA_mRNA_data[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mRNA_mRNA_data[,i] ~ pam50_labels))  # Each ANOVA test iterating through each column
+  list(Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+}
+stopCluster(cl)
+
+```
+
+```{r}
+#Write files
+write.csv(mRNA_data_0.3, "mrna_uncor_0.3.csv")
+write.csv(mRNA_data_0.4, "mrna_uncor_0.4.csv")
+meth_data_0.4 <- meth_final[,match(meth_0.4, names(meth_final))]
+meth_data_0.3 <- meth_final[,match(meth_0.3, names(meth_final))]
+write.csv(meth_data_0.4, "meth_uncor_0.4.csv")
+write.csv(meth_data_0.3, "meth_uncor_0.3.csv")
+
+meth_data_0.35 <- meth_final[,match(meth_0.35, names(meth_final))]
+write.csv(meth_data_0.35, "meth_uncor_0.35.csv")
+mrna_data_0.35 <- mrna_final[,match(mrna_0.35, names(mrna_final))]
+write.csv(mrna_data_0.35, "mrna_uncor_0.35.csv")
+```
+
+```{r}
+#To write out the pam50 label file
+pam50_subtype <- mirna_final %>%
+  rownames_to_column() %>%
+  rename(Sample_ID = "rowname") %>%
+  left_join(pam50, by="Sample_ID") %>%
+  select(Sample_ID, PAM50) %>%
+  rename(patient_id = "Sample_ID", cancer_subtype= "PAM50")
+write.csv(pam50_subtype, "PAM50_subtype.csv", row.names = FALSE)  
+
+  pam50[pam50$Sample_ID %in% common_samples,] %>%
+  rename(patient_id = "Sample_ID", cancer_subtype = "PAM50")
+write.csv(pam50_subtype, "PAM50_subtype.csv")
+```
+
+```{r}
+#mRNA_mRNA tryouts
+#0.3
+mRNA_mRNA_0.25 <- greedySelect(mRNA_mRNA_final, mRNA_mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.25)
+#0.4
+mRNA_mRNA_0.4 <- greedySelect(mRNA_mRNA_final, mRNA_mRNA_sorted["Gene_Symbol"][[1]], corrThreshold = 0.4)
+
+```
+
+```{r}
+#methylation-methylation interaction
+col_names <- sapply(combn(colnames(meth_data_0.4), 2, simplify = FALSE), paste, collapse = "__")
+meth_meth_data <- setNames(data.frame(combn(meth_data_0.4, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(meth_meth_data) <- row.names(meth_data_0.4)
+
+pam50_labels <- column_to_rownames(pam50,"Sample_ID")[common_samples,]
+meth_meth_anova_summary <- data.frame(Gene_Symbol=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(meth_meth_data)-1){
+  column <- names(meth_meth_data[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(meth_meth_data[,i] ~ pam50_labels))  # Each ANOVA test iterating through each column
+  meth_meth_anova_summary <- add_row(meth_meth_anova_summary, Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+}
+meth_meth_sorted <- meth_meth_anova_summary %>% filter(p_value<=0.001/nrow(meth_meth_anova_summary)) %>% arrange(desc(f_value))
+mRNA_mRNA_final <- meth_meth_data[,match(c(meth_meth_sorted["Gene_Symbol"])[[1]], names(meth_meth_data))]
+meth_meth_0.2 <- greedySelect(meth_meth_final, meth_meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.2)
+meth_meth_0.3 <- greedySelect(meth_meth_final, meth_meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.3)
+meth_meth_0.4 <- greedySelect(meth_meth_final, meth_meth_sorted["Gene_Symbol"][[1]], corrThreshold = 0.4)
+```
+
+```{r}
+#mirna - mirna interaction
+col_names <- sapply(combn(colnames(mirna_final), 2, simplify = FALSE), paste, collapse = "__")
+mirna_mirna_data <- setNames(data.frame(combn(mirna_final, 2, FUN = Reduce, f = `*`)), col_names)
+row.names(mirna_mirna_data) <- row.names(mirna_final)
+
+pam50_labels <- column_to_rownames(pam50,"Sample_ID")[common_samples,]
+mirna_mirna_anova_summary <- data.frame(Gene_Symbol=character(0), f_value=numeric(0), p_value=numeric())
+for(i in 2:ncol(mirna_mirna_data)-1){
+  column <- names(mirna_mirna_data[i]) # to print each ROI at the top of each ANOVA summary
+  avz <- broom:: tidy(aov(mirna_mirna_data[,i] ~ pam50_labels))  # Each ANOVA test iterating through each column
+  mirna_mirna_anova_summary <- add_row(mirna_mirna_anova_summary, Gene_Symbol=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]])
+}
+mirna_mirna_sorted <- mirna_mirna_anova_summary %>% filter(p_value<=0.001/nrow(mirna_mirna_anova_summary)) %>% arrange(desc(f_value))
+mirna_mirna_final <- mirna_mirna_data[,match(c(mirna_mirna_sorted["Gene_Symbol"])[[1]], names(mirna_mirna_data))]
+mirna_mirna_0.2 <- greedySelect(mirna_mirna_final, mirna_mirna_sorted["Gene_Symbol"][[1]], corrThreshold = 0.2)
+mirna_mirna_0.3 <- greedySelect(mirna_mirna_final, mirna_mirna_sorted["Gene_Symbol"][[1]], corrThreshold = 0.3)
+mirna_mirna_0.4 <- greedySelect(mirna_mirna_final, mirna_mirna_sorted["Gene_Symbol"][[1]], corrThreshold = 0.4)
+```
+

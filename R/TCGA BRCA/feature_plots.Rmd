@@ -1,0 +1,544 @@
+---
+title: "More plots with features"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+Importing libraries
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(doParallel)
+#library(matrixStats)
+library(gridExtra)
+```
+
+
+Loading shap and lime values
+```{r}
+lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
+shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
+    col_types = cols(features = col_skip()))
+shap <- rename(shap, features = features_1)
+```
+
+
+Plotting the importance values
+
+LIME
+```{r}
+lime %>%
+  mutate(ranks = rank(-aggregate)) %>%
+  ggplot(aes(x = ranks, y = aggregate))+
+  geom_point()+
+  labs(title = "LIME Feature Importance Scores", y = "Score", x = "Rank")+
+  scale_x_continuous(breaks = seq(0,2000,100))
+```
+
+SHAP
+```{r}
+shap %>%
+  mutate(ranks = rank(-shapley_values)) %>%
+  ggplot(aes(x = ranks, y = shapley_values))+
+  geom_point()+
+  labs(title = "SHAP Feature Importance Scores", y = "Score", x = "Rank")+
+  scale_x_continuous(breaks = seq(0,2000,100))
+```
+
+
+# Variable Importance Plot
+
+## LIME
+
+Loading necessary data
+```{r}
+lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+
+library(msigdbr)
+all_gene_sets = msigdbr(species = "Homo sapiens")
+```
+
+Some data processing
+```{r}
+lime$datatype <- NA
+lime$datatype[lime$features %in% names(meth)] = "meth"
+lime$datatype[lime$features %in% names(mrna)] = "mrna"
+lime$datatype[lime$features %in% names(mirna)] = "mirna"
+
+# MSigDB
+selected_gs <- all_gene_sets %>% 
+  filter(!gs_cat %in% c("C1", "C7", "C8")) %>% 
+  filter(grepl("BREAST", gs_name)) %>%
+  select(gs_name, gene_symbol)
+
+msigdb <- unique(selected_gs$gene_symbol)
+
+
+# DriverDBV3
+mutations <- read_tsv("/data/users/bs16b001/genesets/mutation_download_tab.txt") %>%
+  filter(cancer_type_abbr == "BRCA") %>%
+  select(driver_gene)
+
+methylation <- read_tsv("/data/users/bs16b001/genesets/methylation_download_tab.txt") %>%
+  filter(cancer_type_abbr == "BRCA") %>%
+  select(driver_gene)
+  
+driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))), 
+                  unique(Reduce(c, str_split(methylation$driver_gene, ", "))))
+
+
+# miRCancer
+miRCancer <- read_tsv("/data/users/bs16b001/genesets/miRCancerJune2020.txt") %>%
+  filter(grepl("breast", Cancer)) %>%
+  select(mirId)
+
+mirna_names <- unique(miRCancer$mirId)
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+
+miRCancer <- mirna_names
+```
+
+Reformatting names
+```{r}
+lime$features[lime$datatype == "mrna"] <- unlist(str_split(lime$features[lime$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
+
+lime$features[startsWith(lime$features, "PCDHGA4;PCDHGA6;")] <- "PCDHGA4;PCDHGA6;"
+lime$features[startsWith(lime$features, "PCDHGA4;PCDHGA12;")] <- "PCDHGA4;PCDHGA12;"
+lime$features[startsWith(lime$features, "MIR1304")] <- "MIR1304"
+
+mirna_names <- lime$features[lime$datatype == "mirna"]
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+
+lime$features[lime$datatype == "mirna"] <- mirna_names
+```
+
+Some more data processing
+
+I've made three lists of genes: msigdb, driverv3, and mircancer.
+Now I just have to make three columns with values 1, 10, 100 for their being inside those lists of genes. Then sum them up. Convert sum to character. And then colour based on this character value.
+```{r}
+lime$geneset1 <- 0
+lime$geneset1[lime$features %in% msigdb] <- 100
+lime$geneset2 <- 0
+lime$geneset2[lime$features %in% driverv3] <- 10
+lime$geneset3 <- 0
+lime$geneset3[lime$features %in% miRCancer] <- 1
+
+lime$geneset <- as.character(lime$geneset1 + lime$geneset2 + lime$geneset3)
+lime <- select(lime, features, scores = aggregate, datatype, geneset)
+
+lime$geneset <- recode(lime$geneset, 
+                       "0" = "No Overlap",
+                       "1" = "miRCancer",
+                       "10" = "DriverDBV3",
+                       "11" = "DriverDBV3 + miRCancer",
+                       "100" = "MSigDB",
+                       "101" = "MSigDB + miRCancer",
+                       "110" = "MSigDB + DriverDBV3",
+                       "111" = "MSigDB + DriverDBV3 + miRCancer")
+```
+
+
+Lollipop plot
+```{r}
+plot_for_legend <- lime %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_point()+
+                  theme(legend.position = "bottom")+
+                  labs(colour = "Database")+
+                  scale_colour_manual(values = c("No Overlap" = "Black",
+                                                 "MSigDB" = "Red",
+                                                 "DriverDBV3" = "Blue",
+                                                 "miRCancer" = "Yellow",
+                                                 "MSigDB + DriverDBV3" = "Darkviolet",
+                                                 "DriverDBV3 + miRCancer" = "Green",
+                                                 "MSigDB + miRCancer" = "Orange",
+                                                 "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))
+mirna_plot <- lime %>%
+                  filter(datatype == "mirna") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "miRNA", y = "Features", x = "Scores")
+
+mrna_plot <- lime %>%
+                  filter(datatype == "mrna") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "mRNA", y = "", x = "Scores")
+
+meth_plot <- lime %>%
+                  filter(datatype == "meth") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "DNA Methylation", y = "", x = "Scores")
+
+
+ggarrange(mirna_plot, mrna_plot, meth_plot,
+          ncol = 3,
+          legend.grob = get_legend(plot_for_legend))
+```
+
+## SHAP
+
+Loading necessary data
+```{r}
+shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
+    col_types = cols(features = col_skip()))
+shap <- rename(shap, features = features_1)
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+
+library(msigdbr)
+all_gene_sets = msigdbr(species = "Homo sapiens")
+```
+
+Some data processing
+```{r}
+shap$datatype <- NA
+shap$datatype[shap$features %in% names(meth)] = "meth"
+shap$datatype[shap$features %in% names(mrna)] = "mrna"
+shap$datatype[shap$features %in% names(mirna)] = "mirna"
+
+# MSigDB
+selected_gs <- all_gene_sets %>% 
+  filter(!gs_cat %in% c("C1", "C7", "C8")) %>% 
+  filter(grepl("BREAST", gs_name)) %>%
+  select(gs_name, gene_symbol)
+
+msigdb <- unique(selected_gs$gene_symbol)
+
+
+# DriverDBV3
+mutations <- read_tsv("/data/users/bs16b001/genesets/mutation_download_tab.txt") %>%
+  filter(cancer_type_abbr == "BRCA") %>%
+  select(driver_gene)
+
+methylation <- read_tsv("/data/users/bs16b001/genesets/methylation_download_tab.txt") %>%
+  filter(cancer_type_abbr == "BRCA") %>%
+  select(driver_gene)
+  
+driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))), 
+                  unique(Reduce(c, str_split(methylation$driver_gene, ", "))))
+
+
+# miRCancer
+miRCancer <- read_tsv("/data/users/bs16b001/genesets/miRCancerJune2020.txt") %>%
+  filter(grepl("breast", Cancer)) %>%
+  select(mirId)
+
+mirna_names <- unique(miRCancer$mirId)
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+
+miRCancer <- mirna_names
+```
+
+Reformatting names
+```{r}
+shap$features[shap$datatype == "mrna"] <- unlist(str_split(shap$features[shap$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
+
+shap$features[startsWith(shap$features, "PCDHGA4;PCDHGA6;")] <- "PCDHGA4;PCDHGA6;"
+shap$features[startsWith(shap$features, "PCDHGA4;PCDHGA12;")] <- "PCDHGA4;PCDHGA12;"
+shap$features[startsWith(shap$features, "MIR1304")] <- "MIR1304"
+
+mirna_names <- shap$features[shap$datatype == "mirna"]
+str_sub(mirna_names, 1, 4) <- ""
+str_sub(mirna_names, 4, 4) <- ""
+mirna_names <- str_to_upper(mirna_names)
+mirna_names <- sub("MIR133A-1", "MIR133A1", mirna_names)
+mirna_names <- sub("MIR135A-1", "MIR135A1", mirna_names)
+mirna_names <- sub("MIR181A-1", "MIR181A1", mirna_names)
+mirna_names <- sub("MIR196A-1", "MIR196A1", mirna_names)
+mirna_names <- sub("MIR196A-2", "MIR196A2", mirna_names)
+mirna_names <- sub("MIR199A-1", "MIR199A1", mirna_names)
+mirna_names <- sub("MIR199A-2", "MIR199A2", mirna_names)
+mirna_names <- sub("MIR19B-1", "MIR19B1", mirna_names)
+mirna_names <- sub("MIR19B-2", "MIR19B2", mirna_names)
+mirna_names <- sub("MIR26A-1", "MIR26A1", mirna_names)
+mirna_names <- sub("MIR26A-2", "MIR26A2", mirna_names)
+mirna_names <- sub("MIR29B-1", "MIR29B1", mirna_names)
+mirna_names <- sub("MIR30C-1", "MIR30C1", mirna_names)
+mirna_names <- sub("MIR30C-2", "MIR30C2", mirna_names)
+mirna_names <- sub("MIR320B-2", "MIR320B2", mirna_names)
+mirna_names <- sub("MIR320D-1", "MIR320D1", mirna_names)
+mirna_names <- sub("MIR320D-2", "MIR320D2", mirna_names)
+mirna_names <- sub("MIR365-1", "MIR3651", mirna_names)
+mirna_names <- sub("MIR365-2", "MIR3652", mirna_names)
+mirna_names <- sub("MIR376A-1", "MIR376A1", mirna_names)
+mirna_names <- sub("MIR450A-1", "MIR450A1", mirna_names)
+mirna_names <- sub("MIR450A-2", "MIR450A2", mirna_names)
+mirna_names <- sub("MIR514-1", "MIR514A1", mirna_names)
+mirna_names <- sub("MIR514-2", "MIR514A2", mirna_names)
+mirna_names <- sub("MIR514-3", "MIR514A3", mirna_names)
+mirna_names <- sub("MIR550A-1", "MIR550A1", mirna_names)
+mirna_names <- sub("MIR550A-2", "MIR550A2", mirna_names)
+mirna_names <- sub("MIR92A-2", "MIR92A2", mirna_names)
+mirna_names <- sub("LET7C", "MIRLET7C", mirna_names)
+mirna_names <- sub("LET7D", "MIRLET7D", mirna_names)
+mirna_names <- sub("LET7E", "MIRLET7E", mirna_names)
+mirna_names <- sub("LET7F-1", "MIRLET7F1", mirna_names)
+mirna_names <- sub("LET7G", "MIRLET7G", mirna_names)
+mirna_names <- sub("MIR103-2", "MIR103A2", mirna_names)
+mirna_names <- sub("MIR1245", "MIR1245A", mirna_names)
+mirna_names <- sub("MIR1270-2", "MIR1270", mirna_names)
+mirna_names <- sub("MIR151", "MIR151A", mirna_names)
+mirna_names <- sub("MIR203", "MIR203A", mirna_names)
+mirna_names <- sub("MIR219-1", "MIR219A1", mirna_names)
+mirna_names <- sub("MIR323", "MIR323A", mirna_names)
+mirna_names <- sub("MIR3607", "SNORD138", mirna_names)
+mirna_names <- sub("MIR3647", "SNORD111B", mirna_names)
+mirna_names <- sub("MIR451", "MIR451A", mirna_names)
+mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
+
+shap$features[shap$datatype == "mirna"] <- mirna_names
+```
+
+Some more data processing
+
+I've made three lists of genes: msigdb, driverv3, and mircancer.
+Now I just have to make three columns with values 1, 10, 100 for their being inside those lists of genes. Then sum them up. Convert sum to character. And then colour based on this character value.
+```{r}
+shap$geneset1 <- 0
+shap$geneset1[shap$features %in% msigdb] <- 100
+shap$geneset2 <- 0
+shap$geneset2[shap$features %in% driverv3] <- 10
+shap$geneset3 <- 0
+shap$geneset3[shap$features %in% miRCancer] <- 1
+
+shap$geneset <- as.character(shap$geneset1 + shap$geneset2 + shap$geneset3)
+shap <- select(shap, features, scores = shapley_values, datatype, geneset)
+
+shap$geneset <- recode(shap$geneset, 
+                       "0" = "No Overlap",
+                       "1" = "miRCancer",
+                       "10" = "DriverDBV3",
+                       "11" = "DriverDBV3 + miRCancer",
+                       "100" = "MSigDB",
+                       "101" = "MSigDB + miRCancer",
+                       "110" = "MSigDB + DriverDBV3",
+                       "111" = "MSigDB + DriverDBV3 + miRCancer")
+```
+
+
+Lollipop plot
+```{r}
+plot_for_legend <- shap %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_point()+
+                  theme(legend.position = "bottom")+
+                  labs(colour = "Database")+
+                  scale_colour_manual(values = c("No Overlap" = "Black",
+                                                 "MSigDB" = "Red",
+                                                 "DriverDBV3" = "Blue",
+                                                 "miRCancer" = "Yellow",
+                                                 "MSigDB + DriverDBV3" = "Darkviolet",
+                                                 "DriverDBV3 + miRCancer" = "Green",
+                                                 "MSigDB + miRCancer" = "Orange",
+                                                 "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))
+mirna_plot <- shap %>%
+                  filter(datatype == "mirna") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "miRNA", y = "Features", x = "Scores")
+
+mrna_plot <- shap %>%
+                  filter(datatype == "mrna") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "mRNA", y = "", x = "Scores")
+
+meth_plot <- shap %>%
+                  filter(datatype == "meth") %>%
+                  slice_max(scores, n = 25) %>%
+                  arrange(desc(scores)) %>%
+                  mutate(features = fct_reorder(features, scores)) %>%
+                  ggplot(aes(x = scores, y = features, colour = geneset))+
+                  geom_segment(aes(x=0, xend=scores, y=features, yend=features))+
+                  geom_point()+
+                  theme(legend.position = "none")+
+                  scale_colour_manual(values = c("No Overlap" = "Black", "MSigDB" = "Red", "DriverDBV3" = "Blue", "miRCancer" = "Yellow", "MSigDB + DriverDBV3" = "Darkviolet", "DriverDBV3 + miRCancer" = "Green", "MSigDB + miRCancer" = "Orange", "MSigDB + DriverDBV3 + miRCancer" = "Azure2"))+
+                  labs(title = "DNA Methylation", y = "", x = "Scores")
+
+
+ggarrange(mirna_plot, mrna_plot, meth_plot,
+          ncol = 3,
+          legend.grob = get_legend(plot_for_legend))
+```
+

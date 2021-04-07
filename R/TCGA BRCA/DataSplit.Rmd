@@ -1,0 +1,105 @@
+---
+title: "Splitting Data"
+output: html_notebook
+---
+
+Importing the necessary the packages:
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+```
+
+## Importing data
+First we import just the samples from each data type to find the common samples, and then we will use use them and their labels to do a stratified random train test split.
+
+### DNA Methylation
+```{r}
+meth <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
+      "\t", escape_double = FALSE, trim_ws = TRUE, n_max=1, col_names = FALSE)
+meth <- unique(unlist(meth)[2:length(meth)])
+
+#Below is the format for the sample names. This removes the aliquot id etc
+pattern <- "^(\\w{4}\\-\\w{2}\\-\\w{4}\\-\\w{2}).*"
+
+#Now to get meth samples in that format
+meth <- sub(pattern, "\\1", meth)
+```
+
+### mRNA Expression
+```{r}
+mrna <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.mRNAseq_Preprocess.Level_3.2016012800.0.0/BRCA.uncv2.mRNAseq_RSEM_normalized_log2.txt", 
+    "\t", n_max=1, col_names = FALSE)
+mrna <- unique(unlist(mrna)[2:length(mrna)])
+
+#mrna sample ids already follow the format. If not, uncomment the next line and run it.
+#mrna <- sub(pattern, "\\1", mrna)
+```
+
+### microRNA Expression
+```{r}
+mirna <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_mirnaseq__illuminahiseq_mirnaseq__bcgsc_ca__Level_3__miR_isoform_expression__data.Level_3.2016012800.0.0/mirna.txt", 
+     "\t", escape_double = FALSE, trim_ws = TRUE) %>% 
+          select(SampleId)
+mirna <-  unique(mirna$SampleId)
+
+#Now to get mirna samples in the right format
+mirna <- sub(pattern, "\\1", mirna)
+```
+
+### Determining the common samples
+```{r}
+common_samples <- intersect(intersect(meth, mrna), mirna)
+```
+
+## Adding labels and splitting the data
+
+### Reading and adding labels
+First, we have to read the file containing the PAM50 labels
+```{r}
+pam50 <- read_csv("/data/users/bs16b001/R/pam50.csv") %>%
+          mutate(pam50, Sample_ID = sub(pattern, "\\1", Sample_ID)) %>%
+          filter(Sample_ID %in% common_samples)
+
+#Now since for some samples the PAM50 label was not present in the file, we will remove them from the common samples list too.
+common_samples <- unlist(pam50["Sample_ID"], use.names = FALSE)
+```
+
+### Stratified Random Split
+```{r}
+train.index <- createDataPartition(pam50$PAM50, p = .7, list = FALSE)
+train <- pam50[ train.index,]
+test  <- pam50[-train.index,]
+```
+
+## Writing files
+### The PAM50_subtype file
+```{r}
+pam50 %>%
+  rename(patient_id = "Sample_ID", cancer_subtype = "PAM50") %>%
+  write.csv("PAM50_subtype.csv", row.names = FALSE)
+```
+
+## The train-test partition file
+```{r}
+fileConn<-file("trte_partition.txt")
+writeLines(c("training patient_id", paste(unlist(train["Sample_ID"]), collapse = ","), "testing patient_id", paste(unlist(test["Sample_ID"]), collapse = ",")), fileConn)
+close(fileConn)
+```
+
+## The distribution
+```{r}
+pam50$Category <- ifelse(pam50$patient_id %in% train_idx, "Train", "Test")
+
+pam50 %>%
+  ggplot(aes(x=cancer_subtype, group=Category, fill=Category))+
+  geom_bar(position="dodge")+
+  labs(x="Cancer subtype", y="Number of samples", title = "Sample distribution")
+
+(Number_of_train_samples = length(train_idx))
+(Number_of_test_samples = nrow(pam50) - length(train_idx))
+(Total_samples = nrow(pam50))
+```
+

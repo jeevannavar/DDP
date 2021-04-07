@@ -1,0 +1,142 @@
+---
+title: "Feature Extraction from SVM"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+Importing all the requisite packages first.
+```{r message=FALSE}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(foreach)
+library(doParallel)
+library(lime)
+```
+
+Custom functions
+```{r}
+f1_score <- function(predicted, true, type="weighted"){
+  predicted <- factor(as.character(predicted), levels=unique(as.character(true)))
+  true  <- factor(true, levels=unique(as.character(true)))
+  cm = as.matrix(table(true, predicted))
+
+  precision <- diag(cm) / colSums(cm)
+  recall <- diag(cm) / rowSums(cm)
+  f1 <-  ifelse(precision + recall == 0, 0, 2 * precision * recall / (precision + recall))
+
+  #Assuming that F1 is zero when it's not possible compute it
+  f1[is.na(f1)] <- 0
+
+  #weighted average of the f1 scores
+  weights <- table(true)/length(true)
+  sum(f1*weights)
+}
+
+# pred <- c(0,0,0,0,0,0,0,0,0,0,0,0)
+# true <- c(0,0,0,0,1,1,1,1,2,2,2,2)
+# f1 <- f1_score(pred, true)
+```
+
+
+Reading in all the data.
+```{r message=FALSE, warning=FALSE}
+pam50 <- read_csv("PAM50_subtype.csv")
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+test_idx <- unlist(strsplit(lines[4], ","))
+
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+pam50_test <- filter(pam50, pam50$patient_id %in% test_idx)
+
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+
+
+# Selecting only training samples for model training
+meth_train <- filter(meth, meth$patient_id %in% train_idx)
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx)
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+
+# Selecting only test samples for testing
+meth_test <- filter(meth, meth$patient_id %in% test_idx)
+mrna_test <- filter(mrna, mrna$patient_id %in% test_idx)
+mirna_test <- filter(mirna, mirna$patient_id %in% test_idx)
+
+# Check that the labels are identical
+identical(pam50_train$patient_id, meth_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mrna_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+
+# Setting row.names
+meth_train <- column_to_rownames(meth_train, var = "patient_id")
+mrna_train <- column_to_rownames(mrna_train, var = "patient_id")
+mirna_train <- column_to_rownames(mirna_train, var = "patient_id")
+meth_test <- column_to_rownames(meth_test, var = "patient_id")
+mrna_test <- column_to_rownames(mrna_test, var = "patient_id")
+mirna_test <- column_to_rownames(mirna_test, var = "patient_id")
+meth <- column_to_rownames(meth, var = "patient_id")
+mrna <- column_to_rownames(mrna, var = "patient_id")
+mirna <- column_to_rownames(mirna, var = "patient_id")
+```
+
+Concatenating the data for easier use with most modelers.
+
+```{r}
+all_train <- bind_cols(mrna_train, meth_train, mirna_train)
+all_test <- bind_cols(mrna_test, meth_test, mirna_test)
+all_data <- bind_cols(mrna, meth, mirna)
+```
+
+## SVM
+
+Data formatting
+```{r}
+X <- scale(as.matrix(all_train[,1:ncol(all_train)]), center = TRUE, scale = TRUE)
+Y <- as.factor(as.matrix(pam50_train$cancer_subtype))
+
+X_test <- scale(as.matrix(all_test))
+```
+
+Modelling and evaluation
+```{r}
+library(e1071)
+
+svmfit = svm(X, Y, kernel = "linear", cost = 10, scale = FALSE)
+
+train_predictions <- svmfit %>% predict(X, type="class")
+test_predictions <- svmfit %>% predict(X_test, type="class")
+
+train_f1 <- f1_score(train_predictions, pam50_train$cancer_subtype)
+test_f1 <- f1_score(test_predictions, pam50_test$cancer_subtype)
+
+print(train_f1)
+print(test_f1)
+```
+
+## LIME
+```{r}
+explanation <- lime(all_train, svmfit)
+
+predict_model.svm <- function(x, newdata, type, ...) {
+  res <- predict(x, newdata = newdata, ...)
+  switch(
+    type,
+    raw = data.frame(Response = res$class, stringsAsFactors = FALSE),
+    prob = as.data.frame(res$posterior, check.names = FALSE)
+  )
+}
+
+model_type.svm <- function(x, ...) 'classification'
+
+svm_lime <- explain(all_test[1:100,], explanation, n_labels = 5, n_features = 10)
+```
+

@@ -1,0 +1,1686 @@
+
+----------------------------------------------------------------------------------------------------
+Run 1
+----------------------------------------------------------------------------------------------------
+2021-01-25 23:38:27.038998 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only 3 GCNs - mRNA, DNA methylation, miRNA
+SEED =  38633
+
+Training...
+Epoch 0, Train loss: mRNA:9.22e-02, methylation:9.61e-02, miRNA:4.00e-02, VCDN:3.42e-01
+
+Test: Epoch 0
+Train Accuracy: 0.2000   Test ACC: 0.1739
+Train F1: 0.0684         Test F1: 0.0515
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.0000              0.1359              0.0000
+Basal 	           0.2000              0.0048              0.1522              0.0000
+Her2 	           0.2000              0.0000              0.0543              0.0000
+LumA 	           0.2000              0.0000              0.4837              0.0000
+LumB 	           0.2000              0.9952              0.1739              1.0000
+
+Epoch 1, Train loss: mRNA:1.95e+00, methylation:1.28e+00, miRNA:3.61e-02, VCDN:3.30e-01
+Epoch 2, Train loss: mRNA:2.22e-01, methylation:1.69e-01, miRNA:3.32e-02, VCDN:3.23e-01
+Epoch 3, Train loss: mRNA:1.56e-01, methylation:1.10e-01, miRNA:3.19e-02, VCDN:3.23e-01
+Epoch 4, Train loss: mRNA:3.78e-01, methylation:2.60e-01, miRNA:3.12e-02, VCDN:3.22e-01
+Epoch 5, Train loss: mRNA:2.41e-01, methylation:1.72e-01, miRNA:3.09e-02, VCDN:3.23e-01
+Epoch 6, Train loss: mRNA:6.94e-02, methylation:5.43e-02, miRNA:3.04e-02, VCDN:3.22e-01
+Epoch 7, Train loss: mRNA:8.06e-02, methylation:6.48e-02, miRNA:2.97e-02, VCDN:3.23e-01
+Epoch 8, Train loss: mRNA:1.82e-01, methylation:1.32e-01, miRNA:2.93e-02, VCDN:3.22e-01
+Epoch 9, Train loss: mRNA:1.66e-01, methylation:1.12e-01, miRNA:2.81e-02, VCDN:3.22e-01
+Epoch 10, Train loss: mRNA:8.67e-02, methylation:5.82e-02, miRNA:2.75e-02, VCDN:3.22e-01
+Epoch 11, Train loss: mRNA:4.46e-02, methylation:3.77e-02, miRNA:2.68e-02, VCDN:3.22e-01
+Epoch 12, Train loss: mRNA:4.67e-02, methylation:4.72e-02, miRNA:2.62e-02, VCDN:3.22e-01
+Epoch 13, Train loss: mRNA:7.07e-02, methylation:6.38e-02, miRNA:2.55e-02, VCDN:3.22e-01
+Epoch 14, Train loss: mRNA:7.91e-02, methylation:6.29e-02, miRNA:2.53e-02, VCDN:3.22e-01
+Epoch 15, Train loss: mRNA:6.76e-02, methylation:5.00e-02, miRNA:2.48e-02, VCDN:3.21e-01
+Epoch 16, Train loss: mRNA:4.84e-02, methylation:3.60e-02, miRNA:2.46e-02, VCDN:3.21e-01
+Epoch 17, Train loss: mRNA:3.80e-02, methylation:3.39e-02, miRNA:2.40e-02, VCDN:3.21e-01
+Epoch 18, Train loss: mRNA:3.90e-02, methylation:3.92e-02, miRNA:2.38e-02, VCDN:3.20e-01
+Epoch 19, Train loss: mRNA:4.63e-02, methylation:4.40e-02, miRNA:2.32e-02, VCDN:3.20e-01
+Epoch 20, Train loss: mRNA:5.34e-02, methylation:4.49e-02, miRNA:2.29e-02, VCDN:3.20e-01
+Epoch 21, Train loss: mRNA:5.19e-02, methylation:3.84e-02, miRNA:2.22e-02, VCDN:3.19e-01
+Epoch 22, Train loss: mRNA:4.46e-02, methylation:3.34e-02, miRNA:2.21e-02, VCDN:3.19e-01
+Epoch 23, Train loss: mRNA:3.77e-02, methylation:3.09e-02, miRNA:2.16e-02, VCDN:3.19e-01
+Epoch 24, Train loss: mRNA:3.47e-02, methylation:3.14e-02, miRNA:2.14e-02, VCDN:3.18e-01
+Epoch 25, Train loss: mRNA:3.55e-02, methylation:3.30e-02, miRNA:2.07e-02, VCDN:3.18e-01
+Epoch 26, Train loss: mRNA:3.78e-02, methylation:3.42e-02, miRNA:2.05e-02, VCDN:3.18e-01
+Epoch 27, Train loss: mRNA:3.92e-02, methylation:3.37e-02, miRNA:2.04e-02, VCDN:3.17e-01
+Epoch 28, Train loss: mRNA:3.77e-02, methylation:3.17e-02, miRNA:2.01e-02, VCDN:3.16e-01
+Epoch 29, Train loss: mRNA:3.53e-02, methylation:2.89e-02, miRNA:1.97e-02, VCDN:3.16e-01
+Epoch 30, Train loss: mRNA:3.24e-02, methylation:2.81e-02, miRNA:1.92e-02, VCDN:3.15e-01
+Epoch 31, Train loss: mRNA:3.03e-02, methylation:2.79e-02, miRNA:1.89e-02, VCDN:3.15e-01
+Epoch 32, Train loss: mRNA:3.14e-02, methylation:2.83e-02, miRNA:1.88e-02, VCDN:3.14e-01
+Epoch 33, Train loss: mRNA:3.23e-02, methylation:2.88e-02, miRNA:1.83e-02, VCDN:3.13e-01
+Epoch 34, Train loss: mRNA:3.26e-02, methylation:2.89e-02, miRNA:1.79e-02, VCDN:3.13e-01
+Epoch 35, Train loss: mRNA:3.21e-02, methylation:2.74e-02, miRNA:1.79e-02, VCDN:3.12e-01
+Epoch 36, Train loss: mRNA:3.15e-02, methylation:2.57e-02, miRNA:1.77e-02, VCDN:3.11e-01
+Epoch 37, Train loss: mRNA:3.07e-02, methylation:2.52e-02, miRNA:1.74e-02, VCDN:3.11e-01
+Epoch 38, Train loss: mRNA:2.90e-02, methylation:2.60e-02, miRNA:1.70e-02, VCDN:3.11e-01
+Epoch 39, Train loss: mRNA:2.91e-02, methylation:2.57e-02, miRNA:1.70e-02, VCDN:3.09e-01
+Epoch 40, Train loss: mRNA:2.84e-02, methylation:2.58e-02, miRNA:1.65e-02, VCDN:3.09e-01
+
+Test: Epoch 40
+Train Accuracy: 0.6699   Test ACC: 0.6196
+Train F1: 0.6412         Test F1: 0.6088
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9139              0.1359              0.8400
+Basal 	           0.2000              0.9856              0.1522              1.0000
+Her2 	           0.2000              0.2297              0.0543              0.0000
+LumA 	           0.2000              0.6938              0.4837              0.4719
+LumB 	           0.2000              0.5263              0.1739              0.7188
+
+Epoch 41, Train loss: mRNA:2.88e-02, methylation:2.51e-02, miRNA:1.65e-02, VCDN:3.08e-01
+Epoch 42, Train loss: mRNA:2.91e-02, methylation:2.45e-02, miRNA:1.61e-02, VCDN:3.07e-01
+Epoch 43, Train loss: mRNA:2.81e-02, methylation:2.36e-02, miRNA:1.64e-02, VCDN:3.06e-01
+Epoch 44, Train loss: mRNA:2.73e-02, methylation:2.38e-02, miRNA:1.59e-02, VCDN:3.05e-01
+Epoch 45, Train loss: mRNA:2.75e-02, methylation:2.32e-02, miRNA:1.57e-02, VCDN:3.04e-01
+Epoch 46, Train loss: mRNA:2.68e-02, methylation:2.38e-02, miRNA:1.53e-02, VCDN:3.02e-01
+Epoch 47, Train loss: mRNA:2.72e-02, methylation:2.33e-02, miRNA:1.54e-02, VCDN:3.01e-01
+Epoch 48, Train loss: mRNA:2.63e-02, methylation:2.35e-02, miRNA:1.53e-02, VCDN:3.01e-01
+Epoch 49, Train loss: mRNA:2.64e-02, methylation:2.24e-02, miRNA:1.52e-02, VCDN:3.00e-01
+Epoch 50, Train loss: mRNA:2.58e-02, methylation:2.19e-02, miRNA:1.49e-02, VCDN:2.99e-01
+Epoch 51, Train loss: mRNA:2.59e-02, methylation:2.21e-02, miRNA:1.51e-02, VCDN:2.97e-01
+Epoch 52, Train loss: mRNA:2.49e-02, methylation:2.15e-02, miRNA:1.46e-02, VCDN:2.97e-01
+Epoch 53, Train loss: mRNA:2.46e-02, methylation:2.20e-02, miRNA:1.46e-02, VCDN:2.96e-01
+Epoch 54, Train loss: mRNA:2.49e-02, methylation:2.13e-02, miRNA:1.43e-02, VCDN:2.94e-01
+Epoch 55, Train loss: mRNA:2.40e-02, methylation:2.12e-02, miRNA:1.42e-02, VCDN:2.93e-01
+Epoch 56, Train loss: mRNA:2.36e-02, methylation:2.07e-02, miRNA:1.42e-02, VCDN:2.92e-01
+Epoch 57, Train loss: mRNA:2.38e-02, methylation:2.02e-02, miRNA:1.41e-02, VCDN:2.91e-01
+Epoch 58, Train loss: mRNA:2.32e-02, methylation:2.03e-02, miRNA:1.41e-02, VCDN:2.89e-01
+Epoch 59, Train loss: mRNA:2.30e-02, methylation:2.00e-02, miRNA:1.38e-02, VCDN:2.88e-01
+Epoch 60, Train loss: mRNA:2.35e-02, methylation:1.95e-02, miRNA:1.37e-02, VCDN:2.86e-01
+Epoch 61, Train loss: mRNA:2.34e-02, methylation:1.92e-02, miRNA:1.34e-02, VCDN:2.85e-01
+Epoch 62, Train loss: mRNA:2.28e-02, methylation:1.92e-02, miRNA:1.33e-02, VCDN:2.84e-01
+Epoch 63, Train loss: mRNA:2.29e-02, methylation:1.92e-02, miRNA:1.35e-02, VCDN:2.82e-01
+Epoch 64, Train loss: mRNA:2.17e-02, methylation:1.87e-02, miRNA:1.32e-02, VCDN:2.81e-01
+Epoch 65, Train loss: mRNA:2.19e-02, methylation:1.88e-02, miRNA:1.32e-02, VCDN:2.79e-01
+Epoch 66, Train loss: mRNA:2.12e-02, methylation:1.83e-02, miRNA:1.31e-02, VCDN:2.78e-01
+Epoch 67, Train loss: mRNA:2.15e-02, methylation:1.82e-02, miRNA:1.30e-02, VCDN:2.77e-01
+Epoch 68, Train loss: mRNA:2.14e-02, methylation:1.81e-02, miRNA:1.29e-02, VCDN:2.75e-01
+Epoch 69, Train loss: mRNA:2.05e-02, methylation:1.79e-02, miRNA:1.28e-02, VCDN:2.74e-01
+Epoch 70, Train loss: mRNA:2.09e-02, methylation:1.76e-02, miRNA:1.27e-02, VCDN:2.72e-01
+Epoch 71, Train loss: mRNA:2.08e-02, methylation:1.72e-02, miRNA:1.26e-02, VCDN:2.69e-01
+Epoch 72, Train loss: mRNA:2.04e-02, methylation:1.73e-02, miRNA:1.23e-02, VCDN:2.68e-01
+Epoch 73, Train loss: mRNA:1.96e-02, methylation:1.72e-02, miRNA:1.25e-02, VCDN:2.66e-01
+Epoch 74, Train loss: mRNA:1.99e-02, methylation:1.69e-02, miRNA:1.24e-02, VCDN:2.65e-01
+Epoch 75, Train loss: mRNA:1.96e-02, methylation:1.69e-02, miRNA:1.23e-02, VCDN:2.64e-01
+Epoch 76, Train loss: mRNA:1.97e-02, methylation:1.67e-02, miRNA:1.22e-02, VCDN:2.61e-01
+Epoch 77, Train loss: mRNA:1.94e-02, methylation:1.66e-02, miRNA:1.21e-02, VCDN:2.59e-01
+Epoch 78, Train loss: mRNA:1.91e-02, methylation:1.64e-02, miRNA:1.20e-02, VCDN:2.57e-01
+Epoch 79, Train loss: mRNA:1.88e-02, methylation:1.63e-02, miRNA:1.20e-02, VCDN:2.55e-01
+Epoch 80, Train loss: mRNA:1.88e-02, methylation:1.65e-02, miRNA:1.17e-02, VCDN:2.53e-01
+
+Test: Epoch 80
+Train Accuracy: 0.9148   Test ACC: 0.7554
+Train F1: 0.9143         Test F1: 0.7625
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9474              0.1359              0.7600
+Basal 	           0.2000              0.9856              0.1522              1.0000
+Her2 	           0.2000              0.9713              0.0543              0.7000
+LumA 	           0.2000              0.8565              0.4837              0.6629
+LumB 	           0.2000              0.8134              0.1739              0.8125
+
+Epoch 81, Train loss: mRNA:1.86e-02, methylation:1.65e-02, miRNA:1.18e-02, VCDN:2.51e-01
+Epoch 82, Train loss: mRNA:1.83e-02, methylation:1.66e-02, miRNA:1.18e-02, VCDN:2.49e-01
+Epoch 83, Train loss: mRNA:1.83e-02, methylation:1.55e-02, miRNA:1.18e-02, VCDN:2.47e-01
+Epoch 84, Train loss: mRNA:1.80e-02, methylation:1.58e-02, miRNA:1.16e-02, VCDN:2.44e-01
+Epoch 85, Train loss: mRNA:1.79e-02, methylation:1.56e-02, miRNA:1.15e-02, VCDN:2.42e-01
+Epoch 86, Train loss: mRNA:1.77e-02, methylation:1.55e-02, miRNA:1.15e-02, VCDN:2.40e-01
+Epoch 87, Train loss: mRNA:1.77e-02, methylation:1.57e-02, miRNA:1.13e-02, VCDN:2.38e-01
+Epoch 88, Train loss: mRNA:1.78e-02, methylation:1.57e-02, miRNA:1.14e-02, VCDN:2.35e-01
+Epoch 89, Train loss: mRNA:1.74e-02, methylation:1.50e-02, miRNA:1.12e-02, VCDN:2.33e-01
+Epoch 90, Train loss: mRNA:1.66e-02, methylation:1.48e-02, miRNA:1.14e-02, VCDN:2.31e-01
+Epoch 91, Train loss: mRNA:1.74e-02, methylation:1.50e-02, miRNA:1.11e-02, VCDN:2.29e-01
+Epoch 92, Train loss: mRNA:1.74e-02, methylation:1.55e-02, miRNA:1.12e-02, VCDN:2.26e-01
+Epoch 93, Train loss: mRNA:1.72e-02, methylation:1.47e-02, miRNA:1.09e-02, VCDN:2.25e-01
+Epoch 94, Train loss: mRNA:1.73e-02, methylation:1.42e-02, miRNA:1.09e-02, VCDN:2.22e-01
+Epoch 95, Train loss: mRNA:1.71e-02, methylation:1.46e-02, miRNA:1.10e-02, VCDN:2.19e-01
+Epoch 96, Train loss: mRNA:1.66e-02, methylation:1.44e-02, miRNA:1.07e-02, VCDN:2.18e-01
+Epoch 97, Train loss: mRNA:1.66e-02, methylation:1.41e-02, miRNA:1.06e-02, VCDN:2.15e-01
+Epoch 98, Train loss: mRNA:1.67e-02, methylation:1.43e-02, miRNA:1.05e-02, VCDN:2.13e-01
+Epoch 99, Train loss: mRNA:1.69e-02, methylation:1.42e-02, miRNA:1.05e-02, VCDN:2.10e-01
+Epoch 100, Train loss: mRNA:1.62e-02, methylation:1.43e-02, miRNA:1.05e-02, VCDN:2.07e-01
+Epoch 101, Train loss: mRNA:1.62e-02, methylation:1.45e-02, miRNA:1.06e-02, VCDN:2.05e-01
+Epoch 102, Train loss: mRNA:1.61e-02, methylation:1.43e-02, miRNA:1.05e-02, VCDN:2.02e-01
+Epoch 103, Train loss: mRNA:1.62e-02, methylation:1.39e-02, miRNA:1.02e-02, VCDN:1.99e-01
+Epoch 104, Train loss: mRNA:1.57e-02, methylation:1.35e-02, miRNA:1.02e-02, VCDN:1.98e-01
+Epoch 105, Train loss: mRNA:1.65e-02, methylation:1.35e-02, miRNA:1.03e-02, VCDN:1.95e-01
+Epoch 106, Train loss: mRNA:1.61e-02, methylation:1.39e-02, miRNA:1.02e-02, VCDN:1.94e-01
+Epoch 107, Train loss: mRNA:1.58e-02, methylation:1.37e-02, miRNA:1.02e-02, VCDN:1.91e-01
+Epoch 108, Train loss: mRNA:1.62e-02, methylation:1.36e-02, miRNA:1.01e-02, VCDN:1.89e-01
+Epoch 109, Train loss: mRNA:1.61e-02, methylation:1.35e-02, miRNA:1.01e-02, VCDN:1.86e-01
+Epoch 110, Train loss: mRNA:1.58e-02, methylation:1.33e-02, miRNA:1.00e-02, VCDN:1.85e-01
+Epoch 111, Train loss: mRNA:1.59e-02, methylation:1.31e-02, miRNA:1.01e-02, VCDN:1.83e-01
+Epoch 112, Train loss: mRNA:1.55e-02, methylation:1.29e-02, miRNA:9.83e-03, VCDN:1.80e-01
+Epoch 113, Train loss: mRNA:1.54e-02, methylation:1.31e-02, miRNA:9.89e-03, VCDN:1.78e-01
+Epoch 114, Train loss: mRNA:1.54e-02, methylation:1.32e-02, miRNA:9.97e-03, VCDN:1.76e-01
+Epoch 115, Train loss: mRNA:1.59e-02, methylation:1.32e-02, miRNA:9.83e-03, VCDN:1.74e-01
+Epoch 116, Train loss: mRNA:1.51e-02, methylation:1.30e-02, miRNA:9.69e-03, VCDN:1.71e-01
+Epoch 117, Train loss: mRNA:1.53e-02, methylation:1.27e-02, miRNA:9.66e-03, VCDN:1.69e-01
+Epoch 118, Train loss: mRNA:1.53e-02, methylation:1.32e-02, miRNA:9.66e-03, VCDN:1.68e-01
+Epoch 119, Train loss: mRNA:1.50e-02, methylation:1.30e-02, miRNA:9.53e-03, VCDN:1.64e-01
+Epoch 120, Train loss: mRNA:1.54e-02, methylation:1.29e-02, miRNA:9.63e-03, VCDN:1.63e-01
+
+Test: Epoch 120
+Train Accuracy: 0.9541   Test ACC: 0.7989
+Train F1: 0.9539         Test F1: 0.8057
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.7600
+Basal 	           0.2000              0.9856              0.1522              0.9643
+Her2 	           0.2000              0.9952              0.0543              0.7000
+LumA 	           0.2000              0.9474              0.4837              0.7528
+LumB 	           0.2000              0.8612              0.1739              0.8438
+
+Epoch 121, Train loss: mRNA:1.53e-02, methylation:1.27e-02, miRNA:9.52e-03, VCDN:1.60e-01
+Epoch 122, Train loss: mRNA:1.50e-02, methylation:1.25e-02, miRNA:9.46e-03, VCDN:1.58e-01
+Epoch 123, Train loss: mRNA:1.47e-02, methylation:1.19e-02, miRNA:9.40e-03, VCDN:1.55e-01
+Epoch 124, Train loss: mRNA:1.49e-02, methylation:1.24e-02, miRNA:9.27e-03, VCDN:1.53e-01
+Epoch 125, Train loss: mRNA:1.44e-02, methylation:1.21e-02, miRNA:9.17e-03, VCDN:1.51e-01
+Epoch 126, Train loss: mRNA:1.45e-02, methylation:1.22e-02, miRNA:9.30e-03, VCDN:1.48e-01
+Epoch 127, Train loss: mRNA:1.47e-02, methylation:1.24e-02, miRNA:9.21e-03, VCDN:1.47e-01
+Epoch 128, Train loss: mRNA:1.45e-02, methylation:1.28e-02, miRNA:9.12e-03, VCDN:1.45e-01
+Epoch 129, Train loss: mRNA:1.49e-02, methylation:1.25e-02, miRNA:9.19e-03, VCDN:1.43e-01
+Epoch 130, Train loss: mRNA:1.43e-02, methylation:1.21e-02, miRNA:8.95e-03, VCDN:1.42e-01
+Epoch 131, Train loss: mRNA:1.43e-02, methylation:1.20e-02, miRNA:8.94e-03, VCDN:1.40e-01
+Epoch 132, Train loss: mRNA:1.41e-02, methylation:1.18e-02, miRNA:9.16e-03, VCDN:1.38e-01
+Epoch 133, Train loss: mRNA:1.43e-02, methylation:1.20e-02, miRNA:8.93e-03, VCDN:1.37e-01
+Epoch 134, Train loss: mRNA:1.41e-02, methylation:1.25e-02, miRNA:9.05e-03, VCDN:1.34e-01
+Epoch 135, Train loss: mRNA:1.40e-02, methylation:1.19e-02, miRNA:9.01e-03, VCDN:1.33e-01
+Epoch 136, Train loss: mRNA:1.40e-02, methylation:1.17e-02, miRNA:8.91e-03, VCDN:1.32e-01
+Epoch 137, Train loss: mRNA:1.38e-02, methylation:1.21e-02, miRNA:8.79e-03, VCDN:1.29e-01
+Epoch 138, Train loss: mRNA:1.41e-02, methylation:1.21e-02, miRNA:8.61e-03, VCDN:1.28e-01
+Epoch 139, Train loss: mRNA:1.37e-02, methylation:1.19e-02, miRNA:8.62e-03, VCDN:1.25e-01
+Epoch 140, Train loss: mRNA:1.34e-02, methylation:1.15e-02, miRNA:8.65e-03, VCDN:1.24e-01
+Epoch 141, Train loss: mRNA:1.33e-02, methylation:1.13e-02, miRNA:8.71e-03, VCDN:1.22e-01
+Epoch 142, Train loss: mRNA:1.34e-02, methylation:1.14e-02, miRNA:8.48e-03, VCDN:1.20e-01
+Epoch 143, Train loss: mRNA:1.34e-02, methylation:1.15e-02, miRNA:8.63e-03, VCDN:1.19e-01
+Epoch 144, Train loss: mRNA:1.33e-02, methylation:1.12e-02, miRNA:8.52e-03, VCDN:1.17e-01
+Epoch 145, Train loss: mRNA:1.32e-02, methylation:1.15e-02, miRNA:8.61e-03, VCDN:1.16e-01
+Epoch 146, Train loss: mRNA:1.31e-02, methylation:1.15e-02, miRNA:8.44e-03, VCDN:1.14e-01
+Epoch 147, Train loss: mRNA:1.33e-02, methylation:1.12e-02, miRNA:8.60e-03, VCDN:1.12e-01
+Epoch 148, Train loss: mRNA:1.29e-02, methylation:1.10e-02, miRNA:8.41e-03, VCDN:1.11e-01
+Epoch 149, Train loss: mRNA:1.30e-02, methylation:1.12e-02, miRNA:8.52e-03, VCDN:1.10e-01
+Epoch 150, Train loss: mRNA:1.30e-02, methylation:1.10e-02, miRNA:8.31e-03, VCDN:1.09e-01
+Epoch 151, Train loss: mRNA:1.30e-02, methylation:1.09e-02, miRNA:8.48e-03, VCDN:1.06e-01
+Epoch 152, Train loss: mRNA:1.28e-02, methylation:1.08e-02, miRNA:8.13e-03, VCDN:1.06e-01
+Epoch 153, Train loss: mRNA:1.29e-02, methylation:1.08e-02, miRNA:8.24e-03, VCDN:1.04e-01
+Epoch 154, Train loss: mRNA:1.29e-02, methylation:1.07e-02, miRNA:8.11e-03, VCDN:1.03e-01
+Epoch 155, Train loss: mRNA:1.27e-02, methylation:1.04e-02, miRNA:8.13e-03, VCDN:1.02e-01
+Epoch 156, Train loss: mRNA:1.26e-02, methylation:1.05e-02, miRNA:8.06e-03, VCDN:9.96e-02
+Epoch 157, Train loss: mRNA:1.24e-02, methylation:1.09e-02, miRNA:8.16e-03, VCDN:9.81e-02
+Epoch 158, Train loss: mRNA:1.25e-02, methylation:1.10e-02, miRNA:7.85e-03, VCDN:9.72e-02
+Epoch 159, Train loss: mRNA:1.29e-02, methylation:1.08e-02, miRNA:8.03e-03, VCDN:9.62e-02
+Epoch 160, Train loss: mRNA:1.28e-02, methylation:1.07e-02, miRNA:7.93e-03, VCDN:9.48e-02
+
+Test: Epoch 160
+Train Accuracy: 0.9646   Test ACC: 0.8261
+Train F1: 0.9644         Test F1: 0.8331
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.7600
+Basal 	           0.2000              0.9856              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.8947              0.4837              0.7640
+LumB 	           0.2000              0.9713              0.1739              0.9688
+
+Epoch 161, Train loss: mRNA:1.24e-02, methylation:1.08e-02, miRNA:7.94e-03, VCDN:9.34e-02
+Epoch 162, Train loss: mRNA:1.22e-02, methylation:1.10e-02, miRNA:8.10e-03, VCDN:9.26e-02
+Epoch 163, Train loss: mRNA:1.25e-02, methylation:1.17e-02, miRNA:7.88e-03, VCDN:9.21e-02
+Epoch 164, Train loss: mRNA:1.25e-02, methylation:1.18e-02, miRNA:7.98e-03, VCDN:9.22e-02
+Epoch 165, Train loss: mRNA:1.24e-02, methylation:1.18e-02, miRNA:7.85e-03, VCDN:9.03e-02
+Epoch 166, Train loss: mRNA:1.25e-02, methylation:1.07e-02, miRNA:7.88e-03, VCDN:8.93e-02
+Epoch 167, Train loss: mRNA:1.24e-02, methylation:1.08e-02, miRNA:7.92e-03, VCDN:8.85e-02
+Epoch 168, Train loss: mRNA:1.22e-02, methylation:1.11e-02, miRNA:7.76e-03, VCDN:8.59e-02
+Epoch 169, Train loss: mRNA:1.19e-02, methylation:1.02e-02, miRNA:7.69e-03, VCDN:8.48e-02
+Epoch 170, Train loss: mRNA:1.20e-02, methylation:1.08e-02, miRNA:7.61e-03, VCDN:8.55e-02
+Epoch 171, Train loss: mRNA:1.20e-02, methylation:1.10e-02, miRNA:7.81e-03, VCDN:8.33e-02
+Epoch 172, Train loss: mRNA:1.17e-02, methylation:1.02e-02, miRNA:7.65e-03, VCDN:8.14e-02
+Epoch 173, Train loss: mRNA:1.18e-02, methylation:1.06e-02, miRNA:7.51e-03, VCDN:8.22e-02
+Epoch 174, Train loss: mRNA:1.16e-02, methylation:1.14e-02, miRNA:7.65e-03, VCDN:7.90e-02
+Epoch 175, Train loss: mRNA:1.16e-02, methylation:1.01e-02, miRNA:7.70e-03, VCDN:7.80e-02
+Epoch 176, Train loss: mRNA:1.17e-02, methylation:1.08e-02, miRNA:7.56e-03, VCDN:7.85e-02
+Epoch 177, Train loss: mRNA:1.16e-02, methylation:1.13e-02, miRNA:7.41e-03, VCDN:7.67e-02
+Epoch 178, Train loss: mRNA:1.15e-02, methylation:9.96e-03, miRNA:7.61e-03, VCDN:7.59e-02
+Epoch 179, Train loss: mRNA:1.22e-02, methylation:1.09e-02, miRNA:7.40e-03, VCDN:7.63e-02
+Epoch 180, Train loss: mRNA:1.50e-02, methylation:1.12e-02, miRNA:7.37e-03, VCDN:7.60e-02
+Epoch 181, Train loss: mRNA:1.67e-02, methylation:9.89e-03, miRNA:7.43e-03, VCDN:7.57e-02
+Epoch 182, Train loss: mRNA:1.53e-02, methylation:1.14e-02, miRNA:7.44e-03, VCDN:7.59e-02
+Epoch 183, Train loss: mRNA:1.23e-02, methylation:1.02e-02, miRNA:7.46e-03, VCDN:7.47e-02
+Epoch 184, Train loss: mRNA:1.51e-02, methylation:1.04e-02, miRNA:7.45e-03, VCDN:7.18e-02
+Epoch 185, Train loss: mRNA:1.23e-02, methylation:1.06e-02, miRNA:7.43e-03, VCDN:7.33e-02
+Epoch 186, Train loss: mRNA:1.42e-02, methylation:9.63e-03, miRNA:7.37e-03, VCDN:7.16e-02
+Epoch 187, Train loss: mRNA:1.21e-02, methylation:1.04e-02, miRNA:7.38e-03, VCDN:6.91e-02
+Epoch 188, Train loss: mRNA:1.37e-02, methylation:9.90e-03, miRNA:7.22e-03, VCDN:6.83e-02
+Epoch 189, Train loss: mRNA:1.20e-02, methylation:9.77e-03, miRNA:7.33e-03, VCDN:6.85e-02
+Epoch 190, Train loss: mRNA:1.34e-02, methylation:1.01e-02, miRNA:7.22e-03, VCDN:6.63e-02
+Epoch 191, Train loss: mRNA:1.20e-02, methylation:9.37e-03, miRNA:7.32e-03, VCDN:6.64e-02
+Epoch 192, Train loss: mRNA:1.31e-02, methylation:9.88e-03, miRNA:7.17e-03, VCDN:6.56e-02
+Epoch 193, Train loss: mRNA:1.18e-02, methylation:9.62e-03, miRNA:7.16e-03, VCDN:6.55e-02
+Epoch 194, Train loss: mRNA:1.25e-02, methylation:9.52e-03, miRNA:7.08e-03, VCDN:6.30e-02
+Epoch 195, Train loss: mRNA:1.24e-02, methylation:9.85e-03, miRNA:7.15e-03, VCDN:6.28e-02
+Epoch 196, Train loss: mRNA:1.20e-02, methylation:9.84e-03, miRNA:7.00e-03, VCDN:6.24e-02
+Epoch 197, Train loss: mRNA:1.21e-02, methylation:1.08e-02, miRNA:7.19e-03, VCDN:6.32e-02
+Epoch 198, Train loss: mRNA:1.14e-02, methylation:1.19e-02, miRNA:7.06e-03, VCDN:6.13e-02
+Epoch 199, Train loss: mRNA:1.21e-02, methylation:1.14e-02, miRNA:7.04e-03, VCDN:6.11e-02
+Epoch 200, Train loss: mRNA:1.12e-02, methylation:1.00e-02, miRNA:7.16e-03, VCDN:6.03e-02
+
+Test: Epoch 200
+Train Accuracy: 0.9732   Test ACC: 0.8315
+Train F1: 0.9731         Test F1: 0.8393
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9091              0.4837              0.7753
+LumB 	           0.2000              0.9952              0.1739              0.9375
+
+Epoch 201, Train loss: mRNA:1.16e-02, methylation:9.59e-03, miRNA:7.04e-03, VCDN:5.86e-02
+Epoch 202, Train loss: mRNA:1.15e-02, methylation:1.04e-02, miRNA:6.97e-03, VCDN:5.76e-02
+Epoch 203, Train loss: mRNA:1.12e-02, methylation:1.05e-02, miRNA:6.95e-03, VCDN:5.73e-02
+Epoch 204, Train loss: mRNA:1.14e-02, methylation:9.09e-03, miRNA:6.95e-03, VCDN:5.67e-02
+Epoch 205, Train loss: mRNA:1.08e-02, methylation:1.06e-02, miRNA:6.91e-03, VCDN:5.71e-02
+Epoch 206, Train loss: mRNA:1.15e-02, methylation:1.03e-02, miRNA:7.00e-03, VCDN:5.59e-02
+Epoch 207, Train loss: mRNA:1.08e-02, methylation:9.63e-03, miRNA:6.90e-03, VCDN:5.53e-02
+Epoch 208, Train loss: mRNA:1.11e-02, methylation:1.06e-02, miRNA:6.82e-03, VCDN:5.62e-02
+Epoch 209, Train loss: mRNA:1.13e-02, methylation:9.68e-03, miRNA:6.90e-03, VCDN:5.46e-02
+Epoch 210, Train loss: mRNA:1.08e-02, methylation:9.52e-03, miRNA:6.89e-03, VCDN:5.37e-02
+Epoch 211, Train loss: mRNA:1.10e-02, methylation:9.73e-03, miRNA:6.85e-03, VCDN:5.32e-02
+Epoch 212, Train loss: mRNA:1.08e-02, methylation:9.07e-03, miRNA:6.79e-03, VCDN:5.29e-02
+Epoch 213, Train loss: mRNA:1.08e-02, methylation:9.57e-03, miRNA:6.83e-03, VCDN:5.16e-02
+Epoch 214, Train loss: mRNA:1.10e-02, methylation:9.13e-03, miRNA:6.81e-03, VCDN:5.11e-02
+Epoch 215, Train loss: mRNA:1.07e-02, methylation:8.83e-03, miRNA:6.73e-03, VCDN:4.98e-02
+Epoch 216, Train loss: mRNA:1.09e-02, methylation:9.01e-03, miRNA:6.63e-03, VCDN:5.03e-02
+Epoch 217, Train loss: mRNA:1.08e-02, methylation:9.00e-03, miRNA:6.67e-03, VCDN:4.92e-02
+Epoch 218, Train loss: mRNA:1.04e-02, methylation:8.92e-03, miRNA:6.74e-03, VCDN:4.87e-02
+Epoch 219, Train loss: mRNA:1.08e-02, methylation:9.04e-03, miRNA:6.82e-03, VCDN:4.96e-02
+Epoch 220, Train loss: mRNA:1.04e-02, methylation:9.08e-03, miRNA:6.65e-03, VCDN:4.75e-02
+Epoch 221, Train loss: mRNA:1.05e-02, methylation:8.85e-03, miRNA:6.62e-03, VCDN:4.76e-02
+Epoch 222, Train loss: mRNA:1.02e-02, methylation:8.90e-03, miRNA:6.56e-03, VCDN:4.73e-02
+Epoch 223, Train loss: mRNA:1.01e-02, methylation:8.61e-03, miRNA:6.64e-03, VCDN:4.67e-02
+Epoch 224, Train loss: mRNA:1.02e-02, methylation:8.54e-03, miRNA:6.56e-03, VCDN:4.65e-02
+Epoch 225, Train loss: mRNA:1.03e-02, methylation:8.47e-03, miRNA:6.66e-03, VCDN:4.56e-02
+Epoch 226, Train loss: mRNA:1.00e-02, methylation:8.75e-03, miRNA:6.66e-03, VCDN:4.53e-02
+Epoch 227, Train loss: mRNA:1.02e-02, methylation:9.13e-03, miRNA:6.57e-03, VCDN:4.56e-02
+Epoch 228, Train loss: mRNA:9.94e-03, methylation:9.14e-03, miRNA:6.68e-03, VCDN:4.47e-02
+Epoch 229, Train loss: mRNA:1.00e-02, methylation:9.18e-03, miRNA:6.47e-03, VCDN:4.41e-02
+Epoch 230, Train loss: mRNA:9.88e-03, methylation:9.15e-03, miRNA:6.45e-03, VCDN:4.30e-02
+Epoch 231, Train loss: mRNA:9.99e-03, methylation:8.78e-03, miRNA:6.53e-03, VCDN:4.26e-02
+Epoch 232, Train loss: mRNA:1.00e-02, methylation:8.32e-03, miRNA:6.40e-03, VCDN:4.27e-02
+Epoch 233, Train loss: mRNA:9.83e-03, methylation:8.30e-03, miRNA:6.56e-03, VCDN:4.15e-02
+Epoch 234, Train loss: mRNA:9.64e-03, methylation:8.66e-03, miRNA:6.56e-03, VCDN:4.20e-02
+Epoch 235, Train loss: mRNA:9.87e-03, methylation:8.38e-03, miRNA:6.36e-03, VCDN:4.17e-02
+Epoch 236, Train loss: mRNA:9.84e-03, methylation:8.31e-03, miRNA:6.41e-03, VCDN:4.09e-02
+Epoch 237, Train loss: mRNA:9.90e-03, methylation:8.57e-03, miRNA:6.40e-03, VCDN:4.08e-02
+Epoch 238, Train loss: mRNA:9.98e-03, methylation:8.22e-03, miRNA:6.23e-03, VCDN:4.04e-02
+Epoch 239, Train loss: mRNA:9.64e-03, methylation:7.89e-03, miRNA:6.47e-03, VCDN:3.99e-02
+Epoch 240, Train loss: mRNA:9.50e-03, methylation:8.16e-03, miRNA:6.35e-03, VCDN:3.99e-02
+
+Test: Epoch 240
+Train Accuracy: 0.9732   Test ACC: 0.8424
+Train F1: 0.9732         Test F1: 0.8459
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.7200
+Basal 	           0.2000              0.9856              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9426              0.4837              0.8539
+LumB 	           0.2000              0.9761              0.1739              0.8125
+
+Epoch 241, Train loss: mRNA:9.59e-03, methylation:7.98e-03, miRNA:6.29e-03, VCDN:3.93e-02
+Epoch 242, Train loss: mRNA:9.62e-03, methylation:8.13e-03, miRNA:6.31e-03, VCDN:3.84e-02
+Epoch 243, Train loss: mRNA:9.69e-03, methylation:8.26e-03, miRNA:6.47e-03, VCDN:3.88e-02
+Epoch 244, Train loss: mRNA:1.02e-02, methylation:8.15e-03, miRNA:6.31e-03, VCDN:3.85e-02
+Epoch 245, Train loss: mRNA:1.01e-02, methylation:8.90e-03, miRNA:6.29e-03, VCDN:3.77e-02
+Epoch 246, Train loss: mRNA:9.80e-03, methylation:9.69e-03, miRNA:6.22e-03, VCDN:3.87e-02
+Epoch 247, Train loss: mRNA:9.80e-03, methylation:1.06e-02, miRNA:6.37e-03, VCDN:3.85e-02
+Epoch 248, Train loss: mRNA:9.67e-03, methylation:9.23e-03, miRNA:6.38e-03, VCDN:3.87e-02
+Epoch 249, Train loss: mRNA:9.44e-03, methylation:8.46e-03, miRNA:6.25e-03, VCDN:3.78e-02
+Epoch 250, Train loss: mRNA:9.52e-03, methylation:8.43e-03, miRNA:6.26e-03, VCDN:3.72e-02
+Epoch 251, Train loss: mRNA:9.85e-03, methylation:8.85e-03, miRNA:6.29e-03, VCDN:3.76e-02
+Epoch 252, Train loss: mRNA:9.90e-03, methylation:8.76e-03, miRNA:6.17e-03, VCDN:3.59e-02
+Epoch 253, Train loss: mRNA:9.68e-03, methylation:7.91e-03, miRNA:6.10e-03, VCDN:3.59e-02
+Epoch 254, Train loss: mRNA:9.27e-03, methylation:8.28e-03, miRNA:6.25e-03, VCDN:3.58e-02
+Epoch 255, Train loss: mRNA:8.99e-03, methylation:8.57e-03, miRNA:6.17e-03, VCDN:3.61e-02
+Epoch 256, Train loss: mRNA:9.40e-03, methylation:8.00e-03, miRNA:6.05e-03, VCDN:3.49e-02
+Epoch 257, Train loss: mRNA:9.46e-03, methylation:8.06e-03, miRNA:6.22e-03, VCDN:3.50e-02
+Epoch 258, Train loss: mRNA:9.39e-03, methylation:8.71e-03, miRNA:6.16e-03, VCDN:3.58e-02
+Epoch 259, Train loss: mRNA:9.20e-03, methylation:8.55e-03, miRNA:6.12e-03, VCDN:3.62e-02
+Epoch 260, Train loss: mRNA:9.27e-03, methylation:9.11e-03, miRNA:6.22e-03, VCDN:3.40e-02
+Epoch 261, Train loss: mRNA:8.96e-03, methylation:8.28e-03, miRNA:6.31e-03, VCDN:3.35e-02
+Epoch 262, Train loss: mRNA:8.86e-03, methylation:7.85e-03, miRNA:6.11e-03, VCDN:3.37e-02
+Epoch 263, Train loss: mRNA:8.88e-03, methylation:7.99e-03, miRNA:6.00e-03, VCDN:3.31e-02
+Epoch 264, Train loss: mRNA:8.87e-03, methylation:8.20e-03, miRNA:6.11e-03, VCDN:3.28e-02
+Epoch 265, Train loss: mRNA:8.62e-03, methylation:7.95e-03, miRNA:6.20e-03, VCDN:3.22e-02
+Epoch 266, Train loss: mRNA:9.20e-03, methylation:8.15e-03, miRNA:6.04e-03, VCDN:3.19e-02
+Epoch 267, Train loss: mRNA:9.38e-03, methylation:8.11e-03, miRNA:6.18e-03, VCDN:3.14e-02
+Epoch 268, Train loss: mRNA:9.86e-03, methylation:7.46e-03, miRNA:6.05e-03, VCDN:3.23e-02
+Epoch 269, Train loss: mRNA:1.08e-02, methylation:7.93e-03, miRNA:6.08e-03, VCDN:3.17e-02
+Epoch 270, Train loss: mRNA:1.05e-02, methylation:8.07e-03, miRNA:6.06e-03, VCDN:3.12e-02
+Epoch 271, Train loss: mRNA:9.41e-03, methylation:7.87e-03, miRNA:6.06e-03, VCDN:3.23e-02
+Epoch 272, Train loss: mRNA:9.13e-03, methylation:7.97e-03, miRNA:5.96e-03, VCDN:3.19e-02
+Epoch 273, Train loss: mRNA:9.71e-03, methylation:8.05e-03, miRNA:5.84e-03, VCDN:3.13e-02
+Epoch 274, Train loss: mRNA:1.01e-02, methylation:7.69e-03, miRNA:6.04e-03, VCDN:3.08e-02
+Epoch 275, Train loss: mRNA:8.67e-03, methylation:7.92e-03, miRNA:5.99e-03, VCDN:3.05e-02
+Epoch 276, Train loss: mRNA:9.16e-03, methylation:8.14e-03, miRNA:6.06e-03, VCDN:3.09e-02
+Epoch 277, Train loss: mRNA:9.81e-03, methylation:7.87e-03, miRNA:6.00e-03, VCDN:3.04e-02
+Epoch 278, Train loss: mRNA:9.10e-03, methylation:8.06e-03, miRNA:5.95e-03, VCDN:2.93e-02
+Epoch 279, Train loss: mRNA:8.72e-03, methylation:7.46e-03, miRNA:5.75e-03, VCDN:3.10e-02
+Epoch 280, Train loss: mRNA:9.77e-03, methylation:7.60e-03, miRNA:5.82e-03, VCDN:3.12e-02
+
+Test: Epoch 280
+Train Accuracy: 0.9809   Test ACC: 0.8533
+Train F1: 0.9809         Test F1: 0.8547
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.9000
+LumA 	           0.2000              0.9713              0.4837              0.8764
+LumB 	           0.2000              0.9665              0.1739              0.7188
+
+Epoch 281, Train loss: mRNA:9.52e-03, methylation:8.64e-03, miRNA:5.81e-03, VCDN:3.00e-02
+Epoch 282, Train loss: mRNA:8.56e-03, methylation:8.72e-03, miRNA:5.94e-03, VCDN:2.92e-02
+Epoch 283, Train loss: mRNA:9.41e-03, methylation:9.08e-03, miRNA:5.91e-03, VCDN:2.95e-02
+Epoch 284, Train loss: mRNA:8.97e-03, methylation:1.08e-02, miRNA:5.92e-03, VCDN:3.05e-02
+Epoch 285, Train loss: mRNA:8.88e-03, methylation:9.89e-03, miRNA:5.87e-03, VCDN:3.21e-02
+Epoch 286, Train loss: mRNA:9.09e-03, methylation:1.06e-02, miRNA:5.98e-03, VCDN:3.14e-02
+Epoch 287, Train loss: mRNA:8.88e-03, methylation:8.44e-03, miRNA:5.80e-03, VCDN:2.92e-02
+Epoch 288, Train loss: mRNA:8.81e-03, methylation:8.75e-03, miRNA:5.92e-03, VCDN:3.01e-02
+Epoch 289, Train loss: mRNA:8.62e-03, methylation:9.41e-03, miRNA:5.78e-03, VCDN:2.88e-02
+Epoch 290, Train loss: mRNA:8.72e-03, methylation:8.40e-03, miRNA:5.84e-03, VCDN:2.83e-02
+Epoch 291, Train loss: mRNA:8.76e-03, methylation:9.14e-03, miRNA:5.91e-03, VCDN:2.87e-02
+Epoch 292, Train loss: mRNA:8.39e-03, methylation:7.99e-03, miRNA:5.99e-03, VCDN:2.73e-02
+Epoch 293, Train loss: mRNA:8.45e-03, methylation:8.12e-03, miRNA:5.94e-03, VCDN:2.70e-02
+Epoch 294, Train loss: mRNA:8.64e-03, methylation:8.73e-03, miRNA:5.81e-03, VCDN:2.76e-02
+Epoch 295, Train loss: mRNA:8.15e-03, methylation:7.63e-03, miRNA:5.97e-03, VCDN:2.68e-02
+Epoch 296, Train loss: mRNA:8.35e-03, methylation:7.79e-03, miRNA:5.87e-03, VCDN:2.66e-02
+Epoch 297, Train loss: mRNA:8.27e-03, methylation:8.36e-03, miRNA:5.86e-03, VCDN:2.60e-02
+Epoch 298, Train loss: mRNA:8.45e-03, methylation:7.35e-03, miRNA:5.81e-03, VCDN:2.70e-02
+Epoch 299, Train loss: mRNA:8.55e-03, methylation:7.68e-03, miRNA:5.89e-03, VCDN:2.59e-02
+Epoch 300, Train loss: mRNA:8.40e-03, methylation:7.86e-03, miRNA:5.76e-03, VCDN:2.59e-02
+Epoch 301, Train loss: mRNA:8.48e-03, methylation:8.03e-03, miRNA:5.79e-03, VCDN:2.71e-02
+Epoch 302, Train loss: mRNA:8.77e-03, methylation:7.48e-03, miRNA:5.82e-03, VCDN:2.59e-02
+Epoch 303, Train loss: mRNA:8.75e-03, methylation:7.41e-03, miRNA:5.74e-03, VCDN:2.65e-02
+Epoch 304, Train loss: mRNA:8.53e-03, methylation:7.68e-03, miRNA:5.61e-03, VCDN:2.63e-02
+Epoch 305, Train loss: mRNA:8.02e-03, methylation:7.54e-03, miRNA:5.83e-03, VCDN:2.59e-02
+Epoch 306, Train loss: mRNA:8.08e-03, methylation:7.07e-03, miRNA:5.67e-03, VCDN:2.53e-02
+Epoch 307, Train loss: mRNA:8.24e-03, methylation:7.20e-03, miRNA:5.83e-03, VCDN:2.51e-02
+Epoch 308, Train loss: mRNA:8.28e-03, methylation:7.24e-03, miRNA:5.74e-03, VCDN:2.52e-02
+Epoch 309, Train loss: mRNA:8.10e-03, methylation:7.28e-03, miRNA:5.72e-03, VCDN:2.47e-02
+Epoch 310, Train loss: mRNA:8.42e-03, methylation:7.10e-03, miRNA:5.66e-03, VCDN:2.47e-02
+Epoch 311, Train loss: mRNA:9.00e-03, methylation:6.93e-03, miRNA:5.63e-03, VCDN:2.43e-02
+Epoch 312, Train loss: mRNA:8.12e-03, methylation:7.14e-03, miRNA:5.64e-03, VCDN:2.41e-02
+Epoch 313, Train loss: mRNA:8.32e-03, methylation:7.09e-03, miRNA:5.75e-03, VCDN:2.55e-02
+Epoch 314, Train loss: mRNA:8.55e-03, methylation:6.86e-03, miRNA:5.65e-03, VCDN:2.45e-02
+Epoch 315, Train loss: mRNA:8.15e-03, methylation:7.02e-03, miRNA:5.71e-03, VCDN:2.40e-02
+Epoch 316, Train loss: mRNA:8.00e-03, methylation:6.81e-03, miRNA:5.80e-03, VCDN:2.40e-02
+Epoch 317, Train loss: mRNA:7.73e-03, methylation:6.70e-03, miRNA:5.60e-03, VCDN:2.37e-02
+Epoch 318, Train loss: mRNA:8.15e-03, methylation:6.93e-03, miRNA:5.62e-03, VCDN:2.45e-02
+Epoch 319, Train loss: mRNA:8.18e-03, methylation:6.79e-03, miRNA:5.53e-03, VCDN:2.29e-02
+Epoch 320, Train loss: mRNA:8.11e-03, methylation:7.26e-03, miRNA:5.65e-03, VCDN:2.37e-02
+
+Test: Epoch 320
+Train Accuracy: 0.9876   Test ACC: 0.8587
+Train F1: 0.9876         Test F1: 0.8598
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.7200
+Basal 	           0.2000              0.9856              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9809              0.4837              0.8989
+LumB 	           0.2000              0.9904              0.1739              0.8125
+
+Epoch 321, Train loss: mRNA:8.23e-03, methylation:7.06e-03, miRNA:5.66e-03, VCDN:2.36e-02
+Epoch 322, Train loss: mRNA:8.21e-03, methylation:6.86e-03, miRNA:5.64e-03, VCDN:2.21e-02
+Epoch 323, Train loss: mRNA:7.65e-03, methylation:6.88e-03, miRNA:5.66e-03, VCDN:2.35e-02
+Epoch 324, Train loss: mRNA:8.05e-03, methylation:6.96e-03, miRNA:5.66e-03, VCDN:2.48e-02
+Epoch 325, Train loss: mRNA:7.99e-03, methylation:7.08e-03, miRNA:5.48e-03, VCDN:2.30e-02
+Epoch 326, Train loss: mRNA:7.77e-03, methylation:7.53e-03, miRNA:5.61e-03, VCDN:2.39e-02
+Epoch 327, Train loss: mRNA:7.70e-03, methylation:9.01e-03, miRNA:5.63e-03, VCDN:2.35e-02
+Epoch 328, Train loss: mRNA:7.86e-03, methylation:9.38e-03, miRNA:5.62e-03, VCDN:2.55e-02
+Epoch 329, Train loss: mRNA:7.85e-03, methylation:1.01e-02, miRNA:5.65e-03, VCDN:2.40e-02
+Epoch 330, Train loss: mRNA:8.23e-03, methylation:7.94e-03, miRNA:5.55e-03, VCDN:2.46e-02
+Epoch 331, Train loss: mRNA:8.46e-03, methylation:9.53e-03, miRNA:5.62e-03, VCDN:2.52e-02
+Epoch 332, Train loss: mRNA:1.02e-02, methylation:8.92e-03, miRNA:5.64e-03, VCDN:2.49e-02
+Epoch 333, Train loss: mRNA:1.22e-02, methylation:7.97e-03, miRNA:5.49e-03, VCDN:2.70e-02
+Epoch 334, Train loss: mRNA:1.08e-02, methylation:9.18e-03, miRNA:5.60e-03, VCDN:2.32e-02
+Epoch 335, Train loss: mRNA:9.03e-03, methylation:7.08e-03, miRNA:5.54e-03, VCDN:2.53e-02
+Epoch 336, Train loss: mRNA:9.25e-03, methylation:8.34e-03, miRNA:5.60e-03, VCDN:2.43e-02
+Epoch 337, Train loss: mRNA:8.86e-03, methylation:7.24e-03, miRNA:5.47e-03, VCDN:2.35e-02
+Epoch 338, Train loss: mRNA:9.21e-03, methylation:7.95e-03, miRNA:5.51e-03, VCDN:2.64e-02
+Epoch 339, Train loss: mRNA:8.89e-03, methylation:8.21e-03, miRNA:5.43e-03, VCDN:2.23e-02
+Epoch 340, Train loss: mRNA:8.54e-03, methylation:7.16e-03, miRNA:5.46e-03, VCDN:2.36e-02
+Epoch 341, Train loss: mRNA:8.73e-03, methylation:8.20e-03, miRNA:5.59e-03, VCDN:2.41e-02
+Epoch 342, Train loss: mRNA:8.70e-03, methylation:7.36e-03, miRNA:5.45e-03, VCDN:2.23e-02
+Epoch 343, Train loss: mRNA:8.42e-03, methylation:7.81e-03, miRNA:5.49e-03, VCDN:2.27e-02
+Epoch 344, Train loss: mRNA:8.17e-03, methylation:7.85e-03, miRNA:5.52e-03, VCDN:2.28e-02
+Epoch 345, Train loss: mRNA:8.82e-03, methylation:7.70e-03, miRNA:5.46e-03, VCDN:2.25e-02
+Epoch 346, Train loss: mRNA:7.70e-03, methylation:7.10e-03, miRNA:5.45e-03, VCDN:2.33e-02
+Epoch 347, Train loss: mRNA:8.28e-03, methylation:7.49e-03, miRNA:5.49e-03, VCDN:2.22e-02
+Epoch 348, Train loss: mRNA:8.35e-03, methylation:7.50e-03, miRNA:5.47e-03, VCDN:2.17e-02
+Epoch 349, Train loss: mRNA:7.60e-03, methylation:6.57e-03, miRNA:5.60e-03, VCDN:2.26e-02
+Epoch 350, Train loss: mRNA:8.45e-03, methylation:7.48e-03, miRNA:5.43e-03, VCDN:2.23e-02
+Epoch 351, Train loss: mRNA:7.83e-03, methylation:7.23e-03, miRNA:5.49e-03, VCDN:2.17e-02
+Epoch 352, Train loss: mRNA:7.75e-03, methylation:6.92e-03, miRNA:5.55e-03, VCDN:2.20e-02
+Epoch 353, Train loss: mRNA:7.82e-03, methylation:7.66e-03, miRNA:5.33e-03, VCDN:2.14e-02
+Epoch 354, Train loss: mRNA:8.00e-03, methylation:7.22e-03, miRNA:5.39e-03, VCDN:2.10e-02
+Epoch 355, Train loss: mRNA:7.57e-03, methylation:7.14e-03, miRNA:5.53e-03, VCDN:2.08e-02
+Epoch 356, Train loss: mRNA:7.68e-03, methylation:6.90e-03, miRNA:5.42e-03, VCDN:2.15e-02
+Epoch 357, Train loss: mRNA:7.99e-03, methylation:7.13e-03, miRNA:5.54e-03, VCDN:2.06e-02
+Epoch 358, Train loss: mRNA:7.07e-03, methylation:6.77e-03, miRNA:5.30e-03, VCDN:2.00e-02
+Epoch 359, Train loss: mRNA:7.71e-03, methylation:6.33e-03, miRNA:5.42e-03, VCDN:2.05e-02
+Epoch 360, Train loss: mRNA:7.41e-03, methylation:6.76e-03, miRNA:5.27e-03, VCDN:2.03e-02
+
+Test: Epoch 360
+Train Accuracy: 0.9895   Test ACC: 0.8587
+Train F1: 0.9895         Test F1: 0.8598
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.7200
+Basal 	           0.2000              0.9952              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9809              0.4837              0.8989
+LumB 	           0.2000              0.9904              0.1739              0.8125
+
+Epoch 361, Train loss: mRNA:7.56e-03, methylation:6.66e-03, miRNA:5.49e-03, VCDN:1.96e-02
+Epoch 362, Train loss: mRNA:7.64e-03, methylation:6.34e-03, miRNA:5.44e-03, VCDN:2.08e-02
+Epoch 363, Train loss: mRNA:7.60e-03, methylation:6.50e-03, miRNA:5.39e-03, VCDN:1.98e-02
+Epoch 364, Train loss: mRNA:7.37e-03, methylation:6.38e-03, miRNA:5.30e-03, VCDN:1.99e-02
+Epoch 365, Train loss: mRNA:7.18e-03, methylation:6.34e-03, miRNA:5.38e-03, VCDN:1.98e-02
+Epoch 366, Train loss: mRNA:7.68e-03, methylation:5.99e-03, miRNA:5.25e-03, VCDN:1.93e-02
+Epoch 367, Train loss: mRNA:7.02e-03, methylation:6.38e-03, miRNA:5.29e-03, VCDN:1.97e-02
+Epoch 368, Train loss: mRNA:7.18e-03, methylation:6.44e-03, miRNA:5.40e-03, VCDN:1.93e-02
+Epoch 369, Train loss: mRNA:7.28e-03, methylation:6.52e-03, miRNA:5.32e-03, VCDN:2.05e-02
+Epoch 370, Train loss: mRNA:7.13e-03, methylation:7.41e-03, miRNA:5.36e-03, VCDN:2.05e-02
+Epoch 371, Train loss: mRNA:7.66e-03, methylation:8.10e-03, miRNA:5.28e-03, VCDN:2.01e-02
+Epoch 372, Train loss: mRNA:7.42e-03, methylation:8.93e-03, miRNA:5.28e-03, VCDN:1.92e-02
+Epoch 373, Train loss: mRNA:8.11e-03, methylation:7.73e-03, miRNA:5.45e-03, VCDN:1.95e-02
+Epoch 374, Train loss: mRNA:8.00e-03, methylation:6.30e-03, miRNA:5.39e-03, VCDN:1.97e-02
+Epoch 375, Train loss: mRNA:7.79e-03, methylation:6.97e-03, miRNA:5.32e-03, VCDN:1.95e-02
+Epoch 376, Train loss: mRNA:7.24e-03, methylation:7.13e-03, miRNA:5.25e-03, VCDN:1.98e-02
+Epoch 377, Train loss: mRNA:7.02e-03, methylation:6.53e-03, miRNA:5.35e-03, VCDN:1.91e-02
+Epoch 378, Train loss: mRNA:7.30e-03, methylation:6.47e-03, miRNA:5.33e-03, VCDN:1.92e-02
+Epoch 379, Train loss: mRNA:7.22e-03, methylation:6.94e-03, miRNA:5.44e-03, VCDN:2.00e-02
+Epoch 380, Train loss: mRNA:7.49e-03, methylation:6.94e-03, miRNA:5.37e-03, VCDN:1.88e-02
+Epoch 381, Train loss: mRNA:7.39e-03, methylation:6.76e-03, miRNA:5.35e-03, VCDN:1.96e-02
+Epoch 382, Train loss: mRNA:6.99e-03, methylation:7.38e-03, miRNA:5.31e-03, VCDN:1.85e-02
+Epoch 383, Train loss: mRNA:6.85e-03, methylation:6.35e-03, miRNA:5.45e-03, VCDN:1.88e-02
+Epoch 384, Train loss: mRNA:6.99e-03, methylation:6.45e-03, miRNA:5.28e-03, VCDN:1.96e-02
+Epoch 385, Train loss: mRNA:7.34e-03, methylation:7.26e-03, miRNA:5.30e-03, VCDN:1.90e-02
+Epoch 386, Train loss: mRNA:7.25e-03, methylation:6.37e-03, miRNA:5.15e-03, VCDN:1.90e-02
+Epoch 387, Train loss: mRNA:7.24e-03, methylation:6.38e-03, miRNA:5.26e-03, VCDN:1.85e-02
+Epoch 388, Train loss: mRNA:6.87e-03, methylation:6.35e-03, miRNA:5.28e-03, VCDN:1.87e-02
+Epoch 389, Train loss: mRNA:6.93e-03, methylation:6.48e-03, miRNA:5.26e-03, VCDN:1.83e-02
+Epoch 390, Train loss: mRNA:6.81e-03, methylation:5.92e-03, miRNA:5.12e-03, VCDN:1.76e-02
+Epoch 391, Train loss: mRNA:6.77e-03, methylation:6.38e-03, miRNA:5.32e-03, VCDN:1.84e-02
+Epoch 392, Train loss: mRNA:7.10e-03, methylation:6.43e-03, miRNA:5.29e-03, VCDN:1.82e-02
+Epoch 393, Train loss: mRNA:6.87e-03, methylation:5.90e-03, miRNA:5.30e-03, VCDN:1.88e-02
+Epoch 394, Train loss: mRNA:7.37e-03, methylation:6.17e-03, miRNA:5.26e-03, VCDN:1.76e-02
+Epoch 395, Train loss: mRNA:7.40e-03, methylation:5.92e-03, miRNA:5.29e-03, VCDN:1.79e-02
+Epoch 396, Train loss: mRNA:7.25e-03, methylation:5.73e-03, miRNA:5.17e-03, VCDN:1.81e-02
+Epoch 397, Train loss: mRNA:7.09e-03, methylation:6.04e-03, miRNA:5.22e-03, VCDN:1.83e-02
+Epoch 398, Train loss: mRNA:6.70e-03, methylation:6.18e-03, miRNA:5.17e-03, VCDN:1.85e-02
+Epoch 399, Train loss: mRNA:6.60e-03, methylation:6.82e-03, miRNA:5.28e-03, VCDN:1.85e-02
+Epoch 400, Train loss: mRNA:6.63e-03, methylation:8.48e-03, miRNA:5.27e-03, VCDN:1.84e-02
+
+Test: Epoch 400
+Train Accuracy: 0.9847   Test ACC: 0.8533
+Train F1: 0.9847         Test F1: 0.8538
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9856              0.4837              0.9101
+LumB 	           0.2000              0.9761              0.1739              0.7188
+
+Performing feature extraction using SHAP ...
+
+Performing feature extraction using LIME ...
+
+Average lime score =  0.5858750889456656 
+ Standard deviation =  0.04646270429681021 
+
+
+----------------------------------------------------------------------------------------------------
+Run 2
+----------------------------------------------------------------------------------------------------
+2021-01-27 10:15:57.050240 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only 3 GCNs - mRNA, DNA methylation, miRNA
+SEED =  97180
+
+Training...
+Epoch 0, Train loss: mRNA:9.21e-02, methylation:9.19e-02, miRNA:4.24e-02, VCDN:3.26e-01
+
+Test: Epoch 0
+Train Accuracy: 0.2000   Test ACC: 0.1359
+Train F1: 0.0667         Test F1: 0.0325
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              1.0000              0.1359              1.0000
+Basal 	           0.2000              0.0000              0.1522              0.0000
+Her2 	           0.2000              0.0000              0.0543              0.0000
+LumA 	           0.2000              0.0000              0.4837              0.0000
+LumB 	           0.2000              0.0000              0.1739              0.0000
+
+Epoch 1, Train loss: mRNA:1.44e+00, methylation:1.29e+00, miRNA:3.76e-02, VCDN:3.24e-01
+Epoch 2, Train loss: mRNA:1.79e-01, methylation:1.38e-01, miRNA:3.47e-02, VCDN:3.23e-01
+Epoch 3, Train loss: mRNA:1.37e-01, methylation:1.45e-01, miRNA:3.36e-02, VCDN:3.23e-01
+Epoch 4, Train loss: mRNA:2.91e-01, methylation:2.78e-01, miRNA:3.29e-02, VCDN:3.22e-01
+Epoch 5, Train loss: mRNA:1.80e-01, methylation:1.74e-01, miRNA:3.23e-02, VCDN:3.22e-01
+Epoch 6, Train loss: mRNA:5.31e-02, methylation:5.43e-02, miRNA:3.21e-02, VCDN:3.22e-01
+Epoch 7, Train loss: mRNA:6.88e-02, methylation:6.66e-02, miRNA:3.10e-02, VCDN:3.22e-01
+Epoch 8, Train loss: mRNA:1.45e-01, methylation:1.27e-01, miRNA:3.03e-02, VCDN:3.22e-01
+Epoch 9, Train loss: mRNA:1.18e-01, methylation:1.04e-01, miRNA:2.92e-02, VCDN:3.22e-01
+Epoch 10, Train loss: mRNA:5.57e-02, methylation:5.82e-02, miRNA:2.83e-02, VCDN:3.22e-01
+Epoch 11, Train loss: mRNA:3.89e-02, methylation:3.79e-02, miRNA:2.78e-02, VCDN:3.22e-01
+Epoch 12, Train loss: mRNA:5.76e-02, methylation:4.42e-02, miRNA:2.71e-02, VCDN:3.22e-01
+Epoch 13, Train loss: mRNA:7.18e-02, methylation:5.81e-02, miRNA:2.68e-02, VCDN:3.21e-01
+Epoch 14, Train loss: mRNA:6.46e-02, methylation:5.95e-02, miRNA:2.63e-02, VCDN:3.21e-01
+Epoch 15, Train loss: mRNA:4.75e-02, methylation:5.09e-02, miRNA:2.58e-02, VCDN:3.21e-01
+Epoch 16, Train loss: mRNA:3.63e-02, methylation:3.87e-02, miRNA:2.54e-02, VCDN:3.21e-01
+Epoch 17, Train loss: mRNA:3.86e-02, methylation:3.48e-02, miRNA:2.47e-02, VCDN:3.20e-01
+Epoch 18, Train loss: mRNA:4.64e-02, methylation:3.83e-02, miRNA:2.40e-02, VCDN:3.20e-01
+Epoch 19, Train loss: mRNA:5.10e-02, methylation:4.29e-02, miRNA:2.38e-02, VCDN:3.20e-01
+Epoch 20, Train loss: mRNA:4.59e-02, methylation:4.50e-02, miRNA:2.32e-02, VCDN:3.19e-01
+Epoch 21, Train loss: mRNA:3.88e-02, methylation:4.12e-02, miRNA:2.28e-02, VCDN:3.19e-01
+Epoch 22, Train loss: mRNA:3.37e-02, methylation:3.45e-02, miRNA:2.24e-02, VCDN:3.19e-01
+Epoch 23, Train loss: mRNA:3.41e-02, methylation:3.25e-02, miRNA:2.23e-02, VCDN:3.19e-01
+Epoch 24, Train loss: mRNA:3.67e-02, methylation:3.20e-02, miRNA:2.16e-02, VCDN:3.18e-01
+Epoch 25, Train loss: mRNA:3.86e-02, methylation:3.25e-02, miRNA:2.11e-02, VCDN:3.18e-01
+Epoch 26, Train loss: mRNA:3.86e-02, methylation:3.42e-02, miRNA:2.09e-02, VCDN:3.17e-01
+Epoch 27, Train loss: mRNA:3.48e-02, methylation:3.53e-02, miRNA:2.08e-02, VCDN:3.17e-01
+Epoch 28, Train loss: mRNA:3.21e-02, methylation:3.28e-02, miRNA:2.04e-02, VCDN:3.16e-01
+Epoch 29, Train loss: mRNA:3.09e-02, methylation:3.09e-02, miRNA:1.98e-02, VCDN:3.15e-01
+Epoch 30, Train loss: mRNA:3.16e-02, methylation:2.87e-02, miRNA:1.97e-02, VCDN:3.15e-01
+Epoch 31, Train loss: mRNA:3.27e-02, methylation:2.93e-02, miRNA:1.93e-02, VCDN:3.14e-01
+Epoch 32, Train loss: mRNA:3.30e-02, methylation:2.89e-02, miRNA:1.88e-02, VCDN:3.13e-01
+Epoch 33, Train loss: mRNA:3.24e-02, methylation:2.92e-02, miRNA:1.86e-02, VCDN:3.13e-01
+Epoch 34, Train loss: mRNA:3.02e-02, methylation:2.91e-02, miRNA:1.84e-02, VCDN:3.12e-01
+Epoch 35, Train loss: mRNA:2.96e-02, methylation:2.81e-02, miRNA:1.80e-02, VCDN:3.11e-01
+Epoch 36, Train loss: mRNA:2.87e-02, methylation:2.73e-02, miRNA:1.80e-02, VCDN:3.10e-01
+Epoch 37, Train loss: mRNA:2.91e-02, methylation:2.66e-02, miRNA:1.75e-02, VCDN:3.10e-01
+Epoch 38, Train loss: mRNA:2.90e-02, methylation:2.55e-02, miRNA:1.74e-02, VCDN:3.09e-01
+Epoch 39, Train loss: mRNA:2.95e-02, methylation:2.59e-02, miRNA:1.71e-02, VCDN:3.08e-01
+Epoch 40, Train loss: mRNA:2.88e-02, methylation:2.69e-02, miRNA:1.69e-02, VCDN:3.07e-01
+
+Test: Epoch 40
+Train Accuracy: 0.7301   Test ACC: 0.6087
+Train F1: 0.7293         Test F1: 0.6064
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.8800
+Basal 	           0.2000              0.8182              0.1522              0.8214
+Her2 	           0.2000              0.5502              0.0543              0.6000
+LumA 	           0.2000              0.7656              0.4837              0.3933
+LumB 	           0.2000              0.5550              0.1739              0.8125
+
+Epoch 41, Train loss: mRNA:2.78e-02, methylation:2.62e-02, miRNA:1.68e-02, VCDN:3.06e-01
+Epoch 42, Train loss: mRNA:2.75e-02, methylation:2.56e-02, miRNA:1.67e-02, VCDN:3.04e-01
+Epoch 43, Train loss: mRNA:2.65e-02, methylation:2.54e-02, miRNA:1.62e-02, VCDN:3.03e-01
+Epoch 44, Train loss: mRNA:2.69e-02, methylation:2.47e-02, miRNA:1.63e-02, VCDN:3.02e-01
+Epoch 45, Train loss: mRNA:2.64e-02, methylation:2.46e-02, miRNA:1.60e-02, VCDN:3.01e-01
+Epoch 46, Train loss: mRNA:2.62e-02, methylation:2.43e-02, miRNA:1.59e-02, VCDN:3.00e-01
+Epoch 47, Train loss: mRNA:2.60e-02, methylation:2.42e-02, miRNA:1.59e-02, VCDN:2.99e-01
+Epoch 48, Train loss: mRNA:2.56e-02, methylation:2.35e-02, miRNA:1.54e-02, VCDN:2.98e-01
+Epoch 49, Train loss: mRNA:2.57e-02, methylation:2.34e-02, miRNA:1.52e-02, VCDN:2.97e-01
+Epoch 50, Train loss: mRNA:2.51e-02, methylation:2.28e-02, miRNA:1.53e-02, VCDN:2.96e-01
+Epoch 51, Train loss: mRNA:2.46e-02, methylation:2.28e-02, miRNA:1.50e-02, VCDN:2.95e-01
+Epoch 52, Train loss: mRNA:2.48e-02, methylation:2.29e-02, miRNA:1.51e-02, VCDN:2.93e-01
+Epoch 53, Train loss: mRNA:2.46e-02, methylation:2.20e-02, miRNA:1.49e-02, VCDN:2.92e-01
+Epoch 54, Train loss: mRNA:2.44e-02, methylation:2.23e-02, miRNA:1.46e-02, VCDN:2.90e-01
+Epoch 55, Train loss: mRNA:2.39e-02, methylation:2.17e-02, miRNA:1.47e-02, VCDN:2.89e-01
+Epoch 56, Train loss: mRNA:2.35e-02, methylation:2.19e-02, miRNA:1.43e-02, VCDN:2.87e-01
+Epoch 57, Train loss: mRNA:2.32e-02, methylation:2.14e-02, miRNA:1.42e-02, VCDN:2.86e-01
+Epoch 58, Train loss: mRNA:2.29e-02, methylation:2.13e-02, miRNA:1.41e-02, VCDN:2.84e-01
+Epoch 59, Train loss: mRNA:2.30e-02, methylation:2.14e-02, miRNA:1.40e-02, VCDN:2.83e-01
+Epoch 60, Train loss: mRNA:2.27e-02, methylation:2.14e-02, miRNA:1.42e-02, VCDN:2.81e-01
+Epoch 61, Train loss: mRNA:2.18e-02, methylation:2.08e-02, miRNA:1.36e-02, VCDN:2.79e-01
+Epoch 62, Train loss: mRNA:2.26e-02, methylation:2.04e-02, miRNA:1.37e-02, VCDN:2.77e-01
+Epoch 63, Train loss: mRNA:2.20e-02, methylation:2.05e-02, miRNA:1.35e-02, VCDN:2.77e-01
+Epoch 64, Train loss: mRNA:2.18e-02, methylation:2.02e-02, miRNA:1.34e-02, VCDN:2.75e-01
+Epoch 65, Train loss: mRNA:2.15e-02, methylation:1.99e-02, miRNA:1.33e-02, VCDN:2.72e-01
+Epoch 66, Train loss: mRNA:2.13e-02, methylation:2.01e-02, miRNA:1.32e-02, VCDN:2.71e-01
+Epoch 67, Train loss: mRNA:2.10e-02, methylation:1.99e-02, miRNA:1.31e-02, VCDN:2.69e-01
+Epoch 68, Train loss: mRNA:2.10e-02, methylation:2.02e-02, miRNA:1.31e-02, VCDN:2.67e-01
+Epoch 69, Train loss: mRNA:2.06e-02, methylation:1.95e-02, miRNA:1.31e-02, VCDN:2.65e-01
+Epoch 70, Train loss: mRNA:2.07e-02, methylation:1.95e-02, miRNA:1.29e-02, VCDN:2.63e-01
+Epoch 71, Train loss: mRNA:2.03e-02, methylation:1.90e-02, miRNA:1.28e-02, VCDN:2.62e-01
+Epoch 72, Train loss: mRNA:2.02e-02, methylation:1.91e-02, miRNA:1.29e-02, VCDN:2.60e-01
+Epoch 73, Train loss: mRNA:2.03e-02, methylation:1.92e-02, miRNA:1.26e-02, VCDN:2.57e-01
+Epoch 74, Train loss: mRNA:2.02e-02, methylation:1.83e-02, miRNA:1.25e-02, VCDN:2.55e-01
+Epoch 75, Train loss: mRNA:1.96e-02, methylation:1.85e-02, miRNA:1.25e-02, VCDN:2.53e-01
+Epoch 76, Train loss: mRNA:1.92e-02, methylation:1.84e-02, miRNA:1.23e-02, VCDN:2.51e-01
+Epoch 77, Train loss: mRNA:1.87e-02, methylation:1.82e-02, miRNA:1.22e-02, VCDN:2.49e-01
+Epoch 78, Train loss: mRNA:1.90e-02, methylation:1.85e-02, miRNA:1.20e-02, VCDN:2.47e-01
+Epoch 79, Train loss: mRNA:1.88e-02, methylation:1.80e-02, miRNA:1.21e-02, VCDN:2.45e-01
+Epoch 80, Train loss: mRNA:1.87e-02, methylation:1.77e-02, miRNA:1.18e-02, VCDN:2.43e-01
+
+Test: Epoch 80
+Train Accuracy: 0.9388   Test ACC: 0.6739
+Train F1: 0.9381         Test F1: 0.6761
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8400
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.9000
+LumA 	           0.2000              0.8804              0.4837              0.4494
+LumB 	           0.2000              0.8469              0.1739              0.8438
+
+Epoch 81, Train loss: mRNA:1.80e-02, methylation:1.74e-02, miRNA:1.18e-02, VCDN:2.40e-01
+Epoch 82, Train loss: mRNA:1.81e-02, methylation:1.75e-02, miRNA:1.17e-02, VCDN:2.38e-01
+Epoch 83, Train loss: mRNA:1.84e-02, methylation:1.71e-02, miRNA:1.20e-02, VCDN:2.36e-01
+Epoch 84, Train loss: mRNA:1.82e-02, methylation:1.69e-02, miRNA:1.15e-02, VCDN:2.34e-01
+Epoch 85, Train loss: mRNA:1.79e-02, methylation:1.74e-02, miRNA:1.15e-02, VCDN:2.31e-01
+Epoch 86, Train loss: mRNA:1.76e-02, methylation:1.68e-02, miRNA:1.14e-02, VCDN:2.29e-01
+Epoch 87, Train loss: mRNA:1.74e-02, methylation:1.69e-02, miRNA:1.15e-02, VCDN:2.27e-01
+Epoch 88, Train loss: mRNA:1.73e-02, methylation:1.64e-02, miRNA:1.13e-02, VCDN:2.24e-01
+Epoch 89, Train loss: mRNA:1.74e-02, methylation:1.68e-02, miRNA:1.13e-02, VCDN:2.23e-01
+Epoch 90, Train loss: mRNA:1.73e-02, methylation:1.64e-02, miRNA:1.11e-02, VCDN:2.20e-01
+Epoch 91, Train loss: mRNA:1.71e-02, methylation:1.66e-02, miRNA:1.11e-02, VCDN:2.17e-01
+Epoch 92, Train loss: mRNA:1.72e-02, methylation:1.60e-02, miRNA:1.10e-02, VCDN:2.15e-01
+Epoch 93, Train loss: mRNA:1.73e-02, methylation:1.60e-02, miRNA:1.11e-02, VCDN:2.12e-01
+Epoch 94, Train loss: mRNA:1.75e-02, methylation:1.60e-02, miRNA:1.08e-02, VCDN:2.11e-01
+Epoch 95, Train loss: mRNA:1.79e-02, methylation:1.55e-02, miRNA:1.09e-02, VCDN:2.07e-01
+Epoch 96, Train loss: mRNA:1.72e-02, methylation:1.59e-02, miRNA:1.07e-02, VCDN:2.04e-01
+Epoch 97, Train loss: mRNA:1.63e-02, methylation:1.59e-02, miRNA:1.08e-02, VCDN:2.02e-01
+Epoch 98, Train loss: mRNA:1.72e-02, methylation:1.58e-02, miRNA:1.06e-02, VCDN:2.00e-01
+Epoch 99, Train loss: mRNA:1.74e-02, methylation:1.56e-02, miRNA:1.06e-02, VCDN:1.97e-01
+Epoch 100, Train loss: mRNA:1.64e-02, methylation:1.53e-02, miRNA:1.06e-02, VCDN:1.96e-01
+Epoch 101, Train loss: mRNA:1.61e-02, methylation:1.52e-02, miRNA:1.04e-02, VCDN:1.93e-01
+Epoch 102, Train loss: mRNA:1.66e-02, methylation:1.52e-02, miRNA:1.05e-02, VCDN:1.90e-01
+Epoch 103, Train loss: mRNA:1.60e-02, methylation:1.55e-02, miRNA:1.03e-02, VCDN:1.88e-01
+Epoch 104, Train loss: mRNA:1.59e-02, methylation:1.53e-02, miRNA:1.03e-02, VCDN:1.86e-01
+Epoch 105, Train loss: mRNA:1.63e-02, methylation:1.50e-02, miRNA:1.02e-02, VCDN:1.84e-01
+Epoch 106, Train loss: mRNA:1.57e-02, methylation:1.46e-02, miRNA:1.01e-02, VCDN:1.82e-01
+Epoch 107, Train loss: mRNA:1.58e-02, methylation:1.48e-02, miRNA:1.02e-02, VCDN:1.78e-01
+Epoch 108, Train loss: mRNA:1.65e-02, methylation:1.48e-02, miRNA:1.01e-02, VCDN:1.76e-01
+Epoch 109, Train loss: mRNA:1.58e-02, methylation:1.45e-02, miRNA:1.02e-02, VCDN:1.73e-01
+Epoch 110, Train loss: mRNA:1.55e-02, methylation:1.47e-02, miRNA:9.98e-03, VCDN:1.71e-01
+Epoch 111, Train loss: mRNA:1.61e-02, methylation:1.46e-02, miRNA:9.86e-03, VCDN:1.69e-01
+Epoch 112, Train loss: mRNA:1.54e-02, methylation:1.43e-02, miRNA:9.98e-03, VCDN:1.66e-01
+Epoch 113, Train loss: mRNA:1.54e-02, methylation:1.44e-02, miRNA:9.75e-03, VCDN:1.64e-01
+Epoch 114, Train loss: mRNA:1.51e-02, methylation:1.41e-02, miRNA:9.70e-03, VCDN:1.61e-01
+Epoch 115, Train loss: mRNA:1.48e-02, methylation:1.37e-02, miRNA:9.77e-03, VCDN:1.60e-01
+Epoch 116, Train loss: mRNA:1.52e-02, methylation:1.43e-02, miRNA:9.52e-03, VCDN:1.57e-01
+Epoch 117, Train loss: mRNA:1.50e-02, methylation:1.38e-02, miRNA:9.74e-03, VCDN:1.54e-01
+Epoch 118, Train loss: mRNA:1.43e-02, methylation:1.40e-02, miRNA:9.47e-03, VCDN:1.51e-01
+Epoch 119, Train loss: mRNA:1.48e-02, methylation:1.43e-02, miRNA:9.62e-03, VCDN:1.49e-01
+Epoch 120, Train loss: mRNA:1.48e-02, methylation:1.43e-02, miRNA:9.60e-03, VCDN:1.49e-01
+
+Test: Epoch 120
+Train Accuracy: 0.9512   Test ACC: 0.7337
+Train F1: 0.9509         Test F1: 0.7446
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.8000
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.9000
+LumA 	           0.2000              0.8900              0.4837              0.5955
+LumB 	           0.2000              0.9139              0.1739              0.8125
+
+Epoch 121, Train loss: mRNA:1.42e-02, methylation:1.41e-02, miRNA:9.37e-03, VCDN:1.46e-01
+Epoch 122, Train loss: mRNA:1.45e-02, methylation:1.48e-02, miRNA:9.30e-03, VCDN:1.45e-01
+Epoch 123, Train loss: mRNA:1.41e-02, methylation:1.45e-02, miRNA:9.39e-03, VCDN:1.41e-01
+Epoch 124, Train loss: mRNA:1.36e-02, methylation:1.38e-02, miRNA:9.30e-03, VCDN:1.41e-01
+Epoch 125, Train loss: mRNA:1.43e-02, methylation:1.33e-02, miRNA:9.07e-03, VCDN:1.38e-01
+Epoch 126, Train loss: mRNA:1.36e-02, methylation:1.35e-02, miRNA:9.26e-03, VCDN:1.34e-01
+Epoch 127, Train loss: mRNA:1.39e-02, methylation:1.36e-02, miRNA:9.10e-03, VCDN:1.33e-01
+Epoch 128, Train loss: mRNA:1.35e-02, methylation:1.36e-02, miRNA:8.88e-03, VCDN:1.30e-01
+Epoch 129, Train loss: mRNA:1.37e-02, methylation:1.35e-02, miRNA:9.06e-03, VCDN:1.30e-01
+Epoch 130, Train loss: mRNA:1.34e-02, methylation:1.30e-02, miRNA:9.01e-03, VCDN:1.27e-01
+Epoch 131, Train loss: mRNA:1.38e-02, methylation:1.30e-02, miRNA:8.73e-03, VCDN:1.25e-01
+Epoch 132, Train loss: mRNA:1.37e-02, methylation:1.35e-02, miRNA:8.96e-03, VCDN:1.23e-01
+Epoch 133, Train loss: mRNA:1.34e-02, methylation:1.35e-02, miRNA:8.95e-03, VCDN:1.23e-01
+Epoch 134, Train loss: mRNA:1.32e-02, methylation:1.34e-02, miRNA:8.93e-03, VCDN:1.20e-01
+Epoch 135, Train loss: mRNA:1.29e-02, methylation:1.32e-02, miRNA:8.70e-03, VCDN:1.18e-01
+Epoch 136, Train loss: mRNA:1.32e-02, methylation:1.28e-02, miRNA:8.74e-03, VCDN:1.17e-01
+Epoch 137, Train loss: mRNA:1.31e-02, methylation:1.28e-02, miRNA:8.56e-03, VCDN:1.16e-01
+Epoch 138, Train loss: mRNA:1.32e-02, methylation:1.30e-02, miRNA:8.70e-03, VCDN:1.14e-01
+Epoch 139, Train loss: mRNA:1.36e-02, methylation:1.28e-02, miRNA:8.64e-03, VCDN:1.12e-01
+Epoch 140, Train loss: mRNA:1.38e-02, methylation:1.27e-02, miRNA:8.71e-03, VCDN:1.11e-01
+Epoch 141, Train loss: mRNA:1.33e-02, methylation:1.25e-02, miRNA:8.55e-03, VCDN:1.10e-01
+Epoch 142, Train loss: mRNA:1.32e-02, methylation:1.33e-02, miRNA:8.52e-03, VCDN:1.08e-01
+Epoch 143, Train loss: mRNA:1.29e-02, methylation:1.29e-02, miRNA:8.38e-03, VCDN:1.06e-01
+Epoch 144, Train loss: mRNA:1.23e-02, methylation:1.24e-02, miRNA:8.50e-03, VCDN:1.06e-01
+Epoch 145, Train loss: mRNA:1.25e-02, methylation:1.23e-02, miRNA:8.30e-03, VCDN:1.03e-01
+Epoch 146, Train loss: mRNA:1.28e-02, methylation:1.24e-02, miRNA:8.43e-03, VCDN:1.02e-01
+Epoch 147, Train loss: mRNA:1.29e-02, methylation:1.26e-02, miRNA:8.32e-03, VCDN:1.00e-01
+Epoch 148, Train loss: mRNA:1.24e-02, methylation:1.25e-02, miRNA:8.23e-03, VCDN:9.89e-02
+Epoch 149, Train loss: mRNA:1.21e-02, methylation:1.26e-02, miRNA:8.40e-03, VCDN:9.81e-02
+Epoch 150, Train loss: mRNA:1.24e-02, methylation:1.32e-02, miRNA:8.33e-03, VCDN:9.58e-02
+Epoch 151, Train loss: mRNA:1.28e-02, methylation:1.26e-02, miRNA:8.20e-03, VCDN:9.66e-02
+Epoch 152, Train loss: mRNA:1.31e-02, methylation:1.28e-02, miRNA:8.13e-03, VCDN:9.36e-02
+Epoch 153, Train loss: mRNA:1.35e-02, methylation:1.22e-02, miRNA:8.03e-03, VCDN:9.30e-02
+Epoch 154, Train loss: mRNA:1.23e-02, methylation:1.24e-02, miRNA:8.19e-03, VCDN:9.18e-02
+Epoch 155, Train loss: mRNA:1.21e-02, methylation:1.24e-02, miRNA:7.97e-03, VCDN:9.13e-02
+Epoch 156, Train loss: mRNA:1.28e-02, methylation:1.25e-02, miRNA:7.95e-03, VCDN:9.00e-02
+Epoch 157, Train loss: mRNA:1.24e-02, methylation:1.20e-02, miRNA:7.96e-03, VCDN:8.85e-02
+Epoch 158, Train loss: mRNA:1.20e-02, methylation:1.17e-02, miRNA:8.08e-03, VCDN:8.73e-02
+Epoch 159, Train loss: mRNA:1.17e-02, methylation:1.23e-02, miRNA:7.98e-03, VCDN:8.66e-02
+Epoch 160, Train loss: mRNA:1.18e-02, methylation:1.20e-02, miRNA:7.94e-03, VCDN:8.43e-02
+
+Test: Epoch 160
+Train Accuracy: 0.9694   Test ACC: 0.7880
+Train F1: 0.9693         Test F1: 0.7962
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9569              0.1359              0.8000
+Basal 	           0.2000              0.9952              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9378              0.4837              0.6854
+LumB 	           0.2000              0.9569              0.1739              0.9062
+
+Epoch 161, Train loss: mRNA:1.21e-02, methylation:1.14e-02, miRNA:7.82e-03, VCDN:8.33e-02
+Epoch 162, Train loss: mRNA:1.23e-02, methylation:1.18e-02, miRNA:7.93e-03, VCDN:8.27e-02
+Epoch 163, Train loss: mRNA:1.10e-02, methylation:1.18e-02, miRNA:7.77e-03, VCDN:8.12e-02
+Epoch 164, Train loss: mRNA:1.12e-02, methylation:1.17e-02, miRNA:7.76e-03, VCDN:8.11e-02
+Epoch 165, Train loss: mRNA:1.18e-02, methylation:1.14e-02, miRNA:7.75e-03, VCDN:7.88e-02
+Epoch 166, Train loss: mRNA:1.19e-02, methylation:1.14e-02, miRNA:7.73e-03, VCDN:7.83e-02
+Epoch 167, Train loss: mRNA:1.13e-02, methylation:1.13e-02, miRNA:7.64e-03, VCDN:7.74e-02
+Epoch 168, Train loss: mRNA:1.11e-02, methylation:1.14e-02, miRNA:7.68e-03, VCDN:7.53e-02
+Epoch 169, Train loss: mRNA:1.10e-02, methylation:1.15e-02, miRNA:7.43e-03, VCDN:7.53e-02
+Epoch 170, Train loss: mRNA:1.11e-02, methylation:1.14e-02, miRNA:7.67e-03, VCDN:7.33e-02
+Epoch 171, Train loss: mRNA:1.14e-02, methylation:1.15e-02, miRNA:7.66e-03, VCDN:7.25e-02
+Epoch 172, Train loss: mRNA:1.11e-02, methylation:1.14e-02, miRNA:7.48e-03, VCDN:7.24e-02
+Epoch 173, Train loss: mRNA:1.10e-02, methylation:1.15e-02, miRNA:7.57e-03, VCDN:7.08e-02
+Epoch 174, Train loss: mRNA:1.07e-02, methylation:1.14e-02, miRNA:7.51e-03, VCDN:6.93e-02
+Epoch 175, Train loss: mRNA:1.08e-02, methylation:1.14e-02, miRNA:7.43e-03, VCDN:7.07e-02
+Epoch 176, Train loss: mRNA:1.05e-02, methylation:1.14e-02, miRNA:7.58e-03, VCDN:6.93e-02
+Epoch 177, Train loss: mRNA:1.08e-02, methylation:1.13e-02, miRNA:7.43e-03, VCDN:6.77e-02
+Epoch 178, Train loss: mRNA:1.09e-02, methylation:1.11e-02, miRNA:7.45e-03, VCDN:6.64e-02
+Epoch 179, Train loss: mRNA:1.03e-02, methylation:1.11e-02, miRNA:7.45e-03, VCDN:6.60e-02
+Epoch 180, Train loss: mRNA:1.06e-02, methylation:1.13e-02, miRNA:7.41e-03, VCDN:6.59e-02
+Epoch 181, Train loss: mRNA:1.06e-02, methylation:1.10e-02, miRNA:7.33e-03, VCDN:6.47e-02
+Epoch 182, Train loss: mRNA:1.07e-02, methylation:1.08e-02, miRNA:7.33e-03, VCDN:6.36e-02
+Epoch 183, Train loss: mRNA:1.05e-02, methylation:1.06e-02, miRNA:7.31e-03, VCDN:6.37e-02
+Epoch 184, Train loss: mRNA:1.07e-02, methylation:1.07e-02, miRNA:7.29e-03, VCDN:6.29e-02
+Epoch 185, Train loss: mRNA:1.15e-02, methylation:1.08e-02, miRNA:7.21e-03, VCDN:6.32e-02
+Epoch 186, Train loss: mRNA:1.23e-02, methylation:1.10e-02, miRNA:7.25e-03, VCDN:6.33e-02
+Epoch 187, Train loss: mRNA:1.38e-02, methylation:1.13e-02, miRNA:7.19e-03, VCDN:6.32e-02
+Epoch 188, Train loss: mRNA:1.21e-02, methylation:1.20e-02, miRNA:7.10e-03, VCDN:6.08e-02
+Epoch 189, Train loss: mRNA:1.02e-02, methylation:1.29e-02, miRNA:7.03e-03, VCDN:6.28e-02
+Epoch 190, Train loss: mRNA:1.12e-02, methylation:1.27e-02, miRNA:7.08e-03, VCDN:6.17e-02
+Epoch 191, Train loss: mRNA:1.14e-02, methylation:1.13e-02, miRNA:7.06e-03, VCDN:6.02e-02
+Epoch 192, Train loss: mRNA:1.06e-02, methylation:1.10e-02, miRNA:7.06e-03, VCDN:5.87e-02
+Epoch 193, Train loss: mRNA:1.07e-02, methylation:1.16e-02, miRNA:7.15e-03, VCDN:5.74e-02
+Epoch 194, Train loss: mRNA:1.06e-02, methylation:1.11e-02, miRNA:6.95e-03, VCDN:5.65e-02
+Epoch 195, Train loss: mRNA:1.06e-02, methylation:1.08e-02, miRNA:7.03e-03, VCDN:5.66e-02
+Epoch 196, Train loss: mRNA:9.93e-03, methylation:1.16e-02, miRNA:6.99e-03, VCDN:5.54e-02
+Epoch 197, Train loss: mRNA:1.03e-02, methylation:1.10e-02, miRNA:6.94e-03, VCDN:5.51e-02
+Epoch 198, Train loss: mRNA:1.03e-02, methylation:1.04e-02, miRNA:6.95e-03, VCDN:5.43e-02
+Epoch 199, Train loss: mRNA:1.03e-02, methylation:1.07e-02, miRNA:6.86e-03, VCDN:5.40e-02
+Epoch 200, Train loss: mRNA:1.00e-02, methylation:1.08e-02, miRNA:6.85e-03, VCDN:5.29e-02
+
+Test: Epoch 200
+Train Accuracy: 0.9751   Test ACC: 0.8207
+Train F1: 0.9751         Test F1: 0.8293
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9665              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9522              0.4837              0.7865
+LumB 	           0.2000              0.9665              0.1739              0.8750
+
+Epoch 201, Train loss: mRNA:9.71e-03, methylation:1.02e-02, miRNA:6.87e-03, VCDN:5.21e-02
+Epoch 202, Train loss: mRNA:9.59e-03, methylation:1.02e-02, miRNA:6.93e-03, VCDN:5.21e-02
+Epoch 203, Train loss: mRNA:9.89e-03, methylation:1.05e-02, miRNA:6.71e-03, VCDN:5.17e-02
+Epoch 204, Train loss: mRNA:9.50e-03, methylation:1.03e-02, miRNA:6.83e-03, VCDN:5.08e-02
+Epoch 205, Train loss: mRNA:9.60e-03, methylation:1.03e-02, miRNA:6.88e-03, VCDN:4.95e-02
+Epoch 206, Train loss: mRNA:9.85e-03, methylation:1.02e-02, miRNA:6.83e-03, VCDN:4.97e-02
+Epoch 207, Train loss: mRNA:9.49e-03, methylation:1.03e-02, miRNA:6.87e-03, VCDN:4.80e-02
+Epoch 208, Train loss: mRNA:9.79e-03, methylation:1.00e-02, miRNA:6.76e-03, VCDN:4.87e-02
+Epoch 209, Train loss: mRNA:1.02e-02, methylation:1.00e-02, miRNA:6.66e-03, VCDN:4.80e-02
+Epoch 210, Train loss: mRNA:1.03e-02, methylation:1.04e-02, miRNA:6.55e-03, VCDN:4.81e-02
+Epoch 211, Train loss: mRNA:1.09e-02, methylation:1.06e-02, miRNA:6.69e-03, VCDN:4.75e-02
+Epoch 212, Train loss: mRNA:1.09e-02, methylation:1.07e-02, miRNA:6.75e-03, VCDN:4.86e-02
+Epoch 213, Train loss: mRNA:1.01e-02, methylation:1.06e-02, miRNA:6.64e-03, VCDN:4.78e-02
+Epoch 214, Train loss: mRNA:9.30e-03, methylation:1.07e-02, miRNA:6.60e-03, VCDN:4.68e-02
+Epoch 215, Train loss: mRNA:9.36e-03, methylation:1.06e-02, miRNA:6.63e-03, VCDN:4.70e-02
+Epoch 216, Train loss: mRNA:1.02e-02, methylation:1.05e-02, miRNA:6.51e-03, VCDN:4.58e-02
+Epoch 217, Train loss: mRNA:9.89e-03, methylation:9.98e-03, miRNA:6.54e-03, VCDN:4.49e-02
+Epoch 218, Train loss: mRNA:9.36e-03, methylation:1.05e-02, miRNA:6.61e-03, VCDN:4.50e-02
+Epoch 219, Train loss: mRNA:9.24e-03, methylation:1.06e-02, miRNA:6.51e-03, VCDN:4.47e-02
+Epoch 220, Train loss: mRNA:9.81e-03, methylation:1.02e-02, miRNA:6.53e-03, VCDN:4.40e-02
+Epoch 221, Train loss: mRNA:9.76e-03, methylation:9.96e-03, miRNA:6.61e-03, VCDN:4.42e-02
+Epoch 222, Train loss: mRNA:9.29e-03, methylation:1.00e-02, miRNA:6.49e-03, VCDN:4.32e-02
+Epoch 223, Train loss: mRNA:9.09e-03, methylation:9.73e-03, miRNA:6.53e-03, VCDN:4.30e-02
+Epoch 224, Train loss: mRNA:8.98e-03, methylation:1.01e-02, miRNA:6.37e-03, VCDN:4.17e-02
+Epoch 225, Train loss: mRNA:9.02e-03, methylation:9.65e-03, miRNA:6.57e-03, VCDN:4.14e-02
+Epoch 226, Train loss: mRNA:9.33e-03, methylation:9.86e-03, miRNA:6.31e-03, VCDN:4.19e-02
+Epoch 227, Train loss: mRNA:9.37e-03, methylation:9.96e-03, miRNA:6.44e-03, VCDN:4.05e-02
+Epoch 228, Train loss: mRNA:9.11e-03, methylation:9.64e-03, miRNA:6.29e-03, VCDN:4.10e-02
+Epoch 229, Train loss: mRNA:8.87e-03, methylation:9.78e-03, miRNA:6.35e-03, VCDN:4.08e-02
+Epoch 230, Train loss: mRNA:8.93e-03, methylation:9.71e-03, miRNA:6.44e-03, VCDN:4.00e-02
+Epoch 231, Train loss: mRNA:9.37e-03, methylation:9.59e-03, miRNA:6.36e-03, VCDN:4.04e-02
+Epoch 232, Train loss: mRNA:9.51e-03, methylation:9.67e-03, miRNA:6.47e-03, VCDN:3.90e-02
+Epoch 233, Train loss: mRNA:9.41e-03, methylation:9.77e-03, miRNA:6.21e-03, VCDN:3.90e-02
+Epoch 234, Train loss: mRNA:8.95e-03, methylation:1.01e-02, miRNA:6.34e-03, VCDN:3.88e-02
+Epoch 235, Train loss: mRNA:8.72e-03, methylation:9.77e-03, miRNA:6.28e-03, VCDN:3.85e-02
+Epoch 236, Train loss: mRNA:8.48e-03, methylation:9.59e-03, miRNA:6.33e-03, VCDN:3.80e-02
+Epoch 237, Train loss: mRNA:8.95e-03, methylation:9.68e-03, miRNA:6.21e-03, VCDN:3.77e-02
+Epoch 238, Train loss: mRNA:8.89e-03, methylation:9.14e-03, miRNA:6.18e-03, VCDN:3.74e-02
+Epoch 239, Train loss: mRNA:8.83e-03, methylation:9.40e-03, miRNA:6.22e-03, VCDN:3.72e-02
+Epoch 240, Train loss: mRNA:8.76e-03, methylation:9.17e-03, miRNA:6.23e-03, VCDN:3.73e-02
+
+Test: Epoch 240
+Train Accuracy: 0.9809   Test ACC: 0.8315
+Train F1: 0.9808         Test F1: 0.8385
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9713              0.4837              0.8202
+LumB 	           0.2000              0.9809              0.1739              0.8438
+
+Epoch 241, Train loss: mRNA:8.67e-03, methylation:9.37e-03, miRNA:6.16e-03, VCDN:3.64e-02
+Epoch 242, Train loss: mRNA:8.65e-03, methylation:9.45e-03, miRNA:6.14e-03, VCDN:3.64e-02
+Epoch 243, Train loss: mRNA:9.02e-03, methylation:9.63e-03, miRNA:6.21e-03, VCDN:3.64e-02
+Epoch 244, Train loss: mRNA:9.31e-03, methylation:9.55e-03, miRNA:6.11e-03, VCDN:3.56e-02
+Epoch 245, Train loss: mRNA:9.92e-03, methylation:9.62e-03, miRNA:6.19e-03, VCDN:3.64e-02
+Epoch 246, Train loss: mRNA:1.02e-02, methylation:9.35e-03, miRNA:6.17e-03, VCDN:3.64e-02
+Epoch 247, Train loss: mRNA:9.92e-03, methylation:9.25e-03, miRNA:6.31e-03, VCDN:3.49e-02
+Epoch 248, Train loss: mRNA:8.71e-03, methylation:9.05e-03, miRNA:6.27e-03, VCDN:3.45e-02
+Epoch 249, Train loss: mRNA:8.93e-03, methylation:9.10e-03, miRNA:6.10e-03, VCDN:3.46e-02
+Epoch 250, Train loss: mRNA:9.16e-03, methylation:9.33e-03, miRNA:6.09e-03, VCDN:3.41e-02
+Epoch 251, Train loss: mRNA:9.23e-03, methylation:9.01e-03, miRNA:6.08e-03, VCDN:3.43e-02
+Epoch 252, Train loss: mRNA:8.84e-03, methylation:8.94e-03, miRNA:5.99e-03, VCDN:3.37e-02
+Epoch 253, Train loss: mRNA:8.64e-03, methylation:8.75e-03, miRNA:6.25e-03, VCDN:3.36e-02
+Epoch 254, Train loss: mRNA:9.10e-03, methylation:8.81e-03, miRNA:6.19e-03, VCDN:3.30e-02
+Epoch 255, Train loss: mRNA:9.16e-03, methylation:8.80e-03, miRNA:6.03e-03, VCDN:3.24e-02
+Epoch 256, Train loss: mRNA:8.56e-03, methylation:9.20e-03, miRNA:6.08e-03, VCDN:3.34e-02
+Epoch 257, Train loss: mRNA:8.53e-03, methylation:9.46e-03, miRNA:6.09e-03, VCDN:3.27e-02
+Epoch 258, Train loss: mRNA:8.18e-03, methylation:9.78e-03, miRNA:6.09e-03, VCDN:3.35e-02
+Epoch 259, Train loss: mRNA:8.60e-03, methylation:1.07e-02, miRNA:6.01e-03, VCDN:3.29e-02
+Epoch 260, Train loss: mRNA:8.71e-03, methylation:1.14e-02, miRNA:6.13e-03, VCDN:3.29e-02
+Epoch 261, Train loss: mRNA:8.47e-03, methylation:1.06e-02, miRNA:5.99e-03, VCDN:3.32e-02
+Epoch 262, Train loss: mRNA:8.21e-03, methylation:9.01e-03, miRNA:5.90e-03, VCDN:3.28e-02
+Epoch 263, Train loss: mRNA:8.28e-03, methylation:9.31e-03, miRNA:5.93e-03, VCDN:3.26e-02
+Epoch 264, Train loss: mRNA:9.26e-03, methylation:9.79e-03, miRNA:6.05e-03, VCDN:3.17e-02
+Epoch 265, Train loss: mRNA:9.39e-03, methylation:9.09e-03, miRNA:5.89e-03, VCDN:3.24e-02
+Epoch 266, Train loss: mRNA:9.98e-03, methylation:8.98e-03, miRNA:5.91e-03, VCDN:3.08e-02
+Epoch 267, Train loss: mRNA:8.63e-03, methylation:9.57e-03, miRNA:6.09e-03, VCDN:3.10e-02
+Epoch 268, Train loss: mRNA:8.17e-03, methylation:8.86e-03, miRNA:6.09e-03, VCDN:3.05e-02
+Epoch 269, Train loss: mRNA:8.53e-03, methylation:8.64e-03, miRNA:5.98e-03, VCDN:3.03e-02
+Epoch 270, Train loss: mRNA:8.81e-03, methylation:8.77e-03, miRNA:5.78e-03, VCDN:2.99e-02
+Epoch 271, Train loss: mRNA:8.26e-03, methylation:9.40e-03, miRNA:5.86e-03, VCDN:3.02e-02
+Epoch 272, Train loss: mRNA:8.02e-03, methylation:8.85e-03, miRNA:5.86e-03, VCDN:3.00e-02
+Epoch 273, Train loss: mRNA:8.58e-03, methylation:8.52e-03, miRNA:5.97e-03, VCDN:3.07e-02
+Epoch 274, Train loss: mRNA:8.99e-03, methylation:8.82e-03, miRNA:5.83e-03, VCDN:2.95e-02
+Epoch 275, Train loss: mRNA:7.90e-03, methylation:9.24e-03, miRNA:5.91e-03, VCDN:2.99e-02
+Epoch 276, Train loss: mRNA:8.26e-03, methylation:8.94e-03, miRNA:5.81e-03, VCDN:3.03e-02
+Epoch 277, Train loss: mRNA:8.39e-03, methylation:8.39e-03, miRNA:5.78e-03, VCDN:2.92e-02
+Epoch 278, Train loss: mRNA:8.46e-03, methylation:8.84e-03, miRNA:5.71e-03, VCDN:2.88e-02
+Epoch 279, Train loss: mRNA:8.21e-03, methylation:9.18e-03, miRNA:5.70e-03, VCDN:2.83e-02
+Epoch 280, Train loss: mRNA:7.90e-03, methylation:8.68e-03, miRNA:5.85e-03, VCDN:2.86e-02
+
+Test: Epoch 280
+Train Accuracy: 0.9828   Test ACC: 0.8261
+Train F1: 0.9828         Test F1: 0.8315
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9713              0.4837              0.8427
+LumB 	           0.2000              0.9761              0.1739              0.8125
+
+Epoch 281, Train loss: mRNA:8.18e-03, methylation:8.23e-03, miRNA:5.77e-03, VCDN:2.84e-02
+Epoch 282, Train loss: mRNA:8.70e-03, methylation:8.37e-03, miRNA:5.80e-03, VCDN:2.78e-02
+Epoch 283, Train loss: mRNA:7.65e-03, methylation:8.62e-03, miRNA:5.84e-03, VCDN:2.83e-02
+Epoch 284, Train loss: mRNA:8.51e-03, methylation:8.35e-03, miRNA:5.80e-03, VCDN:2.83e-02
+Epoch 285, Train loss: mRNA:8.63e-03, methylation:8.25e-03, miRNA:5.64e-03, VCDN:2.79e-02
+Epoch 286, Train loss: mRNA:8.11e-03, methylation:8.40e-03, miRNA:5.84e-03, VCDN:2.90e-02
+Epoch 287, Train loss: mRNA:8.79e-03, methylation:8.58e-03, miRNA:5.85e-03, VCDN:2.90e-02
+Epoch 288, Train loss: mRNA:8.92e-03, methylation:8.85e-03, miRNA:5.86e-03, VCDN:2.75e-02
+Epoch 289, Train loss: mRNA:9.80e-03, methylation:8.68e-03, miRNA:5.73e-03, VCDN:2.86e-02
+Epoch 290, Train loss: mRNA:1.04e-02, methylation:8.85e-03, miRNA:5.80e-03, VCDN:2.72e-02
+Epoch 291, Train loss: mRNA:1.00e-02, methylation:8.99e-03, miRNA:5.67e-03, VCDN:2.84e-02
+Epoch 292, Train loss: mRNA:1.01e-02, methylation:8.92e-03, miRNA:5.66e-03, VCDN:2.72e-02
+Epoch 293, Train loss: mRNA:8.51e-03, methylation:8.36e-03, miRNA:5.71e-03, VCDN:2.70e-02
+Epoch 294, Train loss: mRNA:9.18e-03, methylation:7.84e-03, miRNA:5.62e-03, VCDN:2.71e-02
+Epoch 295, Train loss: mRNA:9.46e-03, methylation:8.16e-03, miRNA:5.66e-03, VCDN:2.66e-02
+Epoch 296, Train loss: mRNA:8.20e-03, methylation:8.39e-03, miRNA:5.80e-03, VCDN:2.58e-02
+Epoch 297, Train loss: mRNA:9.15e-03, methylation:8.52e-03, miRNA:5.54e-03, VCDN:2.61e-02
+Epoch 298, Train loss: mRNA:9.06e-03, methylation:8.22e-03, miRNA:5.70e-03, VCDN:2.60e-02
+Epoch 299, Train loss: mRNA:8.77e-03, methylation:8.12e-03, miRNA:5.61e-03, VCDN:2.61e-02
+Epoch 300, Train loss: mRNA:7.98e-03, methylation:8.30e-03, miRNA:5.68e-03, VCDN:2.57e-02
+Epoch 301, Train loss: mRNA:8.25e-03, methylation:8.33e-03, miRNA:5.67e-03, VCDN:2.54e-02
+Epoch 302, Train loss: mRNA:8.16e-03, methylation:8.37e-03, miRNA:5.73e-03, VCDN:2.51e-02
+Epoch 303, Train loss: mRNA:7.50e-03, methylation:7.76e-03, miRNA:5.68e-03, VCDN:2.55e-02
+Epoch 304, Train loss: mRNA:8.17e-03, methylation:7.93e-03, miRNA:5.60e-03, VCDN:2.44e-02
+Epoch 305, Train loss: mRNA:7.91e-03, methylation:7.84e-03, miRNA:5.57e-03, VCDN:2.60e-02
+Epoch 306, Train loss: mRNA:8.05e-03, methylation:8.38e-03, miRNA:5.64e-03, VCDN:2.60e-02
+Epoch 307, Train loss: mRNA:7.77e-03, methylation:8.65e-03, miRNA:5.57e-03, VCDN:2.46e-02
+Epoch 308, Train loss: mRNA:7.66e-03, methylation:8.92e-03, miRNA:5.56e-03, VCDN:2.43e-02
+Epoch 309, Train loss: mRNA:7.87e-03, methylation:8.79e-03, miRNA:5.63e-03, VCDN:2.38e-02
+Epoch 310, Train loss: mRNA:7.56e-03, methylation:8.27e-03, miRNA:5.57e-03, VCDN:2.42e-02
+Epoch 311, Train loss: mRNA:7.72e-03, methylation:7.98e-03, miRNA:5.61e-03, VCDN:2.41e-02
+Epoch 312, Train loss: mRNA:7.70e-03, methylation:7.94e-03, miRNA:5.61e-03, VCDN:2.42e-02
+Epoch 313, Train loss: mRNA:8.02e-03, methylation:8.12e-03, miRNA:5.46e-03, VCDN:2.37e-02
+Epoch 314, Train loss: mRNA:8.82e-03, methylation:7.99e-03, miRNA:5.70e-03, VCDN:2.41e-02
+Epoch 315, Train loss: mRNA:8.05e-03, methylation:7.80e-03, miRNA:5.46e-03, VCDN:2.40e-02
+Epoch 316, Train loss: mRNA:7.52e-03, methylation:7.72e-03, miRNA:5.55e-03, VCDN:2.37e-02
+Epoch 317, Train loss: mRNA:7.34e-03, methylation:7.67e-03, miRNA:5.55e-03, VCDN:2.39e-02
+Epoch 318, Train loss: mRNA:7.80e-03, methylation:7.52e-03, miRNA:5.54e-03, VCDN:2.34e-02
+Epoch 319, Train loss: mRNA:7.76e-03, methylation:7.62e-03, miRNA:5.47e-03, VCDN:2.27e-02
+Epoch 320, Train loss: mRNA:7.38e-03, methylation:7.42e-03, miRNA:5.51e-03, VCDN:2.32e-02
+
+Test: Epoch 320
+Train Accuracy: 0.9799   Test ACC: 0.8533
+Train F1: 0.9799         Test F1: 0.8553
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9665              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.7000
+LumA 	           0.2000              0.9761              0.4837              0.8989
+LumB 	           0.2000              0.9665              0.1739              0.7812
+
+Epoch 321, Train loss: mRNA:7.55e-03, methylation:7.56e-03, miRNA:5.65e-03, VCDN:2.27e-02
+Epoch 322, Train loss: mRNA:7.83e-03, methylation:7.49e-03, miRNA:5.41e-03, VCDN:2.29e-02
+Epoch 323, Train loss: mRNA:7.53e-03, methylation:7.50e-03, miRNA:5.47e-03, VCDN:2.29e-02
+Epoch 324, Train loss: mRNA:7.15e-03, methylation:7.32e-03, miRNA:5.50e-03, VCDN:2.22e-02
+Epoch 325, Train loss: mRNA:7.09e-03, methylation:7.27e-03, miRNA:5.39e-03, VCDN:2.21e-02
+Epoch 326, Train loss: mRNA:7.63e-03, methylation:7.45e-03, miRNA:5.65e-03, VCDN:2.21e-02
+Epoch 327, Train loss: mRNA:7.47e-03, methylation:7.58e-03, miRNA:5.55e-03, VCDN:2.28e-02
+Epoch 328, Train loss: mRNA:7.36e-03, methylation:7.94e-03, miRNA:5.37e-03, VCDN:2.26e-02
+Epoch 329, Train loss: mRNA:7.01e-03, methylation:8.71e-03, miRNA:5.44e-03, VCDN:2.41e-02
+Epoch 330, Train loss: mRNA:7.40e-03, methylation:1.13e-02, miRNA:5.40e-03, VCDN:2.40e-02
+Epoch 331, Train loss: mRNA:7.40e-03, methylation:9.40e-03, miRNA:5.50e-03, VCDN:2.26e-02
+Epoch 332, Train loss: mRNA:7.73e-03, methylation:8.39e-03, miRNA:5.57e-03, VCDN:2.34e-02
+Epoch 333, Train loss: mRNA:7.50e-03, methylation:8.95e-03, miRNA:5.46e-03, VCDN:2.33e-02
+Epoch 334, Train loss: mRNA:7.42e-03, methylation:8.69e-03, miRNA:5.41e-03, VCDN:2.25e-02
+Epoch 335, Train loss: mRNA:7.35e-03, methylation:7.66e-03, miRNA:5.41e-03, VCDN:2.25e-02
+Epoch 336, Train loss: mRNA:7.52e-03, methylation:7.53e-03, miRNA:5.31e-03, VCDN:2.24e-02
+Epoch 337, Train loss: mRNA:7.93e-03, methylation:7.47e-03, miRNA:5.39e-03, VCDN:2.24e-02
+Epoch 338, Train loss: mRNA:7.31e-03, methylation:7.67e-03, miRNA:5.33e-03, VCDN:2.21e-02
+Epoch 339, Train loss: mRNA:7.05e-03, methylation:7.37e-03, miRNA:5.59e-03, VCDN:2.13e-02
+Epoch 340, Train loss: mRNA:7.24e-03, methylation:7.54e-03, miRNA:5.41e-03, VCDN:2.04e-02
+Epoch 341, Train loss: mRNA:7.61e-03, methylation:7.60e-03, miRNA:5.36e-03, VCDN:2.11e-02
+Epoch 342, Train loss: mRNA:7.55e-03, methylation:7.40e-03, miRNA:5.28e-03, VCDN:2.09e-02
+Epoch 343, Train loss: mRNA:6.97e-03, methylation:7.22e-03, miRNA:5.38e-03, VCDN:2.17e-02
+Epoch 344, Train loss: mRNA:6.94e-03, methylation:7.52e-03, miRNA:5.34e-03, VCDN:2.11e-02
+Epoch 345, Train loss: mRNA:7.47e-03, methylation:7.54e-03, miRNA:5.35e-03, VCDN:2.09e-02
+Epoch 346, Train loss: mRNA:7.41e-03, methylation:7.51e-03, miRNA:5.32e-03, VCDN:2.10e-02
+Epoch 347, Train loss: mRNA:7.21e-03, methylation:8.09e-03, miRNA:5.32e-03, VCDN:2.08e-02
+Epoch 348, Train loss: mRNA:7.52e-03, methylation:8.09e-03, miRNA:5.52e-03, VCDN:2.05e-02
+Epoch 349, Train loss: mRNA:7.78e-03, methylation:7.82e-03, miRNA:5.46e-03, VCDN:2.10e-02
+Epoch 350, Train loss: mRNA:7.76e-03, methylation:7.42e-03, miRNA:5.29e-03, VCDN:2.06e-02
+Epoch 351, Train loss: mRNA:7.42e-03, methylation:7.33e-03, miRNA:5.28e-03, VCDN:2.09e-02
+Epoch 352, Train loss: mRNA:7.05e-03, methylation:7.04e-03, miRNA:5.41e-03, VCDN:2.07e-02
+Epoch 353, Train loss: mRNA:7.10e-03, methylation:7.31e-03, miRNA:5.36e-03, VCDN:2.03e-02
+Epoch 354, Train loss: mRNA:7.50e-03, methylation:7.36e-03, miRNA:5.41e-03, VCDN:2.05e-02
+Epoch 355, Train loss: mRNA:7.69e-03, methylation:7.15e-03, miRNA:5.33e-03, VCDN:2.00e-02
+Epoch 356, Train loss: mRNA:7.21e-03, methylation:7.17e-03, miRNA:5.26e-03, VCDN:2.00e-02
+Epoch 357, Train loss: mRNA:7.47e-03, methylation:6.94e-03, miRNA:5.31e-03, VCDN:2.17e-02
+Epoch 358, Train loss: mRNA:8.41e-03, methylation:6.86e-03, miRNA:5.29e-03, VCDN:2.03e-02
+Epoch 359, Train loss: mRNA:7.33e-03, methylation:7.26e-03, miRNA:5.26e-03, VCDN:1.99e-02
+Epoch 360, Train loss: mRNA:6.65e-03, methylation:7.23e-03, miRNA:5.29e-03, VCDN:2.04e-02
+
+Test: Epoch 360
+Train Accuracy: 0.9780   Test ACC: 0.8478
+Train F1: 0.9779         Test F1: 0.8516
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9617              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.8000
+LumA 	           0.2000              0.9569              0.4837              0.8539
+LumB 	           0.2000              0.9809              0.1739              0.8125
+
+Epoch 361, Train loss: mRNA:6.95e-03, methylation:7.45e-03, miRNA:5.32e-03, VCDN:1.96e-02
+Epoch 362, Train loss: mRNA:7.01e-03, methylation:8.45e-03, miRNA:5.17e-03, VCDN:2.06e-02
+Epoch 363, Train loss: mRNA:6.96e-03, methylation:9.13e-03, miRNA:5.13e-03, VCDN:2.17e-02
+Epoch 364, Train loss: mRNA:6.95e-03, methylation:1.06e-02, miRNA:5.20e-03, VCDN:2.12e-02
+Epoch 365, Train loss: mRNA:7.33e-03, methylation:9.34e-03, miRNA:5.18e-03, VCDN:2.07e-02
+Epoch 366, Train loss: mRNA:7.85e-03, methylation:7.38e-03, miRNA:5.24e-03, VCDN:2.05e-02
+Epoch 367, Train loss: mRNA:7.46e-03, methylation:8.47e-03, miRNA:5.24e-03, VCDN:2.07e-02
+Epoch 368, Train loss: mRNA:6.97e-03, methylation:8.43e-03, miRNA:5.26e-03, VCDN:1.96e-02
+Epoch 369, Train loss: mRNA:7.12e-03, methylation:7.19e-03, miRNA:5.25e-03, VCDN:2.04e-02
+Epoch 370, Train loss: mRNA:7.25e-03, methylation:8.42e-03, miRNA:5.22e-03, VCDN:2.05e-02
+Epoch 371, Train loss: mRNA:7.29e-03, methylation:7.56e-03, miRNA:5.23e-03, VCDN:1.99e-02
+Epoch 372, Train loss: mRNA:6.66e-03, methylation:7.89e-03, miRNA:5.31e-03, VCDN:1.98e-02
+Epoch 373, Train loss: mRNA:6.54e-03, methylation:8.67e-03, miRNA:5.10e-03, VCDN:1.96e-02
+Epoch 374, Train loss: mRNA:6.80e-03, methylation:7.22e-03, miRNA:5.15e-03, VCDN:1.95e-02
+Epoch 375, Train loss: mRNA:6.80e-03, methylation:7.61e-03, miRNA:5.21e-03, VCDN:1.92e-02
+Epoch 376, Train loss: mRNA:6.72e-03, methylation:7.42e-03, miRNA:5.22e-03, VCDN:1.91e-02
+Epoch 377, Train loss: mRNA:6.85e-03, methylation:7.22e-03, miRNA:5.30e-03, VCDN:1.98e-02
+Epoch 378, Train loss: mRNA:7.07e-03, methylation:7.87e-03, miRNA:5.19e-03, VCDN:1.86e-02
+Epoch 379, Train loss: mRNA:7.02e-03, methylation:7.58e-03, miRNA:5.15e-03, VCDN:1.89e-02
+Epoch 380, Train loss: mRNA:6.86e-03, methylation:7.49e-03, miRNA:5.25e-03, VCDN:1.91e-02
+Epoch 381, Train loss: mRNA:6.93e-03, methylation:6.87e-03, miRNA:5.18e-03, VCDN:2.04e-02
+Epoch 382, Train loss: mRNA:7.50e-03, methylation:7.98e-03, miRNA:5.14e-03, VCDN:1.98e-02
+Epoch 383, Train loss: mRNA:7.52e-03, methylation:7.61e-03, miRNA:5.06e-03, VCDN:1.95e-02
+Epoch 384, Train loss: mRNA:7.54e-03, methylation:6.84e-03, miRNA:5.13e-03, VCDN:1.92e-02
+Epoch 385, Train loss: mRNA:7.30e-03, methylation:7.63e-03, miRNA:5.09e-03, VCDN:1.85e-02
+Epoch 386, Train loss: mRNA:7.44e-03, methylation:7.39e-03, miRNA:5.07e-03, VCDN:1.91e-02
+Epoch 387, Train loss: mRNA:7.66e-03, methylation:7.02e-03, miRNA:5.08e-03, VCDN:1.87e-02
+Epoch 388, Train loss: mRNA:6.40e-03, methylation:6.89e-03, miRNA:5.18e-03, VCDN:1.85e-02
+Epoch 389, Train loss: mRNA:6.63e-03, methylation:6.76e-03, miRNA:5.01e-03, VCDN:1.87e-02
+Epoch 390, Train loss: mRNA:7.98e-03, methylation:6.99e-03, miRNA:5.26e-03, VCDN:1.80e-02
+Epoch 391, Train loss: mRNA:7.22e-03, methylation:6.54e-03, miRNA:5.15e-03, VCDN:1.86e-02
+Epoch 392, Train loss: mRNA:6.52e-03, methylation:6.75e-03, miRNA:5.25e-03, VCDN:1.87e-02
+Epoch 393, Train loss: mRNA:7.27e-03, methylation:6.90e-03, miRNA:5.13e-03, VCDN:1.83e-02
+Epoch 394, Train loss: mRNA:7.14e-03, methylation:6.61e-03, miRNA:5.10e-03, VCDN:1.84e-02
+Epoch 395, Train loss: mRNA:7.22e-03, methylation:6.69e-03, miRNA:5.17e-03, VCDN:1.77e-02
+Epoch 396, Train loss: mRNA:7.40e-03, methylation:6.54e-03, miRNA:5.11e-03, VCDN:1.83e-02
+Epoch 397, Train loss: mRNA:8.39e-03, methylation:6.84e-03, miRNA:5.08e-03, VCDN:1.81e-02
+Epoch 398, Train loss: mRNA:8.38e-03, methylation:6.66e-03, miRNA:5.22e-03, VCDN:1.83e-02
+Epoch 399, Train loss: mRNA:7.56e-03, methylation:6.77e-03, miRNA:5.08e-03, VCDN:1.81e-02
+Epoch 400, Train loss: mRNA:6.76e-03, methylation:7.66e-03, miRNA:5.07e-03, VCDN:1.90e-02
+
+Test: Epoch 400
+Train Accuracy: 0.9856   Test ACC: 0.8533
+Train F1: 0.9857         Test F1: 0.8542
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9856              0.4837              0.8989
+LumB 	           0.2000              0.9713              0.1739              0.7812
+
+Performing feature extraction using SHAP ...
+
+Performing feature extraction using LIME ...
+
+Average lime score =  0.5876091514695834 
+ Standard deviation =  0.04633648639647347 
+
+
+----------------------------------------------------------------------------------------------------
+Run 3
+----------------------------------------------------------------------------------------------------
+2021-01-28 12:45:23.548529 
+
+ANOVA top 1000 features selected greedily with correlation below 0.8 
+This run includes only 3 GCNs - mRNA, DNA methylation, miRNA
+SEED =  89126
+
+Training...
+Epoch 0, Train loss: mRNA:1.42e-01, methylation:9.52e-02, miRNA:4.15e-02, VCDN:3.30e-01
+
+Test: Epoch 0
+Train Accuracy: 0.2000   Test ACC: 0.1359
+Train F1: 0.0667         Test F1: 0.0325
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              1.0000              0.1359              1.0000
+Basal 	           0.2000              0.0000              0.1522              0.0000
+Her2 	           0.2000              0.0000              0.0543              0.0000
+LumA 	           0.2000              0.0000              0.4837              0.0000
+LumB 	           0.2000              0.0000              0.1739              0.0000
+
+Epoch 1, Train loss: mRNA:1.27e+00, methylation:1.56e+00, miRNA:3.71e-02, VCDN:3.26e-01
+Epoch 2, Train loss: mRNA:2.02e-01, methylation:1.96e-01, miRNA:3.45e-02, VCDN:3.23e-01
+Epoch 3, Train loss: mRNA:1.02e-01, methylation:1.46e-01, miRNA:3.34e-02, VCDN:3.24e-01
+Epoch 4, Train loss: mRNA:2.68e-01, methylation:3.38e-01, miRNA:3.26e-02, VCDN:3.23e-01
+Epoch 5, Train loss: mRNA:2.04e-01, methylation:2.30e-01, miRNA:3.28e-02, VCDN:3.23e-01
+Epoch 6, Train loss: mRNA:7.57e-02, methylation:7.55e-02, miRNA:3.15e-02, VCDN:3.22e-01
+Epoch 7, Train loss: mRNA:4.52e-02, methylation:5.68e-02, miRNA:3.11e-02, VCDN:3.23e-01
+Epoch 8, Train loss: mRNA:1.05e-01, methylation:1.45e-01, miRNA:3.02e-02, VCDN:3.22e-01
+Epoch 9, Train loss: mRNA:1.24e-01, methylation:1.44e-01, miRNA:2.95e-02, VCDN:3.22e-01
+Epoch 10, Train loss: mRNA:8.56e-02, methylation:8.33e-02, miRNA:2.86e-02, VCDN:3.22e-01
+Epoch 11, Train loss: mRNA:4.73e-02, methylation:4.40e-02, miRNA:2.83e-02, VCDN:3.22e-01
+Epoch 12, Train loss: mRNA:3.89e-02, methylation:4.05e-02, miRNA:2.74e-02, VCDN:3.23e-01
+Epoch 13, Train loss: mRNA:5.50e-02, methylation:5.79e-02, miRNA:2.70e-02, VCDN:3.22e-01
+Epoch 14, Train loss: mRNA:6.51e-02, methylation:6.92e-02, miRNA:2.67e-02, VCDN:3.22e-01
+Epoch 15, Train loss: mRNA:5.69e-02, methylation:6.33e-02, miRNA:2.60e-02, VCDN:3.22e-01
+Epoch 16, Train loss: mRNA:4.28e-02, methylation:4.84e-02, miRNA:2.56e-02, VCDN:3.22e-01
+Epoch 17, Train loss: mRNA:3.32e-02, methylation:3.77e-02, miRNA:2.52e-02, VCDN:3.22e-01
+Epoch 18, Train loss: mRNA:3.60e-02, methylation:3.63e-02, miRNA:2.46e-02, VCDN:3.21e-01
+Epoch 19, Train loss: mRNA:4.10e-02, methylation:4.12e-02, miRNA:2.41e-02, VCDN:3.21e-01
+Epoch 20, Train loss: mRNA:4.41e-02, methylation:4.77e-02, miRNA:2.38e-02, VCDN:3.21e-01
+Epoch 21, Train loss: mRNA:4.16e-02, methylation:4.77e-02, miRNA:2.34e-02, VCDN:3.21e-01
+Epoch 22, Train loss: mRNA:3.55e-02, methylation:4.27e-02, miRNA:2.29e-02, VCDN:3.20e-01
+Epoch 23, Train loss: mRNA:3.12e-02, methylation:3.61e-02, miRNA:2.22e-02, VCDN:3.20e-01
+Epoch 24, Train loss: mRNA:3.16e-02, methylation:3.31e-02, miRNA:2.19e-02, VCDN:3.20e-01
+Epoch 25, Train loss: mRNA:3.41e-02, methylation:3.35e-02, miRNA:2.20e-02, VCDN:3.20e-01
+Epoch 26, Train loss: mRNA:3.53e-02, methylation:3.43e-02, miRNA:2.13e-02, VCDN:3.19e-01
+Epoch 27, Train loss: mRNA:3.42e-02, methylation:3.58e-02, miRNA:2.07e-02, VCDN:3.19e-01
+Epoch 28, Train loss: mRNA:3.12e-02, methylation:3.59e-02, miRNA:2.07e-02, VCDN:3.19e-01
+Epoch 29, Train loss: mRNA:2.94e-02, methylation:3.35e-02, miRNA:2.03e-02, VCDN:3.18e-01
+Epoch 30, Train loss: mRNA:2.95e-02, methylation:3.23e-02, miRNA:1.99e-02, VCDN:3.17e-01
+Epoch 31, Train loss: mRNA:2.99e-02, methylation:3.10e-02, miRNA:1.97e-02, VCDN:3.17e-01
+Epoch 32, Train loss: mRNA:3.06e-02, methylation:3.01e-02, miRNA:1.92e-02, VCDN:3.16e-01
+Epoch 33, Train loss: mRNA:3.01e-02, methylation:3.03e-02, miRNA:1.91e-02, VCDN:3.16e-01
+Epoch 34, Train loss: mRNA:2.88e-02, methylation:3.11e-02, miRNA:1.87e-02, VCDN:3.15e-01
+Epoch 35, Train loss: mRNA:2.80e-02, methylation:3.11e-02, miRNA:1.85e-02, VCDN:3.15e-01
+Epoch 36, Train loss: mRNA:2.70e-02, methylation:3.09e-02, miRNA:1.81e-02, VCDN:3.14e-01
+Epoch 37, Train loss: mRNA:2.65e-02, methylation:2.93e-02, miRNA:1.80e-02, VCDN:3.13e-01
+Epoch 38, Train loss: mRNA:2.66e-02, methylation:2.88e-02, miRNA:1.75e-02, VCDN:3.13e-01
+Epoch 39, Train loss: mRNA:2.65e-02, methylation:2.80e-02, miRNA:1.72e-02, VCDN:3.12e-01
+Epoch 40, Train loss: mRNA:2.66e-02, methylation:2.82e-02, miRNA:1.70e-02, VCDN:3.11e-01
+
+Test: Epoch 40
+Train Accuracy: 0.7780   Test ACC: 0.7500
+Train F1: 0.7345         Test F1: 0.7393
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9091              0.1359              0.8000
+Basal 	           0.2000              0.9665              0.1522              0.8571
+Her2 	           0.2000              0.9522              0.0543              0.9000
+LumA 	           0.2000              0.9378              0.4837              0.8764
+LumB 	           0.2000              0.1244              0.1739              0.2188
+
+Epoch 41, Train loss: mRNA:2.60e-02, methylation:2.80e-02, miRNA:1.69e-02, VCDN:3.10e-01
+Epoch 42, Train loss: mRNA:2.54e-02, methylation:2.82e-02, miRNA:1.67e-02, VCDN:3.09e-01
+Epoch 43, Train loss: mRNA:2.47e-02, methylation:2.77e-02, miRNA:1.63e-02, VCDN:3.08e-01
+Epoch 44, Train loss: mRNA:2.38e-02, methylation:2.69e-02, miRNA:1.63e-02, VCDN:3.07e-01
+Epoch 45, Train loss: mRNA:2.50e-02, methylation:2.66e-02, miRNA:1.60e-02, VCDN:3.06e-01
+Epoch 46, Train loss: mRNA:2.47e-02, methylation:2.60e-02, miRNA:1.62e-02, VCDN:3.05e-01
+Epoch 47, Train loss: mRNA:2.38e-02, methylation:2.60e-02, miRNA:1.59e-02, VCDN:3.05e-01
+Epoch 48, Train loss: mRNA:2.34e-02, methylation:2.62e-02, miRNA:1.55e-02, VCDN:3.03e-01
+Epoch 49, Train loss: mRNA:2.35e-02, methylation:2.58e-02, miRNA:1.55e-02, VCDN:3.02e-01
+Epoch 50, Train loss: mRNA:2.27e-02, methylation:2.58e-02, miRNA:1.51e-02, VCDN:3.01e-01
+Epoch 51, Train loss: mRNA:2.30e-02, methylation:2.57e-02, miRNA:1.50e-02, VCDN:3.00e-01
+Epoch 52, Train loss: mRNA:2.27e-02, methylation:2.46e-02, miRNA:1.49e-02, VCDN:2.99e-01
+Epoch 53, Train loss: mRNA:2.21e-02, methylation:2.44e-02, miRNA:1.45e-02, VCDN:2.98e-01
+Epoch 54, Train loss: mRNA:2.13e-02, methylation:2.47e-02, miRNA:1.44e-02, VCDN:2.96e-01
+Epoch 55, Train loss: mRNA:2.14e-02, methylation:2.42e-02, miRNA:1.43e-02, VCDN:2.95e-01
+Epoch 56, Train loss: mRNA:2.16e-02, methylation:2.42e-02, miRNA:1.42e-02, VCDN:2.93e-01
+Epoch 57, Train loss: mRNA:2.11e-02, methylation:2.43e-02, miRNA:1.39e-02, VCDN:2.92e-01
+Epoch 58, Train loss: mRNA:2.09e-02, methylation:2.36e-02, miRNA:1.39e-02, VCDN:2.91e-01
+Epoch 59, Train loss: mRNA:2.03e-02, methylation:2.35e-02, miRNA:1.38e-02, VCDN:2.89e-01
+Epoch 60, Train loss: mRNA:2.01e-02, methylation:2.33e-02, miRNA:1.36e-02, VCDN:2.88e-01
+Epoch 61, Train loss: mRNA:1.95e-02, methylation:2.29e-02, miRNA:1.33e-02, VCDN:2.86e-01
+Epoch 62, Train loss: mRNA:2.00e-02, methylation:2.32e-02, miRNA:1.33e-02, VCDN:2.85e-01
+Epoch 63, Train loss: mRNA:1.96e-02, methylation:2.30e-02, miRNA:1.31e-02, VCDN:2.83e-01
+Epoch 64, Train loss: mRNA:1.93e-02, methylation:2.25e-02, miRNA:1.32e-02, VCDN:2.81e-01
+Epoch 65, Train loss: mRNA:1.89e-02, methylation:2.24e-02, miRNA:1.28e-02, VCDN:2.79e-01
+Epoch 66, Train loss: mRNA:1.92e-02, methylation:2.21e-02, miRNA:1.28e-02, VCDN:2.77e-01
+Epoch 67, Train loss: mRNA:1.86e-02, methylation:2.23e-02, miRNA:1.27e-02, VCDN:2.76e-01
+Epoch 68, Train loss: mRNA:1.85e-02, methylation:2.23e-02, miRNA:1.24e-02, VCDN:2.74e-01
+Epoch 69, Train loss: mRNA:1.86e-02, methylation:2.19e-02, miRNA:1.24e-02, VCDN:2.72e-01
+Epoch 70, Train loss: mRNA:1.87e-02, methylation:2.16e-02, miRNA:1.23e-02, VCDN:2.71e-01
+Epoch 71, Train loss: mRNA:1.79e-02, methylation:2.14e-02, miRNA:1.21e-02, VCDN:2.69e-01
+Epoch 72, Train loss: mRNA:1.83e-02, methylation:2.18e-02, miRNA:1.19e-02, VCDN:2.67e-01
+Epoch 73, Train loss: mRNA:1.78e-02, methylation:2.16e-02, miRNA:1.20e-02, VCDN:2.64e-01
+Epoch 74, Train loss: mRNA:1.82e-02, methylation:2.11e-02, miRNA:1.17e-02, VCDN:2.63e-01
+Epoch 75, Train loss: mRNA:1.73e-02, methylation:2.09e-02, miRNA:1.19e-02, VCDN:2.61e-01
+Epoch 76, Train loss: mRNA:1.72e-02, methylation:2.06e-02, miRNA:1.18e-02, VCDN:2.59e-01
+Epoch 77, Train loss: mRNA:1.71e-02, methylation:2.07e-02, miRNA:1.18e-02, VCDN:2.56e-01
+Epoch 78, Train loss: mRNA:1.70e-02, methylation:2.05e-02, miRNA:1.13e-02, VCDN:2.54e-01
+Epoch 79, Train loss: mRNA:1.69e-02, methylation:1.99e-02, miRNA:1.14e-02, VCDN:2.51e-01
+Epoch 80, Train loss: mRNA:1.64e-02, methylation:2.04e-02, miRNA:1.13e-02, VCDN:2.49e-01
+
+Test: Epoch 80
+Train Accuracy: 0.9254   Test ACC: 0.7663
+Train F1: 0.9243         Test F1: 0.7780
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.8400
+Basal 	           0.2000              0.9809              0.1522              0.9286
+Her2 	           0.2000              0.9952              0.0543              0.9000
+LumA 	           0.2000              0.8660              0.4837              0.6742
+LumB 	           0.2000              0.8086              0.1739              0.7812
+
+Epoch 81, Train loss: mRNA:1.67e-02, methylation:2.00e-02, miRNA:1.13e-02, VCDN:2.47e-01
+Epoch 82, Train loss: mRNA:1.62e-02, methylation:2.01e-02, miRNA:1.13e-02, VCDN:2.45e-01
+Epoch 83, Train loss: mRNA:1.63e-02, methylation:2.01e-02, miRNA:1.11e-02, VCDN:2.42e-01
+Epoch 84, Train loss: mRNA:1.59e-02, methylation:1.97e-02, miRNA:1.10e-02, VCDN:2.40e-01
+Epoch 85, Train loss: mRNA:1.58e-02, methylation:1.94e-02, miRNA:1.08e-02, VCDN:2.38e-01
+Epoch 86, Train loss: mRNA:1.59e-02, methylation:1.99e-02, miRNA:1.09e-02, VCDN:2.36e-01
+Epoch 87, Train loss: mRNA:1.61e-02, methylation:1.95e-02, miRNA:1.07e-02, VCDN:2.33e-01
+Epoch 88, Train loss: mRNA:1.61e-02, methylation:1.92e-02, miRNA:1.07e-02, VCDN:2.30e-01
+Epoch 89, Train loss: mRNA:1.61e-02, methylation:1.94e-02, miRNA:1.06e-02, VCDN:2.27e-01
+Epoch 90, Train loss: mRNA:1.61e-02, methylation:1.87e-02, miRNA:1.07e-02, VCDN:2.25e-01
+Epoch 91, Train loss: mRNA:1.53e-02, methylation:1.86e-02, miRNA:1.02e-02, VCDN:2.23e-01
+Epoch 92, Train loss: mRNA:1.50e-02, methylation:1.90e-02, miRNA:1.04e-02, VCDN:2.21e-01
+Epoch 93, Train loss: mRNA:1.52e-02, methylation:1.86e-02, miRNA:1.02e-02, VCDN:2.18e-01
+Epoch 94, Train loss: mRNA:1.49e-02, methylation:1.90e-02, miRNA:1.03e-02, VCDN:2.16e-01
+Epoch 95, Train loss: mRNA:1.51e-02, methylation:1.85e-02, miRNA:1.02e-02, VCDN:2.13e-01
+Epoch 96, Train loss: mRNA:1.54e-02, methylation:1.81e-02, miRNA:1.00e-02, VCDN:2.10e-01
+Epoch 97, Train loss: mRNA:1.49e-02, methylation:1.81e-02, miRNA:1.02e-02, VCDN:2.07e-01
+Epoch 98, Train loss: mRNA:1.47e-02, methylation:1.85e-02, miRNA:9.94e-03, VCDN:2.06e-01
+Epoch 99, Train loss: mRNA:1.45e-02, methylation:1.79e-02, miRNA:9.95e-03, VCDN:2.02e-01
+Epoch 100, Train loss: mRNA:1.47e-02, methylation:1.85e-02, miRNA:1.00e-02, VCDN:1.99e-01
+Epoch 101, Train loss: mRNA:1.43e-02, methylation:1.81e-02, miRNA:9.75e-03, VCDN:1.98e-01
+Epoch 102, Train loss: mRNA:1.40e-02, methylation:1.77e-02, miRNA:9.68e-03, VCDN:1.96e-01
+Epoch 103, Train loss: mRNA:1.43e-02, methylation:1.80e-02, miRNA:9.65e-03, VCDN:1.92e-01
+Epoch 104, Train loss: mRNA:1.45e-02, methylation:1.78e-02, miRNA:9.54e-03, VCDN:1.90e-01
+Epoch 105, Train loss: mRNA:1.40e-02, methylation:1.77e-02, miRNA:9.50e-03, VCDN:1.87e-01
+Epoch 106, Train loss: mRNA:1.41e-02, methylation:1.74e-02, miRNA:9.44e-03, VCDN:1.86e-01
+Epoch 107, Train loss: mRNA:1.40e-02, methylation:1.77e-02, miRNA:9.23e-03, VCDN:1.82e-01
+Epoch 108, Train loss: mRNA:1.37e-02, methylation:1.74e-02, miRNA:9.32e-03, VCDN:1.81e-01
+Epoch 109, Train loss: mRNA:1.35e-02, methylation:1.72e-02, miRNA:9.30e-03, VCDN:1.78e-01
+Epoch 110, Train loss: mRNA:1.39e-02, methylation:1.70e-02, miRNA:9.12e-03, VCDN:1.75e-01
+Epoch 111, Train loss: mRNA:1.38e-02, methylation:1.70e-02, miRNA:9.29e-03, VCDN:1.73e-01
+Epoch 112, Train loss: mRNA:1.37e-02, methylation:1.67e-02, miRNA:9.11e-03, VCDN:1.71e-01
+Epoch 113, Train loss: mRNA:1.34e-02, methylation:1.69e-02, miRNA:9.00e-03, VCDN:1.68e-01
+Epoch 114, Train loss: mRNA:1.32e-02, methylation:1.69e-02, miRNA:9.04e-03, VCDN:1.66e-01
+Epoch 115, Train loss: mRNA:1.35e-02, methylation:1.70e-02, miRNA:8.95e-03, VCDN:1.63e-01
+Epoch 116, Train loss: mRNA:1.31e-02, methylation:1.67e-02, miRNA:8.84e-03, VCDN:1.61e-01
+Epoch 117, Train loss: mRNA:1.32e-02, methylation:1.64e-02, miRNA:8.88e-03, VCDN:1.60e-01
+Epoch 118, Train loss: mRNA:1.34e-02, methylation:1.69e-02, miRNA:8.73e-03, VCDN:1.57e-01
+Epoch 119, Train loss: mRNA:1.31e-02, methylation:1.63e-02, miRNA:8.66e-03, VCDN:1.55e-01
+Epoch 120, Train loss: mRNA:1.31e-02, methylation:1.64e-02, miRNA:8.73e-03, VCDN:1.53e-01
+
+Test: Epoch 120
+Train Accuracy: 0.9656   Test ACC: 0.8261
+Train F1: 0.9655         Test F1: 0.8319
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.8000
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              0.9952              0.0543              0.9000
+LumA 	           0.2000              0.9282              0.4837              0.7528
+LumB 	           0.2000              0.9378              0.1739              0.9062
+
+Epoch 121, Train loss: mRNA:1.29e-02, methylation:1.63e-02, miRNA:8.66e-03, VCDN:1.52e-01
+Epoch 122, Train loss: mRNA:1.28e-02, methylation:1.60e-02, miRNA:8.67e-03, VCDN:1.48e-01
+Epoch 123, Train loss: mRNA:1.25e-02, methylation:1.59e-02, miRNA:8.66e-03, VCDN:1.47e-01
+Epoch 124, Train loss: mRNA:1.23e-02, methylation:1.61e-02, miRNA:8.43e-03, VCDN:1.45e-01
+Epoch 125, Train loss: mRNA:1.23e-02, methylation:1.63e-02, miRNA:8.58e-03, VCDN:1.43e-01
+Epoch 126, Train loss: mRNA:1.25e-02, methylation:1.59e-02, miRNA:8.47e-03, VCDN:1.40e-01
+Epoch 127, Train loss: mRNA:1.24e-02, methylation:1.59e-02, miRNA:8.40e-03, VCDN:1.38e-01
+Epoch 128, Train loss: mRNA:1.25e-02, methylation:1.58e-02, miRNA:8.34e-03, VCDN:1.37e-01
+Epoch 129, Train loss: mRNA:1.21e-02, methylation:1.57e-02, miRNA:8.39e-03, VCDN:1.35e-01
+Epoch 130, Train loss: mRNA:1.24e-02, methylation:1.56e-02, miRNA:8.39e-03, VCDN:1.33e-01
+Epoch 131, Train loss: mRNA:1.26e-02, methylation:1.56e-02, miRNA:8.24e-03, VCDN:1.31e-01
+Epoch 132, Train loss: mRNA:1.29e-02, methylation:1.58e-02, miRNA:8.13e-03, VCDN:1.28e-01
+Epoch 133, Train loss: mRNA:1.30e-02, methylation:1.50e-02, miRNA:8.29e-03, VCDN:1.27e-01
+Epoch 134, Train loss: mRNA:1.24e-02, methylation:1.53e-02, miRNA:8.14e-03, VCDN:1.27e-01
+Epoch 135, Train loss: mRNA:1.26e-02, methylation:1.49e-02, miRNA:7.98e-03, VCDN:1.23e-01
+Epoch 136, Train loss: mRNA:1.21e-02, methylation:1.54e-02, miRNA:8.14e-03, VCDN:1.22e-01
+Epoch 137, Train loss: mRNA:1.17e-02, methylation:1.52e-02, miRNA:8.03e-03, VCDN:1.19e-01
+Epoch 138, Train loss: mRNA:1.19e-02, methylation:1.51e-02, miRNA:8.03e-03, VCDN:1.18e-01
+Epoch 139, Train loss: mRNA:1.20e-02, methylation:1.47e-02, miRNA:7.97e-03, VCDN:1.18e-01
+Epoch 140, Train loss: mRNA:1.28e-02, methylation:1.48e-02, miRNA:7.90e-03, VCDN:1.15e-01
+Epoch 141, Train loss: mRNA:1.25e-02, methylation:1.46e-02, miRNA:7.80e-03, VCDN:1.13e-01
+Epoch 142, Train loss: mRNA:1.26e-02, methylation:1.45e-02, miRNA:7.76e-03, VCDN:1.11e-01
+Epoch 143, Train loss: mRNA:1.19e-02, methylation:1.44e-02, miRNA:7.76e-03, VCDN:1.10e-01
+Epoch 144, Train loss: mRNA:1.15e-02, methylation:1.44e-02, miRNA:7.85e-03, VCDN:1.08e-01
+Epoch 145, Train loss: mRNA:1.14e-02, methylation:1.44e-02, miRNA:7.74e-03, VCDN:1.06e-01
+Epoch 146, Train loss: mRNA:1.15e-02, methylation:1.44e-02, miRNA:7.78e-03, VCDN:1.05e-01
+Epoch 147, Train loss: mRNA:1.16e-02, methylation:1.43e-02, miRNA:7.61e-03, VCDN:1.04e-01
+Epoch 148, Train loss: mRNA:1.15e-02, methylation:1.41e-02, miRNA:7.66e-03, VCDN:1.03e-01
+Epoch 149, Train loss: mRNA:1.12e-02, methylation:1.38e-02, miRNA:7.61e-03, VCDN:1.01e-01
+Epoch 150, Train loss: mRNA:1.10e-02, methylation:1.40e-02, miRNA:7.67e-03, VCDN:9.85e-02
+Epoch 151, Train loss: mRNA:1.12e-02, methylation:1.36e-02, miRNA:7.55e-03, VCDN:9.72e-02
+Epoch 152, Train loss: mRNA:1.13e-02, methylation:1.37e-02, miRNA:7.60e-03, VCDN:9.59e-02
+Epoch 153, Train loss: mRNA:1.21e-02, methylation:1.38e-02, miRNA:7.60e-03, VCDN:9.55e-02
+Epoch 154, Train loss: mRNA:1.24e-02, methylation:1.39e-02, miRNA:7.41e-03, VCDN:9.31e-02
+Epoch 155, Train loss: mRNA:1.17e-02, methylation:1.36e-02, miRNA:7.41e-03, VCDN:9.27e-02
+Epoch 156, Train loss: mRNA:1.12e-02, methylation:1.37e-02, miRNA:7.54e-03, VCDN:9.12e-02
+Epoch 157, Train loss: mRNA:1.11e-02, methylation:1.34e-02, miRNA:7.43e-03, VCDN:9.00e-02
+Epoch 158, Train loss: mRNA:1.13e-02, methylation:1.34e-02, miRNA:7.24e-03, VCDN:8.89e-02
+Epoch 159, Train loss: mRNA:1.20e-02, methylation:1.31e-02, miRNA:7.42e-03, VCDN:8.85e-02
+Epoch 160, Train loss: mRNA:1.14e-02, methylation:1.30e-02, miRNA:7.24e-03, VCDN:8.75e-02
+
+Test: Epoch 160
+Train Accuracy: 0.9665   Test ACC: 0.8043
+Train F1: 0.9663         Test F1: 0.8124
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9713              0.1359              0.8000
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              0.9952              0.0543              0.9000
+LumA 	           0.2000              0.8947              0.4837              0.7191
+LumB 	           0.2000              0.9809              0.1739              0.8750
+
+Epoch 161, Train loss: mRNA:1.10e-02, methylation:1.35e-02, miRNA:7.12e-03, VCDN:8.42e-02
+Epoch 162, Train loss: mRNA:1.08e-02, methylation:1.29e-02, miRNA:7.00e-03, VCDN:8.35e-02
+Epoch 163, Train loss: mRNA:1.12e-02, methylation:1.31e-02, miRNA:7.17e-03, VCDN:8.39e-02
+Epoch 164, Train loss: mRNA:1.19e-02, methylation:1.29e-02, miRNA:7.20e-03, VCDN:8.16e-02
+Epoch 165, Train loss: mRNA:1.06e-02, methylation:1.28e-02, miRNA:7.18e-03, VCDN:8.06e-02
+Epoch 166, Train loss: mRNA:1.04e-02, methylation:1.28e-02, miRNA:7.13e-03, VCDN:8.05e-02
+Epoch 167, Train loss: mRNA:1.08e-02, methylation:1.28e-02, miRNA:7.16e-03, VCDN:7.88e-02
+Epoch 168, Train loss: mRNA:1.03e-02, methylation:1.27e-02, miRNA:7.12e-03, VCDN:7.80e-02
+Epoch 169, Train loss: mRNA:1.04e-02, methylation:1.26e-02, miRNA:7.00e-03, VCDN:7.64e-02
+Epoch 170, Train loss: mRNA:1.02e-02, methylation:1.24e-02, miRNA:6.95e-03, VCDN:7.39e-02
+Epoch 171, Train loss: mRNA:1.02e-02, methylation:1.25e-02, miRNA:7.03e-03, VCDN:7.33e-02
+Epoch 172, Train loss: mRNA:1.04e-02, methylation:1.26e-02, miRNA:7.06e-03, VCDN:7.26e-02
+Epoch 173, Train loss: mRNA:1.05e-02, methylation:1.23e-02, miRNA:6.91e-03, VCDN:7.11e-02
+Epoch 174, Train loss: mRNA:1.04e-02, methylation:1.22e-02, miRNA:6.97e-03, VCDN:7.09e-02
+Epoch 175, Train loss: mRNA:1.04e-02, methylation:1.25e-02, miRNA:7.04e-03, VCDN:7.14e-02
+Epoch 176, Train loss: mRNA:1.10e-02, methylation:1.24e-02, miRNA:6.90e-03, VCDN:6.99e-02
+Epoch 177, Train loss: mRNA:1.13e-02, methylation:1.23e-02, miRNA:6.91e-03, VCDN:6.93e-02
+Epoch 178, Train loss: mRNA:1.16e-02, methylation:1.23e-02, miRNA:6.89e-03, VCDN:6.75e-02
+Epoch 179, Train loss: mRNA:1.08e-02, methylation:1.19e-02, miRNA:6.89e-03, VCDN:6.60e-02
+Epoch 180, Train loss: mRNA:9.95e-03, methylation:1.17e-02, miRNA:6.86e-03, VCDN:6.48e-02
+Epoch 181, Train loss: mRNA:1.02e-02, methylation:1.23e-02, miRNA:6.92e-03, VCDN:6.46e-02
+Epoch 182, Train loss: mRNA:1.07e-02, methylation:1.19e-02, miRNA:6.72e-03, VCDN:6.41e-02
+Epoch 183, Train loss: mRNA:1.07e-02, methylation:1.18e-02, miRNA:6.76e-03, VCDN:6.27e-02
+Epoch 184, Train loss: mRNA:9.99e-03, methylation:1.17e-02, miRNA:6.72e-03, VCDN:6.18e-02
+Epoch 185, Train loss: mRNA:9.70e-03, methylation:1.16e-02, miRNA:6.82e-03, VCDN:6.06e-02
+Epoch 186, Train loss: mRNA:9.87e-03, methylation:1.15e-02, miRNA:6.80e-03, VCDN:6.05e-02
+Epoch 187, Train loss: mRNA:1.03e-02, methylation:1.16e-02, miRNA:6.70e-03, VCDN:5.98e-02
+Epoch 188, Train loss: mRNA:1.01e-02, methylation:1.15e-02, miRNA:6.63e-03, VCDN:5.85e-02
+Epoch 189, Train loss: mRNA:9.74e-03, methylation:1.12e-02, miRNA:6.64e-03, VCDN:5.81e-02
+Epoch 190, Train loss: mRNA:9.58e-03, methylation:1.13e-02, miRNA:6.58e-03, VCDN:5.74e-02
+Epoch 191, Train loss: mRNA:9.63e-03, methylation:1.13e-02, miRNA:6.66e-03, VCDN:5.71e-02
+Epoch 192, Train loss: mRNA:9.66e-03, methylation:1.14e-02, miRNA:6.67e-03, VCDN:5.70e-02
+Epoch 193, Train loss: mRNA:1.00e-02, methylation:1.13e-02, miRNA:6.48e-03, VCDN:5.52e-02
+Epoch 194, Train loss: mRNA:9.89e-03, methylation:1.10e-02, miRNA:6.67e-03, VCDN:5.47e-02
+Epoch 195, Train loss: mRNA:9.95e-03, methylation:1.09e-02, miRNA:6.52e-03, VCDN:5.43e-02
+Epoch 196, Train loss: mRNA:9.48e-03, methylation:1.12e-02, miRNA:6.57e-03, VCDN:5.34e-02
+Epoch 197, Train loss: mRNA:9.16e-03, methylation:1.13e-02, miRNA:6.45e-03, VCDN:5.22e-02
+Epoch 198, Train loss: mRNA:9.34e-03, methylation:1.09e-02, miRNA:6.55e-03, VCDN:5.21e-02
+Epoch 199, Train loss: mRNA:9.42e-03, methylation:1.08e-02, miRNA:6.58e-03, VCDN:5.19e-02
+Epoch 200, Train loss: mRNA:9.20e-03, methylation:1.13e-02, miRNA:6.56e-03, VCDN:5.10e-02
+
+Test: Epoch 200
+Train Accuracy: 0.9770   Test ACC: 0.8315
+Train F1: 0.9770         Test F1: 0.8364
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              0.9952              0.0543              0.9000
+LumA 	           0.2000              0.9474              0.4837              0.7978
+LumB 	           0.2000              0.9761              0.1739              0.8438
+
+Epoch 201, Train loss: mRNA:9.10e-03, methylation:1.14e-02, miRNA:6.30e-03, VCDN:5.05e-02
+Epoch 202, Train loss: mRNA:9.26e-03, methylation:1.08e-02, miRNA:6.45e-03, VCDN:4.95e-02
+Epoch 203, Train loss: mRNA:9.40e-03, methylation:1.06e-02, miRNA:6.46e-03, VCDN:4.93e-02
+Epoch 204, Train loss: mRNA:1.00e-02, methylation:1.05e-02, miRNA:6.37e-03, VCDN:4.91e-02
+Epoch 205, Train loss: mRNA:1.12e-02, methylation:1.08e-02, miRNA:6.35e-03, VCDN:4.92e-02
+Epoch 206, Train loss: mRNA:1.13e-02, methylation:1.08e-02, miRNA:6.64e-03, VCDN:5.04e-02
+Epoch 207, Train loss: mRNA:1.17e-02, methylation:1.06e-02, miRNA:6.47e-03, VCDN:4.85e-02
+Epoch 208, Train loss: mRNA:9.57e-03, methylation:1.05e-02, miRNA:6.29e-03, VCDN:4.76e-02
+Epoch 209, Train loss: mRNA:9.43e-03, methylation:1.04e-02, miRNA:6.42e-03, VCDN:4.70e-02
+Epoch 210, Train loss: mRNA:1.05e-02, methylation:1.06e-02, miRNA:6.39e-03, VCDN:4.62e-02
+Epoch 211, Train loss: mRNA:9.95e-03, methylation:1.05e-02, miRNA:6.29e-03, VCDN:4.52e-02
+Epoch 212, Train loss: mRNA:8.98e-03, methylation:1.03e-02, miRNA:6.27e-03, VCDN:4.51e-02
+Epoch 213, Train loss: mRNA:9.28e-03, methylation:1.00e-02, miRNA:6.24e-03, VCDN:4.49e-02
+Epoch 214, Train loss: mRNA:9.78e-03, methylation:1.02e-02, miRNA:6.23e-03, VCDN:4.42e-02
+Epoch 215, Train loss: mRNA:9.56e-03, methylation:1.01e-02, miRNA:6.21e-03, VCDN:4.31e-02
+Epoch 216, Train loss: mRNA:8.96e-03, methylation:1.03e-02, miRNA:6.22e-03, VCDN:4.31e-02
+Epoch 217, Train loss: mRNA:9.27e-03, methylation:1.03e-02, miRNA:6.24e-03, VCDN:4.27e-02
+Epoch 218, Train loss: mRNA:9.37e-03, methylation:1.05e-02, miRNA:6.34e-03, VCDN:4.31e-02
+Epoch 219, Train loss: mRNA:9.02e-03, methylation:1.11e-02, miRNA:6.15e-03, VCDN:4.28e-02
+Epoch 220, Train loss: mRNA:8.77e-03, methylation:1.12e-02, miRNA:6.21e-03, VCDN:4.31e-02
+Epoch 221, Train loss: mRNA:8.85e-03, methylation:1.08e-02, miRNA:6.18e-03, VCDN:4.11e-02
+Epoch 222, Train loss: mRNA:8.97e-03, methylation:1.00e-02, miRNA:6.10e-03, VCDN:4.14e-02
+Epoch 223, Train loss: mRNA:9.20e-03, methylation:1.01e-02, miRNA:6.08e-03, VCDN:4.11e-02
+Epoch 224, Train loss: mRNA:8.97e-03, methylation:1.04e-02, miRNA:6.22e-03, VCDN:4.02e-02
+Epoch 225, Train loss: mRNA:8.92e-03, methylation:9.84e-03, miRNA:6.15e-03, VCDN:3.97e-02
+Epoch 226, Train loss: mRNA:8.78e-03, methylation:9.90e-03, miRNA:6.11e-03, VCDN:3.90e-02
+Epoch 227, Train loss: mRNA:8.91e-03, methylation:1.01e-02, miRNA:6.29e-03, VCDN:3.85e-02
+Epoch 228, Train loss: mRNA:8.78e-03, methylation:9.82e-03, miRNA:6.07e-03, VCDN:3.87e-02
+Epoch 229, Train loss: mRNA:9.19e-03, methylation:9.33e-03, miRNA:5.98e-03, VCDN:3.93e-02
+Epoch 230, Train loss: mRNA:8.91e-03, methylation:9.39e-03, miRNA:6.01e-03, VCDN:3.84e-02
+Epoch 231, Train loss: mRNA:8.56e-03, methylation:9.91e-03, miRNA:6.17e-03, VCDN:3.82e-02
+Epoch 232, Train loss: mRNA:8.64e-03, methylation:9.63e-03, miRNA:6.05e-03, VCDN:3.74e-02
+Epoch 233, Train loss: mRNA:8.76e-03, methylation:9.34e-03, miRNA:6.06e-03, VCDN:3.71e-02
+Epoch 234, Train loss: mRNA:9.28e-03, methylation:9.26e-03, miRNA:5.94e-03, VCDN:3.80e-02
+Epoch 235, Train loss: mRNA:9.89e-03, methylation:9.55e-03, miRNA:6.04e-03, VCDN:3.70e-02
+Epoch 236, Train loss: mRNA:9.12e-03, methylation:9.37e-03, miRNA:5.86e-03, VCDN:3.60e-02
+Epoch 237, Train loss: mRNA:8.70e-03, methylation:9.22e-03, miRNA:6.03e-03, VCDN:3.60e-02
+Epoch 238, Train loss: mRNA:8.52e-03, methylation:9.15e-03, miRNA:5.88e-03, VCDN:3.55e-02
+Epoch 239, Train loss: mRNA:8.51e-03, methylation:9.30e-03, miRNA:6.03e-03, VCDN:3.60e-02
+Epoch 240, Train loss: mRNA:8.68e-03, methylation:9.24e-03, miRNA:5.91e-03, VCDN:3.51e-02
+
+Test: Epoch 240
+Train Accuracy: 0.9799   Test ACC: 0.8424
+Train F1: 0.9799         Test F1: 0.8450
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9809              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              0.9952              0.0543              0.6000
+LumA 	           0.2000              0.9761              0.4837              0.8652
+LumB 	           0.2000              0.9569              0.1739              0.7812
+
+Epoch 241, Train loss: mRNA:8.53e-03, methylation:9.26e-03, miRNA:5.81e-03, VCDN:3.45e-02
+Epoch 242, Train loss: mRNA:8.45e-03, methylation:9.64e-03, miRNA:5.91e-03, VCDN:3.38e-02
+Epoch 243, Train loss: mRNA:8.82e-03, methylation:9.88e-03, miRNA:6.05e-03, VCDN:3.35e-02
+Epoch 244, Train loss: mRNA:8.72e-03, methylation:1.10e-02, miRNA:5.88e-03, VCDN:3.46e-02
+Epoch 245, Train loss: mRNA:8.96e-03, methylation:1.09e-02, miRNA:5.93e-03, VCDN:3.46e-02
+Epoch 246, Train loss: mRNA:8.69e-03, methylation:1.22e-02, miRNA:5.86e-03, VCDN:3.52e-02
+Epoch 247, Train loss: mRNA:8.82e-03, methylation:1.28e-02, miRNA:5.87e-03, VCDN:3.62e-02
+Epoch 248, Train loss: mRNA:9.42e-03, methylation:1.19e-02, miRNA:5.88e-03, VCDN:3.39e-02
+Epoch 249, Train loss: mRNA:9.26e-03, methylation:9.98e-03, miRNA:5.81e-03, VCDN:3.44e-02
+Epoch 250, Train loss: mRNA:8.68e-03, methylation:1.08e-02, miRNA:5.82e-03, VCDN:3.42e-02
+Epoch 251, Train loss: mRNA:8.28e-03, methylation:1.09e-02, miRNA:5.85e-03, VCDN:3.28e-02
+Epoch 252, Train loss: mRNA:8.04e-03, methylation:9.89e-03, miRNA:5.76e-03, VCDN:3.31e-02
+Epoch 253, Train loss: mRNA:8.41e-03, methylation:1.05e-02, miRNA:5.80e-03, VCDN:3.36e-02
+Epoch 254, Train loss: mRNA:9.02e-03, methylation:1.01e-02, miRNA:5.71e-03, VCDN:3.28e-02
+Epoch 255, Train loss: mRNA:8.97e-03, methylation:1.04e-02, miRNA:5.86e-03, VCDN:3.22e-02
+Epoch 256, Train loss: mRNA:8.74e-03, methylation:1.01e-02, miRNA:5.77e-03, VCDN:3.21e-02
+Epoch 257, Train loss: mRNA:8.67e-03, methylation:9.71e-03, miRNA:5.80e-03, VCDN:3.18e-02
+Epoch 258, Train loss: mRNA:8.40e-03, methylation:1.05e-02, miRNA:5.71e-03, VCDN:3.15e-02
+Epoch 259, Train loss: mRNA:8.29e-03, methylation:9.67e-03, miRNA:5.80e-03, VCDN:3.07e-02
+Epoch 260, Train loss: mRNA:8.46e-03, methylation:9.88e-03, miRNA:5.75e-03, VCDN:3.10e-02
+Epoch 261, Train loss: mRNA:8.13e-03, methylation:1.07e-02, miRNA:5.74e-03, VCDN:3.03e-02
+Epoch 262, Train loss: mRNA:8.15e-03, methylation:9.27e-03, miRNA:5.67e-03, VCDN:3.12e-02
+Epoch 263, Train loss: mRNA:8.14e-03, methylation:1.05e-02, miRNA:5.68e-03, VCDN:3.05e-02
+Epoch 264, Train loss: mRNA:8.05e-03, methylation:1.03e-02, miRNA:5.67e-03, VCDN:2.95e-02
+Epoch 265, Train loss: mRNA:8.04e-03, methylation:9.09e-03, miRNA:5.73e-03, VCDN:3.01e-02
+Epoch 266, Train loss: mRNA:7.94e-03, methylation:1.06e-02, miRNA:5.74e-03, VCDN:2.96e-02
+Epoch 267, Train loss: mRNA:8.16e-03, methylation:9.22e-03, miRNA:5.68e-03, VCDN:2.95e-02
+Epoch 268, Train loss: mRNA:8.41e-03, methylation:9.70e-03, miRNA:5.68e-03, VCDN:2.93e-02
+Epoch 269, Train loss: mRNA:9.01e-03, methylation:9.51e-03, miRNA:5.60e-03, VCDN:2.92e-02
+Epoch 270, Train loss: mRNA:9.84e-03, methylation:8.87e-03, miRNA:5.70e-03, VCDN:2.98e-02
+Epoch 271, Train loss: mRNA:1.04e-02, methylation:9.67e-03, miRNA:5.70e-03, VCDN:2.86e-02
+Epoch 272, Train loss: mRNA:9.05e-03, methylation:8.70e-03, miRNA:5.67e-03, VCDN:2.91e-02
+Epoch 273, Train loss: mRNA:7.93e-03, methylation:9.56e-03, miRNA:5.70e-03, VCDN:2.89e-02
+Epoch 274, Train loss: mRNA:8.62e-03, methylation:8.81e-03, miRNA:5.60e-03, VCDN:2.80e-02
+Epoch 275, Train loss: mRNA:8.66e-03, methylation:9.26e-03, miRNA:5.65e-03, VCDN:2.83e-02
+Epoch 276, Train loss: mRNA:7.78e-03, methylation:9.10e-03, miRNA:5.77e-03, VCDN:2.78e-02
+Epoch 277, Train loss: mRNA:8.00e-03, methylation:8.84e-03, miRNA:5.60e-03, VCDN:2.81e-02
+Epoch 278, Train loss: mRNA:8.99e-03, methylation:9.13e-03, miRNA:5.56e-03, VCDN:2.78e-02
+Epoch 279, Train loss: mRNA:9.26e-03, methylation:8.66e-03, miRNA:5.59e-03, VCDN:2.70e-02
+Epoch 280, Train loss: mRNA:8.01e-03, methylation:8.69e-03, miRNA:5.64e-03, VCDN:2.70e-02
+
+Test: Epoch 280
+Train Accuracy: 0.9818   Test ACC: 0.8370
+Train F1: 0.9818         Test F1: 0.8413
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              0.9952              0.0543              0.6000
+LumA 	           0.2000              0.9665              0.4837              0.8427
+LumB 	           0.2000              0.9809              0.1739              0.8438
+
+Epoch 281, Train loss: mRNA:7.69e-03, methylation:8.82e-03, miRNA:5.58e-03, VCDN:2.68e-02
+Epoch 282, Train loss: mRNA:8.18e-03, methylation:8.52e-03, miRNA:5.54e-03, VCDN:2.67e-02
+Epoch 283, Train loss: mRNA:8.19e-03, methylation:8.66e-03, miRNA:5.68e-03, VCDN:2.61e-02
+Epoch 284, Train loss: mRNA:7.70e-03, methylation:8.17e-03, miRNA:5.58e-03, VCDN:2.60e-02
+Epoch 285, Train loss: mRNA:7.59e-03, methylation:8.32e-03, miRNA:5.57e-03, VCDN:2.62e-02
+Epoch 286, Train loss: mRNA:7.99e-03, methylation:8.41e-03, miRNA:5.44e-03, VCDN:2.67e-02
+Epoch 287, Train loss: mRNA:8.42e-03, methylation:8.31e-03, miRNA:5.43e-03, VCDN:2.60e-02
+Epoch 288, Train loss: mRNA:7.91e-03, methylation:8.40e-03, miRNA:5.46e-03, VCDN:2.66e-02
+Epoch 289, Train loss: mRNA:8.51e-03, methylation:8.46e-03, miRNA:5.67e-03, VCDN:2.55e-02
+Epoch 290, Train loss: mRNA:7.82e-03, methylation:8.36e-03, miRNA:5.48e-03, VCDN:2.49e-02
+Epoch 291, Train loss: mRNA:7.72e-03, methylation:8.28e-03, miRNA:5.56e-03, VCDN:2.59e-02
+Epoch 292, Train loss: mRNA:7.95e-03, methylation:8.29e-03, miRNA:5.45e-03, VCDN:2.48e-02
+Epoch 293, Train loss: mRNA:7.36e-03, methylation:8.13e-03, miRNA:5.34e-03, VCDN:2.44e-02
+Epoch 294, Train loss: mRNA:7.31e-03, methylation:8.10e-03, miRNA:5.41e-03, VCDN:2.52e-02
+Epoch 295, Train loss: mRNA:7.28e-03, methylation:8.00e-03, miRNA:5.50e-03, VCDN:2.44e-02
+Epoch 296, Train loss: mRNA:7.45e-03, methylation:7.97e-03, miRNA:5.44e-03, VCDN:2.49e-02
+Epoch 297, Train loss: mRNA:7.81e-03, methylation:8.24e-03, miRNA:5.51e-03, VCDN:2.44e-02
+Epoch 298, Train loss: mRNA:8.21e-03, methylation:7.88e-03, miRNA:5.36e-03, VCDN:2.62e-02
+Epoch 299, Train loss: mRNA:9.67e-03, methylation:7.97e-03, miRNA:5.46e-03, VCDN:2.46e-02
+Epoch 300, Train loss: mRNA:9.21e-03, methylation:7.86e-03, miRNA:5.49e-03, VCDN:2.54e-02
+Epoch 301, Train loss: mRNA:9.32e-03, methylation:7.75e-03, miRNA:5.35e-03, VCDN:2.38e-02
+Epoch 302, Train loss: mRNA:7.56e-03, methylation:7.90e-03, miRNA:5.34e-03, VCDN:2.37e-02
+Epoch 303, Train loss: mRNA:8.15e-03, methylation:7.79e-03, miRNA:5.45e-03, VCDN:2.48e-02
+Epoch 304, Train loss: mRNA:8.30e-03, methylation:7.70e-03, miRNA:5.37e-03, VCDN:2.33e-02
+Epoch 305, Train loss: mRNA:7.47e-03, methylation:8.02e-03, miRNA:5.42e-03, VCDN:2.45e-02
+Epoch 306, Train loss: mRNA:8.03e-03, methylation:7.94e-03, miRNA:5.31e-03, VCDN:2.43e-02
+Epoch 307, Train loss: mRNA:8.29e-03, methylation:7.83e-03, miRNA:5.47e-03, VCDN:2.33e-02
+Epoch 308, Train loss: mRNA:7.46e-03, methylation:7.66e-03, miRNA:5.32e-03, VCDN:2.44e-02
+Epoch 309, Train loss: mRNA:8.42e-03, methylation:7.74e-03, miRNA:5.35e-03, VCDN:2.53e-02
+Epoch 310, Train loss: mRNA:9.29e-03, methylation:7.75e-03, miRNA:5.29e-03, VCDN:2.38e-02
+Epoch 311, Train loss: mRNA:7.69e-03, methylation:7.84e-03, miRNA:5.37e-03, VCDN:2.23e-02
+Epoch 312, Train loss: mRNA:8.36e-03, methylation:7.87e-03, miRNA:5.29e-03, VCDN:2.33e-02
+Epoch 313, Train loss: mRNA:9.40e-03, methylation:8.46e-03, miRNA:5.40e-03, VCDN:2.27e-02
+Epoch 314, Train loss: mRNA:7.29e-03, methylation:9.21e-03, miRNA:5.45e-03, VCDN:2.44e-02
+Epoch 315, Train loss: mRNA:8.19e-03, methylation:9.23e-03, miRNA:5.51e-03, VCDN:2.46e-02
+Epoch 316, Train loss: mRNA:8.35e-03, methylation:9.09e-03, miRNA:5.20e-03, VCDN:2.22e-02
+Epoch 317, Train loss: mRNA:7.33e-03, methylation:7.59e-03, miRNA:5.37e-03, VCDN:2.40e-02
+Epoch 318, Train loss: mRNA:8.54e-03, methylation:8.49e-03, miRNA:5.35e-03, VCDN:2.46e-02
+Epoch 319, Train loss: mRNA:8.03e-03, methylation:9.25e-03, miRNA:5.23e-03, VCDN:2.27e-02
+Epoch 320, Train loss: mRNA:7.67e-03, methylation:7.50e-03, miRNA:5.26e-03, VCDN:2.34e-02
+
+Test: Epoch 320
+Train Accuracy: 0.9895   Test ACC: 0.8478
+Train F1: 0.9895         Test F1: 0.8476
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9904              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              1.0000
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              1.0000              0.4837              0.9101
+LumB 	           0.2000              0.9665              0.1739              0.7188
+
+Epoch 321, Train loss: mRNA:8.49e-03, methylation:8.89e-03, miRNA:5.24e-03, VCDN:2.43e-02
+Epoch 322, Train loss: mRNA:7.89e-03, methylation:9.20e-03, miRNA:5.32e-03, VCDN:2.19e-02
+Epoch 323, Train loss: mRNA:8.03e-03, methylation:7.48e-03, miRNA:5.25e-03, VCDN:2.35e-02
+Epoch 324, Train loss: mRNA:7.61e-03, methylation:9.25e-03, miRNA:5.31e-03, VCDN:2.46e-02
+Epoch 325, Train loss: mRNA:7.45e-03, methylation:9.92e-03, miRNA:5.22e-03, VCDN:2.27e-02
+Epoch 326, Train loss: mRNA:7.69e-03, methylation:8.27e-03, miRNA:5.32e-03, VCDN:2.25e-02
+Epoch 327, Train loss: mRNA:7.31e-03, methylation:9.37e-03, miRNA:5.30e-03, VCDN:2.33e-02
+Epoch 328, Train loss: mRNA:7.78e-03, methylation:9.18e-03, miRNA:5.26e-03, VCDN:2.29e-02
+Epoch 329, Train loss: mRNA:7.27e-03, methylation:8.71e-03, miRNA:5.24e-03, VCDN:2.25e-02
+Epoch 330, Train loss: mRNA:7.25e-03, methylation:8.63e-03, miRNA:5.24e-03, VCDN:2.18e-02
+Epoch 331, Train loss: mRNA:7.38e-03, methylation:8.86e-03, miRNA:5.15e-03, VCDN:2.14e-02
+Epoch 332, Train loss: mRNA:7.00e-03, methylation:8.01e-03, miRNA:5.21e-03, VCDN:2.13e-02
+Epoch 333, Train loss: mRNA:7.35e-03, methylation:8.57e-03, miRNA:5.24e-03, VCDN:2.18e-02
+Epoch 334, Train loss: mRNA:7.29e-03, methylation:8.33e-03, miRNA:5.25e-03, VCDN:2.10e-02
+Epoch 335, Train loss: mRNA:7.48e-03, methylation:7.75e-03, miRNA:5.23e-03, VCDN:2.12e-02
+Epoch 336, Train loss: mRNA:7.41e-03, methylation:8.67e-03, miRNA:5.15e-03, VCDN:2.12e-02
+Epoch 337, Train loss: mRNA:6.86e-03, methylation:7.34e-03, miRNA:5.12e-03, VCDN:2.10e-02
+Epoch 338, Train loss: mRNA:7.44e-03, methylation:8.33e-03, miRNA:5.21e-03, VCDN:2.06e-02
+Epoch 339, Train loss: mRNA:7.24e-03, methylation:7.53e-03, miRNA:5.25e-03, VCDN:2.05e-02
+Epoch 340, Train loss: mRNA:7.02e-03, methylation:7.91e-03, miRNA:5.26e-03, VCDN:2.05e-02
+Epoch 341, Train loss: mRNA:7.06e-03, methylation:7.66e-03, miRNA:5.28e-03, VCDN:2.00e-02
+Epoch 342, Train loss: mRNA:6.88e-03, methylation:7.31e-03, miRNA:5.27e-03, VCDN:2.00e-02
+Epoch 343, Train loss: mRNA:7.06e-03, methylation:7.88e-03, miRNA:5.30e-03, VCDN:2.03e-02
+Epoch 344, Train loss: mRNA:7.00e-03, methylation:7.26e-03, miRNA:5.20e-03, VCDN:2.05e-02
+Epoch 345, Train loss: mRNA:7.33e-03, methylation:7.47e-03, miRNA:5.23e-03, VCDN:2.02e-02
+Epoch 346, Train loss: mRNA:8.05e-03, methylation:7.13e-03, miRNA:5.14e-03, VCDN:2.03e-02
+Epoch 347, Train loss: mRNA:8.51e-03, methylation:7.41e-03, miRNA:5.23e-03, VCDN:1.98e-02
+Epoch 348, Train loss: mRNA:9.18e-03, methylation:7.18e-03, miRNA:5.19e-03, VCDN:2.02e-02
+Epoch 349, Train loss: mRNA:8.66e-03, methylation:7.24e-03, miRNA:5.22e-03, VCDN:1.95e-02
+Epoch 350, Train loss: mRNA:7.17e-03, methylation:7.15e-03, miRNA:5.09e-03, VCDN:1.95e-02
+Epoch 351, Train loss: mRNA:7.64e-03, methylation:7.08e-03, miRNA:5.13e-03, VCDN:1.98e-02
+Epoch 352, Train loss: mRNA:8.47e-03, methylation:7.20e-03, miRNA:5.06e-03, VCDN:1.92e-02
+Epoch 353, Train loss: mRNA:7.19e-03, methylation:6.89e-03, miRNA:5.21e-03, VCDN:1.92e-02
+Epoch 354, Train loss: mRNA:7.46e-03, methylation:7.14e-03, miRNA:5.18e-03, VCDN:2.02e-02
+Epoch 355, Train loss: mRNA:8.15e-03, methylation:6.81e-03, miRNA:5.04e-03, VCDN:1.93e-02
+Epoch 356, Train loss: mRNA:7.69e-03, methylation:6.89e-03, miRNA:5.19e-03, VCDN:1.86e-02
+Epoch 357, Train loss: mRNA:7.55e-03, methylation:7.28e-03, miRNA:5.23e-03, VCDN:1.97e-02
+Epoch 358, Train loss: mRNA:8.09e-03, methylation:6.84e-03, miRNA:5.16e-03, VCDN:1.93e-02
+Epoch 359, Train loss: mRNA:7.51e-03, methylation:7.02e-03, miRNA:5.10e-03, VCDN:1.90e-02
+Epoch 360, Train loss: mRNA:7.67e-03, methylation:6.77e-03, miRNA:5.00e-03, VCDN:1.98e-02
+
+Test: Epoch 360
+Train Accuracy: 0.9828   Test ACC: 0.8315
+Train F1: 0.9828         Test F1: 0.8382
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9761              0.1359              0.7600
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9522              0.4837              0.8090
+LumB 	           0.2000              0.9952              0.1739              0.9062
+
+Epoch 361, Train loss: mRNA:7.82e-03, methylation:6.67e-03, miRNA:5.12e-03, VCDN:1.90e-02
+Epoch 362, Train loss: mRNA:7.87e-03, methylation:6.57e-03, miRNA:5.06e-03, VCDN:1.91e-02
+Epoch 363, Train loss: mRNA:7.41e-03, methylation:6.64e-03, miRNA:5.13e-03, VCDN:1.99e-02
+Epoch 364, Train loss: mRNA:7.63e-03, methylation:6.60e-03, miRNA:5.06e-03, VCDN:1.84e-02
+Epoch 365, Train loss: mRNA:7.56e-03, methylation:6.94e-03, miRNA:5.10e-03, VCDN:1.83e-02
+Epoch 366, Train loss: mRNA:6.88e-03, methylation:7.23e-03, miRNA:5.09e-03, VCDN:2.05e-02
+Epoch 367, Train loss: mRNA:7.71e-03, methylation:8.22e-03, miRNA:5.00e-03, VCDN:2.02e-02
+Epoch 368, Train loss: mRNA:7.46e-03, methylation:9.63e-03, miRNA:5.09e-03, VCDN:1.96e-02
+Epoch 369, Train loss: mRNA:7.85e-03, methylation:1.17e-02, miRNA:5.06e-03, VCDN:1.86e-02
+Epoch 370, Train loss: mRNA:7.67e-03, methylation:7.84e-03, miRNA:5.05e-03, VCDN:1.86e-02
+Epoch 371, Train loss: mRNA:7.44e-03, methylation:7.58e-03, miRNA:5.14e-03, VCDN:1.94e-02
+Epoch 372, Train loss: mRNA:7.20e-03, methylation:8.94e-03, miRNA:5.04e-03, VCDN:1.88e-02
+Epoch 373, Train loss: mRNA:6.64e-03, methylation:7.33e-03, miRNA:5.22e-03, VCDN:1.98e-02
+Epoch 374, Train loss: mRNA:7.44e-03, methylation:8.57e-03, miRNA:5.13e-03, VCDN:2.10e-02
+Epoch 375, Train loss: mRNA:7.66e-03, methylation:7.97e-03, miRNA:5.09e-03, VCDN:1.90e-02
+Epoch 376, Train loss: mRNA:7.16e-03, methylation:7.76e-03, miRNA:5.02e-03, VCDN:1.84e-02
+Epoch 377, Train loss: mRNA:7.01e-03, methylation:8.41e-03, miRNA:5.16e-03, VCDN:1.87e-02
+Epoch 378, Train loss: mRNA:7.06e-03, methylation:7.00e-03, miRNA:4.98e-03, VCDN:1.82e-02
+Epoch 379, Train loss: mRNA:7.08e-03, methylation:8.37e-03, miRNA:5.09e-03, VCDN:1.76e-02
+Epoch 380, Train loss: mRNA:6.60e-03, methylation:8.44e-03, miRNA:4.98e-03, VCDN:1.75e-02
+Epoch 381, Train loss: mRNA:6.91e-03, methylation:7.31e-03, miRNA:4.98e-03, VCDN:1.79e-02
+Epoch 382, Train loss: mRNA:6.78e-03, methylation:8.52e-03, miRNA:5.05e-03, VCDN:1.72e-02
+Epoch 383, Train loss: mRNA:6.64e-03, methylation:7.37e-03, miRNA:5.04e-03, VCDN:1.75e-02
+Epoch 384, Train loss: mRNA:6.51e-03, methylation:6.83e-03, miRNA:4.97e-03, VCDN:1.69e-02
+Epoch 385, Train loss: mRNA:6.66e-03, methylation:7.44e-03, miRNA:5.09e-03, VCDN:1.73e-02
+Epoch 386, Train loss: mRNA:6.60e-03, methylation:6.79e-03, miRNA:5.07e-03, VCDN:1.74e-02
+Epoch 387, Train loss: mRNA:6.60e-03, methylation:6.86e-03, miRNA:5.13e-03, VCDN:1.80e-02
+Epoch 388, Train loss: mRNA:6.54e-03, methylation:6.95e-03, miRNA:5.00e-03, VCDN:1.74e-02
+Epoch 389, Train loss: mRNA:6.45e-03, methylation:6.53e-03, miRNA:5.09e-03, VCDN:1.71e-02
+Epoch 390, Train loss: mRNA:6.77e-03, methylation:6.74e-03, miRNA:5.11e-03, VCDN:1.82e-02
+Epoch 391, Train loss: mRNA:6.65e-03, methylation:6.86e-03, miRNA:4.91e-03, VCDN:1.67e-02
+Epoch 392, Train loss: mRNA:6.73e-03, methylation:6.47e-03, miRNA:5.03e-03, VCDN:1.68e-02
+Epoch 393, Train loss: mRNA:6.56e-03, methylation:6.69e-03, miRNA:5.15e-03, VCDN:1.74e-02
+Epoch 394, Train loss: mRNA:6.51e-03, methylation:6.96e-03, miRNA:4.87e-03, VCDN:1.71e-02
+Epoch 395, Train loss: mRNA:6.80e-03, methylation:6.65e-03, miRNA:5.03e-03, VCDN:1.82e-02
+Epoch 396, Train loss: mRNA:7.20e-03, methylation:6.89e-03, miRNA:4.94e-03, VCDN:1.72e-02
+Epoch 397, Train loss: mRNA:6.91e-03, methylation:6.90e-03, miRNA:5.07e-03, VCDN:1.67e-02
+Epoch 398, Train loss: mRNA:6.66e-03, methylation:6.62e-03, miRNA:5.05e-03, VCDN:1.61e-02
+Epoch 399, Train loss: mRNA:6.76e-03, methylation:6.51e-03, miRNA:5.01e-03, VCDN:1.68e-02
+Epoch 400, Train loss: mRNA:6.49e-03, methylation:6.54e-03, miRNA:4.96e-03, VCDN:1.66e-02
+
+Test: Epoch 400
+Train Accuracy: 0.9866   Test ACC: 0.8478
+Train F1: 0.9866         Test F1: 0.8499
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal 	           0.2000              0.9856              0.1359              0.7200
+Basal 	           0.2000              0.9904              0.1522              0.9643
+Her2 	           0.2000              1.0000              0.0543              0.6000
+LumA 	           0.2000              0.9761              0.4837              0.8876
+LumB 	           0.2000              0.9809              0.1739              0.8125
+
+Performing feature extraction using SHAP ...
+
+Performing feature extraction using LIME ...
+
+Average lime score =  0.5849376291914022 
+ Standard deviation =  0.04823731783883857 
+

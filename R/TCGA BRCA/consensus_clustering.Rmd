@@ -1,0 +1,140 @@
+---
+title: "Consensus Clustering -  Abandoned"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+In this notebook, I perform consensus clustering using the predicted biomarkers and then use that to validate that the biomarkers are reproducible, i.e., if the best clusters can contain the test data sufficiently well, then the biomarkers are reproducible.
+
+Also, I will use consensus clustering to determine the optimal number of biomarkers from the ranked lists produced by the neural network using shap.
+
+```{r packages}
+library(tidyverse)
+library(ggfortify)
+library(cluster)
+library(ggpubr)
+library(factoextra)
+```
+
+# Data Import
+```{r message=FALSE, warning=FALSE}
+pam50 <- read_csv("PAM50_subtype.csv")
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+test_idx <- unlist(strsplit(lines[4], ","))
+
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+pam50_test <- filter(pam50, pam50$patient_id %in% test_idx)
+
+
+meth <- read_csv("meth_top1000.csv")
+mrna <- read_csv("mrna_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+mrna_mrna <- read_csv("mrna_mrna_anova.csv")
+meth_meth <- read_csv("meth_meth_anova.csv")
+mirna_mirna <- read_csv("mirna_mirna_anova.csv")
+mrna_meth <- read_csv("meth_mrna_anova.csv")
+meth_mirna <- read_csv("meth_mirna_anova.csv")
+mirna_mrna <- read_csv("mrna_mirna_anova.csv")
+
+# Selecting only training samples for model training
+meth_train <- filter(meth, meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx) %>% column_to_rownames(var = "patient_id")
+mrna_mrna_train <- filter(mrna_mrna, mrna_mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_meth_train <- filter(meth_meth, meth_meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mirna_train <- filter(mirna_mirna, mirna_mirna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_meth_train <- filter(mrna_meth, mrna_meth$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_mirna_train <- filter(meth_mirna, meth_mirna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mrna_train <- filter(mirna_mrna, mirna_mrna$patient_id %in% train_idx) %>% 
+  column_to_rownames(var = "patient_id")
+
+# Selecting only testing samples for model testing
+meth_test <- filter(meth, meth$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_test <- filter(mrna, mrna$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_test <- filter(mirna, mirna$patient_id %in% test_idx) %>% column_to_rownames(var = "patient_id")
+mrna_mrna_test <- filter(mrna_mrna, mrna_mrna$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_meth_test <- filter(meth_meth, meth_meth$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mirna_test <- filter(mirna_mirna, mirna_mirna$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mrna_meth_test <- filter(mrna_meth, mrna_meth$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+meth_mirna_test <- filter(meth_mirna, meth_mirna$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+mirna_mrna_test <- filter(mirna_mrna, mirna_mrna$patient_id %in% test_idx) %>% 
+  column_to_rownames(var = "patient_id")
+
+
+# Setting row.names
+meth <- column_to_rownames(meth, var = "patient_id")
+mrna <- column_to_rownames(mrna, var = "patient_id")
+mirna <- column_to_rownames(mirna, var = "patient_id")
+mrna_mrna <- column_to_rownames(mrna_mrna, var = "patient_id")
+meth_meth <- column_to_rownames(meth_meth, var = "patient_id")
+mirna_mirna <- column_to_rownames(mirna_mirna, var = "patient_id")
+mrna_meth <- column_to_rownames(mrna_meth, var = "patient_id")
+meth_mirna <- column_to_rownames(meth_mirna, var = "patient_id")
+mirna_mrna <- column_to_rownames(mirna_mrna, var = "patient_id")
+```
+
+Combining them
+```{r}
+all_train <- bind_cols(mrna_train, meth_train, mirna_train, mrna_mrna_train, meth_meth_train, mirna_mirna_train, mrna_meth_train, meth_mirna_train, mirna_mrna_train)
+all_test <- bind_cols(mrna_test, meth_test, mirna_test, mrna_mrna_test, meth_meth_test, mirna_mirna_test, mrna_meth_test, meth_mirna_test, mirna_mrna_test)
+all_data <- bind_cols(mrna, meth, mirna, mrna_mrna, meth_meth, mirna_mirna, mrna_meth, meth_mirna, mirna_mrna)
+```
+
+# Test Consensus Clustering
+
+```{r}
+# install.packages("diceR")
+library(diceR)
+
+temp <- all_train[1:100, 1:50]
+test <- all_train[200:250, 1:50]
+CC <- consensus_cluster(temp, nk = 3:6, p.item = 1, reps = 5,
+                        algorithms = c("hc", "pam", "diana"))
+# We are using p.item = 1, i.e., using all data because it is already divided into train and test already
+str(CC)
+#CC_imputed <- impute_missing(CC, all_train, nk = 4)
+#str(CC_imputed)
+
+ccomp <- consensus_evaluate(temp, CC, plot = FALSE)
+ccomp
+```
+
+All this looks like a complete dud. There is no point to consensus clustering. It just gives me the clusters according to a combination of clustering algorithms, but does not give me a function so that I can evaluate this on a test data set.
+
+F
+
+# Clustering Methods
+
+## Principal Component Analysis
+
+```{r}
+pca_res <- prcomp(all_train, scale. = TRUE)
+
+autoplot(pca_res, data = pam50_train, colour = 'cancer_subtype', frame = TRUE, frame.type = 'norm')
+```
+
+## K-means
+```{r}
+autoplot(stats::kmeans(all_test, 5), data = all_test)
+autoplot(pam(all_test, 5))
+```
+

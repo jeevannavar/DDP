@@ -1,0 +1,101 @@
+---
+title: "Data type importance using Elastic Net"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+Loading packages:
+```{r}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(broom)
+library(caret)
+library(glmnet)
+library(glmnetUtils)
+library(foreach)
+```
+
+Loading data:
+```{r}
+# Getting the training indices
+trte <- file("trte_partition.txt", open = "r")
+lines <- readLines(trte)
+close(trte)
+train_idx <- unlist(strsplit(lines[2], ","))
+
+pam50 <- read_csv("PAM50_subtype.csv")
+pam50_train <- filter(pam50, pam50$patient_id %in% train_idx)
+
+
+mrna <- read_csv("mrna_complete.csv")
+meth <- read_csv("meth_complete.csv")
+mirna <- read_csv("mirna_complete.csv")
+
+# Selecting only training samples for doing the processing
+mrna_train <- filter(mrna, mrna$patient_id %in% train_idx)
+meth_train <- filter(meth, meth$patient_id %in% train_idx)
+mirna_train <- filter(mirna, mirna$patient_id %in% train_idx)
+
+#Check that the labels are identical
+identical(pam50_train$patient_id, mrna_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, meth_train$patient_id) #This has to be true
+identical(pam50_train$patient_id, mirna_train$patient_id) #This has to be true
+```
+
+Check if any column names are common. If yes, then modify names so that they all have a small code in front of them.
+```{r}
+common_feature_names <- intersect(intersect(names(mrna), names(meth)), names(mirna))
+common_feature_names
+```
+Since there are no common names, we won't need to add any snippets to the names to recognise which data type they belong to.
+
+Concatenating data:
+```{r}
+# cbind or outer union or merge
+concatenated_set <- merge(merge(mrna_train, meth_train, by="patient_id"), mirna_train, by="patient_id")
+```
+
+Running elastic net:
+```{r}
+#Remember to scale and center the values
+a <- seq(0.1, 0.9, 0.05)    #Alpha values search grid
+
+X <- scale(as.matrix(concatenated_set[,2:ncol(concatenated_set)]), center = TRUE, scale = TRUE)
+Y <- as.factor(as.matrix(pam50_train$cancer_subtype))
+
+num_cpus <- 45
+cl <- makeCluster(num_cpus) 
+doParallel::registerDoParallel(cl)
+search <- foreach(i = a, .combine = rbind) %dopar% {
+  cv <- glmnet::cv.glmnet(X, Y, family = "multinomial", nfold = 10, type.measure = "deviance", parallel = TRUE, alpha = i)
+  data.frame(cvm = cv$cvm[cv$lambda == cv$lambda.1se], lambda.1se = cv$lambda.1se, alpha = i)
+}
+stopCluster(cl)
+cv <- search[search$cvm == min(search$cvm), ]
+model <- glmnet(X, Y, family = "multinomial", lambda = cv$lambda.1se, alpha = cv$alpha)
+
+coeff = coef(model)
+out <- 0
+#Coeff is a list because of multinomial classification
+for (i in 1:length(coeff)) {
+  temp <- coeff[i][[1]]
+  var <- names(temp[which(temp !=0),])
+  out <- c(out,var)
+}
+
+selectedVar <- unique(out)[3:length(unique(out))]
+```
+
+Checking output and plotting:
+```{r}
+a <- intersect(names(mrna), selectedVar)
+b <- intersect(names(meth), selectedVar)
+c <- intersect(names(mirna), selectedVar)
+
+selected_features <- tibble(Data_type = c("mRNA", "DNA Methylation", "miRNA"), Features_selected = c(length(a), length(b), length(c)))
+
+ggplot(selected_features, aes(x=Data_type, y=Features_selected))+geom_bar(stat="identity")
+```
+

@@ -1,11 +1,8 @@
-# MORONET: Multi-Omics gRaph cOnvolutional NETworks
-Tongxin Wang, Wei Shao, Zhi Huang, Haixu Tang, Jie Zhang, Zhengming Ding, and Kun Huang
+# Dual Degree Project
+This bioinformatics project on multi-omics/multi-tissue data integration and imputation started from the graph convolutional networks and view correlation discovery network used in the [MORONET](https://github.com/txWang/MORONET/) study. "MORONET is a multi-omics data integrative analysis framework for classification tasks in biomedical applications."  
 
-MORONET is a novel multi-omics data integrative analysis framework for classification tasks in biomedical applications.
+Since then the project has seen many improvements. A more detailed report stating the project's objectives and achievements will be presented here soon.
 
-![MORONET](https://github.com/txWang/MORONET/blob/master/MORONET.png "MORONET")
-Overview of MORONET. \
-<sup>MORONET combines GCN for multi-omics specific learning and VCDN for multi-omics integration. For concise illustration, an example of one patient is chosen to demonstrate the VCDN component for multi-omics integration after omics-specific learning. Pre-processing is first performed on each omics data type to remove noise and redundant features. Omics-specific GCN learns class prediction using omics features and the corresponding patient similarity network generated from the omics data. Cross-omics discovery tensor is calculated from initial predictions from GCN and forwarded to VCDN for final prediction. MORONET is an end-to-end model and all networks are trained jointly.<sup>
 
 ## Dependencies
 * Python 3.6.5
@@ -13,6 +10,7 @@ Overview of MORONET. \
 * pandas 0.23.0
 * scikit-learn 0.21.1
 * pyTorch 1.3.1
+
 
 ## Files
 *main_brca.py*: An example of BRCA dataset for PAM50 subtype classification\

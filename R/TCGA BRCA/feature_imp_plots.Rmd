@@ -1,6 +1,8 @@
 ---
 title: "Feature Importance plots"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 
 Importing libraries
@@ -87,7 +89,7 @@ Loading shap and lime values
 lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
 shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
     col_types = cols(features = col_skip()))
-shap <- rename(shap, features = features_1)
+shap <- dplyr::rename(shap, features = features_1)
 ```
 
 Average values over the three sets
@@ -168,7 +170,7 @@ svm_lime <- read_csv("/data/users/bs16b001/logs/20210131/svm/svm_lime.csv")
 lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
 shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
     col_types = cols(features = col_skip()))
-shap <- rename(shap, features = features_1)
+shap <- dplyr::rename(shap, features = features_1)
 
 # Combining values
 lime <- arrange(lime, features)
@@ -202,7 +204,7 @@ ggplot(ranks, aes(x=lime, y=svm_lime, colour=Datatype))+
 ## Correlation plot
 ```{r}
 matrix <- values[c("shapley_values", "aggregate.x", "f_value", "aggregate.y")]
-matrix <- rename(matrix, "gcn_shap"="shapley_values", "gcn_lime"="aggregate.x", "anova"="f_value", "svm_lime"="aggregate.y")
+matrix <- dplyr::rename(matrix, "gcn_shap"="shapley_values", "gcn_lime"="aggregate.x", "anova"="f_value", "svm_lime"="aggregate.y")
 corr_matrix <- cor(matrix)
 
 library(corrplot)
@@ -213,7 +215,7 @@ corrplot.mixed(corr_matrix, lower.col = "black")
 ```{r}
 lime_all_int <- read_csv("/data/users/bs16b001/logs/20210217/lime_1.csv")
 shap_all_int <- read_csv("/data/users/bs16b001/logs/20210217/shap_1.csv", 
-    col_types = cols(features = col_skip())) %>% rename("features"="features_1")
+    col_types = cols(features = col_skip())) %>% dplyr::rename("features"="features_1")
 
 # Combining values
 lime_all_int <- arrange(lime_all_int, features)
@@ -975,21 +977,97 @@ length(intersect(uterine_cancer_genes, breast_cancer_genes))
 length(unique(values$features))
 length(intersect(unique(values$features), breast_cancer_genes))
 length(intersect(unique(values$features), uterine_cancer_genes))
+
+msigdb_genes <- unique(all_gene_sets$gene_symbol)
+length(unique(values$features))
+length(msigdb_genes)
+length(intersect(msigdb_genes, unique(values$features)))
 ```
 
 Removing redundant genesets
 ```{r}
-enriched_pathways <- fgseaRes_gcnlime$pathway[fgseaRes_gcnlime$padj < 0.05]
+fgsea_output <- fgseaRes_gcnlime %>%
+  mutate(NES = abs(NES)) %>%
+  mutate(gs_name = fct_reorder(pathway, NES))
+
+enriched_pathways <- fgsea_output$gs_name[fgsea_output$padj < 0.05]
 selected_pathways <- all_gene_sets %>% 
   filter(gs_name %in% enriched_pathways) %>%
-  select(gs_name, gene_symbol)
+  dplyr::select(gs_name, gene_symbol)
 
 selected_pathways_list <- lapply(split(selected_pathways, selected_pathways$gs_name), function(x) as.list(x[,2])[[1]])
 
-temp <- sapply(selected_pathways_list, function(x) sapply(selected_pathways_list, function(y) {
+iou_matrix <- sapply(selected_pathways_list, function(x) sapply(selected_pathways_list, function(y) {
     length(intersect(x,y))/length(union(x,y))
   }))
 
-# temp[,"GO_NEGATIVE_REGULATION_OF_PEPTIDE_SECRETION"]
+get_nonoverlapping <- function(iou_matrix) {
+  input_names <- colnames(iou_matrix)
+  output_names <- input_names
+  
+  while (!is_empty(input_names)) {
+    name <- input_names[1]
+    input_names <- input_names[-1]
+    overlapping_names <- colnames(iou_matrix)[iou_matrix[name,] > 0.2]
+    
+    input_names <- input_names[!input_names %in% overlapping_names]
+    output_names <- output_names[!output_names %in% overlapping_names]
+    output_names <- c(output_names, name)
+  }
+  return(output_names)
+}
+
+nonoverlapping_gs <- get_nonoverlapping(iou_matrix)
+nonoverlapping_gs <- nonoverlapping_gs[nonoverlapping_gs != "GSE6092_B_BURGDOFERI_VS_B_BURGDORFERI_AND_IFNG_STIM_ENNDOTHELIAL_CELL_UP"]
+```
+```{r}
+genesets_cat <- all_gene_sets %>% 
+                  filter(!gs_cat %in% c("C1", "C7", "C8")) %>%
+                  dplyr::select(gs_cat, gs_subcat, gs_name) %>% 
+                  distinct()
+
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C6"] <- "Oncogenic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C7"] <- "Immunologic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "H"] <- "Hallmark"
+genesets_cat <- select(genesets_cat, gs_subcat, gs_name)
+
+gcnlime_gs <- fgseaRes_gcnlime %>%
+                filter(padj < 0.05) %>%
+                filter(pathway %in% nonoverlapping_gs) %>%
+                dplyr::select(gs_name = pathway, NES) %>%
+                left_join(genesets_cat)
+
+gcnlime_gs$gs_subcat <- gcnlime_gs$gs_subcat %>%
+                    recode("CGP" = "Chemical/Genetic Perturbations",
+                           "CM" = "Cancer Modules",
+                           "CP:WIKIPATHWAYS" = "WikiPathways",
+                           "GO:BP" = "GO: Biological Processes",
+                           "MIR:MIRDB" = "miRDB Targets",
+                           "CGN" = "Cancer Gene Neighbourhoods",
+                           "GO:CC" = "GO: Cellular Components",
+                           "GO:MF" = "GO: Molecular Function",
+                           "HPO" = "Human Phenotype Ontology",
+                           "CP:REACTOME" = "Reactome Pathways",
+                           "TFT:TFT_Legacy" = "Legacy TF Targets")
+
+gcnlime_gs %>%
+  mutate(NES = abs(NES)) %>%
+  #slice_max(NES, n = 40) %>%
+  mutate(gs_name = fct_reorder(gs_name, NES)) %>%
+  ggplot(aes(x = NES, y = gs_name, fill = gs_subcat))+
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  labs(y = "Top Significant Genesets at FDR = 5%", x = "Normalized Enrichment Score", title = "Gene Set Enrichment Analysis Results", fill = "Sub-collection")
+```
+
+Enriching for a gene set consisting of all genes in msigdb associated with breast
+```{r}
+pathways <- unique(str_subset(all_gene_sets$gs_name, pattern=fixed("BREAST")))
+subset_list <- all_gene_sets %>% filter(gs_name %in% pathways)
+subset_list$gs_name = "Breast_Cancer"
+pathways_list = split(x = subset_list$gene_symbol, f = subset_list$gs_name)
+
+genes <- values %>% dplyr::select(features, lime) %>% deframe()
+fgseaRes_breast_msigdb <- fgsea(pathways = pathways_list, stats = genes, nperm = 1000000, nproc = 30)
 ```
 

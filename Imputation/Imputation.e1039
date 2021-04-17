@@ -1,0 +1,53 @@
+[NbConvertApp] Converting notebook Omics_Imputation.ipynb to notebook
+[NbConvertApp] Executing notebook with kernel: python3
+[NbConvertApp] ERROR | Error while converting 'Omics_Imputation.ipynb'
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/nbconvertapp.py", line 408, in export_single_notebook
+    output, resources = self.exporter.from_filename(notebook_filename, resources=resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 179, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 197, in from_file
+    return self.from_notebook_node(nbformat.read(file_stream, as_version=4), resources=resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/notebook.py", line 32, in from_notebook_node
+    nb_copy, resources = super(NotebookExporter, self).from_notebook_node(nb, resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 139, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 316, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/base.py", line 47, in __call__
+    return self.preprocess(nb, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/execute.py", line 381, in preprocess
+    nb, resources = super(ExecutePreprocessor, self).preprocess(nb, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/base.py", line 69, in preprocess
+    nb.cells[index], resources = self.preprocess_cell(cell, resources, index)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/execute.py", line 424, in preprocess_cell
+    raise CellExecutionError.from_cell_and_msg(cell, out)
+nbconvert.preprocessors.execute.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from sklearn.ensemble import RandomForestRegressor
+
+imp = IterativeImputer(estimator = RandomForestRegressor(max_depth=7), 
+                       initial_strategy = "mean", imputation_order = "random", random_state = 42)
+imp.fit(X_train)
+
+rf7_imputed = imp.transform(X_val)
+rf7_imputed = pd.DataFrame(rf10_imputed, columns = X_val.columns, index = X_val.index)
+
+
+print(rf7_imputed.shape)
+mask = [x=="mirna" for x in datatypes]
+rf7_imputed.loc[:,mask].head()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m<ipython-input-18-e017564a4a6b>[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;34m[0m[0m
+[1;32m      7[0m [0mrf7_imputed[0m [0;34m=[0m [0mimp[0m[0;34m.[0m[0mtransform[0m[0;34m([0m[0mX_val[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m [0mrf7_imputed[0m [0;34m=[0m [0mpd[0m[0;34m.[0m[0mDataFrame[0m[0;34m([0m[0mrf10_imputed[0m[0;34m,[0m [0mcolumns[0m [0;34m=[0m [0mX_val[0m[0;34m.[0m[0mcolumns[0m[0;34m,[0m [0mindex[0m [0;34m=[0m [0mX_val[0m[0;34m.[0m[0mindex[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m [0;34m[0m[0m
+[1;32m     10[0m [0;34m[0m[0m
+
+[0;31mNameError[0m: name 'rf10_imputed' is not defined
+NameError: name 'rf10_imputed' is not defined
+

@@ -136,13 +136,17 @@ brca_genes <- unlist(str_split(brca_genes, "\\|"))[ c(FALSE, TRUE) ]
 
 Selecting only those features selected for brca
 ```{r}
+common_genes <- intersect(discovery$genes, validation$genes)
+
 metabric_d <- discovery %>%
   filter(genes %in% brca_genes) %>%
+  filter(genes %in% common_genes) %>%
   remove_rownames() %>%
   column_to_rownames("genes")
 
 metabric_v <- validation %>%
   filter(genes %in% brca_genes) %>%
+  filter(genes %in% common_genes) %>%
   remove_rownames() %>%
   column_to_rownames("genes")
 
@@ -151,15 +155,75 @@ setdiff(metabric_d$genes, metabric_v$genes)
 
 Transposing and saving to files
 ```{r}
-transpose_df(metabric_d) %>%
-  dplyr::rename(patient_id = "rowname") %>%
-  write.csv("metabric_discovery.csv", row.names = FALSE)
+metabric_d <- transpose_df(metabric_d) %>%
+  dplyr::rename(patient_id = "rowname")
+metabric_d$patient_id <- unlist(str_split(metabric_d$patient_id, "\\_"))[c(TRUE, FALSE)]
+  
+write.csv(metabric_d, "metabric_discovery.csv", row.names = FALSE)
 
-transpose_df(metabric_v) %>%
-  dplyr::rename(patient_id = "rowname") %>%
-  write.csv("metabric_validation.csv", row.names = FALSE)
+metabric_v <- transpose_df(metabric_v) %>%
+  dplyr::rename(patient_id = "rowname")
+metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE, FALSE)]
+
+write.csv(metabric_v, "metabric_validation.csv", row.names = FALSE)
 ```
 
+Combining metabric data
+```{r}
+metabric_mrna_common_genes <- rbind(metabric_d, metabric_v)
+write.csv(metabric_mrna_common_genes, "metabric_mrna_common_genes.csv", row.names = FALSE)
+```
+
+
+Processing TCGA BRCA data
+Load up TCGA BRCA mRNA Expression data, convert to entrez id, and then select only those features that are in metabric_discovery/metabric_validation
+```{r}
+tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
+brca_genes <- names(tcga_brca)[2:1001]
+brca_genes <- c("patient_id", unlist(str_split(brca_genes, "\\|"))[c(FALSE, TRUE)])
+names(tcga_brca) <- brca_genes
+
+tcga_brca <- tcga_brca %>%
+  dplyr::select(names(metabric_mrna_common_genes))
+
+write.csv(tcga_brca, "tcga_brca_mrna.csv", row.names = FALSE)
+```
+
+
+Save a dataframe with all the relevant (~1000) genes' entrez id and gene symbols
+```{r}
+tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
+brca_genes <- names(tcga_brca)[2:1001]
+
+entrez_genesym <- tibble("Entrez_id" = unlist(str_split(brca_genes, "\\|"))[c(FALSE, TRUE)],
+                         "Gene_symbol" = unlist(str_split(brca_genes, "\\|"))[c(TRUE, FALSE)]) %>%
+  filter(Entrez_id %in% names(metabric_mrna_common_genes))
+
+write.csv(entrez_genesym, "entrez_genesym.csv", row.names = FALSE)
+```
+
+Train-test partition where all of TCGA is training and all of METABRIC is testing
+```{r}
+tcga_metabric <- rbind(tcga_brca, metabric_mrna_common_genes)
+write.csv(tcga_metabric, "tcga_metabric_mrna.csv", row.names = FALSE)
+
+fileConn<-file("trte_partition_tcga_metabric.txt")
+writeLines(c("training patient_id", paste(unlist(tcga_brca$patient_id), collapse = ","), "testing patient_id", paste(unlist(metabric_mrna_common_genes$patient_id), collapse = ",")), fileConn)
+close(fileConn)
+```
+
+Labels file
+```{r}
+labels_metabric <- rbind(labels_discovery, labels_validation)
+labels_tcga <- read_csv("../TCGA BRCA/PAM50_subtype.csv")
+
+labels_tcga_metabric <- rbind(labels_tcga, labels_metabric)
+
+write.csv(labels_tcga_metabric, "PAM50_tcga_metabric.csv", row.names = FALSE)
+```
+
+
+## Independent Pre-processing
 Preparing for ANOVA
 ```{r}
 metabric_d <- discovery %>%
@@ -211,11 +275,32 @@ metabric_best1000 <- greedySelect(metabric_d_anova, discovery_sorted["gene"][[1]
 index <- match(metabric_best1000, names(metabric_d_anova))
 index <- prepend(index,1)     #To add the column with the patient_ids too to the output
 metabric_d_top1000 <- metabric_d_anova[,index]
-write.csv(metabric_d_top1000, "metabric_d_top1000.csv", row.names = FALSE)
+#write.csv(metabric_d_top1000, "metabric_d_top1000.csv", row.names = FALSE)
 
 index <- match(metabric_best1000, names(metabric_v))
 index <- prepend(index,1)     #To add the column with the patient_ids too to the output
 metabric_v_top1000 <- metabric_v[,index]
-write.csv(metabric_v_top1000, "metabric_v_top1000.csv", row.names = FALSE)
+#write.csv(metabric_v_top1000, "metabric_v_top1000.csv", row.names = FALSE)
+
+metabric_top1000 <- rbind(metabric_d_top1000, metabric_v_top1000)
+write.csv(metabric_top1000, "metabric_top1000.csv", row.names = FALSE)
+```
+
+Train Test Partition
+```{r}
+fileConn<-file("trte_partition_metabric.txt")
+writeLines(c("training patient_id", paste(unlist(metabric_d_top1000$patient_id), collapse = ","), "testing patient_id", paste(unlist(metabric_v_top1000$patient_id), collapse = ",")), fileConn)
+close(fileConn)
+```
+
+Labels file
+```{r}
+labels_discovery <- read_delim("clinical_data_discovery.txt", "\t") %>% 
+                      dplyr::select(patient_id = METABRIC_ID, cancer_subtype = Pam50Subtype)
+labels_validation <- read_delim("clinical_data_validation.txt", "\t") %>% 
+                      dplyr::select(patient_id = METABRIC_ID, cancer_subtype = Pam50Subtype)
+
+labels_metabric <- rbind(labels_discovery, labels_validation)
+write.csv(labels_metabric, "PAM50_metabric.csv", row.names = FALSE)
 ```
 

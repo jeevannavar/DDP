@@ -52,6 +52,7 @@ def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_e
         losses_df       = pandas dataframe, contains losses for each of the GCNs and the Combiner for every epoch
         metrics_df      = pandas dataframe, contains accuracy and F1 scores for train and test data at test intervals, as well as class specific accuracies
         feature_imp     = dictionary of pandas dataframes, where keys = feature_extract. dataframe contains list of features and coefficients for the features
+        model_dict      = dictionary of torch layers; contains all trained parameters that are needed for test_VCDN() function
     '''
     ############################################################################################################################################################################
     
@@ -377,4 +378,4 @@ def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_e
         std_dev = np.std([each.score for each in sp_obj.explanations])
         print("Average lime score = ", average_lime_score, "\n", "Standard deviation = ", std_dev, "\n")
 
-    return losses_df, metrics_df, feature_imp
+    return losses_df, metrics_df, feature_imp, model_dict

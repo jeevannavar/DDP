@@ -159,13 +159,13 @@ metabric_d <- transpose_df(metabric_d) %>%
   dplyr::rename(patient_id = "rowname")
 metabric_d$patient_id <- unlist(str_split(metabric_d$patient_id, "\\_"))[c(TRUE, FALSE)]
   
-write.csv(metabric_d, "metabric_discovery.csv", row.names = FALSE)
+#write.csv(metabric_d, "metabric_discovery.csv", row.names = FALSE)
 
 metabric_v <- transpose_df(metabric_v) %>%
   dplyr::rename(patient_id = "rowname")
 metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE, FALSE)]
 
-write.csv(metabric_v, "metabric_validation.csv", row.names = FALSE)
+#write.csv(metabric_v, "metabric_validation.csv", row.names = FALSE)
 ```
 
 Combining metabric data
@@ -190,18 +190,6 @@ write.csv(tcga_brca, "tcga_brca_mrna.csv", row.names = FALSE)
 ```
 
 
-Save a dataframe with all the relevant (~1000) genes' entrez id and gene symbols
-```{r}
-tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
-brca_genes <- names(tcga_brca)[2:1001]
-
-entrez_genesym <- tibble("Entrez_id" = unlist(str_split(brca_genes, "\\|"))[c(FALSE, TRUE)],
-                         "Gene_symbol" = unlist(str_split(brca_genes, "\\|"))[c(TRUE, FALSE)]) %>%
-  filter(Entrez_id %in% names(metabric_mrna_common_genes))
-
-write.csv(entrez_genesym, "entrez_genesym.csv", row.names = FALSE)
-```
-
 Train-test partition where all of TCGA is training and all of METABRIC is testing
 ```{r}
 tcga_metabric <- rbind(tcga_brca, metabric_mrna_common_genes)
@@ -216,12 +204,25 @@ Labels file
 ```{r}
 labels_metabric <- rbind(labels_discovery, labels_validation)
 labels_tcga <- read_csv("../TCGA BRCA/PAM50_subtype.csv")
-
 labels_tcga_metabric <- rbind(labels_tcga, labels_metabric)
 
+labels_tcga_metabric <- labels_tcga_metabric[match(tcga_metabric$patient_id, labels_tcga_metabric$patient_id), ]
+
+identical(tcga_metabric$patient_id, labels_tcga_metabric$patient_id)
 write.csv(labels_tcga_metabric, "PAM50_tcga_metabric.csv", row.names = FALSE)
 ```
 
+Save a dataframe with all the relevant (~1000) genes' entrez id and gene symbols
+```{r}
+tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
+brca_genes <- names(tcga_brca)[2:1001]
+
+entrez_genesym <- tibble("Entrez_id" = unlist(str_split(brca_genes, "\\|"))[c(FALSE, TRUE)],
+                         "Gene_symbol" = unlist(str_split(brca_genes, "\\|"))[c(TRUE, FALSE)]) %>%
+  filter(Entrez_id %in% names(metabric_mrna_common_genes))
+
+write.csv(entrez_genesym, "entrez_genesym.csv", row.names = FALSE)
+```
 
 ## Independent Pre-processing
 Preparing for ANOVA

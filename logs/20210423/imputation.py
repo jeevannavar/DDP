@@ -19,7 +19,7 @@ mirna = pd.read_csv("../R/TCGA BRCA/mirna_anova.csv", index_col=0)
 labels = pd.read_csv("../R/TCGA BRCA/PAM50_subtype.csv", index_col=0)
 
 all_data = pd.merge(pd.merge(mrna, meth, left_index=True, right_index=True), mirna,  left_index=True, right_index=True)
-all_data = (all_data - all_data.min())/(all_data.max() - all_data.min())
+all_data = (all_data - all_data.mean())/all_data.std()
 datatypes = ["mrna"]*mrna.shape[1] + ["meth"]*meth.shape[1] + ["mirna"]*mirna.shape[1]
 
 X_train, X_test, y_train, y_test = train_test_split(all_data, labels, test_size = 0.2, random_state = NUMBER, stratify = labels)
@@ -28,7 +28,7 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size = 
 X_test_truth = deepcopy(X_test)
 X_val_truth = deepcopy(X_val)
 
-methods = ["mean", "median", "enet", "knn_iter", "rf", "knn1", "knn50"]
+methods = ["mean", "median"]#, "enet", "knn_iter", "rf", "knn1", "knn50"]
 imputed = {}
 imputers = {
     "mean": SimpleImputer(missing_values=np.nan, strategy="mean"),
@@ -62,7 +62,7 @@ for missing in missing_types:
         imputed_values = imp.transform(X_test)
         
         rmse_score = rmse(truth, imputed_values[:, mask])
-        std_score = imputed_values[:, mask].std()
+        std_score = imputed[:, mask].std()
         print("RMSE = ", rmse_score)
         print("Std = ", std_score)
         rmse_dict[method] = rmse_score

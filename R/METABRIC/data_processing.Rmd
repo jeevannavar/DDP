@@ -171,7 +171,8 @@ metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE,
 Combining metabric data
 ```{r}
 metabric_mrna_common_genes <- rbind(metabric_d, metabric_v)
-write.csv(metabric_mrna_common_genes, "metabric_mrna_common_genes.csv", row.names = FALSE)
+temp <- metabric_mrna_common_genes[match(labels_metabric$patient_id, metabric_mrna_common_genes$patient_id),]
+write.csv(temp, "metabric_mrna_common_genes.csv", row.names = FALSE)
 ```
 
 

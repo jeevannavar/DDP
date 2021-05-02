@@ -41,8 +41,7 @@ imputers = {
     }
 
 missing_types = [["mirna"], ["meth"], ["mrna"], ["mirna", "meth"], ["meth", "mrna"], ["mrna", "mirna"]]
-df_rows_rmse = []
-df_rows_std = []
+df_list = []
 for missing in missing_types:
     print("\n", "="*50)
     print("Missing datatype = ", missing, "\n")
@@ -50,30 +49,30 @@ for missing in missing_types:
     mask = [x in missing for x in datatypes]
     X_test = deepcopy(X_test_truth)
     X_test.loc[:,mask] = np.nan
-    truth = X_test_truth.loc[:, mask].to_numpy()
-    random = np.random.rand(truth.shape[0], truth.shape[1])
+    truth = X_test_truth.loc[:, mask]
+    random = pd.DataFrame(np.random.rand(truth.shape[0], truth.shape[1]), columns = X_test.loc[:,mask].columns, index = X_test.index)
 
-    rmse_dict = {"random": rmse(truth,random)}
-    std_dict = {"random": random.std()}
+    sp_dict = {"random": random.corrwith(truth)}
     for method in methods:
+        print("\n", "-"*50)
         print(method)
+        
         imp = imputers[method]
         imp.fit(X_train)
         imputed_values = imp.transform(X_test)
+        imputed_values = pd.DataFrame(imputed_values, columns = X_test.columns, index = X_test.index)
         
-        rmse_score = rmse(truth, imputed_values[:, mask])
-        std_score = imputed_values[:, mask].std()
-        print("RMSE = ", rmse_score)
-        print("Std = ", std_score)
-        rmse_dict[method] = rmse_score
-        std_dict[method] = std_score
-        print("\n", "-"*50)
-    df_rows_rmse.append(rmse_dict)
-    df_rows_std.append(std_dict)
+        sp_score = imputed_values.loc[:,mask].corrwith(truth)
+        sp_dict[method] = sp_score
+        
+        print("Mean Spearman Score =", sp_score.mean())
+        print("Std Spearman Score =", sp_score.std())
+              
+    df = pd.DataFrame(sp_dict)
+    df = df.melt(ignore_index=False, var_name="method", value_name=" ".join(missing))
+    df.set_index("method", append=True, inplace=True)
+    df_list.append(df)
 
-print(df_rows_rmse)
-print(df_rows_std)
-rmse_df = pd.DataFrame(df_rows_rmse, index = ["mirna", "meth", "mrna", "mirna+meth", "meth+mrna", "mrna+mirna"])
-rmse_df.to_csv("imputation_rmse.csv")
-std_df = pd.DataFrame(df_rows_std, index = ["mirna", "meth", "mrna", "mirna+meth", "meth+mrna", "mrna+mirna"])
-std_df.to_csv("imputation_std.csv")
+final = pd.concat(df_list, axis = 1)
+final = final.melt(ignore_index=False, var_name = "missing_omics", value_name = "Spearman")
+final.to_csv("spearman.csv", index_label = ["feature", "method"], na_rep = "0")

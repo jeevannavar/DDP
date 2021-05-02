@@ -1,0 +1,62 @@
+---
+title: "Imputation Plots"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Imputation plots and selecting the best imputation methods
+
+The Omics_Imputation.ipynb notebook in the folder was used to test a variety of methods and various parameters on a small set of missing omics, in order to find the best paramaters to the imputation methods. Simple readymade methods were tried.
+
+The imputation.py file in the folder is used to run the methods with selected parameters on all combination of missing omics. It generates a csv file containing spearman correlation values for each missing omics combination, for each  methods, for each feature.
+
+This file is used to generate a box-plot for the spearman correlation values, so as to determine the best imputation method to use.
+
+Also, initially, RMSE and Stadard Deviation (a proxy for Variance) was used in place of Spearman Correlation for evaluating the imputation methods. The plots/csv files for the same can be found in "/logs/202104__/".
+
+
+## Loading the data
+
+```{r}
+spearman <- read_csv("spearman.csv")
+summary(spearman)
+head(spearman)
+```
+
+## Processing the data
+
+Adding a column stating what omics type any given feature belongs to.
+```{r}
+meth <- read_csv("../R/TCGA BRCA/meth_top1000.csv", n_max = 1)
+mrna <- read_csv("../R/TCGA BRCA/mrna_top1000.csv", n_max = 1)
+mirna <- read_csv("../R/TCGA BRCA/mirna_anova.csv", n_max = 1)
+
+spearman$datatype <- NA
+spearman$datatype[spearman$feature %in% names(meth)] = "meth"
+spearman$datatype[spearman$feature %in% names(mrna)] = "mrna"
+spearman$datatype[spearman$feature %in% names(mirna)] = "mirna"
+
+head(spearman)
+```
+
+Removing the rows that represent features that were not missing, which consequently have zeros (in place of NaN) in the "Spearman" column.
+```{r}
+spearman <- spearman %>%
+  rowwise() %>%
+  filter(grepl(datatype, missing_values))
+
+head(spearman)
+```
+
+## Box-plot
+
+```{r}
+spearman %>%
+  ggplot(aes(y = Spearman, x = missing_values, fill = method)) +
+  geom_boxplot()
+```
+

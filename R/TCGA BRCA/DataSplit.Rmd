@@ -44,7 +44,7 @@ mrna <- unique(unlist(mrna)[2:length(mrna)])
 ```{r}
 mirna <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_mirnaseq__illuminahiseq_mirnaseq__bcgsc_ca__Level_3__miR_isoform_expression__data.Level_3.2016012800.0.0/mirna.txt", 
      "\t", escape_double = FALSE, trim_ws = TRUE) %>% 
-          select(SampleId)
+          dplyr::select(SampleId)
 mirna <-  unique(mirna$SampleId)
 
 #Now to get mirna samples in the right format
@@ -62,7 +62,7 @@ common_samples <- intersect(intersect(meth, mrna), mirna)
 First, we have to read the file containing the PAM50 labels
 ```{r}
 pam50 <- read_csv("/data/users/bs16b001/R/pam50.csv") %>%
-          mutate(pam50, Sample_ID = sub(pattern, "\\1", Sample_ID)) %>%
+          mutate(Sample_ID = sub(pattern, "\\1", Sample_ID)) %>%
           filter(Sample_ID %in% common_samples)
 
 #Now since for some samples the PAM50 label was not present in the file, we will remove them from the common samples list too.
@@ -80,28 +80,28 @@ test  <- pam50[-train.index,]
 ### The PAM50_subtype file
 ```{r}
 pam50 %>%
-  rename(patient_id = "Sample_ID", cancer_subtype = "PAM50") %>%
-  write.csv("PAM50_subtype.csv", row.names = FALSE)
+  dplyr::rename(patient_id = "Sample_ID", cancer_subtype = "PAM50")# %>%
+  #write.csv("PAM50_subtype.csv", row.names = FALSE)
 ```
 
 ## The train-test partition file
 ```{r}
-fileConn<-file("trte_partition.txt")
-writeLines(c("training patient_id", paste(unlist(train["Sample_ID"]), collapse = ","), "testing patient_id", paste(unlist(test["Sample_ID"]), collapse = ",")), fileConn)
-close(fileConn)
+#fileConn<-file("trte_partition.txt")
+#writeLines(c("training patient_id", paste(unlist(train["Sample_ID"]), collapse = ","), "testing patient_id", paste(unlist(test["Sample_ID"]), collapse = ",")), fileConn)
+#close(fileConn)
 ```
 
 ## The distribution
 ```{r}
-pam50$Category <- ifelse(pam50$patient_id %in% train_idx, "Train", "Test")
+pam50$Category <- ifelse(pam50$Sample_ID %in% train$Sample_ID, "Train", "Test")
 
 pam50 %>%
-  ggplot(aes(x=cancer_subtype, group=Category, fill=Category))+
+  ggplot(aes(x=PAM50, group=Category, fill=Category))+
   geom_bar(position="dodge")+
   labs(x="Cancer subtype", y="Number of samples", title = "Sample distribution")
 
-(Number_of_train_samples = length(train_idx))
-(Number_of_test_samples = nrow(pam50) - length(train_idx))
+(Number_of_train_samples = length(train.index))
+(Number_of_test_samples = nrow(pam50) - length(train.index))
 (Total_samples = nrow(pam50))
 ```
 

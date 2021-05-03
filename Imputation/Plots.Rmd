@@ -23,6 +23,9 @@ Also, initially, RMSE and Stadard Deviation (a proxy for Variance) was used in p
 
 ```{r}
 spearman <- read_csv("spearman.csv")
+spearman2 <- read_csv("spearman2.csv")
+
+spearman <- rbind(spearman, spearman2)
 summary(spearman)
 head(spearman)
 ```
@@ -47,7 +50,10 @@ Removing the rows that represent features that were not missing, which consequen
 ```{r}
 spearman <- spearman %>%
   rowwise() %>%
-  filter(grepl(datatype, missing_values))
+  filter(grepl(datatype, missing_omics))
+
+spearman$method <- fct_relevel(spearman$method, c("random", "mean", "median", "enet", "knn_iter", "rf", "knn1", "knn25", "knn50", "knn75", "knn100", "knn200"))
+spearman$missing_omics <- fct_relevel(spearman$missing_omics, c("mirna", "mrna", "meth", "mirna meth", "meth mrna", "mrna mirna"))
 
 head(spearman)
 ```
@@ -56,7 +62,20 @@ head(spearman)
 
 ```{r}
 spearman %>%
-  ggplot(aes(y = Spearman, x = missing_values, fill = method)) +
-  geom_boxplot()
+  ggplot(aes(y = Spearman, x = missing_omics, fill = method)) +
+  geom_boxplot()+
+  labs(x="Missing Omics", y="Correlation Coefficient (Spearman)", fill="Imputation method",
+       title="Distribution of correlation with true values for imputed omics")+
+  scale_fill_brewer(palette = "Paired", labels = c("Random", "Mean", "Median", "Elastic Net", "KNN (Iterative)", "Random Forest", "KNN (n=1)", "KNN (n=25)", "KNN (n=50)", "KNN (n=75)", "KNN (n=100)", "KNN (n=200)"))+
+  scale_y_continuous(breaks = round(seq(-1, 1, by = 0.1),1))+
+  scale_x_discrete(labels = c("miRNA", "mRNA", "DNA Methylation", "miRNA & Methylation", "Methylation & mRNA", "mRNA & miRNA"))
 ```
 
+
+As can be inferred from the figure, KNN is the best choice to perform imputation with. 
+
+KNN (Iterative) was performed with n=75. But if fails disproportionately badly on the "Methylation and mRNA" set, where the omics present was only miRNA. Similarly, KNN (n=25) performs particularly well for the same set.
+
+Among the KNNs, averaging over 50 neighbours appears to be the best choice, while 25 neighbours is sometimes better. I believe that is so because in the training set, the smallest class contained less than 50 samples. Increasing "n" beyond that would likely result in including too many samples from other classes in the averaging process and thus reduce correlation and usefulness of the imputation in classification downstream.
+
+This also implies that in case one trains the imputer on data sets containing more samples in the smallest class, one can increase "n" likewise for best results.

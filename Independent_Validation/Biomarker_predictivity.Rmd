@@ -1,0 +1,255 @@
+---
+title: "Biomarker Predictivity"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(data.table)
+library(parallel)
+library(foreach)
+library(broom)
+library(caret)
+```
+
+## Independent Validation on METABRIC Data
+
+Here, I validate the pre-processing and selection method used by showing that the biomarkers selected on TCGA BRCA are useful for classification on METABRIC data
+
+
+### Custom Functions
+
+```{r}
+# To perform ANOVA
+run_anova <- function(train_data, train_labels, num_cpus=40) {
+  num_cpus <- 40
+  cl <- makeCluster(num_cpus)
+  doParallel::registerDoParallel(cl)
+  anova_summary <- foreach(i = 2:ncol(train_data)) %dopar% {
+    column <- names(train_data[i]) 
+    avz <- broom:: tidy(aov(train_data[,i][[1]] ~ unlist(train_labels$cancer_subtype))) # Each ANOVA test iterating through each column
+    return(c(gene=column, f_value=avz$statistic[[1]], p_value=avz$p.value[[1]]))
+  }
+  stopCluster(cl)
+  anova_summary <- as.data.frame(do.call(rbind, anova_summary), stringsAsFactors = FALSE)
+  anova_summary <- transform(anova_summary, p_value = as.numeric(p_value), f_value = as.numeric(f_value))
+  return(anova_summary)
+}
+
+# To transpose
+transpose_df <- function(df) {
+  t_df <- data.table::transpose(df)
+  colnames(t_df) <- rownames(df)
+  rownames(t_df) <- colnames(df)
+  t_df <- t_df %>%
+    tibble::rownames_to_column(.data = .) %>%
+    tibble::as_tibble(.)
+  return(t_df)
+}
+```
+
+
+### Loading Data
+
+TCGA mRNA Expression
+
+```{r}
+brca_genes <- read_csv("../R/TCGA BRCA/mrna_top1000.csv", n_max = 1, col_names = FALSE)
+brca_genes <- as.character(brca_genes[,2:1001])
+brca_genes <- unlist(str_split(brca_genes, "\\|"))[ c(FALSE, TRUE) ]
+```
+
+METABRIC mRNA Expression
+```{r}
+metabric <- read_csv("../R/METABRIC/metabric_mrna_common_genes.csv")
+metabric_labels <- read_csv("../R/METABRIC/PAM50_metabric.csv")
+```
+This data has been pre-processed to have only those features that were selected based on TCGA BRCA data beforehand. For details on the processing, check the file at /R/METABRIC/dataprocessing.Rmd.
+
+
+### ANOVA
+
+```{r}
+anova_summary <- run_anova(metabric, metabric_labels, num_cpus=40)
+
+median_pval <- median(anova_summary$p_value)
+median_fval <- median(anova_summary$f_value)
+```
+
+## Random analysis
+
+Here, I will select a random set of 1000 genes in the METABRIC mRNA Expression data and then find it's median F-value and p-value.
+
+### Loading raw data
+```{r}
+colnames <- read_delim("../../metabric/EGAF00000102986/discovery_ExpressionMatrix.txt", 
+    "\t", escape_double = FALSE, trim_ws = TRUE, n_max = 1, col_names = FALSE)
+colnames <- c("genes", as.character(colnames[1,]))
+
+discovery <- read_delim("../../metabric/EGAF00000102986/discovery_ExpressionMatrix.txt", 
+    "\t", escape_double = FALSE, trim_ws = TRUE, col_names = colnames, skip = 1)
+
+colnames <- read_delim("../../metabric/EGAF00000102987/validation_ExpressionMatrix.txt", 
+    " ", escape_double = FALSE, trim_ws = TRUE, n_max = 1, col_names = FALSE)
+colnames <- c("genes", as.character(colnames[1,]))
+
+validation <- read_delim("../../metabric/EGAF00000102987/validation_ExpressionMatrix.txt", 
+    " ", escape_double = FALSE, trim_ws = TRUE, col_names = colnames, skip = 1)
+```
+
+### Processing the data
+
+The raw data needs quite a bit of processing to bring it to a more presentable format
+
+Converting the Illumina Gene IDs to Gene Symbols
+```{r}
+# BiocManager::install("illuminaHumanv3.db")
+library(illuminaHumanv3.db)
+genes <- discovery$genes
+genes <- data.frame(Gene=unlist(mget(x = genes, envir = illuminaHumanv3ENTREZREANNOTATED)))
+
+discovery$genes <- genes$Gene
+
+genes <- validation$genes
+genes <- data.frame(Gene=unlist(mget(x = genes, envir = illuminaHumanv3ENTREZREANNOTATED)))
+
+validation$genes <- genes$Gene
+rm(genes)
+```
+
+Removing NAs and summarising over duplicates
+```{r}
+discovery <- discovery[complete.cases(discovery), ] %>%
+      group_by(genes) %>%
+      summarize(across(everything(), list(mean))) #%>%
+#      remove_rownames() %>%
+#      column_to_rownames("genes")
+
+validation <- validation[complete.cases(validation), ] %>%
+      group_by(genes) %>%
+      summarize(across(everything(), list(mean))) #%>%
+#      remove_rownames() %>%
+#      column_to_rownames("genes")
+
+```
+
+Selecting only those features common to both discovery and validation sets
+```{r}
+common_genes <- intersect(discovery$genes, validation$genes)
+
+metabric_d <- discovery %>%
+  filter(genes %in% common_genes) %>%
+  remove_rownames() %>%
+  column_to_rownames("genes")
+
+metabric_v <- validation %>%
+  filter(genes %in% common_genes) %>%
+  remove_rownames() %>%
+  column_to_rownames("genes")
+
+setdiff(metabric_d$genes, metabric_v$genes)
+```
+
+Transposing and then combining the discovery and validation sets
+```{r}
+metabric_d <- transpose_df(metabric_d) %>%
+  dplyr::rename(patient_id = "rowname")
+metabric_d$patient_id <- unlist(str_split(metabric_d$patient_id, "\\_"))[c(TRUE, FALSE)]
+
+metabric_v <- transpose_df(metabric_v) %>%
+  dplyr::rename(patient_id = "rowname")
+metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE, FALSE)]
+
+metabric_complete <- rbind(metabric_d, metabric_v)
+metabric_complete <- metabric_complete[match(metabric_labels$patient_id, metabric_complete$patient_id),]
+```
+
+### Selecting Random Features
+
+```{r}
+feature_list <- names(metabric_complete)[2:ncol(metabric_complete)]
+set.seed(42)
+random_sample <- sample(feature_list, 953)
+# Adding "patient_id" column to random_sample
+random_sample <- c("patient_id", random_sample)
+```
+
+### ANOVA
+
+```{r}
+anova_summary_random <- metabric_complete %>%
+  dplyr::select(random_sample) %>%
+  run_anova(metabric_labels, num_cpus=20)
+
+median_pval_random <- median(anova_summary_random$p_value)
+median_fval_random <- median(anova_summary_random$f_value)
+```
+
+## Comparison
+
+```{r}
+summary(anova_summary$p_value)
+summary(anova_summary_random$p_value)
+median_pval
+median_pval_random
+
+summary(anova_summary$f_value)
+summary(anova_summary_random$f_value)
+median_fval
+median_fval_random
+```
+
+```{r}
+df <- tibble(
+  type = c(rep("tcga", nrow(anova_summary)), rep("random", nrow(anova_summary_random))),
+  f_value = c(anova_summary$f_value, anova_summary_random$f_value),
+  p_value = c(anova_summary$p_value, anova_summary_random$p_value)
+)
+```
+
+```{r}
+ggplot(df, aes(x=p_value, fill=type))+
+  geom_density(alpha=0.5)+
+  scale_x_continuous(trans='log10')
+
+ggplot(df, aes(x=f_value, fill=type))+
+  geom_density(alpha=0.5)+
+  scale_x_continuous(trans='log10')
+```
+
+
+
+```{r eval=FALSE, include=FALSE}
+## Selecting best features from METABRIC
+anova_summary_metabric <- run_anova(metabric_complete, metabric_labels, num_cpus=40)
+anova_metabric_sorted <- anova_summary_metabric %>% 
+                  filter(p_value<=0.0001/nrow(anova_summary_metabric)) %>% 
+                  slice_max(order_by=f_value, n=953)
+
+ggplot(anova_metabric_sorted, aes(x=p_value))+
+  geom_density(alpha=0.5)+
+  scale_x_continuous(trans='log10')
+```
+
+```{r eval=FALSE, include=FALSE}
+df <- tibble(
+  type = c(rep("tcga", nrow(anova_summary)), 
+           rep("random", nrow(anova_summary_random)),
+           rep("metabric", nrow(anova_metabric_sorted))),
+  f_value = c(anova_summary$f_value, anova_summary_random$f_value, anova_metabric_sorted$f_value),
+  p_value = c(anova_summary$p_value, anova_summary_random$p_value, anova_metabric_sorted$p_value)
+)
+
+df %>%
+  filter(p_value != 0) %>%
+  ggplot(aes(x=p_value, fill=type))+
+  geom_density(alpha=0.5)+
+  scale_x_log10()
+  scale_x_continuous(trans='log10')
+
+ggplot(df, aes(x=f_value, fill=type))+
+  geom_density(alpha=0.5)+
+  scale_x_continuous(trans='log10')
+```
+

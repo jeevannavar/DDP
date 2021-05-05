@@ -106,6 +106,7 @@ def label_specific_acc(truth, prediction):
     accuracies = {label:correct_counter[label]/total_counter[label] for label in labels}
     return accuracies
 
-ground_truth = [0,0,0,0,0,0,0,1,1,1,1,1,1,1,1] 
-prediction =  [0,0,0,0,0,0,0,0,1,1,1,1,1,1,0]
-label_specific_acc(ground_truth,prediction)
+if __name__ == '__main__':
+    ground_truth = [0,0,0,0,0,0,0,1,1,1,1,1,1,1,1] 
+    prediction =  [0,0,0,0,0,0,0,0,1,1,1,1,1,1,0]
+    label_specific_acc(ground_truth,prediction)

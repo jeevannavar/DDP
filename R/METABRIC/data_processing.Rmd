@@ -1,6 +1,6 @@
 ---
 title: "METABRIC Gene Expression"
-output: html_notebook
+output: github_document
 editor_options: 
   chunk_output_type: inline
 ---
@@ -67,7 +67,7 @@ greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features 
 
 # Importing data
 
-```{r}
+```{r message=FALSE}
 colnames <- read_delim("../../../metabric/EGAF00000102986/discovery_ExpressionMatrix.txt", 
     "\t", escape_double = FALSE, trim_ws = TRUE, n_max = 1, col_names = FALSE)
 colnames <- c("genes", as.character(colnames[1,]))
@@ -122,7 +122,7 @@ validation <- validation[complete.cases(validation), ] %>%
 ```
 
 Reading in the requisite genes from the TCGA selected genes
-```{r}
+```{r message=FALSE}
 brca_genes <- read_csv("../TCGA BRCA/mrna_top1000.csv", n_max = 1, col_names = FALSE)
 
 brca_genes <- as.character(brca_genes[,2:1001])
@@ -153,18 +153,30 @@ metabric_v <- validation %>%
 setdiff(metabric_d$genes, metabric_v$genes)
 ```
 
+Getting labels and removing those that don't exist in BRCA.
+Here, there are 6 (out of 1992) samples that have a "NC" label, which is not present in TCGA BRCA.
+```{r}
+labels_metabric <- rbind(labels_discovery, labels_validation)
+toBeRemoved <- labels_metabric$patient_id[labels_metabric$cancer_subtype == "NC"]
+
+labels_metabric <- filter(labels_metabric, !patient_id %in% toBeRemoved)
+```
+
+
 Transposing and saving to files
 ```{r}
 metabric_d <- transpose_df(metabric_d) %>%
   dplyr::rename(patient_id = "rowname")
 metabric_d$patient_id <- unlist(str_split(metabric_d$patient_id, "\\_"))[c(TRUE, FALSE)]
-  
+
+metabric_d <- filter(metabric_d, !patient_id %in% toBeRemoved)  
 #write.csv(metabric_d, "metabric_discovery.csv", row.names = FALSE)
 
 metabric_v <- transpose_df(metabric_v) %>%
   dplyr::rename(patient_id = "rowname")
 metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE, FALSE)]
 
+metabric_v <- filter(metabric_v, !patient_id %in% toBeRemoved)  
 #write.csv(metabric_v, "metabric_validation.csv", row.names = FALSE)
 ```
 
@@ -178,7 +190,7 @@ write.csv(temp, "metabric_mrna_common_genes.csv", row.names = FALSE)
 
 Processing TCGA BRCA data
 Load up TCGA BRCA mRNA Expression data, convert to entrez id, and then select only those features that are in metabric_discovery/metabric_validation
-```{r}
+```{r message=FALSE}
 tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
 brca_genes <- names(tcga_brca)[2:1001]
 brca_genes <- c("patient_id", unlist(str_split(brca_genes, "\\|"))[c(FALSE, TRUE)])
@@ -202,8 +214,11 @@ close(fileConn)
 ```
 
 Labels file
-```{r}
+```{r message=FALSE}
 labels_metabric <- rbind(labels_discovery, labels_validation)
+toBeRemoved <- labels_metabric$patient_id[labels_metabric$cancer_subtype == "NC"]
+
+labels_metabric <- filter(labels_metabric, !patient_id %in% toBeRemoved)
 labels_tcga <- read_csv("../TCGA BRCA/PAM50_subtype.csv")
 labels_tcga_metabric <- rbind(labels_tcga, labels_metabric)
 
@@ -214,7 +229,7 @@ write.csv(labels_tcga_metabric, "PAM50_tcga_metabric.csv", row.names = FALSE)
 ```
 
 Save a dataframe with all the relevant (~1000) genes' entrez id and gene symbols
-```{r}
+```{r message=FALSE}
 tcga_brca <- read_csv("../TCGA BRCA/mrna_top1000.csv")
 brca_genes <- names(tcga_brca)[2:1001]
 
@@ -248,6 +263,11 @@ metabric_v$patient_id <- unlist(str_split(metabric_v$patient_id, "\\_"))[c(TRUE,
 
 metabric_v <- metabric_v[match(labels_validation$patient_id, metabric_v$patient_id), ]
 
+
+metabric_d <- filter(metabric_d, !patient_id %in% toBeRemoved)
+metabric_v <- filter(metabric_v, !patient_id %in% toBeRemoved)
+labels_discovery <- filter(labels_discovery, !patient_id %in% toBeRemoved)
+labels_validation <- filter(labels_validation, !patient_id %in% toBeRemoved)
 
 identical(metabric_d$patient_id, labels_discovery$patient_id)
 identical(metabric_v$patient_id, labels_validation$patient_id)
@@ -296,13 +316,15 @@ close(fileConn)
 ```
 
 Labels file
-```{r}
+```{r message=FALSE}
 labels_discovery <- read_delim("clinical_data_discovery.txt", "\t") %>% 
                       dplyr::select(patient_id = METABRIC_ID, cancer_subtype = Pam50Subtype)
 labels_validation <- read_delim("clinical_data_validation.txt", "\t") %>% 
                       dplyr::select(patient_id = METABRIC_ID, cancer_subtype = Pam50Subtype)
 
 labels_metabric <- rbind(labels_discovery, labels_validation)
+toBeRemoved <- labels_metabric$patient_id[labels_metabric$cancer_subtype == "NC"]
+labels_metabric <- filter(labels_metabric, !patient_id %in% toBeRemoved)
 write.csv(labels_metabric, "PAM50_metabric.csv", row.names = FALSE)
 ```
 

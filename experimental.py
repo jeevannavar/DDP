@@ -85,7 +85,9 @@ def load_and_process(load_list, label_dict, doSMOTE=True, SEED="random"):
 
     return (data_tr_list, data_trte_list, trte_idx, labels_tr_tensor, onehot_labels_tr_tensor, labels_trte, sample_weight_tr)
 
-def train(data, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interval=50, lr=1e-4, weight_decay=3e-3, dropout=0.5, adj_parameter=5, VERBOSE=2, RUN_TITLE="", RUN_TITLE_SHORT="", OUTPUT_FILES=False, feature_extract=[]):
+
+
+def train(data, label_dict, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interval=50, lr=1e-4, weight_decay=3e-3, dropout=0.5, adj_parameter=5, VERBOSE=2, RUN_TITLE="", RUN_TITLE_SHORT="", OUTPUT_FILES=False, feature_extract=[]):
     
     # loading processed data
     (data_tr_list, data_trte_list, trte_idx, labels_tr_tensor, onehot_labels_tr_tensor, labels_trte, sample_weight_tr) = data
@@ -115,7 +117,7 @@ def train(data, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interva
         torch.cuda.manual_seed(SEED)
         torch.cuda.set_device(CUDA_DEVICE)
     
-    num_class = len(label_dict)
+    num_class = onehot_labels_tr_tensor.shape[1]
 
     # calculate adjacency matrix
     adj_tr_list, adj_te_list = gen_trte_adj_mat(data_tr_list, data_trte_list, trte_idx, adj_parameter)
@@ -343,7 +345,7 @@ def train(data, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interva
     return losses_df, metrics_df, feature_imp, model_dict
 
 
-def process(data_list, labels, indices):
+def process(data_list, labels, indices, SEED="random", doSMOTE=True):
     """
     Inputs:
         data_list = list of pandas DataFrames representing individual omics
@@ -354,13 +356,15 @@ def process(data_list, labels, indices):
     if isinstance(data_list[0], pd.DataFrame):
         patient_id = data_list[0].index.tolist()
         feat_name_list = [None]*len(data_list)
-        for i in range(len(data)):
+        for i in range(len(data_list)):
             feat_name_list[i] = data_list[i].columns.to_numpy()
             data_list[i] = data_list[i].to_numpy()
     else:
         sys.exit("Wrond data type. Supply list of 'pandas.DataFrame's.")
     
-    (tr_idx, test_idx) = indices
+    (tr_idx, te_idx) = indices
+    
+    num_class = len(set(labels))
     
     # assign GPU number
     CUDA_DEVICE = 0
@@ -380,7 +384,7 @@ def process(data_list, labels, indices):
     if cuda:
         torch.cuda.manual_seed(SEED)
         torch.cuda.set_device(CUDA_DEVICE)
-    num_class = len(label_dict)
+    
 
     # data to tensor
     data_tensor_list = []
@@ -443,17 +447,3 @@ if __name__ == '__main__':
     # feat_name_list = list of 1d numpy arrays with feature names
     # tr_idx = list of training indices
     # te_idx = list of test indices
-
-def temp(data):
-    """
-    Inputs:
-        data = list of pandas DataFrames representing individual omics
-
-    """
-    if isinstance(data[0], pd.DataFrame):
-        patient_id = data[0].index.tolist()
-        feat_name_list = [None]*len(data)
-        for i in range(len(data)):
-            feat_name_list[i] = data[i].columns.to_numpy()
-    else:
-        sys.exit("Wrond data type. Supply list of 'pandas.DataFrame's.")

@@ -10,15 +10,15 @@ RUN_TITLE_SHORT = "brca_all_int"
 SEED = "random" 
 
 # pre-processed data
-mrna = "/data/users/bs16b001/R/TCGA BRCA/mrna_top1000.csv"
-meth = "/data/users/bs16b001/R/TCGA BRCA/meth_top1000.csv"
-mirna = "/data/users/bs16b001/R/TCGA BRCA/mirna_anova.csv"
-mrna_mrna = "/data/users/bs16b001/R/TCGA BRCA/mrna_mrna_anova.csv"
-meth_meth = "/data/users/bs16b001/R/TCGA BRCA/meth_meth_anova.csv"
-mirna_mirna = "/data/users/bs16b001/R/TCGA BRCA/mirna_mirna_anova.csv"
-mrna_meth = "/data/users/bs16b001/R/TCGA BRCA/meth_mrna_anova.csv"
-meth_mirna = "/data/users/bs16b001/R/TCGA BRCA/meth_mirna_anova.csv"
-mirna_mrna = "/data/users/bs16b001/R/TCGA BRCA/mrna_mirna_anova.csv"
+mrna = "R/TCGA BRCA/mrna_top1000.csv"
+meth = "R/TCGA BRCA/meth_top1000.csv"
+mirna = "R/TCGA BRCA/mirna_anova.csv"
+mrna_mrna = "R/TCGA BRCA/mrna_mrna_anova.csv"
+meth_meth = "R/TCGA BRCA/meth_meth_anova.csv"
+mirna_mirna = "R/TCGA BRCA/mirna_mirna_anova.csv"
+mrna_meth = "R/TCGA BRCA/meth_mrna_anova.csv"
+meth_mirna = "R/TCGA BRCA/meth_mirna_anova.csv"
+mirna_mrna = "R/TCGA BRCA/mrna_mirna_anova.csv"
 
 meta_csv = "/data/users/bs16b001/R/TCGA BRCA/PAM50_subtype.csv"
 trte_partition_file = "/data/users/bs16b001/R/TCGA BRCA/trte_partition.txt"
@@ -49,7 +49,7 @@ VERBOSE = 2 #0, only print final result; 1, only testing result; 2, training and
 OUTPUT_FILES = False #Boolean to determine whether to output loss and metrics as csv files
 MAKE_PLOTS = False #Boolean to determine whether to output loss and metrics as plots in png format
 REPEATS = 1 #Integer, how many times to independently train the model
-feature_extract = ["lime", "shap"]
+feature_extract = ["lime"]
 
 for i in range(1,REPEATS+1):
     print("\n"+"-"*100)

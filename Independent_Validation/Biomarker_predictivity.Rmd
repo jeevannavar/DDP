@@ -253,3 +253,27 @@ ggplot(df, aes(x=f_value, fill=type))+
   scale_x_continuous(trans='log10')
 ```
 
+```{r eval=FALSE, include=FALSE}
+metabric <- intersect(as.character(discovery$genes), as.character(validation$genes))
+
+tcga <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.mRNAseq_Preprocess.Level_3.2016012800.0.0/BRCA.uncv2.mRNAseq_RSEM_normalized_log2.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
+tcga <- tcga$gene
+tcga <- unlist(str_split(tcga, "\\|"))[ c(FALSE, TRUE) ]
+
+length(intersect(metabric, tcga))
+
+tcga_selected <- unlist(str_split(brca_genes, "\\|"))[ c(FALSE, TRUE) ]
+metabric_selected <- metabric_best1000
+
+length(setdiff(tcga_selected, intersect(metabric, tcga)))
+length(setdiff(metabric_selected, intersect(metabric, tcga)))
+
+# Is this overlap significant?
+q = 94              # Size of the overlap
+m = 1000 - 47       # Number of genes selected in TCGA - genes not present in METABRIC
+k = 1000 - 17       # Number of genes selected in METABRIC - genes not present in TCGA
+n = 17206           # Total number of common genes in TCGA and METABRIC
+
+phyper(q-1, m, n-m, k, lower.tail = FALSE, log.p = FALSE)
+```
+

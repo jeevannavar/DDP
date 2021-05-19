@@ -1,0 +1,135 @@
+---
+title: "Data Preliminaries"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggfortify)
+```
+
+## Custom functions
+```{r}
+# To transpose
+transpose_df <- function(df) {
+  t_df <- data.table::transpose(df)
+  colnames(t_df) <- rownames(df)
+  rownames(t_df) <- colnames(df)
+  t_df <- t_df %>%
+    tibble::rownames_to_column(.data = .) %>%
+    tibble::as_tibble(.)
+  return(t_df)
+}
+```
+
+
+## Loading data
+```{r message=FALSE, warning=FALSE}
+mrna <- read_csv("mrna_top1000.csv")
+meth <- read_csv("meth_top1000.csv")
+mirna <- read_csv("mirna_anova.csv")
+pam50 <- read_csv("PAM50_subtype.csv")
+
+data <- left_join(left_join(mrna, meth, by = "patient_id"), mirna, by = "patient_id")
+data <- left_join(data, pam50, "patient_id")
+
+data$patient_id <- str_sub(data$patient_id, 1, 12)
+```
+
+## Loading metadata and making it presentable
+```{r message=FALSE, warning=FALSE}
+BRCA_clin_merged_picked <- read_delim("../../../firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Clinical_Pick_Tier1.Level_4.2016012800.0.0/BRCA.clin.merged.picked.txt", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
+
+clinical1 <- BRCA_clin_merged_picked %>% 
+              column_to_rownames(var="Hybridization REF") %>%
+              transpose_df() %>%
+              dplyr::rename("patient_id" = "rowname")
+
+All_CDEs <- read_delim("../../../firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Clinical_Pick_Tier1.Level_4.2016012800.0.0/All_CDEs.txt", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
+
+clinical2 <- All_CDEs %>% 
+              column_to_rownames(var="bcr_patient_barcode") %>%
+              transpose_df() %>%
+              dplyr::select(-patient_id) %>%
+              dplyr::rename("patient_id" = "rowname")
+
+clinical <- inner_join(clinical1, clinical2, by = "patient_id") 
+#dplyr::select(intersect(names(clinical1), names(clinical2)))
+
+clinical$patient_id <- str_to_upper(clinical$patient_id)
+```
+
+## Obtaining TSS from  Patient Barcode
+TSS = Tissue Source Site
+```{r}
+data$TSS <- str_sub(data$patient_id, 6, 7)
+```
+
+
+
+## Filtering data
+
+```{r}
+patients <- intersect(data$patient_id, clinical$patient_id)
+
+# Data
+data <- data %>%
+  dplyr::filter(patient_id %in% patients)
+
+# Clinical data
+clinical <- clinical %>%
+  dplyr:: filter(patient_id %in% patients)
+
+meta_and_data <- left_join(data, clinical, by = "patient_id") %>%
+  dplyr::rename("Subtype" = "cancer_subtype",
+                "Age" = "age_at_initial_pathologic_diagnosis",
+                "Race" = "race.x",
+                "Ethnicity" = "ethnicity.x") %>%
+  mutate(Age = as.numeric(Age),
+         TSS = fct_lump_n(TSS, n=9))
+```
+
+
+## Performing Principal Component Analysis
+
+```{r}
+tcga.pca <- prcomp(data[,c(2:2258)], center = TRUE, scale. = TRUE)
+summary(tcga.pca)
+str(tcga.pca)
+```
+
+## Checking for covairates
+
+### Cancer Subtype
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="Subtype", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Breast Cancer Subtype")
+```
+
+### Age
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="Age", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Age")
+```
+
+### Race
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="Race", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Race")
+```
+
+### Ethnicity
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="Ethnicity", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Ethnicity")
+```
+
+### Tissue Source Site
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="TSS", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Tissue Source Site")
+```
+

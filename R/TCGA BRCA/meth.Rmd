@@ -1,6 +1,8 @@
 ---
 title: "TCGA BRCA Level 3 Data Analysis"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 ```{r}
 library(tidyverse)
@@ -15,7 +17,7 @@ library(foreach)
 
 In the first chunk, we import only the first row in the form of a tibble. Later we will convert it into a character vector which can then be used to import the whole file, with this as column names.
 ```{r}
-  cnames <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
+cnames <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
       "\t", escape_double = FALSE, trim_ws = TRUE, n_max=1, col_names = FALSE)
   #View(cnames)
 
@@ -23,7 +25,7 @@ In the first chunk, we import only the first row in the form of a tibble. Later 
 
 Here, we import the complete methylation data with the correct column names and making sure that the beta values are imported as numeric types rather than character type.
 ```{r}
-  meth <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
+meth <- read_delim("/data/users/bs16b001/firehose/stddata__2016_01_28/BRCA/20160128/gdac.broadinstitute.org_BRCA.Merge_methylation__humanmethylation450__jhu_usc_edu__Level_3__within_bioassay_data_set_function__data.Level_3.2016012800.0.0/meth.txt", 
     "\t", escape_double = FALSE, na = "NA", col_names = unlist(c(cnames[1,])),
     trim_ws = TRUE, skip = 2)
 #View(meth)
@@ -31,7 +33,7 @@ Here, we import the complete methylation data with the correct column names and 
 
 
 ```{r}
-  processed <- meth[complete.cases(meth), ] %>%
+processed <- meth[complete.cases(meth), ] %>%
       rename(Gene_symbol = "TCGA-3C-AAAU-01A-11D-A41Q-05_1") %>%
       select(!ends_with("_1") & !ends_with("_2") & !ends_with("_3")) %>%
       select(!starts_with("Hybrid")) %>%
@@ -39,7 +41,7 @@ Here, we import the complete methylation data with the correct column names and 
       summarize(across(everything(), list(mean))) %>%
       column_to_rownames("Gene_symbol")
       
-  processed <- processed[is.finite(rowSums(processed)),]
+processed <- processed[is.finite(rowSums(processed)),]
 ```
 
 ```{r}

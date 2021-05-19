@@ -1,8 +1,6 @@
 Data Preliminaries
 ================
 
-# Data Preliminaries
-
 ## Custom functions
 
 ``` r
@@ -475,6 +473,25 @@ str(tcga.pca)
 
 ## Checking for covairates
 
+### Tissue Source Site
+
+``` r
+autoplot(tcga.pca, data=meta_and_data, colour="TSS", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Tissue Source Site")
+```
+
+    ## Warning: `select_()` was deprecated in dplyr 0.7.0.
+    ## Please use `select()` instead.
+
+![](data_preliminiaries_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+### Sequencing Center
+
+All tissue samples were taken from cold storage and then sequenced in
+the same center. Different omics data was generated at different
+centers, but all samples’ individual omics was generated at the same
+center.
+
 ### Cancer Subtype
 
 ``` r
@@ -482,10 +499,7 @@ autoplot(tcga.pca, data=meta_and_data, colour="Subtype", frame=TRUE, frame.type=
   labs(title = "PCA on scaled data, coloured based on Breast Cancer Subtype")
 ```
 
-    ## Warning: `select_()` was deprecated in dplyr 0.7.0.
-    ## Please use `select()` instead.
-
-![](data_preliminiaries_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](data_preliminiaries_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ### Age
 
@@ -494,7 +508,7 @@ autoplot(tcga.pca, data=meta_and_data, colour="Age", frame=TRUE, frame.type="nor
   labs(title = "PCA on scaled data, coloured based on Age")
 ```
 
-![](data_preliminiaries_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](data_preliminiaries_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ### Race
 
@@ -503,22 +517,13 @@ autoplot(tcga.pca, data=meta_and_data, colour="Race", frame=TRUE, frame.type="no
   labs(title = "PCA on scaled data, coloured based on Race")
 ```
 
-![](data_preliminiaries_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](data_preliminiaries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ### Ethnicity
 
 ``` r
 autoplot(tcga.pca, data=meta_and_data, colour="Ethnicity", frame=TRUE, frame.type="norm") +
   labs(title = "PCA on scaled data, coloured based on Ethnicity")
-```
-
-![](data_preliminiaries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-### Tissue Source Site
-
-``` r
-autoplot(tcga.pca, data=meta_and_data, colour="TSS", frame=TRUE, frame.type="norm") +
-  labs(title = "PCA on scaled data, coloured based on Tissue Source Site")
 ```
 
 ![](data_preliminiaries_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->

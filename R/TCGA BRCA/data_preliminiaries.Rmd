@@ -103,6 +103,17 @@ str(tcga.pca)
 
 ## Checking for covairates
 
+
+### Tissue Source Site
+```{r}
+autoplot(tcga.pca, data=meta_and_data, colour="TSS", frame=TRUE, frame.type="norm") +
+  labs(title = "PCA on scaled data, coloured based on Tissue Source Site")
+```
+
+### Sequencing Center
+
+All tissue samples were taken from cold storage and then sequenced in the same center. Different omics data was generated at different centers, but all samples' individual omics was generated at the same center.  
+
 ### Cancer Subtype
 ```{r}
 autoplot(tcga.pca, data=meta_and_data, colour="Subtype", frame=TRUE, frame.type="norm") +
@@ -125,11 +136,5 @@ autoplot(tcga.pca, data=meta_and_data, colour="Race", frame=TRUE, frame.type="no
 ```{r}
 autoplot(tcga.pca, data=meta_and_data, colour="Ethnicity", frame=TRUE, frame.type="norm") +
   labs(title = "PCA on scaled data, coloured based on Ethnicity")
-```
-
-### Tissue Source Site
-```{r}
-autoplot(tcga.pca, data=meta_and_data, colour="TSS", frame=TRUE, frame.type="norm") +
-  labs(title = "PCA on scaled data, coloured based on Tissue Source Site")
 ```
 

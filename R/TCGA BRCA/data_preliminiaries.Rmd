@@ -96,7 +96,7 @@ meta_and_data <- left_join(data, clinical, by = "patient_id") %>%
 
 ```{r}
 tcga.pca <- prcomp(data[,c(2:2258)], center = TRUE, scale. = TRUE)
-summary(tcga.pca)
+#summary(tcga.pca)
 str(tcga.pca)
 ```
 
@@ -140,10 +140,10 @@ autoplot(tcga.pca, data=meta_and_data, colour="Ethnicity", frame=TRUE, frame.typ
 
 # Scaling and Centering data
 
-### METABRIC Top 1000
+### mRNA Expression
 ```{r message=FALSE, warning=FALSE}
-data <- read_csv("metabric_top1000.csv")
-trte <- read.csv("trte_partition_metabric.txt", header=FALSE, colClasses = "character")
+data <- read_csv("mrna_top1000.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
 train <- as.character(trte[2,])
 train <- train[train != ""]
 test <- as.character(trte[4,])
@@ -159,14 +159,13 @@ data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
-write_csv(data, "metabric_top1000_scaled.csv")
+write_csv(data, "mrna_top1000_scaled.csv")
 ```
 
-
-### METABRIC data, but features selected from TCGA top 1000
+### DNA Methylation
 ```{r message=FALSE, warning=FALSE}
-data <- read_csv("metabric_mrna_common_genes.csv")
-trte <- read.csv("trte_partition_metabric.txt", header=FALSE, colClasses = "character")
+data <- read_csv("meth_top1000.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
 train <- as.character(trte[2,])
 train <- train[train != ""]
 test <- as.character(trte[4,])
@@ -175,20 +174,20 @@ test <- test[test != ""]
 data_train <- filter(data, patient_id %in% train)
 data_test <- filter(data, patient_id %in% test)
 
-mean <- apply(data_train[2:954], 2, mean)
-std <- apply(data_train[2:954], 2, sd)
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
 
-data_train[2:954] <- scale(data_train[2:954], center = mean, scale = std)
-data_test[2:954] <- scale(data_test[2:954], center = mean, scale = std)
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
-write_csv(data, "metabric_mrna_common_genes_scaled.csv")
+write_csv(data, "meth_top1000_scaled.csv")
 ```
 
-### TCGA and METABRIC data, top genes
+### miRNA Expression
 ```{r message=FALSE, warning=FALSE}
-data <- read_csv("tcga_metabric_mrna.csv")
-trte <- read.csv("trte_partition_tcga_metabric.txt", header=FALSE, colClasses = "character")
+data <- read_csv("mirna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
 train <- as.character(trte[2,])
 train <- train[train != ""]
 test <- as.character(trte[4,])
@@ -197,12 +196,144 @@ test <- test[test != ""]
 data_train <- filter(data, patient_id %in% train)
 data_test <- filter(data, patient_id %in% test)
 
-mean <- apply(data_train[2:954], 2, mean)
-std <- apply(data_train[2:954], 2, sd)
+mean <- apply(data_train[2:258], 2, mean)
+std <- apply(data_train[2:258], 2, sd)
 
-data_train[2:954] <- scale(data_train[2:954], center = mean, scale = std)
-data_test[2:954] <- scale(data_test[2:954], center = mean, scale = std)
+data_train[2:258] <- scale(data_train[2:258], center = mean, scale = std)
+data_test[2:258] <- scale(data_test[2:258], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
-write_csv(data, "tcga_metabric_mrna_scaled.csv")
+write_csv(data, "mirna_anova_scaled.csv")
+```
+
+### mRNA Expression X mRNA Expression
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("mrna_mrna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
+
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "mrna_mrna_anova_scaled.csv")
+```
+
+### DNA Methylation X DNA Methylation
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("meth_meth_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
+
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "meth_meth_anova_scaled.csv")
+```
+
+### miRNA Expression X miRNA Expression
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("mirna_mirna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:630], 2, mean)
+std <- apply(data_train[2:630], 2, sd)
+
+data_train[2:630] <- scale(data_train[2:630], center = mean, scale = std)
+data_test[2:630] <- scale(data_test[2:630], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "mirna_mirna_anova_scaled.csv")
+```
+
+### mRNA Expression X DNA Methylation
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("meth_mrna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
+
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "meth_mrna_anova_scaled.csv")
+```
+
+### DNA Methylation X miRNA Expression
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("meth_mirna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
+
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "meth_mirna_anova_scaled.csv")
+```
+
+### miRNA Expression X mRNA Expression
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("mrna_mirna_anova.csv")
+trte <- read.csv("trte_partition.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:802], 2, mean)
+std <- apply(data_train[2:802], 2, sd)
+
+data_train[2:802] <- scale(data_train[2:802], center = mean, scale = std)
+data_test[2:802] <- scale(data_test[2:802], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "mrna_mirna_anova_scaled.csv")
 ```

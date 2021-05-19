@@ -328,3 +328,73 @@ labels_metabric <- filter(labels_metabric, !patient_id %in% toBeRemoved)
 write.csv(labels_metabric, "PAM50_metabric.csv", row.names = FALSE)
 ```
 
+
+
+# Scaling and Centering data
+
+### METABRIC Top 1000
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("metabric_top1000.csv")
+trte <- read.csv("trte_partition_metabric.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:1001], 2, mean)
+std <- apply(data_train[2:1001], 2, sd)
+
+data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
+data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "metabric_top1000_scaled.csv")
+```
+
+
+### METABRIC data, but features selected from TCGA top 1000
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("metabric_mrna_common_genes.csv")
+trte <- read.csv("trte_partition_metabric.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:954], 2, mean)
+std <- apply(data_train[2:954], 2, sd)
+
+data_train[2:954] <- scale(data_train[2:954], center = mean, scale = std)
+data_test[2:954] <- scale(data_test[2:954], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "metabric_mrna_common_genes_scaled.csv")
+```
+
+### TCGA and METABRIC data, top genes
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("tcga_metabric_mrna.csv")
+trte <- read.csv("trte_partition_tcga_metabric.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:954], 2, mean)
+std <- apply(data_train[2:954], 2, sd)
+
+data_train[2:954] <- scale(data_train[2:954], center = mean, scale = std)
+data_test[2:954] <- scale(data_test[2:954], center = mean, scale = std)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "tcga_metabric_mrna_scaled.csv")
+```

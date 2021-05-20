@@ -398,3 +398,28 @@ data_test[2:954] <- scale(data_test[2:954], center = mean, scale = std)
 data <- rbind(data_train, data_test)
 write_csv(data, "tcga_metabric_mrna_scaled.csv")
 ```
+
+### TCGA and METABRIC data, top genes; Scaled separately
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("tcga_metabric_mrna.csv")
+trte <- read.csv("trte_partition_tcga_metabric.txt", header=FALSE, colClasses = "character")
+train <- as.character(trte[2,])
+train <- train[train != ""]
+test <- as.character(trte[4,])
+test <- test[test != ""]
+
+data_train <- filter(data, patient_id %in% train)
+data_test <- filter(data, patient_id %in% test)
+
+mean <- apply(data_train[2:954], 2, mean)
+std <- apply(data_train[2:954], 2, sd)
+
+mean_test <- apply(data_test[2:954], 2, mean)
+std_test <- apply(data_test[2:954], 2, sd)
+
+data_train[2:954] <- scale(data_train[2:954], center = mean, scale = std)
+data_test[2:954] <- scale(data_test[2:954], center = mean_test, scale = std_test)
+
+data <- rbind(data_train, data_test)
+write_csv(data, "tcga_metabric_mrna_scaled_separately.csv")
+```

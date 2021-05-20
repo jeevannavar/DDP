@@ -175,7 +175,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "mrna_top1000_scaled.csv")
 ```
 
@@ -198,7 +199,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "meth_top1000_scaled.csv")
 ```
 
@@ -221,7 +223,8 @@ std <- apply(data_train[2:258], 2, sd)
 data_train[2:258] <- scale(data_train[2:258], center = mean, scale = std)
 data_test[2:258] <- scale(data_test[2:258], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "mirna_anova_scaled.csv")
 ```
 
@@ -244,7 +247,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "mrna_mrna_anova_scaled.csv")
 ```
 
@@ -267,7 +271,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "meth_meth_anova_scaled.csv")
 ```
 
@@ -290,7 +295,8 @@ std <- apply(data_train[2:630], 2, sd)
 data_train[2:630] <- scale(data_train[2:630], center = mean, scale = std)
 data_test[2:630] <- scale(data_test[2:630], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "mirna_mirna_anova_scaled.csv")
 ```
 
@@ -313,7 +319,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "meth_mrna_anova_scaled.csv")
 ```
 
@@ -336,7 +343,8 @@ std <- apply(data_train[2:1001], 2, sd)
 data_train[2:1001] <- scale(data_train[2:1001], center = mean, scale = std)
 data_test[2:1001] <- scale(data_test[2:1001], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "meth_mirna_anova_scaled.csv")
 ```
 
@@ -359,6 +367,7 @@ std <- apply(data_train[2:802], 2, sd)
 data_train[2:802] <- scale(data_train[2:802], center = mean, scale = std)
 data_test[2:802] <- scale(data_test[2:802], center = mean, scale = std)
 
-data <- rbind(data_train, data_test)
+new_data <- rbind(data_train, data_test)
+data <- new_data[match(data$patient_id, new_data$patient_id),]
 write_csv(data, "mrna_mirna_anova_scaled.csv")
 ```

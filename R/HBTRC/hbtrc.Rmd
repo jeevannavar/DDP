@@ -1,6 +1,8 @@
 ---
 title: "HBTRC Data Processing"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 
 Importing all the requisite packages first.
@@ -49,6 +51,12 @@ greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features 
 ```
 
 
+## GEO Accession number: GSE44772
+Get clinical data by: 
+library(GEOquery)
+gset <- getGEO("GSE44772", GSEMatrix =TRUE, getGPL=FALSE)
+clinical <- pData(gset[[1]])
+
 # Cerebellum
 ## Loading data
 ```{r}
@@ -58,13 +66,14 @@ cerebellum <- read_delim("/data/users/bs16b001/HBTRC_data/GN326_MeanDataAnnotate
 ## Removing the unnecessary metadata
 ```{r}
 cerebellum <- cerebellum %>%
-  select("Gene Symbol" | "Gene Id" | starts_with("HB")) %>%
-  rename(Gene_Symbol = "Gene Symbol", GeneID = "Gene Id") %>%
+  dplyr::select("Gene Symbol" | "Gene Id" | starts_with("HB")) %>%
+  dplyr::rename(Gene_Symbol = "Gene Symbol", GeneID = "Gene Id") %>%
   filter(GeneID != "None") %>%
   mutate(Gene = paste(Gene_Symbol, GeneID, sep = "|")) %>%
-  select(!GeneID & !Gene_Symbol) %>%
+  dplyr::select(!GeneID & !Gene_Symbol) %>%
   group_by(Gene) %>%
   summarize(across(everything(), list(mean))) %>%
+  remove_rownames() %>%
   column_to_rownames("Gene")
 
 # Keep only finite features
@@ -79,7 +88,7 @@ Now we will format the sample id names and then attach the labels from the disea
 pattern <- "^(\\w{2}\\_\\w{3}\\_\\w{1,2})\\_1$"
 cerebellum <- cerebellum %>%  
   mutate(rowname = sub(pattern, "\\1", rowname)) %>%
-  rename(Sample_ID = rowname)
+  dplyr::rename(Sample_ID = rowname)
 
 labels <- read_csv("disease_class.csv")
 cerebellum <- cerebellum[match(labels$patient_id, cerebellum$Sample_ID),]

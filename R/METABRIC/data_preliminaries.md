@@ -31,94 +31,6 @@ Converting the Illumina Gene IDs to Gene Symbols
 
 ``` r
 library(illuminaHumanv3.db)
-```
-
-    ## Loading required package: AnnotationDbi
-
-    ## Loading required package: stats4
-
-    ## Loading required package: BiocGenerics
-
-    ## Loading required package: parallel
-
-    ## 
-    ## Attaching package: 'BiocGenerics'
-
-    ## The following objects are masked from 'package:parallel':
-    ## 
-    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
-    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     combine, intersect, setdiff, union
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     IQR, mad, sd, var, xtabs
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    ##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    ##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    ##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    ##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    ##     union, unique, unsplit, which, which.max, which.min
-
-    ## Loading required package: Biobase
-
-    ## Welcome to Bioconductor
-    ## 
-    ##     Vignettes contain introductory material; view with
-    ##     'browseVignettes()'. To cite Bioconductor, see
-    ##     'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-    ## Loading required package: IRanges
-
-    ## Loading required package: S4Vectors
-
-    ## 
-    ## Attaching package: 'S4Vectors'
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     first, rename
-
-    ## The following object is masked from 'package:tidyr':
-    ## 
-    ##     expand
-
-    ## The following object is masked from 'package:base':
-    ## 
-    ##     expand.grid
-
-    ## 
-    ## Attaching package: 'IRanges'
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     collapse, desc, slice
-
-    ## The following object is masked from 'package:purrr':
-    ## 
-    ##     reduce
-
-    ## 
-    ## Attaching package: 'AnnotationDbi'
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     select
-
-    ## Loading required package: org.Hs.eg.db
-
-    ## 
-
-    ## 
-
-``` r
 genes <- discovery$genes
 genes <- data.frame(Gene=unlist(mget(x = genes, envir = illuminaHumanv3ENTREZREANNOTATED)))
 
@@ -187,11 +99,19 @@ data <- rbind(metabric_d, metabric_v)
 
 ``` r
 meta_and_data <- left_join(data, clinical, by = "patient_id") %>%
-  mutate(Site = as.factor(Site)) %>%
+  mutate(Site = as.factor(Site),
+         Age = cut(age_at_diagnosis, c(0,40,50,60,70,80,100)),
+         Age = fct_recode(Age, "<40" = "(0,40]", ">80" = "(80,100]"),
+         Size = cut(as.numeric(size), c(0,15,30,45,60,200)),
+         Size = fct_recode(Size, ">60" = "(60,200]")) %>%
   dplyr::rename(Subtype = cancer_subtype,
-                Age = age_at_diagnosis,
                 Cellularity = cellularity)
+```
 
+    ## Warning in cut(as.numeric(size), c(0, 15, 30, 45, 60, 200)): NAs introduced by
+    ## coercion
+
+``` r
 meta_and_data$Set <- NULL
 meta_and_data$Set[meta_and_data$patient_id %in% metabric_d$patient_id] = "Discovery"
 ```
@@ -282,10 +202,20 @@ autoplot(metabric.pca, data=meta_and_data, colour="Subtype", frame=TRUE, frame.t
 
 ``` r
 autoplot(metabric.pca, data=meta_and_data, colour="Age", frame=TRUE, frame.type="norm") +
-  labs(title = "PCA on scaled data, coloured based on Age")
+  labs(colour = "Age (in yrs)", fill = "Age (in yrs)")
 ```
 
 ![](data_preliminaries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+``` r
+  labs(title = "PCA on scaled data, coloured based on Age")
+```
+
+    ## $title
+    ## [1] "PCA on scaled data, coloured based on Age"
+    ## 
+    ## attr(,"class")
+    ## [1] "labels"
 
 ### Cancer Cellularity
 
@@ -295,3 +225,75 @@ autoplot(metabric.pca, data=meta_and_data, colour="Cellularity", frame=TRUE, fra
 ```
 
 ![](data_preliminaries_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+### Size
+
+``` r
+autoplot(metabric.pca, data=meta_and_data, colour="Size", frame=TRUE, frame.type="norm") +
+  labs(colour = "Size (in mm)", fill = "Size (in mm)") +
+  labs(title = "PCA on scaled data, coloured based on Cancer Cellularity")
+```
+
+![](data_preliminaries_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+### Cancer Subtypes vs Tissue Source Site
+
+``` r
+numbers = clinical %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n())
+```
+
+    ## `summarise()` has grouped output by 'cancer_subtype'. You can override using the `.groups` argument.
+
+``` r
+clinical %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = cancer_subtype, names_from = Site, values_from = number) %>%
+  #column_to_rownames(var="cancer_subtype") %>%
+  mutate_if(is.numeric, funs(./sum(.))) %>%
+  pivot_longer(cols = 2:6, names_to = "Site", values_to = "Fraction") %>%
+  mutate(Number = numbers$number) %>%
+  ggplot(aes(x = Site, y = cancer_subtype, fill = Fraction, label = Number)) +
+  geom_tile()+
+  geom_text()+
+  labs(y = "Cancer Subtype", title = "Distribution of different cancer subtypes across the tissue collection sites")
+```
+
+    ## `summarise()` has grouped output by 'cancer_subtype'. You can override using the `.groups` argument.
+
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## Please use a list of either functions or lambdas: 
+    ## 
+    ##   # Simple named list: 
+    ##   list(mean = mean, median = median)
+    ## 
+    ##   # Auto named with `tibble::lst()`: 
+    ##   tibble::lst(mean, median)
+    ## 
+    ##   # Using lambdas
+    ##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+
+![](data_preliminaries_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
+labels_validation %>%
+  filter(cancer_subtype != "NC") %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = cancer_subtype, names_from = Site, values_from = number) %>%
+  mutate_if(is.numeric, funs(./sum(., na.rm = TRUE))) %>%
+  pivot_longer(cols = 2:6, names_to = "Site", values_to = "Fraction") %>%
+  mutate(Fraction = replace_na(Fraction, 0)) %>%
+  ggplot(aes(x = Site, y = cancer_subtype, fill = Fraction, label = round(Fraction,2))) +
+  geom_tile()+
+  geom_text()+
+  labs(y = "Cancer Subtype", title = "Distribution of different cancer subtypes in the validation set across sites")
+```
+
+    ## `summarise()` has grouped output by 'cancer_subtype'. You can override using the `.groups` argument.
+
+![](data_preliminaries_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->

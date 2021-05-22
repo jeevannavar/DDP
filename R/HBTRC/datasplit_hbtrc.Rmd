@@ -1,6 +1,8 @@
 ---
 title: "Data Split and Label Recovery"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 
 In this notebook, I will get the labels from the data and then format them as needed and also split the data into training and testing splits.

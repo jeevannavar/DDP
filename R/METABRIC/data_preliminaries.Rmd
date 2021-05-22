@@ -109,9 +109,12 @@ data <- rbind(metabric_d, metabric_v)
 ## Processing
 ```{r}
 meta_and_data <- left_join(data, clinical, by = "patient_id") %>%
-  mutate(Site = as.factor(Site)) %>%
+  mutate(Site = as.factor(Site),
+         Age = cut(age_at_diagnosis, c(0,40,50,60,70,80,100)),
+         Age = fct_recode(Age, "<40" = "(0,40]", ">80" = "(80,100]"),
+         Size = cut(as.numeric(size), c(0,15,30,45,60,200)),
+         Size = fct_recode(Size, ">60" = "(60,200]")) %>%
   dplyr::rename(Subtype = cancer_subtype,
-                Age = age_at_diagnosis,
                 Cellularity = cellularity)
 
 meta_and_data$Set <- NULL
@@ -156,6 +159,7 @@ autoplot(metabric.pca, data=meta_and_data, colour="Subtype", frame=TRUE, frame.t
 ### Age
 ```{r}
 autoplot(metabric.pca, data=meta_and_data, colour="Age", frame=TRUE, frame.type="norm") +
+  labs(colour = "Age (in yrs)", fill = "Age (in yrs)")+
   labs(title = "PCA on scaled data, coloured based on Age")
 ```
 
@@ -165,4 +169,46 @@ autoplot(metabric.pca, data=meta_and_data, colour="Cellularity", frame=TRUE, fra
   labs(title = "PCA on scaled data, coloured based on Cancer Cellularity")
 ```
 
+### Size
+```{r}
+autoplot(metabric.pca, data=meta_and_data, colour="Size", frame=TRUE, frame.type="norm") +
+  labs(colour = "Size (in mm)", fill = "Size (in mm)") +
+  labs(title = "PCA on scaled data, coloured based on Cancer Cellularity")
+```
+
+### Cancer Subtypes vs Tissue Source Site
+```{r}
+numbers = clinical %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n())
+
+clinical %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = cancer_subtype, names_from = Site, values_from = number) %>%
+  #column_to_rownames(var="cancer_subtype") %>%
+  mutate_if(is.numeric, funs(./sum(.))) %>%
+  pivot_longer(cols = 2:6, names_to = "Site", values_to = "Fraction") %>%
+  mutate(Number = numbers$number) %>%
+  ggplot(aes(x = Site, y = cancer_subtype, fill = Fraction, label = Number)) +
+  geom_tile()+
+  geom_text()+
+  labs(y = "Cancer Subtype", title = "Distribution of different cancer subtypes across the tissue collection sites")
+
+
+labels_validation %>%
+  filter(cancer_subtype != "NC") %>%
+  group_by(cancer_subtype, Site) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = cancer_subtype, names_from = Site, values_from = number) %>%
+  mutate_if(is.numeric, funs(./sum(., na.rm = TRUE))) %>%
+  pivot_longer(cols = 2:6, names_to = "Site", values_to = "Fraction") %>%
+  mutate(Fraction = replace_na(Fraction, 0)) %>%
+  ggplot(aes(x = Site, y = cancer_subtype, fill = Fraction, label = round(Fraction,2))) +
+  geom_tile()+
+  geom_text()+
+  labs(y = "Cancer Subtype", title = "Distribution of different cancer subtypes in the validation set across sites")
+```
 

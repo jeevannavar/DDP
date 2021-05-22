@@ -102,7 +102,7 @@ ctpnet <- ctpnet[match(labels$cell_id, ctpnet$cell_id),]
 # Writing data to files
 ```{r}
 # Gene Expression
-write_csv(rna, "rna.csv")
+write_csv(rna, "../../../CITEseq_BMNC/rna.csv")
 
 # Antibody Derived Tags (ADT)
 write_csv(adt, "adt.csv")

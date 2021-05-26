@@ -63,6 +63,26 @@ class GCN_E_2(nn.Module):
 
         return x
 
+class GCN_E_N(nn.Module):
+    """#===========================================
+        GCN encoder with two layers
+    """#===========================================
+    
+    def __init__(self, in_dim, hgcn_dim, out_dim, dropout, num_layers):
+        super().__init__()
+        self.gc = [GraphConvolution(in_dim, hgcn_dim)]
+        for _ in range(num_layers-2):
+            self.gc.append(GraphConvolution(hgcn_dim, hgcn_dim))
+        self.gc.append(GraphConvolution(hgcn_dim, out_dim))
+        self.dropout = dropout
+
+    def forward(self, x, adj):
+        for i in range(len(self.gc)):
+            x = self.gc[i](x, adj)
+            x = F.leaky_relu(x, 0.25)
+            x = F.dropout(x, self.dropout, training=self.training)
+
+        return x
 
 class Classifier_1(nn.Module):
     """#===========================================
@@ -168,7 +188,7 @@ class DenseCombine(nn.Module):
 
         return output
     
-def init_model_dict(num_class, dim_list, dim_he_list, dim_hc, gcn_names, combiner, gcn_dropout=0.5):
+def init_model_dict(num_class, dim_list, dim_he_list, dim_hc, gcn_names, combiner, gcn_dropout=0.5, num_gcn=2):
     """
         Initialize the models - GCNs and VCDN
         Inputs:
@@ -179,6 +199,7 @@ def init_model_dict(num_class, dim_list, dim_he_list, dim_hc, gcn_names, combine
             gcn_names   -> list of namesfor the gcns and the combiner, if it is being used
             combiner    -> name of combiner, false if no combiner is used
             gcn_dropout -> dropout rate for the GCN layers
+            num_gcn     -> number of gcn layers to train on
 
         Outputs:
             model_dict  -> dictionary of individual gcn and vcdn layers/models
@@ -190,7 +211,7 @@ def init_model_dict(num_class, dim_list, dim_he_list, dim_hc, gcn_names, combine
     model_dict = {}
     for i in range(len(dim_list)):
         encoder = f"E{i+1}"
-        model_dict[encoder] = GCN_E_2(dim_list[i], dim_he_list[i], dim_he_list[i], gcn_dropout)
+        model_dict[encoder] = GCN_E_N(dim_list[i], dim_he_list[i], dim_he_list[i], gcn_dropout, num_gcn)
         classifier = gcn_names[i]
         model_dict[classifier] = Classifier_1(dim_he_list[i], num_class)
     

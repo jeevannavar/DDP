@@ -23,7 +23,7 @@ from train_test import train_1_epoch, test_VCDN
 from utils import print_dict
 from temporaries import findInteractionsSelf, findInteractionsCross, label_specific_acc
 
-def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interval=50, lr=1e-4, weight_decay=3e-3, dropout=0.5, adj_parameter=5, VERBOSE=2, doSMOTE=True, RUN_TITLE="", RUN_TITLE_SHORT="", OUTPUT_FILES=False, MAKE_PLOTS=False, feature_extract=[]):
+def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_epoch=1000, test_interval=50, lr=1e-4, weight_decay=3e-3, dropout=0.5, adj_parameter=5, VERBOSE=2, doSMOTE=True, RUN_TITLE="", RUN_TITLE_SHORT="", OUTPUT_FILES=False, MAKE_PLOTS=False, feature_extract=[], num_gcn=2):
     ############################################################################################################################################################################
     '''
     This is the main function that takes all the inputs definitions and runs the GCN+VCDN model.
@@ -47,6 +47,7 @@ def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_e
         OUTPUT_FILES    = Boolean, set True to output metrics.csv and loss.csv. (Default = False)
         MAKE_PLOTS      = Boolean, set True to create losses and metrics plots. (Default = False)
         feature_extract = list of "lime", "shap", both, or none. Select which feature selector to use. (Default = [])
+        num_gcn         = int, one of 1, 2, or 3. (Default = 2)
     
     Outputs:
         losses_df       = pandas dataframe, contains losses for each of the GCNs and the Combiner for every epoch
@@ -134,7 +135,7 @@ def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_e
     dim_hvcdn = num_class**len(dim_list)                # Input dimension of VCDN
            
     # model and optimization
-    model_dict = init_model_dict(num_class, dim_list, dim_he_list, dim_hvcdn, GCN_names, COMBINER, gcn_dropout=dropout)
+    model_dict = init_model_dict(num_class, dim_list, dim_he_list, dim_hvcdn, GCN_names, COMBINER, gcn_dropout=dropout, num_gcn=num_gcn)
 
     for m in model_dict:
         if cuda:

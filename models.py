@@ -65,15 +65,16 @@ class GCN_E_2(nn.Module):
 
 class GCN_E_N(nn.Module):
     """#===========================================
-        GCN encoder with two layers
+        GCN encoder with N layers
     """#===========================================
     
     def __init__(self, in_dim, hgcn_dim, out_dim, dropout, num_layers):
         super().__init__()
-        self.gc = [GraphConvolution(in_dim, hgcn_dim)]
-        for _ in range(num_layers-2):
-            self.gc.append(GraphConvolution(hgcn_dim, hgcn_dim))
-        self.gc.append(GraphConvolution(hgcn_dim, out_dim))
+        self.gc = {}
+        self.gc[0] = GraphConvolution(in_dim, hgcn_dim)
+        for i in range(1, num_layers-1):
+            self.gc[i] = GraphConvolution(hgcn_dim, hgcn_dim)
+        self.gc[num_layers-1] = GraphConvolution(hgcn_dim, out_dim)
         self.dropout = dropout
 
     def forward(self, x, adj):
@@ -211,7 +212,7 @@ def init_model_dict(num_class, dim_list, dim_he_list, dim_hc, gcn_names, combine
     model_dict = {}
     for i in range(len(dim_list)):
         encoder = f"E{i+1}"
-        model_dict[encoder] = GCN_E_N(dim_list[i], dim_he_list[i], dim_he_list[i], gcn_dropout, num_gcn)
+        model_dict[encoder] = GCN_E_2(dim_list[i], dim_he_list[i], dim_he_list[i], gcn_dropout)#, num_gcn)
         classifier = gcn_names[i]
         model_dict[classifier] = Classifier_1(dim_he_list[i], num_class)
     

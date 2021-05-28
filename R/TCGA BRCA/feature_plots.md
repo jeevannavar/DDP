@@ -1,29 +1,27 @@
----
-title: "More plots with features"
-output: github_document
-editor_options: 
-  chunk_output_type: inline
----
+More plots with features
+================
+
 Importing libraries
-```{r message=FALSE, warning=FALSE}
+
+``` r
 library(tidyverse)
 library(ggpubr)
 ```
 
-
 Loading shap and lime values
-```{r message=FALSE, warning=FALSE}
+
+``` r
 lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
 shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
     col_types = cols(features = col_skip()))
 shap <- rename(shap, features = features_1)
 ```
 
-
 Plotting the importance values
 
 LIME
-```{r}
+
+``` r
 lime %>%
   mutate(ranks = rank(-aggregate)) %>%
   ggplot(aes(x = ranks, y = aggregate))+
@@ -32,8 +30,11 @@ lime %>%
   scale_x_continuous(breaks = seq(0,2000,100))
 ```
 
+![](feature_plots_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
 SHAP
-```{r}
+
+``` r
 shap %>%
   mutate(ranks = rank(-shapley_values)) %>%
   ggplot(aes(x = ranks, y = shapley_values))+
@@ -42,13 +43,15 @@ shap %>%
   scale_x_continuous(breaks = seq(0,2000,100))
 ```
 
+![](feature_plots_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 # Variable Importance Plot
 
 ## LIME
 
 Loading necessary data
-```{r message=FALSE, warning=FALSE}
+
+``` r
 lime <- read_csv("/data/users/bs16b001/logs/20210129/lime_1.csv")
 
 meth <- read_csv("meth_top1000.csv")
@@ -60,7 +63,8 @@ all_gene_sets = msigdbr(species = "Homo sapiens")
 ```
 
 Some data processing
-```{r}
+
+``` r
 lime$datatype <- NA
 lime$datatype[lime$features %in% names(meth)] = "meth"
 lime$datatype[lime$features %in% names(mrna)] = "mrna"
@@ -79,11 +83,32 @@ msigdb <- unique(selected_gs$gene_symbol)
 mutations <- read_tsv("/data/users/bs16b001/genesets/mutation_download_tab.txt") %>%
   filter(cancer_type_abbr == "BRCA") %>%
   select(driver_gene)
+```
 
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   cancer_project = col_character(),
+    ##   cancer_type_abbr = col_character(),
+    ##   tool = col_character(),
+    ##   driver_gene = col_character()
+    ## )
+
+``` r
 methylation <- read_tsv("/data/users/bs16b001/genesets/methylation_download_tab.txt") %>%
   filter(cancer_type_abbr == "BRCA") %>%
   select(driver_gene)
-  
+```
+
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   cancer_project = col_character(),
+    ##   cancer_type_abbr = col_character(),
+    ##   driver_gene = col_character()
+    ## )
+
+``` r
 driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))), 
                   unique(Reduce(c, str_split(methylation$driver_gene, ", "))))
 
@@ -92,7 +117,18 @@ driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))),
 miRCancer <- read_tsv("/data/users/bs16b001/genesets/miRCancerJune2020.txt") %>%
   filter(grepl("breast", Cancer)) %>%
   select(mirId)
+```
 
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   mirId = col_character(),
+    ##   Cancer = col_character(),
+    ##   Profile = col_character(),
+    ##   `PubMed Article` = col_character()
+    ## )
+
+``` r
 mirna_names <- unique(miRCancer$mirId)
 str_sub(mirna_names, 1, 4) <- ""
 str_sub(mirna_names, 4, 4) <- ""
@@ -145,8 +181,10 @@ mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
 miRCancer <- mirna_names
 ```
 
-Reformatting names
-```{r}
+Reformatting
+names
+
+``` r
 lime$features[lime$datatype == "mrna"] <- unlist(str_split(lime$features[lime$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
 
 lime$features[startsWith(lime$features, "PCDHGA4;PCDHGA6;")] <- "PCDHGA4;PCDHGA6;"
@@ -207,9 +245,12 @@ lime$features[lime$datatype == "mirna"] <- mirna_names
 
 Some more data processing
 
-I've made three lists of genes: msigdb, driverv3, and mircancer.
-Now I just have to make three columns with values 1, 10, 100 for their being inside those lists of genes. Then sum them up. Convert sum to character. And then colour based on this character value.
-```{r}
+I’ve made three lists of genes: msigdb, driverv3, and mircancer. Now I
+just have to make three columns with values 1, 10, 100 for their being
+inside those lists of genes. Then sum them up. Convert sum to character.
+And then colour based on this character value.
+
+``` r
 lime$geneset1 <- 0
 lime$geneset1[lime$features %in% msigdb] <- 100
 lime$geneset2 <- 0
@@ -231,9 +272,9 @@ lime$geneset <- recode(lime$geneset,
                        "111" = "MSigDB + DriverDBV3 + miRCancer")
 ```
 
-
 Lollipop plot
-```{r}
+
+``` r
 plot_for_legend <- lime %>%
                   ggplot(aes(x = scores, y = features, colour = geneset))+
                   geom_point()+
@@ -289,40 +330,96 @@ ggarrange(mirna_plot, mrna_plot, meth_plot,
           legend.grob = get_legend(plot_for_legend))
 ```
 
+![](feature_plots_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
 Top features
-```{r}
+
+``` r
 top_features <- lime %>%
   group_by(datatype) %>%
   select(!geneset) %>%
   slice_max(order_by=scores, n=25) %>%
   select(features) %>%
   as.vector()
+```
 
+    ## Adding missing grouping variables: `datatype`
+
+``` r
 paste(top_features$features[top_features$datatype == "mrna"], collapse = ", ")
+```
+
+    ## [1] "DACH1, NTRK2, FAM107A, FGD3, C8orf84, FGF2, LRRN1, PIF1, CLSTN2, DNAJC12, MMP11, ANKRD29, C4A, CDH1, TINAGL1, ATAD3C, PHGDH, CNN1, CACNA2D2, SLC4A8, C16orf71, RAI2, INPP5J, SLC7A5, SHISA2"
+
+``` r
 paste(top_features$features[top_features$datatype == "meth"], collapse = ", ")
+```
+
+    ## [1] "SNORA23;IPO7, DOCK2;FAM196B, C21orf130, HIST3H2BB;HIST3H2A, DLX6;DLX6AS, LOC727677, NAP1L6, CDC123, OR8U8;OR5AR1, ZIC4;ZIC1, LBX2;LOC151534, OR10G9, LY6E, KLC2;RAB1B, DCT, PCDHGA4;PCDHGA6;, MIR195, ZNF492, MIR1304, ESPNL;SCLY, UTS2D;CCDC50, FBXO47, POU3F3, DERL3, VPS28;NFKBIL2"
+
+``` r
 paste(top_features$features[top_features$datatype == "mirna"], collapse = ", ")
 ```
 
-
+    ## [1] "MIR342, MIR101-2, MIR30C2, MIR29C, MIR576, MIR130B, MIRLET7D, MIR3690, MIR345, MIR28, SNORD138, MIR3682, MIR3912, MIR450A2, MIR101-1, MIR196B, MIR425, MIR3074, MIR3922, MIR3605, MIR200B, MIR639, MIR1306, MIR15B, MIR26A2"
 
 ## SHAP
 
 Loading necessary data
-```{r}
+
+``` r
 shap <- read_csv("/data/users/bs16b001/logs/20210129/shap_1.csv", 
     col_types = cols(features = col_skip()))
+```
+
+    ## Warning: Duplicated column names deduplicated: 'features' => 'features_1' [2]
+
+``` r
 shap <- rename(shap, features = features_1)
 
 meth <- read_csv("meth_top1000.csv")
-mrna <- read_csv("mrna_top1000.csv")
-mirna <- read_csv("mirna_anova.csv")
+```
 
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   .default = col_double(),
+    ##   patient_id = col_character()
+    ## )
+    ## ℹ Use `spec()` for the full column specifications.
+
+``` r
+mrna <- read_csv("mrna_top1000.csv")
+```
+
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   .default = col_double(),
+    ##   patient_id = col_character()
+    ## )
+    ## ℹ Use `spec()` for the full column specifications.
+
+``` r
+mirna <- read_csv("mirna_anova.csv")
+```
+
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   .default = col_double(),
+    ##   patient_id = col_character()
+    ## )
+    ## ℹ Use `spec()` for the full column specifications.
+
+``` r
 library(msigdbr)
 all_gene_sets = msigdbr(species = "Homo sapiens")
 ```
 
 Some data processing
-```{r}
+
+``` r
 shap$datatype <- NA
 shap$datatype[shap$features %in% names(meth)] = "meth"
 shap$datatype[shap$features %in% names(mrna)] = "mrna"
@@ -341,11 +438,32 @@ msigdb <- unique(selected_gs$gene_symbol)
 mutations <- read_tsv("/data/users/bs16b001/genesets/mutation_download_tab.txt") %>%
   filter(cancer_type_abbr == "BRCA") %>%
   select(driver_gene)
+```
 
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   cancer_project = col_character(),
+    ##   cancer_type_abbr = col_character(),
+    ##   tool = col_character(),
+    ##   driver_gene = col_character()
+    ## )
+
+``` r
 methylation <- read_tsv("/data/users/bs16b001/genesets/methylation_download_tab.txt") %>%
   filter(cancer_type_abbr == "BRCA") %>%
   select(driver_gene)
-  
+```
+
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   cancer_project = col_character(),
+    ##   cancer_type_abbr = col_character(),
+    ##   driver_gene = col_character()
+    ## )
+
+``` r
 driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))), 
                   unique(Reduce(c, str_split(methylation$driver_gene, ", "))))
 
@@ -354,7 +472,18 @@ driverv3 <- union(unique(Reduce(c, str_split(mutations$driver_gene, ", "))),
 miRCancer <- read_tsv("/data/users/bs16b001/genesets/miRCancerJune2020.txt") %>%
   filter(grepl("breast", Cancer)) %>%
   select(mirId)
+```
 
+    ## 
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## cols(
+    ##   mirId = col_character(),
+    ##   Cancer = col_character(),
+    ##   Profile = col_character(),
+    ##   `PubMed Article` = col_character()
+    ## )
+
+``` r
 mirna_names <- unique(miRCancer$mirId)
 str_sub(mirna_names, 1, 4) <- ""
 str_sub(mirna_names, 4, 4) <- ""
@@ -407,8 +536,10 @@ mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
 miRCancer <- mirna_names
 ```
 
-Reformatting names
-```{r}
+Reformatting
+names
+
+``` r
 shap$features[shap$datatype == "mrna"] <- unlist(str_split(shap$features[shap$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
 
 shap$features[startsWith(shap$features, "PCDHGA4;PCDHGA6;")] <- "PCDHGA4;PCDHGA6;"
@@ -469,9 +600,12 @@ shap$features[shap$datatype == "mirna"] <- mirna_names
 
 Some more data processing
 
-I've made three lists of genes: msigdb, driverv3, and mircancer.
-Now I just have to make three columns with values 1, 10, 100 for their being inside those lists of genes. Then sum them up. Convert sum to character. And then colour based on this character value.
-```{r}
+I’ve made three lists of genes: msigdb, driverv3, and mircancer. Now I
+just have to make three columns with values 1, 10, 100 for their being
+inside those lists of genes. Then sum them up. Convert sum to character.
+And then colour based on this character value.
+
+``` r
 shap$geneset1 <- 0
 shap$geneset1[shap$features %in% msigdb] <- 100
 shap$geneset2 <- 0
@@ -493,9 +627,9 @@ shap$geneset <- recode(shap$geneset,
                        "111" = "MSigDB + DriverDBV3 + miRCancer")
 ```
 
-
 Lollipop plot
-```{r}
+
+``` r
 plot_for_legend <- shap %>%
                   ggplot(aes(x = scores, y = features, colour = geneset))+
                   geom_point()+
@@ -551,16 +685,35 @@ ggarrange(mirna_plot, mrna_plot, meth_plot,
           legend.grob = get_legend(plot_for_legend))
 ```
 
+![](feature_plots_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
 Top features
-```{r}
+
+``` r
 top_features <- shap %>%
   group_by(datatype) %>%
   select(!geneset) %>%
   slice_max(order_by=scores, n=25) %>%
   select(features) %>%
   as.vector()
+```
 
+    ## Adding missing grouping variables: `datatype`
+
+``` r
 paste(top_features$features[top_features$datatype == "mrna"], collapse = ", ")
+```
+
+    ## [1] "DACH1, NTRK2, CLSTN2, LRRN1, DNAJC12, FAM107A, FGF2, C4A, PIF1, SLC1A1, C8orf84, MMP11, FGD3, ANKRD29, PTHLH, MYB, CACNA2D2, L3MBTL4, INPP5J, TINAGL1, ZNF135, SLC4A8, LMX1B, SHISA2, PHGDH"
+
+``` r
 paste(top_features$features[top_features$datatype == "meth"], collapse = ", ")
+```
+
+    ## [1] "SNORA23;IPO7, DOCK2;FAM196B, C21orf130, HIST3H2BB;HIST3H2A, LOC727677, DLX6;DLX6AS, NAP1L6, ZIC4;ZIC1, LBX2;LOC151534, ZNF492, OR8U8;OR5AR1, KLC2;RAB1B, C21orf29;KRTAP10-5, CDC123, DCT, PCDHGA4;PCDHGA6;, MIR195, C9orf66;DOCK8, ESPNL;SCLY, LY6E, ICAM5;ICAM4, POU3F3, OR10G9, LRRC36;KCTD19, FBXO47"
+
+``` r
 paste(top_features$features[top_features$datatype == "mirna"], collapse = ", ")
 ```
+
+    ## [1] "MIR342, MIR101-2, MIR29C, MIR30C2, MIR196B, MIR3912, MIR28, MIR581, MIR425, MIRLET7D, MIR345, MIR3610, MIR3605, MIR296, MIR1291, MIR15B, MIR3690, MIR450A2, MIR1245A, MIR887, MIR101-1, MIR193B, MIR3922, SNORD138, MIR944"

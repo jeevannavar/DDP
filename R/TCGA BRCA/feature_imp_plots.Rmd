@@ -150,17 +150,17 @@ Mentioning which data type they are
 ```{r}
 values$datatype <- NA
 values$datatype[values$features %in% names(meth)] = "meth"
-values$datatype[values$features %in% names(mrna)] = "mrna"
-values$datatype[values$features %in% names(mirna)] = "mirna"
+values$datatype[values$features %in% names(mrna)] = "mRNA"
+values$datatype[values$features %in% names(mirna)] = "miRNA"
 
 ranks$Datatype = values$datatype
 ```
 
 Plotting
 ```{r}
-ggplot(ranks, aes(x=anova, y=lime, colour=Datatype))+
+ggplot(ranks, aes(x=anova, y=shap, colour=Datatype))+
   geom_point()+
-  labs(x="ANOVA Ranks", y="LIME Ranks")
+  labs(x="ANOVA Ranks", y="SHAP Ranks")
 ```
 
 
@@ -189,22 +189,22 @@ ranks <- dplyr::select(values, features, shap, lime, anova, svm_lime)
 # Mentioning which datatype they are
 values$datatype <- NA
 values$datatype[values$features %in% names(meth)] = "meth"
-values$datatype[values$features %in% names(mrna)] = "mrna"
-values$datatype[values$features %in% names(mirna)] = "mirna"
+values$datatype[values$features %in% names(mrna)] = "mRNA"
+values$datatype[values$features %in% names(mirna)] = "miRNA"
 
 ranks$Datatype = values$datatype
 ```
 Plotting
 ```{r}
-ggplot(ranks, aes(x=lime, y=svm_lime, colour=Datatype))+
+ggplot(ranks, aes(x=anova, y=svm_lime, colour=Datatype))+
   geom_point()+
-  labs(x="GCN Lime Ranks", y="SVM LIME Ranks")
+  labs(x="ANOVA Ranks", y="SVM LIME Ranks")
 ```
 
 ## Correlation plot
 ```{r}
 matrix <- values[c("shapley_values", "aggregate.x", "f_value", "aggregate.y")]
-matrix <- dplyr::rename(matrix, "gcn_shap"="shapley_values", "gcn_lime"="aggregate.x", "anova"="f_value", "svm_lime"="aggregate.y")
+matrix <- dplyr::rename(matrix, "SHAP"="shapley_values", "LIME"="aggregate.x", "ANOVA"="f_value", "SVM LIME"="aggregate.y")
 corr_matrix <- cor(matrix)
 
 library(corrplot)
@@ -367,7 +367,9 @@ Formatting mrna names:
 ```{r}
 # The mrna names have both names and entrez ids joined with an underscore
 # Splitting them and keeping only one of them will be enough
-values$features[values$datatype == "mrna"] <- unlist(str_split(values$features[values$datatype == "mrna"], "\\|"))[ c(TRUE,FALSE) ]
+values$features[values$datatype == "mRNA"] <- unlist(str_split(values$features[values$datatype == "mRNA"], "\\|"))[ c(TRUE,FALSE) ]
+
+#values$features <- vapply(strsplit(values$features, "\\|"), `[`, 1, FUN.VALUE=character(1))
 ```
 
 Formatting mirna names:
@@ -375,7 +377,7 @@ Formatting mirna names:
 # In my analysis, the mirna names are in the format hsa-mir-000ab
 # Get only the part after first dash, and keep the last dash
 #test <- c("hsa-mir-100", "hsa-mir-100a", "hsa-mir-100-1")
-mirna_names <- values$features[values$datatype == "mirna"]
+mirna_names <- values$features[values$datatype == "miRNA"]
 str_sub(mirna_names, 1, 4) <- ""
 str_sub(mirna_names, 4, 4) <- ""
 mirna_names <- str_to_upper(mirna_names)
@@ -426,7 +428,7 @@ mirna_names <- sub("MIR486", "MIR486-1", mirna_names)
 
 #setdiff(mirna_names, all_gene_sets$gene_symbol)
 
-values$features[values$datatype == "mirna"] <- mirna_names
+values$features[values$datatype == "miRNA"] <- mirna_names
 ```
 
 Converting everything to entrez ids
@@ -500,12 +502,12 @@ Making tables:
 ```{r}
 genesets_cat <- all_gene_sets %>% 
                   filter(!gs_cat %in% c("C1", "C7", "C8")) %>%
-                  select(gs_cat, gs_subcat, gs_name) %>% 
+                  dplyr::select(gs_cat, gs_subcat, gs_name) %>% 
                   distinct()
 
 genesets_cat$gs_subcat[genesets_cat$gs_cat == "C6"] <- "Oncogenic Signatures"
 genesets_cat$gs_subcat[genesets_cat$gs_cat == "H"] <- "Hallmark"
-genesets_cat <- select(genesets_cat, gs_subcat, gs_name)
+genesets_cat <- dplyr::select(genesets_cat, gs_subcat, gs_name)
 
 
 temp_list <- fgseaRes_anova$pathway[fgseaRes_anova$padj < 0.05]
@@ -984,6 +986,7 @@ length(msigdb_genes)
 length(intersect(msigdb_genes, unique(values$features)))
 ```
 
+#### LIME
 Removing redundant genesets
 ```{r}
 fgsea_output <- fgseaRes_gcnlime %>%
@@ -1054,11 +1057,91 @@ gcnlime_gs %>%
   mutate(NES = abs(NES)) %>%
   #slice_max(NES, n = 40) %>%
   mutate(gs_name = fct_reorder(gs_name, NES)) %>%
+  filter(!is.na(gs_subcat)) %>%
   ggplot(aes(x = NES, y = gs_name, fill = gs_subcat))+
   geom_bar(stat = "identity")+
   theme_minimal()+
-  labs(y = "Top Significant Genesets at FDR = 5%", x = "Normalized Enrichment Score", title = "Gene Set Enrichment Analysis Results", fill = "Sub-collection")
+  labs(y = "Top Significant Non-Overlapping Genesets at FDR = 5%", x = "Normalized Enrichment Score", fill = "Sub-collection")#, title = "Gene Set Enrichment Analysis Results"
 ```
+
+
+#### SHAP
+Removing redundant genesets
+```{r}
+fgsea_output <- fgseaRes_gcnshap %>%
+  mutate(NES = abs(NES)) %>%
+  mutate(gs_name = fct_reorder(pathway, NES))
+
+enriched_pathways <- fgsea_output$gs_name[fgsea_output$padj < 0.05]
+selected_pathways <- all_gene_sets %>% 
+  filter(gs_name %in% enriched_pathways) %>%
+  dplyr::select(gs_name, gene_symbol)
+
+selected_pathways_list <- lapply(split(selected_pathways, selected_pathways$gs_name), function(x) as.list(x[,2])[[1]])
+
+iou_matrix <- sapply(selected_pathways_list, function(x) sapply(selected_pathways_list, function(y) {
+    length(intersect(x,y))/length(union(x,y))
+  }))
+
+get_nonoverlapping <- function(iou_matrix) {
+  input_names <- colnames(iou_matrix)
+  output_names <- input_names
+  
+  while (!is_empty(input_names)) {
+    name <- input_names[1]
+    input_names <- input_names[-1]
+    overlapping_names <- colnames(iou_matrix)[iou_matrix[name,] > 0.2]
+    
+    input_names <- input_names[!input_names %in% overlapping_names]
+    output_names <- output_names[!output_names %in% overlapping_names]
+    output_names <- c(output_names, name)
+  }
+  return(output_names)
+}
+
+nonoverlapping_gs <- get_nonoverlapping(iou_matrix)
+```
+```{r}
+genesets_cat <- all_gene_sets %>% 
+                  filter(!gs_cat %in% c("C1", "C7", "C8")) %>%
+                  dplyr::select(gs_cat, gs_subcat, gs_name) %>% 
+                  distinct()
+
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C6"] <- "Oncogenic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "C7"] <- "Immunologic Signatures"
+genesets_cat$gs_subcat[genesets_cat$gs_cat == "H"] <- "Hallmark"
+genesets_cat <- select(genesets_cat, gs_subcat, gs_name)
+
+gcnshap_gs <- fgseaRes_gcnlime %>%
+                filter(padj < 0.05) %>%
+                filter(pathway %in% nonoverlapping_gs) %>%
+                dplyr::select(gs_name = pathway, NES) %>%
+                left_join(genesets_cat)
+
+gcnshap_gs$gs_subcat <- gcnshap_gs$gs_subcat %>%
+                    recode("CGP" = "Chemical/Genetic Perturbations",
+                           "CM" = "Cancer Modules",
+                           "CP:WIKIPATHWAYS" = "WikiPathways",
+                           "GO:BP" = "GO: Biological Processes",
+                           "MIR:MIRDB" = "miRDB Targets",
+                           "CGN" = "Cancer Gene Neighbourhoods",
+                           "GO:CC" = "GO: Cellular Components",
+                           "GO:MF" = "GO: Molecular Function",
+                           "HPO" = "Human Phenotype Ontology",
+                           "CP:REACTOME" = "Reactome Pathways",
+                           "TFT:TFT_Legacy" = "Legacy TF Targets")
+
+gcnshap_gs %>%
+  mutate(NES = abs(NES)) %>%
+  #slice_max(NES, n = 40) %>%
+  mutate(gs_name = fct_reorder(gs_name, NES)) %>%
+  filter(!is.na(gs_subcat)) %>%
+  ggplot(aes(x = NES, y = gs_name, fill = gs_subcat))+
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  labs(y = "Top Significant Non-Overlapping Genesets at FDR = 5%", x = "Normalized Enrichment Score", fill = "Sub-collection")#, title = "Gene Set Enrichment Analysis Results"
+```
+
 
 Enriching for a gene set consisting of all genes in msigdb associated with breast
 ```{r}

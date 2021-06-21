@@ -194,6 +194,7 @@ clinical %>%
   ggplot(aes(x = Site, y = cancer_subtype, fill = Fraction, label = Number)) +
   geom_tile()+
   geom_text()+
+  scale_fill_distiller(palette = "YlOrBr")+
   labs(y = "Cancer Subtype", title = "Distribution of different cancer subtypes across the tissue collection sites")
 
 

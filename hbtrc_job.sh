@@ -1,10 +1,11 @@
 #!/bin/bash
-#$ -N hbtrc_elasticnet
+#$ -N hbtrc
 #$ -cwd
 
 chmod 775 hbtrc.py
 
-./hbtrc.py > hbtrc_elasticnet.log
-mkdir -p /data/users/bs16b001/logs/20201230/hbtrc/elasticnet
-cp *.py hbtrc_job.sh *.log hbtrc_elasticnet* *.png *.csv /data/users/bs16b001/logs/20201230/hbtrc/elasticnet
-rm *.log *.png *.csv
+/opt/anaconda3/bin/jupyter nbconvert --to notebook --execute HBTRC_Multi_Tissue_Analysis.ipynb --output Multi-Tissue-Analysis.ipynb --ExecutePreprocessor.timeout=None
+
+mkdir -p /data/users/bs16b001/DDP/logs/20210622/hbtrc/
+cp *.py hbtrc_job.sh *Analysis.ipynb  hbtrc* *.csv /data/users/bs16b001/DDP/logs/20210622/hbtrc/
+rm *.csv

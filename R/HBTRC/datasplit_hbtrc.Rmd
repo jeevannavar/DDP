@@ -85,8 +85,8 @@ label_df %>%
   geom_bar(position="dodge")+
   labs(x="Disease class", y="Number of samples", title = "Sample distribution")
 
-(Number_of_train_samples = length(train_idx))
-(Number_of_test_samples = nrow(labels) - length(train_idx))
-(Total_samples = nrow(labels))
+(Number_of_train_samples = length(train.index))
+(Number_of_test_samples = nrow(label_df) - length(train.index))
+(Total_samples = nrow(label_df))
 ```
 

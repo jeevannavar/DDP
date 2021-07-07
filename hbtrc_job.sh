@@ -1,11 +1,10 @@
 #!/bin/bash
-#$ -N hbtrc
+#$ -N hbtrc_allfeat
 #$ -cwd
 
-chmod 775 hbtrc.py
+chmod 775 hbtrc_allfeat.py
 
-/opt/anaconda3/bin/jupyter nbconvert --to notebook --execute HBTRC_Multi_Tissue_Analysis.ipynb --output Multi-Tissue-Analysis.ipynb --ExecutePreprocessor.timeout=None
+./hbtrc_allfeat.py > hbtrc_allfeat.log
 
-mkdir -p /data/users/bs16b001/DDP/logs/20210622/hbtrc/
-cp *.py hbtrc_job.sh *Analysis.ipynb  hbtrc* *.csv /data/users/bs16b001/DDP/logs/20210622/hbtrc/
-rm *.csv
+mkdir -p /data/users/bs16b001/DDP/logs/20210707/hbtrc_allfeat/
+cp *.py hbtrc_job.sh  hbtrc_allfeat* hbtrc_lime_primary.csv /data/users/bs16b001/DDP/logs/20210707/hbtrc_allfeat/

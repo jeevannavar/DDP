@@ -570,8 +570,9 @@ anova_sorted <- anova_summary %>%
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
-top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:25000])]
-top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:25000], corrThreshold = 0.7)
+n = min(nrow(anova_sorted), 25000)
+top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:n])]
+top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:n], corrThreshold = 0.7)
 
 # Full data
 col_names <- sapply(combn(colnames(cere), 2, simplify = FALSE), paste, collapse = "_")
@@ -617,8 +618,9 @@ anova_sorted <- anova_summary %>%
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
-top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:25000])]
-top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:25000], corrThreshold = 0.7)
+n = min(nrow(anova_sorted), 25000)
+top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:n])]
+top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:n], corrThreshold = 0.7)
 
 # Full data
 col_names <- sapply(combn(colnames(visual), 2, simplify = FALSE), paste, collapse = "_")
@@ -664,8 +666,9 @@ anova_sorted <- anova_summary %>%
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
-top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:25000])]
-top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:25000], corrThreshold = 0.7)
+n = min(nrow(anova_sorted), 25000)
+top25000 <- data_train[, which(names(data_train) %in% anova_sorted$gene[1:n])]
+top_names <- greedySelect(top25000, anova_sorted["gene"][[1]][1:n], corrThreshold = 0.7)
 
 # Full data
 col_names <- sapply(combn(colnames(prefrontal), 2, simplify = FALSE), paste, collapse = "_")

@@ -1,0 +1,118 @@
+[NbConvertApp] Converting notebook HBTRC_Multi_Tissue_Analysis.ipynb to notebook
+[NbConvertApp] Executing notebook with kernel: python3
+[NbConvertApp] ERROR | Error while converting 'HBTRC_Multi_Tissue_Analysis.ipynb'
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/nbconvertapp.py", line 408, in export_single_notebook
+    output, resources = self.exporter.from_filename(notebook_filename, resources=resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 179, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 197, in from_file
+    return self.from_notebook_node(nbformat.read(file_stream, as_version=4), resources=resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/notebook.py", line 32, in from_notebook_node
+    nb_copy, resources = super(NotebookExporter, self).from_notebook_node(nb, resources, **kw)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 139, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/exporters/exporter.py", line 316, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/base.py", line 47, in __call__
+    return self.preprocess(nb, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/execute.py", line 381, in preprocess
+    nb, resources = super(ExecutePreprocessor, self).preprocess(nb, resources)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/base.py", line 69, in preprocess
+    nb.cells[index], resources = self.preprocess_cell(cell, resources, index)
+  File "/opt/anaconda3/lib/python3.7/site-packages/nbconvert/preprocessors/execute.py", line 424, in preprocess_cell
+    raise CellExecutionError.from_cell_and_msg(cell, out)
+nbconvert.preprocessors.execute.CellExecutionError: An error occurred while executing the following cell:
+------------------
+losses_df, metrics_df, _, _, _ = train_model(load_list=load_list, label_dict=label_dict, GCN_names=GCN_names, COMBINER=COMBINER,
+        SEED=SEED, num_epoch=num_epoch, test_interval=test_interval, lr=lr, weight_decay=weight_decay, 
+        dropout=dropout, adj_parameter=adj_parameter, VERBOSE=VERBOSE, doSMOTE = doSMOTE,
+        RUN_TITLE=RUN_TITLE, RUN_TITLE_SHORT=RUN_TITLE_SHORT,
+        OUTPUT_FILES=OUTPUT_FILES, MAKE_PLOTS=MAKE_PLOTS, feature_extract=feature_extract, num_gcn=num_gcn)
+
+#losses_df.to_csv("losses.csv")
+#metrics_df.to_csv("metrics.csv")
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m<ipython-input-16-8a3df0611669>[0m in [0;36m<module>[0;34m[0m
+[1;32m      3[0m         [0mdropout[0m[0;34m=[0m[0mdropout[0m[0;34m,[0m [0madj_parameter[0m[0;34m=[0m[0madj_parameter[0m[0;34m,[0m [0mVERBOSE[0m[0;34m=[0m[0mVERBOSE[0m[0;34m,[0m [0mdoSMOTE[0m [0;34m=[0m [0mdoSMOTE[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m         [0mRUN_TITLE[0m[0;34m=[0m[0mRUN_TITLE[0m[0;34m,[0m [0mRUN_TITLE_SHORT[0m[0;34m=[0m[0mRUN_TITLE_SHORT[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 5[0;31m         OUTPUT_FILES=OUTPUT_FILES, MAKE_PLOTS=MAKE_PLOTS, feature_extract=feature_extract, num_gcn=num_gcn)
+[0m[1;32m      6[0m [0;34m[0m[0m
+[1;32m      7[0m [0;31m#losses_df.to_csv("losses.csv")[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/data/users/bs16b001/DDP/main.py[0m in [0;36mtrain_model[0;34m(load_list, label_dict, GCN_names, COMBINER, SEED, num_epoch, test_interval, lr, weight_decay, dropout, adj_parameter, VERBOSE, doSMOTE, RUN_TITLE, RUN_TITLE_SHORT, OUTPUT_FILES, MAKE_PLOTS, feature_extract, num_gcn)[0m
+[1;32m     87[0m [0;34m[0m[0m
+[1;32m     88[0m     [0mnum_class[0m [0;34m=[0m [0mlen[0m[0;34m([0m[0mlabel_dict[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 89[0;31m     [0mdata_list[0m[0;34m,[0m [0mlabels[0m[0;34m,[0m [0mpatient_id[0m[0;34m,[0m [0mfeat_name_list[0m [0;34m=[0m [0mload_preproc_data[0m[0;34m([0m[0mload_list[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m2[0m[0;34m][0m[0;34m,[0m [0mload_list[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m][0m[0;34m,[0m [0mlabel_dict[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     90[0m     [0;31m# load tr/te partition[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     91[0m     [0mtr_idx[0m[0;34m,[0m [0mte_idx[0m [0;34m=[0m [0mload_trte_partition[0m[0;34m([0m[0mload_list[0m[0;34m[[0m[0;34m-[0m[0;36m1[0m[0;34m][0m[0;34m,[0m [0mpatient_id[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/data/users/bs16b001/DDP/load_data.py[0m in [0;36mload_preproc_data[0;34m(load_list, meta_csv, label_dict)[0m
+[1;32m    120[0m     [0mfeat_name_list[0m [0;34m=[0m [0;34m[[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    121[0m     [0;32mfor[0m [0meach[0m [0;32min[0m [0mload_list[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 122[0;31m         [0mdata[0m[0;34m,[0m [0mfeat_name[0m [0;34m=[0m [0mload_data_csv[0m[0;34m([0m[0meach[0m[0;34m,[0m [0mmeta_patient_id[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    123[0m         [0mdata_list[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mdata[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    124[0m         [0mfeat_name_list[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mfeat_name[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/data/users/bs16b001/DDP/load_data.py[0m in [0;36mload_data_csv[0;34m(csv_file, meta_patient_id, take_log)[0m
+[1;32m     11[0m         [0mmeta_patient_id[0m[0;34m:[0m [0mpatient_id[0m [0morder[0m [0;32mfrom[0m [0mmetadata[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     12[0m     """
+[0;32m---> 13[0;31m     [0mdf[0m [0;34m=[0m [0mpd[0m[0;34m.[0m[0mread_csv[0m[0;34m([0m[0mcsv_file[0m[0;34m,[0m [0mdelimiter[0m[0;34m=[0m[0;34m','[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     14[0m     [0mpatient_id[0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m"patient_id"[0m[0;34m][0m[0;34m.[0m[0mvalues[0m[0;34m.[0m[0mtolist[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     15[0m     [0;31m# check if patient_id in the same order as meta_patient_id[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, dialect, error_bad_lines, warn_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
+[1;32m    603[0m     [0mkwds[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mkwds_defaults[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    604[0m [0;34m[0m[0m
+[0;32m--> 605[0;31m     [0;32mreturn[0m [0m_read[0m[0;34m([0m[0mfilepath_or_buffer[0m[0;34m,[0m [0mkwds[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    606[0m [0;34m[0m[0m
+[1;32m    607[0m [0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36m_read[0;34m(filepath_or_buffer, kwds)[0m
+[1;32m    455[0m [0;34m[0m[0m
+[1;32m    456[0m     [0;31m# Create the parser.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 457[0;31m     [0mparser[0m [0;34m=[0m [0mTextFileReader[0m[0;34m([0m[0mfilepath_or_buffer[0m[0;34m,[0m [0;34m**[0m[0mkwds[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    458[0m [0;34m[0m[0m
+[1;32m    459[0m     [0;32mif[0m [0mchunksize[0m [0;32mor[0m [0miterator[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36m__init__[0;34m(self, f, engine, **kwds)[0m
+[1;32m    812[0m             [0mself[0m[0;34m.[0m[0moptions[0m[0;34m[[0m[0;34m"has_index_names"[0m[0;34m][0m [0;34m=[0m [0mkwds[0m[0;34m[[0m[0;34m"has_index_names"[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    813[0m [0;34m[0m[0m
+[0;32m--> 814[0;31m         [0mself[0m[0;34m.[0m[0m_engine[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_make_engine[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mengine[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    815[0m [0;34m[0m[0m
+[1;32m    816[0m     [0;32mdef[0m [0mclose[0m[0;34m([0m[0mself[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36m_make_engine[0;34m(self, engine)[0m
+[1;32m   1043[0m             )
+[1;32m   1044[0m         [0;31m# error: Too many arguments for "ParserBase"[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1045[0;31m         [0;32mreturn[0m [0mmapping[0m[0;34m[[0m[0mengine[0m[0;34m][0m[0;34m([0m[0mself[0m[0;34m.[0m[0mf[0m[0;34m,[0m [0;34m**[0m[0mself[0m[0;34m.[0m[0moptions[0m[0;34m)[0m  [0;31m# type: ignore[call-arg][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1046[0m [0;34m[0m[0m
+[1;32m   1047[0m     [0;32mdef[0m [0m_failover_to_python[0m[0;34m([0m[0mself[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36m__init__[0;34m(self, src, **kwds)[0m
+[1;32m   1860[0m [0;34m[0m[0m
+[1;32m   1861[0m         [0;31m# open handles[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1862[0;31m         [0mself[0m[0;34m.[0m[0m_open_handles[0m[0;34m([0m[0msrc[0m[0;34m,[0m [0mkwds[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1863[0m         [0;32massert[0m [0mself[0m[0;34m.[0m[0mhandles[0m [0;32mis[0m [0;32mnot[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1864[0m         [0;32mfor[0m [0mkey[0m [0;32min[0m [0;34m([0m[0;34m"storage_options"[0m[0;34m,[0m [0;34m"encoding"[0m[0;34m,[0m [0;34m"memory_map"[0m[0;34m,[0m [0;34m"compression"[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/parsers.py[0m in [0;36m_open_handles[0;34m(self, src, kwds)[0m
+[1;32m   1361[0m             [0mcompression[0m[0;34m=[0m[0mkwds[0m[0;34m.[0m[0mget[0m[0;34m([0m[0;34m"compression"[0m[0;34m,[0m [0;32mNone[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1362[0m             [0mmemory_map[0m[0;34m=[0m[0mkwds[0m[0;34m.[0m[0mget[0m[0;34m([0m[0;34m"memory_map"[0m[0;34m,[0m [0;32mFalse[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1363[0;31m             [0mstorage_options[0m[0;34m=[0m[0mkwds[0m[0;34m.[0m[0mget[0m[0;34m([0m[0;34m"storage_options"[0m[0;34m,[0m [0;32mNone[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1364[0m         )
+[1;32m   1365[0m [0;34m[0m[0m
+
+[0;32m~/.local/lib/python3.7/site-packages/pandas/io/common.py[0m in [0;36mget_handle[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
+[1;32m    642[0m                 [0mencoding[0m[0;34m=[0m[0mioargs[0m[0;34m.[0m[0mencoding[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    643[0m                 [0merrors[0m[0;34m=[0m[0merrors[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 644[0;31m                 [0mnewline[0m[0;34m=[0m[0;34m""[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    645[0m             )
+[1;32m    646[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'R/HBTRC/prefrontal_cerebellum.csv'
+FileNotFoundError: [Errno 2] No such file or directory: 'R/HBTRC/prefrontal_cerebellum.csv'
+

@@ -56,14 +56,14 @@ RUN_TITLE_SHORT = "primary_data"
 
 # load preprocessed data from csv
 #load_list - list of csv files to laod. The -2 position should be meta_csv and -1 position should be trte_partition_file
-load_list = [cerebellum, visualCortex, prefrontalCortex, meta_csv, trte_partition_file]
-GCN_names = ["cerebellum", "visualCortex", "prefrontalCortex"]
+load_list = [cerebellum, visualCortex, prefrontalCortex, cerebellum_visual, visual_prefrontal, prefrontal_cerebellum, cerebellum_cerebellum, visual_visual, prefrontal_prefrontal, meta_csv, trte_partition_file]
+GCN_names = ["cerebellum", "visualCortex", "prefrontalCortex", "cere_vis", "vis_pre", "pre_cere", "cere_cere", "vis_vis", "pre_pre"]
 
-COMBINER = "VCDN"
+COMBINER = "FullyConnected"
 feature_extract = ["lime"]
 
 losses_df, metrics_df, feature_imp, _, _ = train_model(load_list=load_list, label_dict=label_dict, GCN_names=GCN_names, COMBINER=COMBINER, SEED=SEED, num_epoch=num_epoch, test_interval=test_interval, lr=lr, weight_decay=weight_decay,     dropout=dropout, adj_parameter=adj_parameter, VERBOSE=VERBOSE, doSMOTE = doSMOTE, RUN_TITLE=RUN_TITLE, RUN_TITLE_SHORT=RUN_TITLE_SHORT, OUTPUT_FILES=OUTPUT_FILES, MAKE_PLOTS=MAKE_PLOTS, feature_extract=feature_extract, num_gcn=num_gcn)
 
 #losses_df.to_csv("losses.csv")
 #metrics_df.to_csv("metrics.csv")
-feature_imp["lime"].to_csv("hbtrc_lime_primary.csv", index_label="features")
+feature_imp["lime"].to_csv("hbtrc_lime_allint.csv", index_label="features")

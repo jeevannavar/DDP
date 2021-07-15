@@ -112,5 +112,4 @@ write_csv(xgboost, "adt_xgboost.csv")
 
 # ADT predicted using cTPnet
 write_csv(ctpnet, "adt_ctpnet.csv")
-```
-
+``

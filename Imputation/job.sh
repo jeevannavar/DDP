@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N imputation_table
+#$ -N citeseq_imp400
 #$ -cwd
 
-/opt/anaconda3/bin/python3 imputation.py > imputation_table.log
+/opt/anaconda3/bin/python3 citeseq_imputation.py > citeseq_imp400.log

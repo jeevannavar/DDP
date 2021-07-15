@@ -1,0 +1,168 @@
+<IPython.core.display.HTML object>
+2021-07-07 19:37:12.184180 
+
+This run includes 3 GCNs - Cerebellum, Primary Visual Cortex, and Prefrontal Cortex
+SEED =  42
+
+Training...
+
+Test: Epoch 0
+Train Accuracy: 0.3333   Test ACC: 0.2933
+Train F1: 0.1667         Test F1: 0.1331
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              1.0000              0.2933              1.0000
+Alzheimer's 	           0.3333              0.0000              0.4933              0.0000
+Huntington's 	           0.3333              0.0000              0.2133              0.0000
+
+
+Test: Epoch 50
+Train Accuracy: 0.2685   Test ACC: 0.4667
+Train F1: 0.1948         Test F1: 0.3353
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.0134              0.2933              0.0000
+Alzheimer's 	           0.3333              0.7114              0.4933              0.9459
+Huntington's 	           0.3333              0.0805              0.2133              0.0000
+
+
+Test: Epoch 100
+Train Accuracy: 0.7383   Test ACC: 0.5867
+Train F1: 0.7361         Test F1: 0.6023
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.6443              0.2933              0.5000
+Alzheimer's 	           0.3333              0.6980              0.4933              0.5135
+Huntington's 	           0.3333              0.8725              0.2133              0.8750
+
+
+Test: Epoch 150
+Train Accuracy: 0.8837   Test ACC: 0.7600
+Train F1: 0.8810         Test F1: 0.7718
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.7248              0.2933              0.6818
+Alzheimer's 	           0.3333              0.9329              0.4933              0.7297
+Huntington's 	           0.3333              0.9933              0.2133              0.9375
+
+
+Test: Epoch 200
+Train Accuracy: 0.9441   Test ACC: 0.8533
+Train F1: 0.9438         Test F1: 0.8539
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.8926              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9463              0.4933              0.8378
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 250
+Train Accuracy: 0.9374   Test ACC: 0.8800
+Train F1: 0.9373         Test F1: 0.8799
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.8523              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9664              0.4933              0.9189
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 300
+Train Accuracy: 0.9418   Test ACC: 0.8933
+Train F1: 0.9419         Test F1: 0.8935
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.8725              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9597              0.4933              0.9189
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 350
+Train Accuracy: 0.9485   Test ACC: 0.8933
+Train F1: 0.9486         Test F1: 0.8935
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.8993              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9530              0.4933              0.9189
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 400
+Train Accuracy: 0.9553   Test ACC: 0.9200
+Train F1: 0.9553         Test F1: 0.9199
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9128              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9597              0.4933              0.9730
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 450
+Train Accuracy: 0.9575   Test ACC: 0.9067
+Train F1: 0.9576         Test F1: 0.9066
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9262              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9530              0.4933              0.9459
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 500
+Train Accuracy: 0.9553   Test ACC: 0.9067
+Train F1: 0.9553         Test F1: 0.9060
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9195              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9530              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8125
+
+
+Test: Epoch 550
+Train Accuracy: 0.9732   Test ACC: 0.9067
+Train F1: 0.9732         Test F1: 0.9068
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9732              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9530              0.4933              0.9459
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 600
+Train Accuracy: 0.9530   Test ACC: 0.9200
+Train F1: 0.9531         Test F1: 0.9194
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9060              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9597              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 650
+Train Accuracy: 0.9687   Test ACC: 0.9200
+Train F1: 0.9687         Test F1: 0.9194
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9597              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9530              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 700
+Train Accuracy: 0.9732   Test ACC: 0.9333
+Train F1: 0.9732         Test F1: 0.9331
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------

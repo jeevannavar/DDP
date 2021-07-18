@@ -18,7 +18,7 @@ library(caret)
 
 ## Loading data
 ```{r message=FALSE, warning=FALSE}
-data <- read_delim("../../../HBTRC_data/GN326_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
+data <- read_delim("../../../../HBTRC_data/GN326_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
 ```
 ```{r message=FALSE, warning=FALSE}
 # Getting the Gene Symbol and description and storing them as an annotation file
@@ -35,14 +35,15 @@ write_csv(annotation, "gene_description.csv")
 
 We will load the header row of each tissue type to get the sample ids present. Then we will find the common samples among them and use only those for the analysis.
 ```{r message=FALSE, warning=FALSE}
-tissue1 <- read_delim("../../../HBTRC_data/GN326_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
-tissue2 <- read_delim("../../../HBTRC_data/GN327_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
-tissue3 <- read_delim("../../../HBTRC_data/GN328_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
+tissue1 <- read_delim("../../../../HBTRC_data/GN326_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
+tissue2 <- read_delim("../../../../HBTRC_data/GN327_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
+tissue3 <- read_delim("../../../../HBTRC_data/GN328_MeanDataAnnotated_rev081815.txt", "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32, n_max = 0) %>% select(starts_with("HB")) %>% names()
 
 common_samples <- intersect(intersect(tissue1, tissue2), tissue3)
+full_set <- union(union(tissue1, tissue2), tissue3)
 ```
 
-
+Below is code to get the disease labels, i.e., whether the sample belongs to one among the class of Normal, Huntington's, or Alzheimer's.
 ```{r}
 #Below is the format for getting label infromation from the sample id
 pattern <- "^\\w{2}\\_\\w{3}\\_(\\w*)$"
@@ -51,42 +52,70 @@ pattern <- "^\\w{2}\\_\\w{3}\\_(\\w*)$"
 labels <- sub(pattern, "\\1", common_samples)
 labels <- recode(labels, "N"="Normal", "AD"="Alzheimer's", "HD"="Huntington's")
 
-label_df <- tibble(Samples=common_samples, Labels=labels)
+# label_df <- tibble(Samples=common_samples, Labels=labels)
 ```
 
+We, however, in this bit want more relevant information with respect to just Alzheimer's. So, I will load in some meta-data with restricted access. It is still not personally recognizable, but it cannot be made public. No attempt at personally identifying has been made.
+```{r message=FALSE, warning=FALSE}
+meta <- read_csv("../../../../HBTRC_data/HBTRC_trait_data5_TID.txt")
+matcher <- read_csv("../../../../HBTRC_data/patient_id_to_biosample_id.csv")
+
+meta_data <- left_join(matcher, meta, by = c("Biosample Name")) %>%
+                 filter(patient_id %in% common_samples)
+
+
+table(meta_data$`AD case or control (combined)`)
+table(meta_data$`Braak severity (from pathology reports)`) # 10 samples have NA values
+
+labels_AD <- tibble(patient_id = meta_data$patient_id,
+                    label = meta_data$`AD case or control (combined)`)
+
+labels_braak <- tibble(patient_id = meta_data$patient_id,
+                       label = meta_data$`Braak severity (from pathology reports)`) %>%
+                  filter(!is.na(label))
+```
+
+
 ### Stratified Random Split
+One for AD or not. One for Braak severity.
 ```{r}
-train.index <- createDataPartition(label_df$Labels, p = .8, list = FALSE)
-train <- label_df[ train.index,]
-test  <- label_df[-train.index,]
+# AD or Control
+train.index <- createDataPartition(labels_AD$label, p = .8, list = FALSE)
+train_AD <- labels_AD[ train.index,]
+test_AD  <- labels_AD[-train.index,]
+
+# Braak Severity
+train.index <- createDataPartition(labels_braak$label, p = .8, list = FALSE)
+train_braak <- labels_braak[ train.index,]
+test_braak  <- labels_braak[-train.index,]
 ```
 
 ## Writing files
 
-### The disease_class file
+### The labels files
 ```{r}
-label_df %>%
-  rename(patient_id = "Samples", class = "Labels") %>%
-  write.csv("disease_class.csv", row.names = FALSE)
+# AD or not
+labels_AD %>%
+  rename(class = "label") %>%
+  write.csv("labels_AD.csv", row.names = FALSE)
+
+# Braak Severity
+labels_braak %>%
+  rename(class = "label") %>%
+  write.csv("labels_braak.csv", row.names = FALSE)
 ```
 
 ## The train-test partition file
 ```{r}
-fileConn<-file("trte_partition.txt")
-writeLines(c("training patient_id", paste(unlist(train["Samples"]), collapse = ","), "testing patient_id", paste(unlist(test["Samples"]), collapse = ",")), fileConn)
+# AD or not
+fileConn<-file("trte_partition_AD.txt")
+writeLines(c("training patient_id", paste(unlist(train_AD["patient_id"]), collapse = ","), "testing patient_id", paste(unlist(test_AD["patient_id"]), collapse = ",")), fileConn)
+close(fileConn)
+
+# Braak Severity
+fileConn<-file("trte_partition_braak.txt")
+writeLines(c("training patient_id", paste(unlist(train_braak["patient_id"]), collapse = ","), "testing patient_id", paste(unlist(test_braak["patient_id"]), collapse = ",")), fileConn)
 close(fileConn)
 ```
 
-```{r}
-label_df$Category <- ifelse(label_df$Samples %in% train$Samples, "Train", "Test")
-
-label_df %>%
-  ggplot(aes(x=Labels, group=Category, fill=Category))+
-  geom_bar(position="dodge")+
-  labs(x="Disease class", y="Number of samples", title = "Sample distribution")
-
-(Number_of_train_samples = length(train.index))
-(Number_of_test_samples = nrow(label_df) - length(train.index))
-(Total_samples = nrow(label_df))
-```
 

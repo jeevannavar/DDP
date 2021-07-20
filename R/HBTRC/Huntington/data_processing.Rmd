@@ -98,10 +98,10 @@ visualCortex <- read_delim("../../../../HBTRC_data/GN327_MeanDataAnnotated_rev08
 prefrontalCortex <- read_delim("../../../../HBTRC_data/GN328_MeanDataAnnotated_rev081815.txt",
                                "\t", escape_double = FALSE, trim_ws = TRUE, skip = 32)
 
-labels <- read_csv("labels_AD.csv")
+labels <- read_csv("labels_HD.csv")
 
 # Getting the training indices
-trte <- file("trte_partition_AD.txt", open = "r")
+trte <- file("trte_partition_HD.txt", open = "r")
 lines <- readLines(trte)
 close(trte)
 train_idx <- unlist(strsplit(lines[2], ","))
@@ -324,7 +324,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "cerebellum_AD.csv")
+write_csv(data, "cerebellum_HD.csv")
 ```
 
 ### Primary Visual Cortex
@@ -343,7 +343,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "visualCortex_AD.csv")
+write_csv(data, "visualCortex_HD.csv")
 ```
 
 ### Pre-frontal Cortex
@@ -362,7 +362,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "prefrontalCortex_AD.csv")
+write_csv(data, "prefrontalCortex_HD.csv")
 ```
 
 
@@ -371,14 +371,14 @@ write_csv(data, "prefrontalCortex_AD.csv")
 ## Loading data
 
 ```{r message=FALSE, warning=FALSE}
-labels <- read_csv("labels_braak.csv")
+labels <- read_csv("labels_vonsattel.csv")
 
 cerebellum <- filter(cerebellum, patient_id %in% labels$patient_id)
 visualCortex <- filter(visualCortex, patient_id %in% labels$patient_id)
 prefrontalCortex <- filter(prefrontalCortex, patient_id %in% labels$patient_id)
 
 # Getting the training indices
-trte <- file("trte_partition_braak.txt", open = "r")
+trte <- file("trte_partition_vonsattel.txt", open = "r")
 lines <- readLines(trte)
 close(trte)
 train_idx <- unlist(strsplit(lines[2], ","))
@@ -514,7 +514,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "cerebellum_braak.csv")
+write_csv(data, "cerebellum_vonsattel.csv")
 ```
 
 ### Primary Visual Cortex
@@ -533,7 +533,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "visualCortex_braak.csv")
+write_csv(data, "visualCortex_vonsattel.csv")
 ```
 
 ### Pre-frontal Cortex
@@ -552,7 +552,7 @@ data_test[2:n] <- scale(data_test[2:n], center = mean, scale = std)
 
 data <- rbind(data_train, data_test)
 data <- data[match(labels$patient_id, data$patient_id), ]
-write_csv(data, "prefrontalCortex_braak.csv")
+write_csv(data, "prefrontalCortex_vonsattel.csv")
 ```
 
 ```{r}

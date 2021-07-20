@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N citeseq_imp3
+#$ -N citeseq_imp
 #$ -cwd
 
-/opt/anaconda3/bin/python3 citeseq_imputation3.py > knn_imputation3.log
+/opt/anaconda3/bin/python3 citeseq_imputation1.py

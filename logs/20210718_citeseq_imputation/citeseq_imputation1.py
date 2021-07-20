@@ -68,7 +68,7 @@ merged_data = pd.concat([bmnc_train, bmnc_test], keys=["train", "test"])
 
 # Imputing the missing features in metabric data set
 from sklearn.impute import KNNImputer
-neighbors = [3000]
+neighbors = [7500, 10000]
 for n in neighbors:
     imputer = KNNImputer(n_neighbors=n)
     imputer.fit(merged_data.loc["train"])
@@ -77,20 +77,19 @@ for n in neighbors:
     bmnc_test_imputed = pd.DataFrame(bmnc_test_imputed, columns = merged_data.columns, index = merged_data.loc["test"].index)
 
     imputed_values = bmnc_test_imputed.loc[:,mask]
-    # print("n_neighbors=", n)
+    print("n_neighbors=", n)
 
     sp_score = imputed_values.corrwith(truth, method="spearman")
     pe_score = imputed_values.corrwith(truth, method="pearson")
-    # print("Spearman Scores:")
-    # print(sp_score)
-    # print("\n\n")
-    # print("Pearson Scores:")
-    # print(pe_score)
-    # print("\n\n")
-    # print("-"*50)
+    print("Spearman Scores:")
+    print(sp_score)
+    print("\n\n")
+    print("Pearson Scores:")
+    print(pe_score)
+    print("\n\n")
+    print("-"*50)
     
-    # filename = "smote500_spearman_n_" + str(n) + ".csv"
-    # sp_score.to_csv(filename)
-    # filename = "smote500_pearson_n_" + str(n) + ".csv"
-    # pe_score.to_csv(filename)
-    imputed_values.to_csv("Test_ADT_KNN_data.csv")
+    filename = "smote500_spearman_n_" + str(n) + ".csv"
+    sp_score.to_csv(filename)
+    filename = "smote500_pearson_n_" + str(n) + ".csv"
+    pe_score.to_csv(filename)

@@ -166,3 +166,56 @@ Train F1: 0.9732         Test F1: 0.9331
 
 Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
 ------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9732              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9530              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 750
+Train Accuracy: 0.9620   Test ACC: 0.9200
+Train F1: 0.9620         Test F1: 0.9194
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9262              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9664              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 800
+Train Accuracy: 0.9732   Test ACC: 0.9200
+Train F1: 0.9732         Test F1: 0.9194
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9597              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9664              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 850
+Train Accuracy: 0.9754   Test ACC: 0.9333
+Train F1: 0.9754         Test F1: 0.9331
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9799              0.2933              0.8636
+Alzheimer's 	           0.3333              0.9530              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+
+Test: Epoch 900
+Train Accuracy: 0.9732   Test ACC: 0.9200
+Train F1: 0.9732         Test F1: 0.9194
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+Normal    	           0.3333              0.9664              0.2933              0.8182
+Alzheimer's 	           0.3333              0.9597              0.4933              1.0000
+Huntington's 	           0.3333              0.9933              0.2133              0.8750
+
+Performing feature extraction using LIME ...
+
+Average lime score =  0.8033129627893905 
+ Standard deviation =  0.017990315029706272 
+

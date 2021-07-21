@@ -220,7 +220,7 @@ def train_model(load_list, label_dict, GCN_names, COMBINER, SEED="random", num_e
 
 
     metrics = [train_ACC, train_F1, test_ACC, test_F1]+ list(train_accuracies_dict.values()) + list(test_accuracies_dict.values())
-    columns = ["train_accuracy","train_F1","test_accuracy","test_F1"] + ["train_acc_"+key for key in label_dict] + ["test_acc_"+key for key in label_dict]
+    columns = ["train_accuracy","train_F1","test_accuracy","test_F1"] + ["train_acc_"+str(key) for key in label_dict] + ["test_acc_"+str(key) for key in label_dict]
     metrics_df = pd.DataFrame(zip(*metrics), columns=columns, index=range(0,num_epoch+1,test_interval))
     if OUTPUT_FILES:
         metrics_df.to_csv("metrics.csv")

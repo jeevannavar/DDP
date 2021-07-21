@@ -87,7 +87,20 @@ labels_AD <- tibble(patient_id = meta_data$patient_id,
 labels_braak <- tibble(patient_id = meta_data$patient_id,
                        label = meta_data$`Braak severity (from pathology reports)`) %>%
                   filter(!is.na(label))
+
+labels_braak$label[labels_braak$label==1] = "1-2"
+labels_braak$label[labels_braak$label==2] = "1-2"
+labels_braak$label[labels_braak$label==3] = "3-4"
+labels_braak$label[labels_braak$label==4] = "3-4"
+labels_braak$label[labels_braak$label==5] = "5-6"
+labels_braak$label[labels_braak$label==6] = "5-6"
+
+table(labels_braak$label)
 ```
+
+    ## 
+    ##   0 1-2 3-4 5-6 
+    ## 130  63  43 138
 
 ### Stratified Random Split
 

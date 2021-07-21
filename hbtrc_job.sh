@@ -1,10 +1,10 @@
 #!/bin/bash
-#$ -N hbtrc_allfeat
+#$ -N hbtrc_HD
 #$ -cwd
 
-chmod 775 hbtrc_allfeat.py
+chmod 775 hbtrc_HD.py
 
-./hbtrc_allfeat.py > hbtrc_allfeat.log
+./hbtrc_HD.py > hbtrc_HD.log
 
-mkdir -p /data/users/bs16b001/DDP/logs/20210707/hbtrc_allfeat/
-cp *.py hbtrc_job.sh  hbtrc_allfeat* hbtrc_lime_primary.csv /data/users/bs16b001/DDP/logs/20210707/hbtrc_allfeat/
+mkdir -p /data/users/bs16b001/DDP/logs/20210721/hbtrc_HD/
+cp *.py hbtrc_job.sh  hbtrc_HD* hbtrc_shap_HD.csv /data/users/bs16b001/DDP/logs/20210721/hbtrc_HD/

@@ -86,7 +86,7 @@ greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features 
 }
 ```
 
-# AD or Control
+# HD or Control
 
 ## Loading data
 

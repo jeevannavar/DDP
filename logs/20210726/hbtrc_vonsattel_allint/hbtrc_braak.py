@@ -19,29 +19,24 @@ import re
 SEED = 42
 
 # pre-processed data
-cerebellum = "R/HBTRC/Huntington/cerebellum_HD.csv"
-visualCortex = "R/HBTRC/Huntington/visualCortex_HD.csv"
-prefrontalCortex = "R/HBTRC/Huntington/prefrontalCortex_HD.csv"
-cerebellum_visual = "R/HBTRC/Huntington/cere_visual_HD.csv"
-visual_prefrontal = "R/HBTRC/Huntington/visual_prefrontal_HD.csv"
-prefrontal_cerebellum = "R/HBTRC/Huntington/prefrontal_cere_HD.csv"
-cerebellum_cerebellum = "R/HBTRC/Huntington/cere_cere_HD.csv"
-visual_visual = "R/HBTRC/Huntington/visual_visual_HD.csv"
-prefrontal_prefrontal = "R/HBTRC/Huntington/prefrontal_prefrontal_HD.csv"
-meta_csv = "R/HBTRC/Huntington/labels_HD.csv"
-trte_partition_file = "R/HBTRC/Huntington/trte_partition_HD.txt"
+cerebellum = "R/HBTRC/Alzheimer/cerebellum_braak.csv"
+visualCortex = "R/HBTRC/Alzheimer/visualCortex_braak.csv"
+prefrontalCortex = "R/HBTRC/Alzheimer/prefrontalCortex_braak.csv"
+meta_csv = "R/HBTRC/Alzheimer/labels_braak.csv"
+trte_partition_file = "R/HBTRC/Alzheimer/trte_partition_braak.txt"
 
 # change label from text to integer
-label_dict = {"control":0, "affected":1}
+label_dict = {i:i for i in range(7)}
+#label_dict = {"0":0, "1":1, "2":2, "3":3, "4":4, "5":5, "6":6}
 
 doSMOTE = True # Boolean
 
 # training parameters
-num_epoch = 600
+num_epoch = 900
 test_interval = 25
 lr = 5e-4
-weight_decay = 5e-3
-dropout = 0.5
+weight_decay = 1e-3
+dropout = 0.25
 adj_parameter = 8 # average number of edge per node in adj matrix
 
 # VERBOSE setting for print results
@@ -51,18 +46,18 @@ MAKE_PLOTS = False #Boolean to determine whether to output loss and metrics as p
 feature_extract = ["shap"] #["lime", "shap"]
 num_gcn = 2
 
-RUN_TITLE = "This run includes 9 GCNs - Primary features and all the Interaction features \nClassifying between Huntington's Affected and Controls"
-RUN_TITLE_SHORT = "HD"
+RUN_TITLE = "This run includes only 3 GCNs - Cerebellum, Visual Cortex, and Prefrontal Cortex \nPredicting Braak Scores"
+RUN_TITLE_SHORT = "braak"
 
 # load preprocessed data from csv
 #load_list - list of csv files to laod. The -2 position should be meta_csv and -1 position should be trte_partition_file
-load_list = [cerebellum, visualCortex, prefrontalCortex, cerebellum_visual, visual_prefrontal, prefrontal_cerebellum, cerebellum_cerebellum, visual_visual, prefrontal_prefrontal, meta_csv, trte_partition_file]
-GCN_names = ["cerebellum", "visualCortex", "prefrontalCortex", "cere_vis", "vis_pre", "pre_cere", "cere_cere", "vis_vis", "pre_pre"]
+load_list = [cerebellum, visualCortex, prefrontalCortex, meta_csv, trte_partition_file]
+GCN_names = ["cerebellum", "visualCortex", "prefrontalCortex"]
 
-COMBINER = "FullyConnected"
+COMBINER = "VCDN"
 
 losses_df, metrics_df, feature_imp, _, _ = train_model(load_list=load_list, label_dict=label_dict, GCN_names=GCN_names, COMBINER=COMBINER, SEED=SEED, num_epoch=num_epoch, test_interval=test_interval, lr=lr, weight_decay=weight_decay,     dropout=dropout, adj_parameter=adj_parameter, VERBOSE=VERBOSE, doSMOTE = doSMOTE, RUN_TITLE=RUN_TITLE, RUN_TITLE_SHORT=RUN_TITLE_SHORT, OUTPUT_FILES=OUTPUT_FILES, MAKE_PLOTS=MAKE_PLOTS, feature_extract=feature_extract, num_gcn=num_gcn)
 
 #losses_df.to_csv("losses.csv")
 #metrics_df.to_csv("metrics.csv")
-feature_imp["shap"].to_csv("hbtrc_shap_AD_allint.csv", index=False)
+feature_imp["shap"].to_csv("hbtrc_shap_braak.csv", index_label="features")

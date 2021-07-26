@@ -77,7 +77,7 @@ greedySelect <- function(dframe, featureList, corrThreshold = 0.8, max_features 
 }
 ```
 
-# HD or Not
+# AD or Not
 For each of the pairs, the data is generated, top features selected, the data normalized, and then saved to files.
 
 ```{r message=FALSE, warning=FALSE}
@@ -131,7 +131,7 @@ cere_visual_train <- cere_visual_train[match(labels_train$patient_id, cere_visua
 #ANOVA
 anova_summary <- run_anova_(cere_visual_train, labels_train, num_cpus = 50)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less to be supplied
@@ -181,7 +181,7 @@ visual_prefrontal_train <- visual_prefrontal_train[match(labels_train$patient_id
 #ANOVA
 anova_summary <- run_anova_(visual_prefrontal_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -230,7 +230,7 @@ prefrontal_cere_train <- prefrontal_cere_train[match(labels_train$patient_id, pr
 #ANOVA
 anova_summary <- run_anova_(prefrontal_cere_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -279,7 +279,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -328,7 +328,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -377,7 +377,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -414,7 +414,7 @@ rm(data, data_train, df, topM)
 ```
 
 
-# Vonsattel Scores
+# Braak Scores
 
 For each of the pairs, the data is generated, top features selected, the data normalized, and then saved to files.
 
@@ -469,7 +469,7 @@ cere_visual_train <- cere_visual_train[match(labels_train$patient_id, cere_visua
 #ANOVA
 anova_summary <- run_anova_(cere_visual_train, labels_train, num_cpus = 50)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less to be supplied
@@ -519,7 +519,7 @@ visual_prefrontal_train <- visual_prefrontal_train[match(labels_train$patient_id
 #ANOVA
 anova_summary <- run_anova_(visual_prefrontal_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -568,7 +568,7 @@ prefrontal_cere_train <- prefrontal_cere_train[match(labels_train$patient_id, pr
 #ANOVA
 anova_summary <- run_anova_(prefrontal_cere_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -617,7 +617,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -666,7 +666,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied
@@ -715,7 +715,7 @@ data_train <- data_train[match(labels_train$patient_id, data_train$patient_id),]
 #ANOVA
 anova_summary <- run_anova_(data_train, labels_train, num_cpus = 40)
 anova_sorted <- anova_summary %>% 
-                     filter(p_value<=0.0001/nrow(anova_summary)) %>% 
+                     filter(p_value<=0.05/nrow(anova_summary)) %>% 
                      arrange(desc(f_value))
 
 #Only selecting the top 25000 or less features to be supplied

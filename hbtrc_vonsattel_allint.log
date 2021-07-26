@@ -1,0 +1,168 @@
+<IPython.core.display.HTML object>
+2021-07-26 12:16:43.933068 
+
+This run includes 9 GCNs - Primary features and all the Interaction features 
+Predicting Vonsattel Scores
+SEED =  42
+
+Training...
+
+Test: Epoch 0
+Train Accuracy: 0.2551   Test ACC: 0.0789
+Train F1: 0.1124         Test F1: 0.0116
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.0000              0.7237              0.0000
+2 	           0.2500              0.9959              0.0789              1.0000
+3 	           0.2500              0.0000              0.1447              0.0000
+4 	           0.2500              0.0246              0.0526              0.0000
+
+
+Test: Epoch 25
+Train Accuracy: 0.2971   Test ACC: 0.1447
+Train F1: 0.1986         Test F1: 0.0370
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.3525              0.7237              0.0000
+2 	           0.2500              0.0000              0.0789              0.0000
+3 	           0.2500              0.8320              0.1447              1.0000
+4 	           0.2500              0.0041              0.0526              0.0000
+
+
+Test: Epoch 50
+Train Accuracy: 0.4488   Test ACC: 0.0789
+Train F1: 0.4137         Test F1: 0.0116
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.5041              0.7237              0.0000
+2 	           0.2500              0.9057              0.0789              1.0000
+3 	           0.2500              0.1189              0.1447              0.0000
+4 	           0.2500              0.2664              0.0526              0.0000
+
+
+Test: Epoch 75
+Train Accuracy: 0.6311   Test ACC: 0.1447
+Train F1: 0.6152         Test F1: 0.1347
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.9303              0.7237              0.0727
+2 	           0.2500              0.8074              0.0789              1.0000
+3 	           0.2500              0.3320              0.1447              0.0909
+4 	           0.2500              0.4549              0.0526              0.0000
+
+
+Test: Epoch 100
+Train Accuracy: 0.7029   Test ACC: 0.5789
+Train F1: 0.6829         Test F1: 0.6384
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.9836              0.7237              0.6545
+2 	           0.2500              0.9262              0.0789              0.8333
+3 	           0.2500              0.2951              0.1447              0.0909
+4 	           0.2500              0.6066              0.0526              0.5000
+
+
+Test: Epoch 125
+Train Accuracy: 0.7654   Test ACC: 0.6579
+Train F1: 0.7516         Test F1: 0.6917
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              0.9959              0.7237              0.7636
+2 	           0.2500              0.9467              0.0789              0.8333
+3 	           0.2500              0.3648              0.1447              0.0909
+4 	           0.2500              0.7541              0.0526              0.5000
+
+
+Test: Epoch 150
+Train Accuracy: 0.8607   Test ACC: 0.7895
+Train F1: 0.8504         Test F1: 0.7912
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              0.9091
+2 	           0.2500              0.9918              0.0789              0.8333
+3 	           0.2500              0.5082              0.1447              0.1818
+4 	           0.2500              0.9426              0.0526              0.7500
+
+
+Test: Epoch 175
+Train Accuracy: 0.9672   Test ACC: 0.8289
+Train F1: 0.9673         Test F1: 0.8242
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              0.9636
+2 	           0.2500              0.9508              0.0789              0.3333
+3 	           0.2500              0.9713              0.1447              0.4545
+4 	           0.2500              0.9467              0.0526              0.7500
+
+
+Test: Epoch 200
+Train Accuracy: 0.9754   Test ACC: 0.8421
+Train F1: 0.9755         Test F1: 0.8340
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              0.9818
+2 	           0.2500              0.9672              0.0789              0.3333
+3 	           0.2500              0.9713              0.1447              0.4545
+4 	           0.2500              0.9631              0.0526              0.7500
+
+
+Test: Epoch 225
+Train Accuracy: 0.9754   Test ACC: 0.8684
+Train F1: 0.9751         Test F1: 0.8535
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              1.0000
+2 	           0.2500              0.9918              0.0789              0.8333
+3 	           0.2500              0.9139              0.1447              0.2727
+4 	           0.2500              0.9959              0.0526              0.7500
+
+
+Test: Epoch 250
+Train Accuracy: 0.9918   Test ACC: 0.8553
+Train F1: 0.9918         Test F1: 0.8444
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              1.0000
+2 	           0.2500              0.9713              0.0789              0.5000
+3 	           0.2500              1.0000              0.1447              0.3636
+4 	           0.2500              0.9959              0.0526              0.7500
+
+
+Test: Epoch 275
+Train Accuracy: 0.9867   Test ACC: 0.8289
+Train F1: 0.9867         Test F1: 0.8052
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              0.9818
+2 	           0.2500              0.9508              0.0789              0.0000
+3 	           0.2500              1.0000              0.1447              0.5455
+4 	           0.2500              0.9959              0.0526              0.7500
+
+
+Test: Epoch 300
+Train Accuracy: 0.9918   Test ACC: 0.8289
+Train F1: 0.9918         Test F1: 0.7957
+
+Label        Train Distribution     Train Accuracy     Test Distribution     Test Accuracy
+------------------------------------------------------------------------------------------
+0 	           0.2500              1.0000              0.7237              1.0000
+2 	           0.2500              0.9713              0.0789              0.0000
+3 	           0.2500              1.0000              0.1447              0.4545
+4 	           0.2500              0.9959              0.0526              0.7500
+
+
+Test: Epoch 325
+Train Accuracy: 0.9959   Test ACC: 0.8289
+Train F1: 0.9959         Test F1: 0.8183

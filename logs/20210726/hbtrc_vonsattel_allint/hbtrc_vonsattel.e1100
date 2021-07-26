@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "./hbtrc_vonsattel.py", line 65, in <module>
+    losses_df, metrics_df, feature_imp, _, _ = train_model(load_list=load_list, label_dict=label_dict, GCN_names=GCN_names, COMBINER=COMBINER, SEED=SEED, num_epoch=num_epoch, test_interval=test_interval, lr=lr, weight_decay=weight_decay,     dropout=dropout, adj_parameter=adj_parameter, VERBOSE=VERBOSE, doSMOTE = doSMOTE, RUN_TITLE=RUN_TITLE, RUN_TITLE_SHORT=RUN_TITLE_SHORT, OUTPUT_FILES=OUTPUT_FILES, MAKE_PLOTS=MAKE_PLOTS, feature_extract=feature_extract, num_gcn=num_gcn)
+  File "/data/users/bs16b001/DDP/main.py", line 89, in train_model
+    data_list, labels, patient_id, feat_name_list = load_preproc_data(load_list[:-2], load_list[-2], label_dict)
+  File "/data/users/bs16b001/DDP/load_data.py", line 122, in load_preproc_data
+    data, feat_name = load_data_csv(each, meta_patient_id)
+  File "/data/users/bs16b001/DDP/load_data.py", line 13, in load_data_csv
+    df = pd.read_csv(csv_file, delimiter=',')
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 605, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 457, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 814, in __init__
+    self._engine = self._make_engine(self.engine)
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 1045, in _make_engine
+    return mapping[engine](self.f, **self.options)  # type: ignore[call-arg]
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 1862, in __init__
+    self._open_handles(src, kwds)
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/parsers.py", line 1363, in _open_handles
+    storage_options=kwds.get("storage_options", None),
+  File "/home/bs16b001/.local/lib/python3.7/site-packages/pandas/io/common.py", line 644, in get_handle
+    newline="",
+FileNotFoundError: [Errno 2] No such file or directory: 'R/HBTRC/Huntington/prefrontal_prefrontal.csv'

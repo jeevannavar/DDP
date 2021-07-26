@@ -19,28 +19,29 @@ import re
 SEED = 42
 
 # pre-processed data
-cerebellum = "R/HBTRC/Huntington/cerebellum_HD.csv"
-visualCortex = "R/HBTRC/Huntington/visualCortex_HD.csv"
-prefrontalCortex = "R/HBTRC/Huntington/prefrontalCortex_HD.csv"
-cerebellum_visual = "R/HBTRC/Huntington/cere_visual_HD.csv"
-visual_prefrontal = "R/HBTRC/Huntington/visual_prefrontal_HD.csv"
-prefrontal_cerebellum = "R/HBTRC/Huntington/prefrontal_cere_HD.csv"
-cerebellum_cerebellum = "R/HBTRC/Huntington/cere_cere_HD.csv"
-visual_visual = "R/HBTRC/Huntington/visual_visual_HD.csv"
-prefrontal_prefrontal = "R/HBTRC/Huntington/prefrontal_prefrontal_HD.csv"
-meta_csv = "R/HBTRC/Huntington/labels_HD.csv"
-trte_partition_file = "R/HBTRC/Huntington/trte_partition_HD.txt"
+cerebellum = "R/HBTRC/Huntington/cerebellum_vonsattel.csv"
+visualCortex = "R/HBTRC/Huntington/visualCortex_vonsattel.csv"
+prefrontalCortex = "R/HBTRC/Huntington/prefrontalCortex_vonsattel.csv"
+cerebellum_visual = "R/HBTRC/Huntington/cere_visual_vonsattel.csv"
+visual_prefrontal = "R/HBTRC/Huntington/visual_prefrontal_vonsattel.csv"
+prefrontal_cerebellum = "R/HBTRC/Huntington/prefrontal_cere_vonsattel.csv"
+cerebellum_cerebellum = "R/HBTRC/Huntington/cere_cere_vonsattel.csv"
+visual_visual = "R/HBTRC/Huntington/visual_visual_vonsattel.csv"
+prefrontal_prefrontal = "R/HBTRC/Huntington/prefrontal_prefrontal.csv"
+meta_csv = "R/HBTRC/Huntington/labels_vonsattel.csv"
+trte_partition_file = "R/HBTRC/Huntington/trte_partition_vonsattel.txt"
 
 # change label from text to integer
-label_dict = {"control":0, "affected":1}
+#label_dict = {i:i for i in [0,2,3,4]}
+label_dict = {0:0, 2:1, 3:2, 4:3}
 
 doSMOTE = True # Boolean
 
 # training parameters
-num_epoch = 600
+num_epoch = 425
 test_interval = 25
 lr = 5e-4
-weight_decay = 5e-3
+weight_decay = 1e-3
 dropout = 0.5
 adj_parameter = 8 # average number of edge per node in adj matrix
 
@@ -51,8 +52,8 @@ MAKE_PLOTS = False #Boolean to determine whether to output loss and metrics as p
 feature_extract = ["shap"] #["lime", "shap"]
 num_gcn = 2
 
-RUN_TITLE = "This run includes 9 GCNs - Primary features and all the Interaction features \nClassifying between Huntington's Affected and Controls"
-RUN_TITLE_SHORT = "HD"
+RUN_TITLE = "This run includes 9 GCNs - Primary features and all the Interaction features \nPredicting Vonsattel Scores"
+RUN_TITLE_SHORT = "vonsattel"
 
 # load preprocessed data from csv
 #load_list - list of csv files to laod. The -2 position should be meta_csv and -1 position should be trte_partition_file
@@ -65,4 +66,4 @@ losses_df, metrics_df, feature_imp, _, _ = train_model(load_list=load_list, labe
 
 #losses_df.to_csv("losses.csv")
 #metrics_df.to_csv("metrics.csv")
-feature_imp["shap"].to_csv("hbtrc_shap_AD_allint.csv", index=False)
+feature_imp["shap"].to_csv("hbtrc_shap_vonsattel_allint.csv", index=False)
